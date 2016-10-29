@@ -2,6 +2,12 @@
 
 ## Setup Local Development
 
+### Requirements
+
+1. some GIT tool (SourceTree)
+2. local MySQL server (it is part of XAMPP for example which is easy to use and has built-in phpmyadmin)
+3. Installed NodeJS and NPM
+
 1. clone repository
 2. run `npm install` in both directories `/frontend` and `/backend`
 3. starting local development:
