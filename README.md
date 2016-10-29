@@ -8,6 +8,8 @@
 2. local MySQL server (it is part of XAMPP for example which is easy to use and has built-in phpmyadmin)
 3. Installed NodeJS and NPM
 
+### Setup
+
 1. clone repository
 2. run `npm install` in both directories `/frontend` and `/backend`
 3. starting local development:
