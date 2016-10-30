@@ -34,7 +34,7 @@
    - run `npm run watch-babel` in backend directory. It will create nodejs server on adress `localhost:3001` and automatically restart          server. Livereload doesn't work though.
    - you can access loopback on url `localhost:3001/explorer`
    
-4. Happy hacking
+4. Switch into `dev` branch and create your feature branch. Happy hacking
 
 ## GitFlow
 
