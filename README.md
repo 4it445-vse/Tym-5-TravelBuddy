@@ -5,7 +5,7 @@
 1. [Setup Local Development](#setup-local-development)
 2. [GitFlow](#gitflow)
 
-## 1. Setup Local Development
+## Setup Local Development
 
 ### Requirements
 
@@ -36,6 +36,6 @@
    
 4. Happy hacking
 
-## 2. GitFlow
+## GitFlow
 
 //Todo
