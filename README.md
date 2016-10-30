@@ -1,6 +1,11 @@
 # TravelBuddy
 
-## Setup Local Development
+## Table of contents
+
+1. [Setup Local Development](#setup-local-development)
+2. [GitFlow](#gitflow)
+
+## 1. Setup Local Development
 
 ### Requirements
 
@@ -12,7 +17,7 @@
 
 1. clone repository
 2. run `npm install` in both directories `/frontend` and `/backend`
-3. starting local development:
+3. **starting local development**:
 
   3.1 frontend:
     - run `npm start` in frontend directory, it will create nodejs server on adress `localhost:3000` and livereload feature.
@@ -30,3 +35,7 @@
    - you can access loopback on url `localhost:3001/explorer`
    
 4. Happy hacking
+
+## 2. GitFlow
+
+//Todo
