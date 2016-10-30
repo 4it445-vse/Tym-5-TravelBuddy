@@ -38,4 +38,35 @@
 
 ## GitFlow
 
-//Todo
+- Further Git Information - https://git-scm.com/docs/
+
+### Naming Conventions
+
+- use lower case for each feature branch naming
+- use name of develeoping feature according to Trello user-stories
+
+### Description
+
+Gitflow defines 5 types of branches: Master (Production), Develop, Feature, Release, Hotfix
+
+- We dont use Release and Hotfix branches
+
+- Master Branch - Sprint Review branch
+- Develop Branch - Branch from Master for development
+- Features Branch - Branch from Develop for feature development eg. registration-server, registration-frontend
+
+### Setup SourceTree repository with Gitflow
+1. Download SourceTree - https://www.sourcetreeapp.com/
+2. Install SourceTree
+3. Create folder on your local disc eg. C:\GitRepository
+4. Run SourceTree
+5. Click Clone\New in the upper left corner insert - https://github.com/4it445-vse/Tym-5-TravelBuddy.git
+6. Click on GitFlow button to initialize GitFlow for your local repository
+7. Click on GitFlow again and create Development branch
+8. Click on GitFlow again and select Start new Feature
+9. Name your Feature branch
+10. Develop your feature
+11. Open SourceTree and see your changes. Go to FileStatus tab, Click StageAll or Stage selected files for your revision
+12. Click Commit. Write some description. Your Revision is done.
+13. You can click on GitFlow again when your feature is ready and click Finish Feature. This will merge your feature branch with Development branch.
+13. You can Push to server or continue to Step 8
