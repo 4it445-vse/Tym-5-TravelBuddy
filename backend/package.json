@@ -1,0 +1,42 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "server/server.js",
+  "scripts": {
+    "lint": "eslint .",
+    "start": "node .",
+    "watch-babel": "nodemon server/server.js --exec babel-node --presets es2015",
+    "build": "babel server -d build --presets es2015",
+    "watch": "nodemon .",
+    "watch-touch": "nodemon -x 'touch tmp/restart.txt 2> /dev/null'",
+    "posttest": "npm run lint && nsp check"
+  },
+  "dependencies": {
+    "compression": "^1.0.3",
+    "cors": "^2.5.2",
+    "dotenv": "^2.0.0",
+    "helmet": "^1.3.0",
+    "log4js": "^0.6.38",
+    "loopback": "^3.0.0",
+    "loopback-boot": "^2.6.5",
+    "loopback-component-explorer": "^2.4.0",
+    "loopback-connector-mysql": "^2.3.0",
+    "loopback-datasource-juggler": "^2.51.0",
+    "serve-favicon": "^2.0.1",
+    "strong-error-handler": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "eslint": "^2.13.1",
+    "eslint-config-loopback": "^4.0.0",
+    "nodemon": "^1.10.2",
+    "nsp": "^2.1.0"
+  },
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "license": "UNLICENSED",
+  "description": "backend"
+}
