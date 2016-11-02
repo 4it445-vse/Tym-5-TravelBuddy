@@ -7,20 +7,58 @@ import 'react-day-picker/lib/style.css';
 const overlayStyle = {
   position: 'absolute',
   background: 'white',
+  border: 'solid 1px rgb(220,220,220)',
   boxShadow: '0 2px 5px rgba(0, 0, 0, .15)',
 };
+
+const currentYear = (new Date()).getFullYear();
+const fromMonth = new Date(currentYear - 100, 0, 1, 0, 0);
+const toMonth = new Date();
+
+function YearMonthForm({ date, localeUtils, onChange }) {
+  const months = localeUtils.getMonths();
+
+  const years = [];
+  for (let i = fromMonth.getFullYear(); i <= toMonth.getFullYear(); i++) {
+    years.push(i);
+  }
+
+  const handleChange = function handleChange(e) {
+    const { year, month } = e.target.form;
+    onChange(new Date(year.value, month.value));
+  };
+
+  return (
+    <form className="DayPicker-Caption">
+      <select name="month" onChange={ handleChange } value={ date.getMonth() }>
+        { months.map((month, i) =>
+          <option key={ i } value={ i }>
+            { month }
+          </option>)
+        }
+      </select>
+      <select name="year" onChange={ handleChange } value={ date.getFullYear() }>
+        { years.map((year, i) =>
+          <option key={ i } value={ year }>
+            { year }
+          </option>)
+        }
+      </select>
+    </form>
+  );
+}
 
 export class DatePicker extends Component {
   constructor(props) {
     super(props);
-
-
-
     this.state = {
+      initialMonth: toMonth,
       showOverlay: false,
       value: '',
       selectedDay: null,
     };
+
+    // const { type } = props.type;
 
     this.handleDayClick = this.handleDayClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -102,12 +140,18 @@ export class DatePicker extends Component {
           onBlur={ this.handleInputBlur }
         />
         { this.state.showOverlay &&
-          <div style={ { position: 'relative' } }>
+          <div style={ { position: 'relative' } } className="YearNavigation">
             <div style={ overlayStyle }>
               <DayPicker
                 ref={ el => { this.daypicker = el; } }
                 onDayClick={ this.handleDayClick }
                 selectedDays={ day => DateUtils.isSameDay(this.state.selectedDay, day) }
+                initialMonth={ this.state.initialMonth }
+                fromMonth={ fromMonth }
+                toMonth={ toMonth }
+                captionElement={
+                  <YearMonthForm onChange={ initialMonth => this.setState({ initialMonth }) } />
+                }
               />
             </div>
           </div>
