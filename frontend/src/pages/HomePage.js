@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
+import { LoginComponent } from "../components/LoginComponent/LoginComponent.js";
+
 export class HomePage extends Component {
   render() {
     return (
@@ -12,6 +14,7 @@ export class HomePage extends Component {
         </div>
         <div className="row marketing">
           <div className="col-lg-6">
+          <LoginComponent />
             <h4>Subheading</h4>
             <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
             <h4>Subheading</h4>
