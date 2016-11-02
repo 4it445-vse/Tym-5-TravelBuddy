@@ -1,0 +1,59 @@
+{
+  "name": "UserDetail",
+  "plural": "UserDetails",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "ProfilePicture": {
+      "type": "blob"
+    },
+    "Bio": {
+      "type": "clob",
+      "required": true
+    },
+    "Phone": {
+      "type": "integer",
+      "required": true
+    },
+    "Skype": {
+      "type": "varchar"
+
+    },
+    "Facebook": {
+      "type": "varchar"
+    },
+    "Email": {
+      "type": "varchar",
+      "required": true
+    },
+    "Country": {
+      "type": "varchar",
+      "required": true
+    },
+    "City": {
+      "type": "varchar",
+      "required": true
+    },
+    "Street": {
+      "type": "varchar"
+    },
+    "PostalCode": {
+      "type": "integer",
+      "required": true
+    },
+    "Video": {
+      "type": "varchar"
+    },
+    "Motto": {
+      "type": "varchar"
+    }
+  },
+  "validations": [],
+  "relations": {
+  },
+  "acls": [],
+  "methods": {}
+}
