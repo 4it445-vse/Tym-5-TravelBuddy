@@ -1,0 +1,28 @@
+{
+  "name": "Language",
+  "plural": "Languages",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "Name": {
+      "type": "string"
+    },
+    "ISOCode": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "userLanguages": {
+      "type": "hasMany",
+      "model": "User_Language",
+      "foreignKey": "refLanguageId",
+      "through": "User_Language"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

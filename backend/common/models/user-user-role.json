@@ -1,0 +1,31 @@
+{
+  "name": "User_UserRole",
+  "plural": "User_UserRoles",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "DurationFrom": {
+      "type": "date"
+    },
+    "DurationTo": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {
+     "UserRoleUser": {
+      "type": "belongsTo",
+      "model": "UserMain",
+      "foreignKey": ""
+    },
+    "UserRoleRole": {
+        "type": "belongsTo",
+        "model": "Role",
+        "foreignKey": ""
+      }},
+  "acls": [],
+  "methods": {}
+}

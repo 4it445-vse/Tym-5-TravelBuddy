@@ -1,0 +1,37 @@
+{
+  "name": "User_city",
+  "plural": "User_cities",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "DurationFrom": {
+      "type": "date"
+    },
+    "DurationTo": {
+      "type": "date"
+    },
+    "refUserId": {
+      "type": "number"
+    },
+    "refCityId": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {
+  "User_cityCity": {
+    "type": "belongsTo",
+    "model": "City",
+    "foreignKey": ""
+  },
+  "User_cityUser": {
+    "type": "belongsTo",
+    "model": "UserMain",
+    "foreignKey": ""
+  }},
+  "acls": [],
+  "methods": {}
+}

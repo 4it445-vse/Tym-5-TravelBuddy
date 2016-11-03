@@ -1,0 +1,110 @@
+{
+  "name": "UserMain",
+  "plural": "UserMain",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "FirstName": {
+      "type": "string",
+      "required": true
+    },
+    "LastName": {
+      "type": "string",
+      "required": true
+    },
+    "Email": {
+      "type": "string",
+      "required": true
+    },
+    "Password": {
+      "type": "string",
+      "required": true
+    },
+    "RecordCreated": {
+      "type": "date"
+    },
+    "EmailConfirmed": {
+      "type": "boolean"
+    },
+    "LastLoginDate": {
+      "type": "date"
+    },
+    "Birthdate": {
+      "type": "date"
+    },
+    "Gender": {
+      "type": "string"
+    },
+    "IsBanned": {
+      "type": "boolean"
+    },
+    "IsActive": {
+      "type": "boolean"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "userDetails": {
+      "type": "belongsTo",
+      "model": "UserDetail",
+      "foreignKey": "refUserDetailId"
+    },
+    "userRatings": {
+      "type": "belongsTo",
+      "model": "UserRating",
+      "foreignKey": "refUserRatingId"
+    },
+    "userReviews": {
+      "type": "belongsTo",
+      "model": "UserReview",
+      "foreignKey": ""
+    },
+    "RecipientNotifications": {
+      "type": "hasMany",
+      "model": "Notification",
+      "foreignKey": "refRecipientUserId",
+      "through": "Notification"
+    },
+    "SenderNotifications": {
+      "type": "hasMany",
+      "model": "Notification",
+      "foreignKey": "refSenderUserId",
+      "through": "Notification"
+    },
+    "inInterestedIn": {
+      "type": "hasMany",
+      "model": "UserProduct",
+      "foreignKey": "refTouristUserId",
+      "through": "UserProduct"
+    },
+    "owns": {
+      "type": "hasMany",
+      "model": "Product",
+      "foreignKey": "refOwnerUserId",
+      "through": "Product"
+    },
+    "userCities": {
+      "type": "hasMany",
+      "model": "User_city",
+      "foreignKey": "refUserId",
+      "through": "User_city"
+    },
+    "userLanguages": {
+      "type": "hasMany",
+      "model": "User_Language",
+      "foreignKey": "refUserId",
+      "through": "User_Language"
+    },
+    "userUserroles": {
+      "type": "hasMany",
+      "model": "User_UserRole",
+      "foreignKey": "refUserId",
+      "through": "User_UserRole"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
