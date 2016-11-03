@@ -58,8 +58,6 @@ export class DatePicker extends Component {
       selectedDay: null,
     };
 
-    // const { type } = props.type;
-
     this.handleDayClick = this.handleDayClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleInputFocus = this.handleInputFocus.bind(this);
@@ -75,8 +73,6 @@ export class DatePicker extends Component {
 
   handleContainerMouseDown() {
     this.clickedInside = true;
-    // The input's onBlur method is called from a queue right after onMouseDown event.
-    // setTimeout adds another callback in the queue, but is called later than onBlur event
     this.clickTimeout = setTimeout(() => {
       this.clickedInside = false;
     }, 0);
@@ -95,7 +91,6 @@ export class DatePicker extends Component {
       showOverlay,
     });
 
-    // Force input's focus if blur event was caused by clicking on the calendar
     if (showOverlay) {
       this.input.focus();
     }
@@ -127,37 +122,68 @@ export class DatePicker extends Component {
   }
 
   render() {
-    return (
-      <div onMouseDown={ this.handleContainerMouseDown }>
-        <input
-          type="text"
-          ref={ el => { this.input = el; } }
-          placeholder="DD/MM/YYYY"
-          className="form-control"
-          value={ this.state.value }
-          onChange={ this.handleInputChange }
-          onFocus={ this.handleInputFocus }
-          onBlur={ this.handleInputBlur }
-        />
-        { this.state.showOverlay &&
-          <div style={ { position: 'relative' } } className="YearNavigation">
-            <div style={ overlayStyle }>
-              <DayPicker
-                ref={ el => { this.daypicker = el; } }
-                onDayClick={ this.handleDayClick }
-                selectedDays={ day => DateUtils.isSameDay(this.state.selectedDay, day) }
-                initialMonth={ this.state.initialMonth }
-                fromMonth={ fromMonth }
-                toMonth={ toMonth }
-                captionElement={
-                  <YearMonthForm onChange={ initialMonth => this.setState({ initialMonth }) } />
-                }
-              />
-            </div>
+    const { type } = this.props;
+    switch (type) {
+      case 'birthdate':
+        return (
+          <div onMouseDown={ this.handleContainerMouseDown }>
+            <input
+              type="text"
+              ref={ el => { this.input = el; } }
+              placeholder="DD/MM/YYYY"
+              className="form-control"
+              value={ this.state.value }
+              onChange={ this.handleInputChange }
+              onFocus={ this.handleInputFocus }
+              onBlur={ this.handleInputBlur }
+            />
+            { this.state.showOverlay &&
+              <div style={ { position: 'relative' } } className="YearNavigation">
+                <div style={ overlayStyle }>
+                  <DayPicker
+                    ref={ el => { this.daypicker = el; } }
+                    onDayClick={ this.handleDayClick }
+                    selectedDays={ day => DateUtils.isSameDay(this.state.selectedDay, day) }
+                    initialMonth={ this.state.initialMonth }
+                    fromMonth={ fromMonth }
+                    toMonth={ toMonth }
+                    captionElement={
+                      <YearMonthForm onChange={ initialMonth => this.setState({ initialMonth }) } />
+                    }
+                  />
+                </div>
+              </div>
+            }
           </div>
-        }
-      </div>
-    );
+        );
+      default:
+      return (
+        <div onMouseDown={ this.handleContainerMouseDown }>
+          <input
+            type="text"
+            ref={ el => { this.input = el; } }
+            placeholder="DD/MM/YYYY"
+            className="form-control"
+            value={ this.state.value }
+            onChange={ this.handleInputChange }
+            onFocus={ this.handleInputFocus }
+            onBlur={ this.handleInputBlur }
+          />
+          { this.state.showOverlay &&
+            <div style={ { position: 'relative' } }>
+              <div style={ overlayStyle }>
+                <DayPicker
+                  ref={ el => { this.daypicker = el; } }
+                  onDayClick={ this.handleDayClick }
+                  selectedDays={ day => DateUtils.isSameDay(this.state.selectedDay, day) }
+                />
+              </div>
+            </div>
+          }
+        </div>
+      );
+    }
+
   }
 
 }

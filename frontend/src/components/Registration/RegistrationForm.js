@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { DatePicker } from '../common/DatePicker/DatePicker.js';
-import { FormGroup, ControlLabel, FormControl, HelpBlock, OverlayTrigger,
-  Popover } from 'react-bootstrap';
+import { Form, FormGroup, ControlLabel, FormControl, HelpBlock, OverlayTrigger,
+  Popover, Radio, ButtonGroup, Button } from 'react-bootstrap';
 
 export class RegistrationForm extends Component {
 
@@ -9,18 +9,10 @@ export class RegistrationForm extends Component {
     super(props);
 
     this.state = {
-      firstName: "",
-      lastName: "",
-      email: ""
+      clientErrors: {}
     };
 
-
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    console.log('--- submitted: ', event.target);
   }
 
   createPopover(text) {
@@ -55,30 +47,57 @@ export class RegistrationForm extends Component {
 
       case 'date':
         return (
-          <DatePicker type="yearNavigation"/>
+          <DatePicker type="birthdate"/>
         );
 
       case 'radio':
         return (
-          <div>
+          <ButtonGroup block>
             {values.map((value) => {
               return (
-                <label key={value}>
-                  <input type="radio" name={key}/>{value}
-                </label>
+                <Button type="button" onClick={this.onRadioClick.bind(this, value)} active={this.state.option === value}>{value}</Button>
               );
             })}
-          </div>
+          </ButtonGroup>
         );
-      default:
-        return;
 
+      default:
+        return {};
     }
   }
 
-/*
- * Frontend validation
- */
+  onRadioClick(option) {
+    this.setState({
+      option: option
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    console.log('--- submitted: ', formData);
+
+    const clientErrors = this.validateForm(formData);
+    console.log('---clientErrors', clientErrors);
+    this.setState({ clientErrors });
+
+  }
+
+  /*
+   * Frontend validation
+   */
+
+   validateForm(formData) {
+
+     const psw = formData.get('password');
+     const psw2 = formData.get('password2');
+     if (psw !== psw2) {
+       return {
+          password: "Passwords are not same!"
+       };
+     }
+
+   }
 
   render() {
 
@@ -91,34 +110,33 @@ export class RegistrationForm extends Component {
       ['email', 'Your email', 'email', 'Will be used for login'],
       ['password', 'Password', 'password', 'At least 6 characters long'],
       ['password2', 'Re-enter your password', 'password']
-
     ];
 
-
+    const { clientErrors } = this.state;
+    // console.log('---error msg', clientErrors);
 
     return (
       <div className="register">
-        <form onSubmit={this.handleSubmit} className="form-horizontal">
+        <Form horizontal onSubmit={this.handleSubmit} className="form-horizontal">
           <div>
             {fields.map(([key, label, type, desc, values]) => {
-
-
+                const clientErrorMsg = clientErrors[key] || [];
+                console.log('---error msg', clientErrorMsg);
                 return (
-                  <FormGroup key={key} controlId={key}>
+                  <FormGroup validationState={clientErrorMsg.length ? "error" : undefined} key={key} controlId={key}>
                     <ControlLabel>{label}</ControlLabel>
                     {this.createField(type, key, desc, values)}
-                    <HelpBlock>helper text</HelpBlock>
+                    <FormControl.Feedback />
+                    <HelpBlock>{clientErrorMsg}</HelpBlock>
                   </FormGroup>
                 );
-
-
             })}
           </div>
           <div>
-            <button className="btn" type="submit">Register!</button>
+            <Button type="submit" bsStyle="primary" bsSize="large" block>Register!</Button>
           </div>
 
-        </form>
+        </Form>
       </div>
     );
   }
