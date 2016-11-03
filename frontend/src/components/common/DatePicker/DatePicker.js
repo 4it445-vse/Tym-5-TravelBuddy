@@ -9,6 +9,7 @@ const overlayStyle = {
   background: 'white',
   border: 'solid 1px rgb(220,220,220)',
   boxShadow: '0 2px 5px rgba(0, 0, 0, .15)',
+  zIndex: 9999
 };
 
 const currentYear = (new Date()).getFullYear();
@@ -123,12 +124,14 @@ export class DatePicker extends Component {
 
   render() {
     const { type } = this.props;
+    const { name } = this.props;
     switch (type) {
       case 'birthdate':
         return (
           <div onMouseDown={ this.handleContainerMouseDown }>
             <input
               type="text"
+              name={name}
               ref={ el => { this.input = el; } }
               placeholder="DD/MM/YYYY"
               className="form-control"

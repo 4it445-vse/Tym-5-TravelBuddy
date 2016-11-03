@@ -9,7 +9,8 @@ export class RegistrationForm extends Component {
     super(props);
 
     this.state = {
-      clientErrors: {}
+      clientErrors: {},
+      gender: ''
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -47,7 +48,7 @@ export class RegistrationForm extends Component {
 
       case 'date':
         return (
-          <DatePicker type="birthdate"/>
+          <DatePicker type="birthdate" name="birthdate"/>
         );
 
       case 'radio':
@@ -68,19 +69,24 @@ export class RegistrationForm extends Component {
 
   onRadioClick(option) {
     this.setState({
-      option: option
+      gender: option
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    console.log('--- submitted: ', formData);
-
+    formData.append('gender', this.state.gender);
+    // console.log('--- submitted: ', formData);
     const clientErrors = this.validateForm(formData);
     console.log('---clientErrors', clientErrors);
-    this.setState({ clientErrors });
-
+    if (clientErrors.length === 0) {
+      //Make api call
+      console.log('---form valid!')
+    }
+    else {
+      this.setState({ clientErrors });
+    }
   }
 
   /*
@@ -89,14 +95,29 @@ export class RegistrationForm extends Component {
 
    validateForm(formData) {
 
-     const psw = formData.get('password');
-     const psw2 = formData.get('password2');
-     if (psw !== psw2) {
-       return {
-          password: "Passwords are not same!"
-       };
+     var errors = [];
+
+     for (var pair of formData.entries()) {
+       if (!pair[1]) {
+        errors[pair[0]] = "Required!";
+       }
+       if (pair[0] === 'email') {
+         const emailPattern = /(.+)@(.+){2,}\.(.+){2,}/;
+         if (!emailPattern.test(pair[1])) {
+           errors[pair[0]] = 'Enter a valid email';
+         }
+       }
      }
 
+     var psw = formData.get('password');
+     var psw2 = formData.get('password2');
+     if (psw !== psw2) {
+       errors['password'] = "Passwords are not same!";
+     }
+     if (psw.length < 6) {
+       errors['password'] = "Password is too short!"
+     }
+     return errors;
    }
 
   render() {
@@ -106,22 +127,22 @@ export class RegistrationForm extends Component {
       ['firstName', 'First name', 'text', ''],
       ['lastName', 'Last name', 'text', ''],
       ['birthdate', 'Birthdate', 'date', ''],
-      ['gender', 'Your sex', 'radio', '', ['Male', 'Female']],
-      ['email', 'Your email', 'email', 'Will be used for login'],
+      ['gender', 'Your gender', 'radio', '', ['Male', 'Female']],
+      ['email', 'Your email', 'text', 'Enter valid email. You will use it for login and password reset'],
       ['password', 'Password', 'password', 'At least 6 characters long'],
       ['password2', 'Re-enter your password', 'password']
     ];
 
     const { clientErrors } = this.state;
-    // console.log('---error msg', clientErrors);
+    // console.log('---client errors', clientErrors);
 
     return (
       <div className="register">
         <Form horizontal onSubmit={this.handleSubmit} className="form-horizontal">
-          <div>
+
             {fields.map(([key, label, type, desc, values]) => {
                 const clientErrorMsg = clientErrors[key] || [];
-                console.log('---error msg', clientErrorMsg);
+                // console.log('---error msg', clientErrorMsg);
                 return (
                   <FormGroup validationState={clientErrorMsg.length ? "error" : undefined} key={key} controlId={key}>
                     <ControlLabel>{label}</ControlLabel>
@@ -131,10 +152,9 @@ export class RegistrationForm extends Component {
                   </FormGroup>
                 );
             })}
-          </div>
-          <div>
+
             <Button type="submit" bsStyle="primary" bsSize="large" block>Register!</Button>
-          </div>
+
 
         </Form>
       </div>
