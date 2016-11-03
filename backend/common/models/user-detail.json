@@ -8,52 +8,61 @@
   },
   "properties": {
     "ProfilePicture": {
-      "type": "blob"
+      "type": "string",
+      "required": true
     },
     "Bio": {
-      "type": "clob",
+      "type": "string",
       "required": true
     },
     "Phone": {
-      "type": "integer",
+      "type": "string",
       "required": true
     },
     "Skype": {
-      "type": "varchar"
-
+      "type": "string",
+      "required": true
     },
     "Facebook": {
-      "type": "varchar"
+      "type": "string",
+      "required": true
     },
     "Email": {
-      "type": "varchar",
+      "type": "string",
       "required": true
     },
-    "Country": {
-      "type": "varchar",
+    "refCountryId": {
+      "type": "number",
       "required": true
     },
-    "City": {
-      "type": "varchar",
+    "refCityId": {
+      "type": "number",
       "required": true
     },
     "Street": {
-      "type": "varchar"
+      "type": "string",
+      "required": true
     },
     "PostalCode": {
-      "type": "integer",
+      "type": "string",
       "required": true
     },
     "Video": {
-      "type": "varchar"
+      "type": "string",
+      "required": true
     },
     "Motto": {
-      "type": "varchar"
+      "type": "string",
+      "required": true
     }
   },
   "validations": [],
   "relations": {
-  },
+  "UserDetailUser": {
+    "type": "belongsTo",
+    "model": "UserMain",
+    "foreignKey": ""
+  }},
   "acls": [],
   "methods": {}
 }

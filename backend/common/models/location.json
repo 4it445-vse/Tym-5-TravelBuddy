@@ -1,0 +1,43 @@
+{
+  "name": "Location",
+  "plural": "Locations",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "Latitude": {
+      "type": "number"
+    },
+    "Longitude": {
+      "type": "number"
+    },
+    "refCityId": {
+      "type": "number"
+    },
+    "refCountryId": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "LocationCity": {
+      "type": "hasMany",
+      "model": "City",
+      "foreignKey": "refCityId"
+    },
+    "LocationCountry": {
+      "type": "belongsTo",
+      "model": "Country",
+      "foreignKey": ""
+    },
+    "LocationProduct": {
+      "type": "belongsTo",
+      "model": "Product",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
