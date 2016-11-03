@@ -1,0 +1,68 @@
+{
+  "name": "UserDetail",
+  "plural": "UserDetails",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "ProfilePicture": {
+      "type": "string",
+      "required": true
+    },
+    "Bio": {
+      "type": "string",
+      "required": true
+    },
+    "Phone": {
+      "type": "string",
+      "required": true
+    },
+    "Skype": {
+      "type": "string",
+      "required": true
+    },
+    "Facebook": {
+      "type": "string",
+      "required": true
+    },
+    "Email": {
+      "type": "string",
+      "required": true
+    },
+    "refCountryId": {
+      "type": "number",
+      "required": true
+    },
+    "refCityId": {
+      "type": "number",
+      "required": true
+    },
+    "Street": {
+      "type": "string",
+      "required": true
+    },
+    "PostalCode": {
+      "type": "string",
+      "required": true
+    },
+    "Video": {
+      "type": "string",
+      "required": true
+    },
+    "Motto": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+  "UserDetailUser": {
+    "type": "belongsTo",
+    "model": "UserMain",
+    "foreignKey": ""
+  }},
+  "acls": [],
+  "methods": {}
+}

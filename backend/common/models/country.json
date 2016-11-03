@@ -1,0 +1,37 @@
+{
+  "name": "Country",
+  "plural": "Countries",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "Name": {
+      "type": "string"
+    },
+    "Code": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "locations": {
+      "type": "hasMany",
+      "model": "Location",
+      "foreignKey": "refCountryId"
+    },
+    "cities": {
+      "type": "hasMany",
+      "model": "City",
+      "foreignKey": "refCountryId"
+    },
+    "userDetails": {
+      "type": "hasMany",
+      "model": "UserDetail",
+      "foreignKey": "refCountryId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,71 @@
+{
+  "name": "Product",
+  "plural": "Products",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "RecordCreated": {
+      "type": "date"
+    },
+    "DurationFrom": {
+      "type": "date"
+    },
+    "DurationTo": {
+      "type": "date"
+    },
+    "Price": {
+      "type": "number"
+    },
+    "refTimeUnit": {
+      "type": "number"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "refOwnedUserId": {
+      "type": "number"
+    },
+    "refLocationId": {
+      "type": "number"
+    },
+    "Type": {
+      "type": "string"
+    },
+    "State": {
+      "type": "number"
+    },
+    "refTimeOut": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "userProducts": {
+      "type": "hasMany",
+      "model": "UserProduct",
+      "foreignKey": "refProductId",
+      "through": "UserProduct"
+    },
+    "productProductcategories": {
+      "type": "hasMany",
+      "model": "Product_ProductCategory",
+      "foreignKey": "refProductId",
+      "through": "Product_ProductCategory"
+    },
+    "timeUnits": {
+      "type": "hasOne",
+      "model": "TimeUnit",
+      "foreignKey": "refTimeUnit"
+    },
+    "locations": {
+      "type": "hasOne",
+      "model": "Location",
+      "foreignKey": "refLocationId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

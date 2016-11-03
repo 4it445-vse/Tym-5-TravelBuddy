@@ -1,31 +1,29 @@
 {
-  "name": "EshopProduct",
-  "plural": "products",
+  "name": "UserRating",
+  "plural": "UserRatings",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "title": {
-      "type": "string",
-      "required": true
-    },
-    "price": {
+    "Rating": {
       "type": "number"
     },
-    "shortInfo": {
-      "type": "string"
+    "TotalRating": {
+      "type": "number"
+    },
+    "CountRating": {
+      "type": "number"
     }
   },
   "validations": [],
   "relations": {
-    "category": {
+    "UserRatingUserMain": {
       "type": "belongsTo",
-      "model": "EshopCategory",
-      "foreignKey": "categoryId"
-    }
-  },
+      "model": "UserMain",
+      "foreignKey": ""
+    }},
   "acls": [],
   "methods": {}
 }
