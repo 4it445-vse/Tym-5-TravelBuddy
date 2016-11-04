@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { DatePicker } from '../common/DatePicker/DatePicker.js';
 import { Form, FormGroup, ControlLabel, FormControl, HelpBlock, OverlayTrigger,
-  Popover, Radio, ButtonGroup, Button } from 'react-bootstrap';
+  Popover, ButtonGroup, Button } from 'react-bootstrap';
 
 export class RegistrationForm extends Component {
 
@@ -53,10 +53,10 @@ export class RegistrationForm extends Component {
 
       case 'radio':
         return (
-          <ButtonGroup block>
+          <ButtonGroup>
             {values.map((value) => {
               return (
-                <Button type="button" onClick={this.onRadioClick.bind(this, value)} active={this.state.option === value}>{value}</Button>
+                <Button key={value} type="button" onClick={this.onRadioClick.bind(this, value)} active={this.state.option === value}>{value}</Button>
               );
             })}
           </ButtonGroup>
@@ -78,11 +78,14 @@ export class RegistrationForm extends Component {
     const formData = new FormData(event.target);
     formData.append('gender', this.state.gender);
     // console.log('--- submitted: ', formData);
-    const clientErrors = this.validateForm(formData);
-    console.log('---clientErrors', clientErrors);
-    if (clientErrors.length === 0) {
+    var clientErrors = this.validateForm(formData);
+    // console.log('---clientErrors', clientErrors);
+    // console.log('---length', Object.keys(clientErrors).length);
+    if (Object.keys(clientErrors).length === 0) {
       //Make api call
-      console.log('---form valid!')
+      console.log('---form valid!');
+      clientErrors = {};
+      this.setState({ clientErrors });
     }
     else {
       this.setState({ clientErrors });
@@ -95,7 +98,7 @@ export class RegistrationForm extends Component {
 
    validateForm(formData) {
 
-     var errors = [];
+     var errors = {};
 
      for (var pair of formData.entries()) {
        if (!pair[1]) {
