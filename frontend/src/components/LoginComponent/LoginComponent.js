@@ -31,6 +31,8 @@ export class LoginComponent extends Component{
     console.log("email: ", this.state.loginEmail);
     console.log("pwd: ", this.state.loginPassword);
 
+    const formData = new formData(event.target);
+
     var email = this.state.loginEmail;
     var pwd = this.state.loginPassword;
 
@@ -39,7 +41,7 @@ export class LoginComponent extends Component{
       return;
     }
 
-    api('/Users/login', {})
+    api('/UserMain/login', formData)
     .then(function(response) {
       console.log(response.data);
       console.log(response.status);
