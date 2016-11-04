@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 
-export class PageFooter extends Component {
-  render() {
+
+class PageFooter extends Component {
+
+    render() {
     return (
       <div className="footer">
-        <p>© TravelBuddy - {new Date().getFullYear()} - App</p>
+        <p>© TravelBuddy - {new Date().getFullYear()} - Version 1.0.0</p>
       </div>
     );
   }
 }
+
+export default PageFooter;

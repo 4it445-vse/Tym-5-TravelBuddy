@@ -1,12 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { App } from './App';
+import { App } from './App.js';
 
-import { configureStore } from './store/configureStore.js';
-
-const store = configureStore()
-
-ReactDOM.render(
-  <App store={store} />,
-  document.getElementById('root')
-);
+ReactDOM.render(<App />,  document.getElementsByClassName('root'));

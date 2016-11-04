@@ -5,6 +5,7 @@ export class NoMatchPage extends Component {
     return (
       <div>
         <h1>Page not Found</h1>
+        <p>There has been some problem with loading the page</p>
       </div>
     );
   }
