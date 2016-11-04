@@ -8,7 +8,8 @@ export class LoginComponent extends Component{
 
     this.state = {
       loginEmail : "",
-      loginPassword : ""
+      loginPassword : "",
+      callout : "test"
     }
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -38,7 +39,7 @@ export class LoginComponent extends Component{
       return;
     }
 
-    api('')
+    api('/Users/login', {})
     .then(function(response) {
       console.log(response.data);
       console.log(response.status);
@@ -80,6 +81,7 @@ export class LoginComponent extends Component{
 
     return(
       <div className="login">
+      <div className="login-form-element"> {this.state.callout} </div>
         <Form inline onSubmit={this.handleSubmit} >
 
         {fields.map(([key, label, type, desc]) => {
