@@ -1,7 +1,7 @@
 {
   "name": "UserMain",
   "plural": "UserMain",
-  "base": "PersistedModel",
+  "base": "User",
   "idInjection": true,
   "options": {
     "validateUpsert": true
@@ -15,19 +15,8 @@
       "type": "string",
       "required": true
     },
-    "Email": {
-      "type": "string",
-      "required": true
-    },
-    "Password": {
-      "type": "string",
-      "required": true
-    },
     "RecordCreated": {
       "type": "date"
-    },
-    "EmailConfirmed": {
-      "type": "boolean"
     },
     "LastLoginDate": {
       "type": "date"
