@@ -56,7 +56,7 @@ export class RegistrationForm extends Component {
           <ButtonGroup>
             {values.map((value) => {
               return (
-                <Button key={value} type="button" onClick={this.onRadioClick.bind(this, value)} active={this.state.option === value}>{value}</Button>
+                <Button type="button" key={value} onClick={this.onRadioClick.bind(this, value)} active={this.state.option === value}>{value}</Button>
               );
             })}
           </ButtonGroup>
