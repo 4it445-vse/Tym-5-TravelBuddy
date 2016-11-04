@@ -10,7 +10,8 @@ export class LoginComponent extends Component{
 
     this.state = {
       loginEmail : "",
-      loginPassword : ""
+      loginPassword : "",
+      callout : " "
     }
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -32,6 +33,8 @@ export class LoginComponent extends Component{
     console.log("email: ", this.state.loginEmail);
     console.log("pwd: ", this.state.loginPassword);
 
+    const formData = new FormData(event.target);
+
     var email = this.state.loginEmail;
     var pwd = this.state.loginPassword;
 
@@ -40,16 +43,20 @@ export class LoginComponent extends Component{
       return;
     }
 
-    api('')
-    .then(function(response) {
+    api('/UserMain/login', formData)
+    .then((response) => {
       console.log(response.data);
       console.log(response.status);
       console.log(response.statusText);
       console.log(response.headers);
       console.log(response.config);
+      if (response.status ==200){
+        this.setState({callout: "login succesful"});
+      }
     })
-      .catch(function (error) {
-        console.log("Errorx: ", error);
+      .catch((error) => {
+        console.log("Errorx: ", error.response);
+        this.setState({callout: "login failed"});
       });
 
 
@@ -82,6 +89,7 @@ export class LoginComponent extends Component{
 
     return(
       <div className="login">
+      <div className="login-form-element"> {this.state.callout} </div>
         <Form inline onSubmit={this.handleSubmit} >
 
         {fields.map(([key, label, type, desc]) => {
