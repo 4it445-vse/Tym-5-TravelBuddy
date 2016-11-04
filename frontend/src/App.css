@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-.login-form-element {
-    margin-left: 5px;
-    margin-right: 5px;
-    display: inline-block;
-=======
+
+
 /* Space out content a bit */
 body {
   padding-top: 20px;
@@ -71,6 +67,14 @@ body {
   width: 50%;
 }
 
+
+.login-form-element {
+
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+
+}
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
@@ -88,5 +92,5 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
->>>>>>> 1fdaa830567747a080d4079033169be6dc0ce101
+
 }

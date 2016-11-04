@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {LoginComponent} from '../LoginComponent/LoginComponent';
+import {LoginComponent}  from '../LoginComponent/LoginComponent';
 class PageHeader extends Component {
 
     render() {
@@ -21,6 +21,7 @@ class PageHeader extends Component {
                         <ul className="nav navbar-nav"></ul>
                     </div>
                 </div>
+
             </div>
 
         );
