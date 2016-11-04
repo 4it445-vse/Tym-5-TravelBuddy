@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import {LoginComponent} from '../LoginComponent/LoginComponent';
 class PageHeader extends Component {
 
     render() {
@@ -14,7 +14,9 @@ class PageHeader extends Component {
                         </button>
                         <a className="navbar-brand">Travel Buddy</a>
                     </div>
-
+                    <div className="pull-right">
+                        <LoginComponent/>
+                    </div>
                     <div className="collapse navbar-collapse">
                         <ul className="nav navbar-nav"></ul>
                     </div>

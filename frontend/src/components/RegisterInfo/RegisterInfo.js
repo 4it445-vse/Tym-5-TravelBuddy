@@ -7,7 +7,7 @@ class RegisterInfo extends Component {
         return (
             <div className="row">
                 <div className="col-md-6 col-lg-6 col-sm-6">
-                    <button className="btn btn-primary">
+                    <button className="btn btn-lg btn-primary">
                         <Link to="/registration">Register</Link>
                     </button>
                 </div>
