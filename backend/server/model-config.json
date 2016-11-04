@@ -14,7 +14,7 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "mysqlds"
   },
   "AccessToken": {
     "dataSource": "db",
@@ -32,11 +32,75 @@
     "dataSource": "db",
     "public": false
   },
-  "EshopProduct": {
+  "UserDetail": {
     "dataSource": "mysqlds",
     "public": true
   },
-  "EshopCategory": {
+  "UserRating": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "UserReview": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "UserMain": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "Notification": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "UserProduct": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "User_Language": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "User_city": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "Product": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "Product_ProductCategory": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "ProductCategory": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "User_UserRole": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "UserRole": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "Language": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "City": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "Country": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "Location": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "TimeUnit": {
     "dataSource": "mysqlds",
     "public": true
   }

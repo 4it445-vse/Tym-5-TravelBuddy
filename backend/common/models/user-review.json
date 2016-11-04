@@ -1,0 +1,45 @@
+{
+  "name": "UserReview",
+  "plural": "UserReviews",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "RecordCreated": {
+      "type": "date"
+    },
+    "CreatedBy": {
+      "type": "string"
+    },
+    "ReviewType": {
+      "type": "string"
+    },
+    "Rating": {
+      "type": "number"
+    },
+    "Text": {
+      "type": "string"
+    },
+    "IsEdited": {
+      "type": "boolean"
+    },
+    "EditDate": {
+      "type": "date"
+    },
+    "refUserId": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "UserReviewUserMain": {
+      "type": "belongsTo",
+      "model": "UserMain",
+      "foreignKey": "refUserId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

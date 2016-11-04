@@ -1,0 +1,25 @@
+{
+  "name": "ProductCategory",
+  "plural": "ProductCategories",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "Name": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "productProductcategories": {
+      "type": "hasMany",
+      "model": "Product_ProductCategory",
+      "foreignKey": "refProductCategoryId",
+      "through": "Product_ProductCategory"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

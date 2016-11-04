@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { DatePicker } from '../common/DatePicker/DatePicker.js';
-import { FormGroup, ControlLabel, FormControl, HelpBlock, OverlayTrigger,
-  Popover } from 'react-bootstrap';
+import { Form, FormGroup, ControlLabel, FormControl, HelpBlock, OverlayTrigger,
+  Popover, Radio, ButtonGroup, Button } from 'react-bootstrap';
 
 export class RegistrationForm extends Component {
 
@@ -9,18 +9,11 @@ export class RegistrationForm extends Component {
     super(props);
 
     this.state = {
-      firstName: "",
-      lastName: "",
-      email: ""
+      clientErrors: {},
+      gender: ''
     };
 
-
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    console.log('--- submitted: ', event.target);
   }
 
   createPopover(text) {
@@ -55,30 +48,77 @@ export class RegistrationForm extends Component {
 
       case 'date':
         return (
-          <DatePicker type="yearNavigation"/>
+          <DatePicker type="birthdate" name="birthdate"/>
         );
 
       case 'radio':
         return (
-          <div>
+          <ButtonGroup block>
             {values.map((value) => {
               return (
-                <label key={value}>
-                  <input type="radio" name={key}/>{value}
-                </label>
+                <Button type="button" onClick={this.onRadioClick.bind(this, value)} active={this.state.option === value}>{value}</Button>
               );
             })}
-          </div>
+          </ButtonGroup>
         );
-      default:
-        return;
 
+      default:
+        return {};
     }
   }
 
-/*
- * Frontend validation
- */
+  onRadioClick(option) {
+    this.setState({
+      gender: option
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    formData.append('gender', this.state.gender);
+    // console.log('--- submitted: ', formData);
+    const clientErrors = this.validateForm(formData);
+    console.log('---clientErrors', clientErrors);
+    if (clientErrors.length === 0) {
+      //Make api call
+      console.log('---form valid!')
+    }
+    else {
+      this.setState({ clientErrors });
+    }
+  }
+
+  /*
+   * Frontend validation
+   */
+
+   validateForm(formData) {
+
+     var errors = [];
+
+     for (var pair of formData.entries()) {
+       if (!pair[1]) {
+        errors[pair[0]] = "Required!";
+       }
+       if (pair[0] === 'email') {
+         const emailPattern = /(.+)@(.+){2,}\.(.+){2,}/;
+         if (!emailPattern.test(pair[1])) {
+           errors[pair[0]] = 'Enter a valid email';
+         }
+       }
+     }
+
+     var psw = formData.get('password');
+     var psw2 = formData.get('password2');
+     if (psw !== psw2) {
+       errors['password'] = "Passwords are not same!";
+     }
+     if (psw.length < 6) {
+       errors['password'] = "Password is too short!"
+     }
+     return errors;
+   }
 
   render() {
 
@@ -87,38 +127,36 @@ export class RegistrationForm extends Component {
       ['firstName', 'First name', 'text', ''],
       ['lastName', 'Last name', 'text', ''],
       ['birthdate', 'Birthdate', 'date', ''],
-      ['gender', 'Your sex', 'radio', '', ['Male', 'Female']],
-      ['email', 'Your email', 'email', 'Will be used for login'],
+      ['gender', 'Your gender', 'radio', '', ['Male', 'Female']],
+      ['email', 'Your email', 'text', 'Enter valid email. You will use it for login and password reset'],
       ['password', 'Password', 'password', 'At least 6 characters long'],
       ['password2', 'Re-enter your password', 'password']
-
     ];
 
-
+    const { clientErrors } = this.state;
+    // console.log('---client errors', clientErrors);
 
     return (
       <div className="register">
-        <form onSubmit={this.handleSubmit} className="form-horizontal">
-          <div>
+        <Form horizontal onSubmit={this.handleSubmit} className="form-horizontal">
+
             {fields.map(([key, label, type, desc, values]) => {
-
-
+                const clientErrorMsg = clientErrors[key] || [];
+                // console.log('---error msg', clientErrorMsg);
                 return (
-                  <FormGroup key={key} controlId={key}>
+                  <FormGroup validationState={clientErrorMsg.length ? "error" : undefined} key={key} controlId={key}>
                     <ControlLabel>{label}</ControlLabel>
                     {this.createField(type, key, desc, values)}
-                    <HelpBlock>helper text</HelpBlock>
+                    <FormControl.Feedback />
+                    <HelpBlock>{clientErrorMsg}</HelpBlock>
                   </FormGroup>
                 );
-
-
             })}
-          </div>
-          <div>
-            <button className="btn" type="submit">Register!</button>
-          </div>
 
-        </form>
+            <Button type="submit" bsStyle="primary" bsSize="large" block>Register!</Button>
+
+
+        </Form>
       </div>
     );
   }
