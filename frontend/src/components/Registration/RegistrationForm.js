@@ -12,6 +12,7 @@ export class RegistrationForm extends Component {
 
     this.state = {
       clientErrors: {},
+      errors: {},
       gender: ''
     };
 
@@ -58,7 +59,7 @@ export class RegistrationForm extends Component {
           <ButtonGroup className="block">
             {values.map((value) => {
               return (
-                <Button type="button" key={value} onClick={this.onRadioClick.bind(this, value)} active={this.state.option === value}>{value}</Button>
+                <Button key={value} type="button" onClick={this.onRadioClick.bind(this, value)} active={this.state.gender === value}>{value}</Button>
               );
             })}
           </ButtonGroup>
@@ -75,34 +76,37 @@ export class RegistrationForm extends Component {
     });
   }
 
+  formDataToJSON(formData) {
+    var json = {};
+    for(var pair of formData.entries()) {
+      if (pair[0] !== 'password2') {
+        json[pair[0]] = pair[1];
+      }
+    }
+    return json;
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
 
-    formData.append('gender', JSON.stringify(this.state.gender));
-    // console.log('--- submitted: ', formData);
+    formData.append('gender', this.state.gender);
+
     var clientErrors = this.validateForm(formData);
-    // console.log('---clientErrors', clientErrors);
-    // console.log('---length', Object.keys(clientErrors).length);
+
     if (Object.keys(clientErrors).length === 0) {
       console.log('---formData', formData);
 
-      var params = {
-        "FirstName":"Test4",
-        "LastName": "Test4",
-        "email": "test4@test.cz",
-        "birthdate": "11/04/2016",
-        "password": "aaaaaa",
-        "password2": "aaaaaa",
-        "gender": "male"
-      };
-      // params = JSON.stringify(formData);
+      const params = this.formDataToJSON(formData);
 
+      console.log('---json formdata', params);
       api.post('usermain', params)
       .then(({ data }) => {
         console.log('---data', data);
       })
       .catch(error => {
+        const errors = error.response.data.error.details.messages;
+        this.setState({ errors });
         console.log('---response', error.response);
       });
       console.log('---form valid!');
@@ -159,21 +163,30 @@ export class RegistrationForm extends Component {
     ];
 
     const { clientErrors } = this.state;
+    const { errors } = this.state;
     // console.log('---client errors', clientErrors);
+    console.log('---backend errors', errors);
 
     return (
       <div className="register">
-        <Form horizontal onSubmit={this.handleSubmit} className="form-horizontal">
+        <form  onSubmit={this.handleSubmit} className="form-horizontal">
 
             {fields.map(([key, label, type, desc, values]) => {
                 const clientErrorMsg = clientErrors[key] || [];
-                // console.log('---error msg', clientErrorMsg);
+                const errorMsg = errors[key] || [];
+                console.log('---error msg', errorMsg);
+                var invalid = true;
+                if (errorMsg.length || clientErrorMsg.length) {
+                  invalid = true;
+                } else {
+                  invalid = false;
+                }
                 return (
-                  <FormGroup validationState={clientErrorMsg.length ? "error" : undefined} key={key} controlId={key}>
+                  <FormGroup validationState={invalid ? "error" : undefined} key={key} controlId={key}>
                     <ControlLabel>{label}</ControlLabel>
                     {this.createField(type, key, desc, values)}
                     <FormControl.Feedback />
-                    <HelpBlock>{clientErrorMsg}</HelpBlock>
+                    <HelpBlock>{clientErrorMsg}{errorMsg}</HelpBlock>
                   </FormGroup>
                 );
             })}
@@ -181,7 +194,7 @@ export class RegistrationForm extends Component {
             <Button type="submit" bsStyle="primary" bsSize="large" block>Register!</Button>
 
 
-        </Form>
+        </form>
       </div>
     );
   }

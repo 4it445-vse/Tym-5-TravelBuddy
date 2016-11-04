@@ -7,30 +7,30 @@
     "validateUpsert": true
   },
   "properties": {
-    "FirstName": {
+    "firstName": {
       "type": "string",
       "required": true
     },
-    "LastName": {
+    "lastName": {
       "type": "string",
       "required": true
     },
-    "RecordCreated": {
+    "recordCreated": {
       "type": "date"
     },
-    "LastLoginDate": {
+    "lastLoginDate": {
       "type": "date"
     },
-    "Birthdate": {
+    "birthdate": {
       "type": "date"
     },
-    "Gender": {
+    "gender": {
       "type": "string"
     },
-    "IsBanned": {
+    "isBanned": {
       "type": "boolean"
     },
-    "IsActive": {
+    "isActive": {
       "type": "boolean"
     }
   },
