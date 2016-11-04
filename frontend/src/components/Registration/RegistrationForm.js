@@ -3,6 +3,8 @@ import { DatePicker } from '../common/DatePicker/DatePicker.js';
 import { Form, FormGroup, ControlLabel, FormControl, HelpBlock, OverlayTrigger,
   Popover, ButtonGroup, Button } from 'react-bootstrap';
 
+import api from '../../api.js';
+
 export class RegistrationForm extends Component {
 
   constructor(props) {
@@ -82,7 +84,12 @@ export class RegistrationForm extends Component {
     // console.log('---clientErrors', clientErrors);
     // console.log('---length', Object.keys(clientErrors).length);
     if (Object.keys(clientErrors).length === 0) {
-      //Make api call
+      console.log('---formData', formData);
+      api.post('users', formData)
+      .then()
+      .catch(error => {
+        console.log('---response', error.response);
+      });
       console.log('---form valid!');
       clientErrors = {};
       this.setState({ clientErrors });
