@@ -11,7 +11,8 @@ class About extends Component {
                         tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet
                         risus.</p>
                 </div>
-                <div className="container">
+                <div>
+                    <div className="container">
                     <div className="row">
                         <div className="col-lg-6 alert alert-info">
                             <h4>Co je to Travel Buddy?</h4>
@@ -22,15 +23,13 @@ class About extends Component {
                             <h4>Jak mi může pomoct seznámit se se zahraničnimi hosty?</h4>
                             <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
                         </div>
-
-                        <div className="col-lg-6 alert alert-success">
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-md-4">Join TravelBuddy........t</div>
-                                    <div className="col-md-2 text-right"><RegisterInfo/></div>
-                                </div>
-                            </div>
+                        <div className="col-md-6 alert alert-success">
+                            <div className="h3">Join TravelBuddy........</div>
+                            <div className="pull-right fill"><RegisterInfo/></div>
                         </div>
+                    </div>
+
+
                     </div>
                 </div>
                 <div className="container">
