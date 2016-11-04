@@ -78,15 +78,29 @@ export class RegistrationForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    formData.append('gender', this.state.gender);
+
+    formData.append('gender', JSON.stringify(this.state.gender));
     // console.log('--- submitted: ', formData);
     var clientErrors = this.validateForm(formData);
     // console.log('---clientErrors', clientErrors);
     // console.log('---length', Object.keys(clientErrors).length);
     if (Object.keys(clientErrors).length === 0) {
       console.log('---formData', formData);
-      api.post('users', formData)
-      .then()
+
+      var params = {
+        "FirstName":"Test4",
+        "LastName": "Test4",
+        "email": "test4@test.cz",
+        "birthdate": "11/04/2016",
+        "password": "aaaaaa",
+        "password2": "aaaaaa",
+        "gender": "male"
+      };
+
+      api.post('usermain', params)
+      .then(({ data }) => {
+        console.log('---data', data);
+      })
       .catch(error => {
         console.log('---response', error.response);
       });
