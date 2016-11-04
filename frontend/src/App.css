@@ -61,10 +61,14 @@ body {
   margin-top: 28px;
 }
 
+/* Register Page */
 .register {
   position: relative;
   margin: auto;
   width: 50%;
+}
+.block {
+  display: block;
 }
 
 

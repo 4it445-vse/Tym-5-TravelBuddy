@@ -55,7 +55,7 @@ export class RegistrationForm extends Component {
 
       case 'radio':
         return (
-          <ButtonGroup>
+          <ButtonGroup className="block">
             {values.map((value) => {
               return (
                 <Button type="button" key={value} onClick={this.onRadioClick.bind(this, value)} active={this.state.option === value}>{value}</Button>
@@ -96,6 +96,7 @@ export class RegistrationForm extends Component {
         "password2": "aaaaaa",
         "gender": "male"
       };
+      // params = JSON.stringify(formData);
 
       api.post('usermain', params)
       .then(({ data }) => {
