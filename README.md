@@ -4,6 +4,7 @@
 
 1. [Setup Local Development](#setup-local-development)
 2. [GitFlow](#gitflow)
+3. [Development Guidelines](#development-guidelines)
 
 ## Setup Local Development
 
@@ -70,3 +71,14 @@ Gitflow defines 5 types of branches: Master (Production), Develop, Feature, Rele
 12. Click Commit. Write some description. Your Revision is done.
 13. You can click on GitFlow again when your feature is ready and click Finish Feature. This will merge your feature branch with Development branch.
 13. You can Push to server or continue to Step 8
+
+## Development Guidelines
+
+### Vendor files
+
+CSS files of third parties goes to `public/css` directory. Linking goes to `App.js` using `import`.
+Example:
+
+    import '../public/css/font-awesome.min.css';
+
+Same applies to images, logos, graphics, medias and so on. Target directory is `public/assets`.
