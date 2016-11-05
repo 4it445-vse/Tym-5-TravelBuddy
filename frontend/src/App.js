@@ -3,8 +3,8 @@ import { Provider } from 'react-redux'
 import { Router, applyRouterMiddleware, browserHistory } from 'react-router';
 import { useScroll } from 'react-router-scroll';
 
-import 'bootstrap/dist/css/bootstrap.css';
-import './App.css';
+import '../public/css/bootstrap.min.css';
+import '../public/css/App.css';
 
 import { createRoutes } from './createRoutes.js';
 

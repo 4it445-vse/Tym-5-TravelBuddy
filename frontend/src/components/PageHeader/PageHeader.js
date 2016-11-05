@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {LoginComponent}  from '../LoginComponent/LoginComponent';
-class PageHeader extends Component {
+export class PageHeader extends Component {
 
     render() {
         return (
@@ -33,5 +33,3 @@ class PageHeader extends Component {
         );
     }
 }
-
-export default PageHeader;
