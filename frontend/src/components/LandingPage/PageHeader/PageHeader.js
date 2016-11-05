@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {LoginComponent}  from '../LoginComponent/LoginComponent';
-export class PageHeader extends Component {
 
+export class PageHeader extends Component {
+    const LoginComponent = this.props
     render() {
         return (
             <header className="header-navbar">
@@ -16,13 +16,15 @@ export class PageHeader extends Component {
                                         <span className="icon-bar"></span>
                                         <span className="icon-bar"></span>
                                     </button>
+                                    <a href="#">Travel Buddy</a>
+
                                   {/*  <a href="#" className="logo"><img src="logo" alt="logo"></a>*/}
                                 </div>
                                 <div className="collapse navbar-collapse at-navbar">
                                     <ul className="nav navbar-nav navbar-right">
-                                        <li className="current"><a href="#at-home">Home</a></li>
-                                        <li><a href="#at-features">Platform</a></li>
-                                        <li><a href="#at-gallery">How To</a></li>
+                                        <li className="current"><a href="#landing">Landing</a></li>
+                                        <li><a href="#platform">Platform</a></li>
+                                        <li><a href="#how-to">How To</a></li>
                                     </ul>
                                 </div>
                             </nav>

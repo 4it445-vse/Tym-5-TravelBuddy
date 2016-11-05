@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import About from '../components/About/About';
-
-
+import {PageHeader} from '../components/LandingPage/PageHeader/PageHeader';
+import {PageFooter} from '../components/LandingPage/PageFooter/PageFooter';
+import {LoginComponent} from '../components/LandingPage/LoginComponent/LoginComponent';
 export class LandingPage extends Component {
   render() {
     return (
-        <About/>
+        <div className="container">
+            <PageHeader LoginComponent={LoginComponent}/>
+            <PageFooter/>
+        </div>
     );
-  }
+  };
 }
