@@ -33,7 +33,7 @@ export class LoginComponent extends Component{
     console.log("email: ", this.state.loginEmail);
     console.log("pwd: ", this.state.loginPassword);
 
-    const formData = new FormData(event.target);
+    //const formData = new FormData(event.target);
 
     var email = this.state.loginEmail;
     var pwd = this.state.loginPassword;
@@ -43,7 +43,7 @@ export class LoginComponent extends Component{
       return;
     }
 
-    api('/UserMain/login', formData)
+    api.post('/UserMain/login', {"email":{email}, "password":{pwd}})
     .then((response) => {
       console.log(response.data);
       console.log(response.status);
