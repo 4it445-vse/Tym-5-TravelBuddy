@@ -7,13 +7,13 @@
     "validateUpsert": true
   },
   "properties": {
-    "Date": {
+    "date": {
       "type": "date"
     },
-    "IsRead": {
+    "isRead": {
       "type": "boolean"
     },
-    "Message": {
+    "message": {
       "type": "string"
     },
     "refRecipientUserId": {
