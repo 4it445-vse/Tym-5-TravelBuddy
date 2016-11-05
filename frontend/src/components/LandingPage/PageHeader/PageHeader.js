@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import {LoginComponent} from '../LoginComponent/LoginComponent';
 
 export class PageHeader extends Component {
-    const LoginComponent = this.props
     render() {
         return (
             <header className="header-navbar">
@@ -26,6 +26,9 @@ export class PageHeader extends Component {
                                         <li><a href="#platform">Platform</a></li>
                                         <li><a href="#how-to">How To</a></li>
                                     </ul>
+                                    <div className="pull-right">
+                                        <LoginComponent/>
+                                    </div>
                                 </div>
                             </nav>
                         </div>
