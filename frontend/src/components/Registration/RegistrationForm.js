@@ -198,7 +198,7 @@ export class RegistrationForm extends Component {
               {fields.map(([key, label, type, desc, values]) => {
                   const clientErrorMsg = clientErrors[key] || [];
                   const errorMsg = errors[key] || [];
-                  var invalid = true;
+                  var isValid = false;
                   if (errorMsg.length || clientErrorMsg.length) {
                     isValid = false;
                   } else {
