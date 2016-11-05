@@ -7,10 +7,10 @@
     "validateUpsert": true
   },
   "properties": {
-    "Latitude": {
+    "latitude": {
       "type": "number"
     },
-    "Longitude": {
+    "longitude": {
       "type": "number"
     },
     "refCityId": {

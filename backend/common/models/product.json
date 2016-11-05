@@ -7,22 +7,22 @@
     "validateUpsert": true
   },
   "properties": {
-    "RecordCreated": {
+    "recordCreated": {
       "type": "date"
     },
-    "DurationFrom": {
+    "durationFrom": {
       "type": "date"
     },
-    "DurationTo": {
+    "durationTo": {
       "type": "date"
     },
-    "Price": {
+    "price": {
       "type": "number"
     },
     "refTimeUnit": {
       "type": "number"
     },
-    "Description": {
+    "description": {
       "type": "string"
     },
     "refOwnedUserId": {
@@ -31,10 +31,10 @@
     "refLocationId": {
       "type": "number"
     },
-    "Type": {
+    "type": {
       "type": "string"
     },
-    "State": {
+    "state": {
       "type": "number"
     },
     "refTimeOut": {
