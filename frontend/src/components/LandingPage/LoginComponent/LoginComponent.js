@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, HelpBlock, Form } from 'react-bootstrap';
-import api from '../../api.js';
+import api from '../../../api.js';
 
 
 

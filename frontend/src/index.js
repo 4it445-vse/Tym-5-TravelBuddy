@@ -2,11 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './App';
 
-import { configureStore } from './store/configureStore.js';
+// Main entry point of the Application
+// Rendering of the app starts here
 
-const store = configureStore()
-
-ReactDOM.render(
-  <App store={store} />,
-  document.getElementById('root')
-);
+ReactDOM.render(<App/>,  document.getElementById('root'));

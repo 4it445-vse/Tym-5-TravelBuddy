@@ -72,13 +72,7 @@ body {
 }
 
 
-.login-form-element {
 
-  display: inline-block;
-  margin-left: 5px;
-  margin-right: 5px;
-
-}
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
@@ -97,4 +91,17 @@ body {
     border-bottom: 0;
   }
 
+}
+
+/* Custom CSS */
+
+.login-form-element {
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+
+}
+
+.bgwhite {
+  background-color: #fff !important;
 }
