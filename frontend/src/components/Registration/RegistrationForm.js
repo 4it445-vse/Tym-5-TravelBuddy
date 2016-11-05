@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { DatePicker } from '../common/DatePicker/DatePicker.js';
-import { Form, FormGroup, ControlLabel, FormControl, HelpBlock, OverlayTrigger,
+import { FormGroup, ControlLabel, FormControl, HelpBlock, OverlayTrigger,
   Popover, ButtonGroup, Button } from 'react-bootstrap';
+import moment from 'moment';
 
 import api from '../../api.js';
 
@@ -136,6 +137,11 @@ export class RegistrationForm extends Component {
            errors[pair[0]] = 'Enter a valid email';
          }
        }
+       if (pair[0] === 'birthdate') {
+         if (moment(pair[1]).isSameOrAfter(new Date(), 'day')) {
+           errors[pair[0]] = 'Birthdate cannot be set in future!';
+         }
+       }
      }
 
      var psw = formData.get('password');
@@ -149,8 +155,11 @@ export class RegistrationForm extends Component {
      return errors;
    }
 
-  render() {
 
+  render() {
+    console.log('---date comparison',
+      moment('31/11/2016').isSameOrAfter(new Date(), 'day')
+    )
     const fields = [
       /*key, label, type, desc, array with possible choices*/
       ['firstName', 'First name', 'text', ''],

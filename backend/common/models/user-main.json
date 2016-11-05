@@ -16,7 +16,8 @@
       "required": true
     },
     "recordCreated": {
-      "type": "date"
+      "type": "date",
+      "default": "$now"
     },
     "lastLoginDate": {
       "type": "date"
