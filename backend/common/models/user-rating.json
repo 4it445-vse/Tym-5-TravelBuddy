@@ -7,13 +7,13 @@
     "validateUpsert": true
   },
   "properties": {
-    "Rating": {
+    "rating": {
       "type": "number"
     },
-    "TotalRating": {
+    "totalRating": {
       "type": "number"
     },
-    "CountRating": {
+    "countRating": {
       "type": "number"
     }
   },

@@ -7,27 +7,27 @@
     "validateUpsert": true
   },
   "properties": {
-    "ProfilePicture": {
+    "profilePicture": {
       "type": "string",
       "required": true
     },
-    "Bio": {
+    "bio": {
       "type": "string",
       "required": true
     },
-    "Phone": {
+    "phone": {
       "type": "string",
       "required": true
     },
-    "Skype": {
+    "skype": {
       "type": "string",
       "required": true
     },
-    "Facebook": {
+    "facebook": {
       "type": "string",
       "required": true
     },
-    "Email": {
+    "email": {
       "type": "string",
       "required": true
     },
@@ -39,19 +39,19 @@
       "type": "number",
       "required": true
     },
-    "Street": {
+    "street": {
       "type": "string",
       "required": true
     },
-    "PostalCode": {
+    "postalCode": {
       "type": "string",
       "required": true
     },
-    "Video": {
+    "video": {
       "type": "string",
       "required": true
     },
-    "Motto": {
+    "motto": {
       "type": "string",
       "required": true
     }
