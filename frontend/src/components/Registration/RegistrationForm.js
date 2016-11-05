@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { DatePicker } from '../common/DatePicker/DatePicker.js';
 import { FormGroup, ControlLabel, FormControl, HelpBlock, OverlayTrigger,
-  Popover, ButtonGroup, Button } from 'react-bootstrap';
+  Popover, ButtonGroup, Button, Alert } from 'react-bootstrap';
 import moment from 'moment';
 
 import api from '../../api.js';
@@ -14,6 +14,7 @@ export class RegistrationForm extends Component {
     this.state = {
       clientErrors: {},
       errors: {},
+      formSuccess: false,
       gender: ''
     };
 
@@ -71,6 +72,14 @@ export class RegistrationForm extends Component {
     }
   }
 
+  showAlert(type) {
+    return (
+      <Alert bsStyle={type}>
+        <strong>Thank you for registering!</strong> Now visit your email inbox and proceed with verification link!
+      </Alert>
+    );
+  }
+
   onRadioClick(option) {
     this.setState({
       gender: option
@@ -104,6 +113,8 @@ export class RegistrationForm extends Component {
       api.post('usermain', params)
       .then(({ data }) => {
         console.log('---data', data);
+        this.setState({ clientErrors: {} });
+        this.setState({formSuccess: true});
       })
       .catch(error => {
         const errors = error.response.data.error.details.messages;
@@ -111,8 +122,7 @@ export class RegistrationForm extends Component {
         console.log('---response', error.response);
       });
       console.log('---form valid!');
-      clientErrors = {};
-      this.setState({ clientErrors });
+      this.setState({ clientErrors: {} });
     }
     else {
       this.setState({ clientErrors });
@@ -157,9 +167,6 @@ export class RegistrationForm extends Component {
 
 
   render() {
-    console.log('---date comparison',
-      moment('31/11/2016').isSameOrAfter(new Date(), 'day')
-    )
     const fields = [
       /*key, label, type, desc, array with possible choices*/
       ['firstName', 'First name', 'text', ''],
@@ -175,36 +182,38 @@ export class RegistrationForm extends Component {
     const { errors } = this.state;
     // console.log('---client errors', clientErrors);
     console.log('---backend errors', errors);
+    console.log('---form sucess', this.state.formSuccess);
 
-    return (
-      <div className="register">
-        <form  onSubmit={this.handleSubmit} className="form-horizontal">
-
-            {fields.map(([key, label, type, desc, values]) => {
-                const clientErrorMsg = clientErrors[key] || [];
-                const errorMsg = errors[key] || [];
-                console.log('---error msg', errorMsg);
-                var invalid = true;
-                if (errorMsg.length || clientErrorMsg.length) {
-                  invalid = true;
-                } else {
-                  invalid = false;
-                }
-                return (
-                  <FormGroup validationState={invalid ? "error" : undefined} key={key} controlId={key}>
-                    <ControlLabel>{label}</ControlLabel>
-                    {this.createField(type, key, desc, values)}
-                    <FormControl.Feedback />
-                    <HelpBlock>{clientErrorMsg}{errorMsg}</HelpBlock>
-                  </FormGroup>
-                );
-            })}
-
-            <Button type="submit" bsStyle="primary" bsSize="large" block>Register!</Button>
-
-
-        </form>
-      </div>
-    );
+    if (this.state.formSuccess === true) {
+      return this.showAlert('success');
+    } else {
+      return(
+        <div className="register">
+          <form  onSubmit={this.handleSubmit} className="form-horizontal">
+              {fields.map(([key, label, type, desc, values]) => {
+                  const clientErrorMsg = clientErrors[key] || [];
+                  const errorMsg = errors[key] || [];
+                  // console.log('---error msg', errorMsg);
+                  var invalid = true;
+                  if (errorMsg.length || clientErrorMsg.length) {
+                    invalid = true;
+                  } else {
+                    invalid = false;
+                  }
+                  return (
+                    <FormGroup validationState={invalid ? "error" : undefined} key={key} controlId={key}>
+                      <ControlLabel>{label}</ControlLabel>
+                      {this.createField(type, key, desc, values)}
+                      <FormControl.Feedback />
+                      <HelpBlock>{clientErrorMsg}{errorMsg}</HelpBlock>
+                    </FormGroup>
+                  );
+              })}
+              <Button type="submit" bsStyle="primary" bsSize="large" block>Register!</Button>
+          </form>
+          {(this.state.formSuccess ? this.showAlert('success') : '' )}
+        </div>
+      );
+    }
   }
 }
