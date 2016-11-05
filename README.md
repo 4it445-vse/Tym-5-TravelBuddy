@@ -4,7 +4,6 @@
 
 1. [Setup Local Development](#setup-local-development)
 2. [GitFlow](#gitflow)
-3. [Development Guidelines](#development-guidelines)
 
 ## Setup Local Development
 
@@ -22,19 +21,19 @@
 
   3.1 frontend:
     - run `npm start` in frontend directory, it will create nodejs server on adress `localhost:3000` and livereload feature.
-
+    
   3.2 backend:
     - create `.env` file based on `.env.example`. It is configuration for MySQL database connection. For example if you have MySQL server on localhost with root (default account) and no password it will look like this:
-
+    
             DB_HOST=localhost
             DB_PORT=3306
             DB_DATABASE=TravelBuddy
             DB_USERNAME=root
             DB_PASS=
-
+        
    - run `npm run watch-babel` in backend directory. It will create nodejs server on adress `localhost:3001` and automatically restart          server. Livereload doesn't work though.
    - you can access loopback on url `localhost:3001/explorer`
-
+   
 4. Switch into `dev` branch and create your feature branch. Happy hacking
 
 ## GitFlow
@@ -71,14 +70,3 @@ Gitflow defines 5 types of branches: Master (Production), Develop, Feature, Rele
 12. Click Commit. Write some description. Your Revision is done.
 13. You can click on GitFlow again when your feature is ready and click Finish Feature. This will merge your feature branch with Development branch.
 13. You can Push to server or continue to Step 8
-
-## Development Guidelines
-
-### Vendor files
-
-CSS files of third parties goes to `public/css` directory. Linking goes to `App.js` using `import`.
-Example:
-
-    import '../public/css/font-awesome.min.css';
-
-Same applies to images, logos, graphics, medias and so on. Target directory is `public/assets`.
