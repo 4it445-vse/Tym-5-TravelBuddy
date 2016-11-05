@@ -1,0 +1,284 @@
+/*! (AppTale - Landing Page) 2014-12-11 */
+.overlayer {
+  background-color: #f45555;
+}
+a {
+  color: #f45555;
+}
+blockquote {
+  border-left: 3px solid #f45555;
+}
+.sec-title h3:after {
+  background: #f45555;
+}
+.owl-theme .owl-controls .owl-page.active span {
+  background: #f45555;
+}
+.form-control:focus,
+.form-control:active {
+  border-color: #f45555;
+}
+.nicescroll-rails > div {
+  background: #f45555 !important;
+}
+.at-highlight {
+  color: #f45555 !important;
+}
+.btn.btn-o-white {
+  color: #f45555;
+}
+.btn.btn-o-main {
+  background-color: #f45555;
+  border-color: #f45555;
+}
+.btn.btn-o-main:hover {
+  color: #f45555;
+}
+.btn.btn-main {
+  background-color: #f45555;
+  border-color: #f45555;
+}
+.btn.btn-main:hover {
+  background-color: #ed0f0f;
+  border-color: #ed0f0f;
+}
+.btn.btn-white {
+  color: #f45555;
+}
+header.header-navbar nav.main-nav ul li > .dropdown-menu li.current > a {
+  background-color: #f45555;
+}
+header.header-navbar nav.main-nav ul li:hover > a,
+header.header-navbar nav.main-nav ul li.current > a {
+  background-color: #f45555;
+  border: 1px solid #f45555;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  background-color: #f45555;
+}
+.at-clone nav.main-nav ul li:hover > a,
+.at-clone nav.main-nav ul li.current > a {
+  border: 1px solid #f45555 !important;
+  background: #f45555 !important;
+}
+.at-clone .navbar-default .navbar-toggle:hover,
+.at-clone .navbar-default .navbar-toggle:active,
+.at-clone .navbar-default .navbar-toggle:focus {
+  background-color: #f45555;
+  border-color: #f45555;
+}
+.navbar-default .navbar-toggle:hover .icon-bar,
+.navbar-default .navbar-toggle:active .icon-bar,
+.navbar-default .navbar-toggle:focus .icon-bar {
+  background-color: #f45555;
+}
+.at-page-header {
+  background-color: #f45555;
+}
+.at-home {
+  background-color: #f45555;
+}
+.feature .feature-icon {
+  border: 1px solid #f45555;
+  color: #f45555;
+}
+.feature:after {
+  background: #f45555;
+}
+.ext-feature:hover .ft-icon {
+  color: #f45555;
+}
+.ext-feature.ext-feature-dark .ft-icon {
+  border: 1px solid #f45555;
+  color: #f45555;
+}
+.ext-feature.ext-feature-dark .join-line {
+  background-color: #f45555;
+}
+.ext-feature.ext-feature-dark:hover .ft-icon {
+  background-color: #f45555;
+  border: 1px solid #f45555;
+}
+ul.nav-tabs li a:hover {
+  color: #f45555;
+}
+ul.nav-tabs li.active a {
+  background-color: #f45555;
+}
+ul.nav-tabs li.active a:hover,
+ul.nav-tabs li.active a:focus {
+  background-color: #f45555;
+}
+.at-ext-mini-features .at-ext-mini-icon {
+  color: #f45555;
+  border-color: #f45555;
+}
+.at-ext-mini-features:hover .at-ext-mini-icon {
+  background-color: #f45555;
+}
+.icon-list li i {
+  color: #f45555;
+}
+.at-main-features-cont .at-ext-mini-icon.pull-right:before {
+  background-color: #f45555;
+}
+.at-main-features-cont .at-ext-mini-icon.pull-left:before {
+  background-color: #f45555;
+}
+.panel-default.at-collapse-active {
+  border-color: #f45555;
+}
+.panel-default.at-collapse-active > .panel-heading {
+  background-color: #f45555;
+}
+.at-testimonials {
+  background-color: #f45555;
+}
+.pricing-table .pricing-footer a:hover {
+  background-color: #f45555;
+}
+.pricing-table.featured .pricing-header strong {
+  background-color: #f45555;
+}
+.pricing-table.featured .pricing-header p {
+  color: #f45555;
+}
+.pricing-table.featured .pricing-body ul li:before {
+  color: #f45555;
+}
+.pricing-table.featured .pricing-footer a {
+  background-color: #f45555;
+}
+.at-funfact {
+  background-color: #f45555;
+}
+.at-subscribe {
+  background-color: #f45555;
+}
+.contact-info .contact-info-icon {
+  color: #f45555;
+}
+.video-prev:hover .play-btn i {
+  background-color: rgba(244, 85, 85, 0.7);
+}
+.post-container .post-thumb a:after {
+  background-color: #f45555;
+}
+.post-container .post-data .post-title a:hover {
+  color: #f45555;
+}
+.post-container .post-data .post-meta i {
+  color: #f45555;
+}
+.post-container .post-data .post-meta a:hover {
+  color: #f45555;
+}
+.main-blog .at-post .at-post-thumb a:after {
+  background-color: #f45555;
+}
+.main-blog .at-post .post-title a:hover {
+  color: #f45555;
+}
+.main-blog .at-post .post-meta i {
+  color: #f45555;
+}
+.main-blog .at-post .post-meta a:hover {
+  color: #f45555;
+}
+.main-blog .at-single-post .at-post-thumb a:after {
+  background-color: #f45555;
+}
+.main-blog .at-single-post .post-title a:hover {
+  color: #f45555;
+}
+.main-blog .at-single-post .post-meta i {
+  color: #f45555;
+}
+.main-blog .at-single-post .post-meta a:hover {
+  color: #f45555;
+}
+.at-all-tags a:hover {
+  background-color: #f45555;
+}
+.at-widget #searchform input[type="text"]:focus + i {
+  color: #f45555;
+}
+.at-widget ul li a:hover {
+  color: #f45555;
+}
+.pagination > li > a {
+  color: #f45555;
+}
+.pagination > li > a:hover {
+  background-color: #f45555;
+  border-color: #f45555;
+}
+.pagination > li.active > a {
+  background-color: #f45555;
+  border-color: #f45555;
+}
+.pagination > li.active > a:hover {
+  background-color: #f45555;
+  border-color: #f45555;
+}
+.author-info-box .author-info .author-name a:hover {
+  color: #f45555;
+}
+.at-comments .comment a:hover {
+  color: #f45555;
+}
+footer .footer-social ul li a:hover {
+  background-color: #f45555 !important;
+}
+body.dark .ext-feature.ext-feature-dark:hover .ft-icon {
+  background-color: #f45555;
+  border: 1px solid #f45555;
+}
+body.dark .at-blog .post-container .post-data .post-title a:hover,
+body.dark .at-blog .post-container .post-data .post-meta a:hover {
+  color: #f45555;
+}
+body.dark .main-blog .at-post .post-title a:hover,
+body.dark .main-blog .at-post .post-meta a:hover,
+body.dark .recent-posts-widget .post-container .post-data .post-title a:hover {
+  color: #f45555;
+}
+body.dark .at-all-tags a:hover {
+  background-color: #f45555;
+}
+body.dark .at-widget h3.widget-title a:hover,
+body.dark .at-widget ul li a:hover {
+  color: #f45555;
+}
+body.dark .pagination > li > a:hover {
+  background-color: #f45555;
+  border-color: #f45555;
+}
+body.dark .pagination > li.active > a {
+  background-color: #f45555;
+  border-color: #f45555;
+}
+body.dark .pagination > li.active > a:hover {
+  background-color: #f45555;
+  border-color: #f45555;
+}
+body.dark .main-blog .at-single-post .post-title a:hover,
+body.dark .author-info-box .author-info .author-name a:hover,
+body.dark .at-comments .comment a:hover {
+  color: #f45555;
+}
+body.dark input[type="text"]:focus,
+body.dark input[type="email"]:focus,
+body.dark input[type="tel"]:focus,
+body.dark input[type="password"]:focus,
+body.dark textarea:focus {
+  border-color: #f45555;
+}
+body.dark .panel-default.at-collapse-active {
+  border-color: #f45555;
+}
+body.dark .panel-default.at-collapse-active > .panel-heading {
+  background-color: #f45555;
+}

@@ -3,7 +3,7 @@ import { IndexRoute, Route } from 'react-router';
 
 import { AppPage } from './pages/AppPage.js';
 import { ContactPage } from './pages/ContactPage.js';
-import { HomePage } from './pages/HomePage.js';
+import { HomePage } from './pages/LandingPage.js';
 import { RegistrationPage } from './pages/RegistrationPage.js';
 import { NoMatchPage } from './pages/NoMatchPage.js';
 import { ProductDetailPage } from './pages/ProductDetailPage.js'

@@ -4,26 +4,32 @@ class PageHeader extends Component {
 
     render() {
         return (
-            <div className="navbar navbar-default">
+            <header className="header-navbar">
                 <div className="container">
-                    <div className="navbar-header">
-                        <button className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                        </button>
-                        <a className="navbar-brand">Travel Buddy</a>
-                    </div>
-                    <div className="pull-right">
-                        <LoginComponent/>
-                    </div>
-                    <div className="collapse navbar-collapse">
-                        <ul className="nav navbar-nav"></ul>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <nav className="navbar main-nav navbar-default" role="navigation">
+                                <div className="navbar-header">
+                                    <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".at-navbar">
+                                        <span className="sr-only">Toggle navigation</span>
+                                        <span className="icon-bar"></span>
+                                        <span className="icon-bar"></span>
+                                        <span className="icon-bar"></span>
+                                    </button>
+                                  {/*  <a href="#" className="logo"><img src="logo" alt="logo"></a>*/}
+                                </div>
+                                <div className="collapse navbar-collapse at-navbar">
+                                    <ul className="nav navbar-nav navbar-right">
+                                        <li className="current"><a href="#at-home">Home</a></li>
+                                        <li><a href="#at-features">Platform</a></li>
+                                        <li><a href="#at-gallery">How To</a></li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
                     </div>
                 </div>
-
-            </div>
-
+            </header>
         );
     }
 }
