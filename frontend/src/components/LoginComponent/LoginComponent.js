@@ -45,6 +45,7 @@ export class LoginComponent extends Component{
 
     api.post('/UserMain/login', {"email":{email}, "password":{pwd}})
     .then((response) => {
+      console.log("Response: ");
       console.log(response.data);
       console.log(response.status);
       console.log(response.statusText);
