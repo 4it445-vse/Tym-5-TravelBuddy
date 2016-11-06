@@ -7,25 +7,25 @@
     "validateUpsert": true
   },
   "properties": {
-    "RecordCreated": {
+    "recordCreated": {
       "type": "date"
     },
-    "CreatedBy": {
+    "createdBy": {
       "type": "string"
     },
-    "ReviewType": {
+    "reviewType": {
       "type": "string"
     },
-    "Rating": {
+    "rating": {
       "type": "number"
     },
-    "Text": {
+    "text": {
       "type": "string"
     },
-    "IsEdited": {
+    "isEdited": {
       "type": "boolean"
     },
-    "EditDate": {
+    "editDate": {
       "type": "date"
     },
     "refUserId": {
