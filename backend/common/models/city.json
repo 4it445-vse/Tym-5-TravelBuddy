@@ -7,10 +7,10 @@
     "validateUpsert": true
   },
   "properties": {
-    "Name": {
+    "name": {
       "type": "string"
     },
-    "Code": {
+    "code": {
       "type": "string"
     },
     "refCountryId": {

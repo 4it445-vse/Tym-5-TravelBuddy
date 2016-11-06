@@ -7,10 +7,10 @@
     "validateUpsert": true
   },
   "properties": {
-    "DurationFrom": {
+    "durationFrom": {
       "type": "date"
     },
-    "DurationTo": {
+    "durationTo": {
       "type": "date"
     },
     "refUserId": {
