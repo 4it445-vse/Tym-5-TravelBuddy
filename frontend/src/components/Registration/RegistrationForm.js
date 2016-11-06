@@ -123,12 +123,12 @@ export class RegistrationForm extends Component {
 
       api.post('usermain', params)
       .then(({ data }) => {
-        // console.log('---data', data);
+        console.log('---then data', data);
         this.setState({ clientErrors: {} });
         this.setState({formSuccess: true});
       })
       .catch(error => {
-        // console.log('---response', error.response);
+        console.log('---catch response', error.response);
         const errors = error.response.data.error.details.messages;
         this.setState({ errors });
       });

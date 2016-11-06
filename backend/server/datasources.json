@@ -7,5 +7,14 @@
     "name": "mysqlds",
     "connector": "memory",
     "note": "This is overwritten in ./datasources.local.js"
+  },
+  "mailserver": {
+    "name": "mailserver",
+    "connector": "mail",
+    "transports": [{
+        "type": "smtp",
+        "host": "localhost",
+        "port": 587
+    }]
   }
 }
