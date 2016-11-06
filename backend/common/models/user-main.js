@@ -2,7 +2,9 @@
 
 module.exports = function(Usermain) {
 
-  //send verification email after registration
+  /*
+   * send verification email after registration
+   */
   Usermain.afterRemote('create', function(context, usermain, next) {
     console.log('> Usermain.afterRemote triggered');
 
@@ -31,17 +33,14 @@ module.exports = function(Usermain) {
 
       console.log('> verification email sent:', response);
 
-      //TODO
-      //this code is returning "unhandled error for request post failed to lookup view response in views directory"
-
-      // context.res.render('response', {
-      //   title: 'Signed up successfully',
-      //   content: 'Please check your email and click on the verification link ' -
-      //       'before logging in.',
-      //   redirectTo: '/',
-      //   redirectToLinkText: 'Log in'
-      // });
     });
   });
 
+  /*
+   * update lastLoginDate after successful login
+   */
+   Usermain.afterRemote('login', function(context, usermain, next) {
+     console.log('> Usermain.afterRemote "login" triggered', usermain);
+     next();
+   });
 };
