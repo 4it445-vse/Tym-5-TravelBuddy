@@ -6,10 +6,9 @@ export class TopNavigation extends Component {
     return (
       <div className="header">
         <ul className="nav nav-pills pull-right">
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/products">Products</Link></li>
+          <li><Link to="/search">Search</Link></li>
+          <li><Link to="/profile">Profile</Link></li>
           <li><Link to="/contact">Contact</Link></li>
-          <li><Link to="/cart">Cart</Link></li>
         </ul>
         <h3 className="text-muted"><Link to="/">E-shop</Link></h3>
       </div>
