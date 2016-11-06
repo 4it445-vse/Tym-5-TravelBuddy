@@ -12,9 +12,16 @@
     "name": "mailserver",
     "connector": "mail",
     "transports": [{
-        "type": "smtp",
-        "host": "localhost",
-        "port": 587
+        "type": "SMTP",
+        "host": "smtp.gmail.com",
+        "port": 465,
+        "tls": {
+          "rejectUnauthorized": false
+        },
+        "auth": {
+          "user": "noreply.tym5@gmail.com",
+          "pass": "travelbuddy"
+        }
     }]
   }
 }
