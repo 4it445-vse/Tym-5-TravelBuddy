@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import RegisterInfo from '../RegisterInfo/RegisterInfo';
-class About extends Component {
+import RegisterInfo from '../LandingPage/RegisterInfo/RegisterInfo';
+export class About extends Component {
 
     render() {
         return (
@@ -46,4 +46,3 @@ class About extends Component {
         );
     }
 }
-export default About;

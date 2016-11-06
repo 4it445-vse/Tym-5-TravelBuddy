@@ -4,7 +4,8 @@
   "private": true,
   "devDependencies": {
     "babel-cli": "^6.18.0",
-    "react-scripts": "0.6.0"
+    "react-scripts": "0.6.0",
+    "webpack": "^1.13.3"
   },
   "dependencies": {
     "axios": "^0.15.2",
