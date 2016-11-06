@@ -32,6 +32,17 @@
     "dataSource": "db",
     "public": false
   },
+  "Email": {
+    "dataSource": "mailserver"
+  },
+
+  "UserMain": {
+    "dataSource": "mysqlds",
+    "public": true,
+    "options": {
+      "emailVerificationRequired": true
+    }
+  },
   "UserDetail": {
     "dataSource": "mysqlds",
     "public": true
@@ -41,10 +52,6 @@
     "public": true
   },
   "UserReview": {
-    "dataSource": "mysqlds",
-    "public": true
-  },
-  "UserMain": {
     "dataSource": "mysqlds",
     "public": true
   },
