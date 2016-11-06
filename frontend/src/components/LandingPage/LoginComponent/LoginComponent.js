@@ -33,7 +33,7 @@ export class LoginComponent extends Component{
     console.log("email: ", this.state.loginEmail);
     console.log("pwd: ", this.state.loginPassword);
 
-    const formData = new FormData(event.target);
+    //const formData = new FormData(event.target);
 
     var email = this.state.loginEmail;
     var pwd = this.state.loginPassword;
@@ -43,15 +43,21 @@ export class LoginComponent extends Component{
       return;
     }
 
-    api('/UserMain/login', formData)
+    api.post('/UserMain/login', {"email":email, "password":pwd})
     .then((response) => {
+      console.log("Response: ");
       console.log(response.data);
       console.log(response.status);
-      console.log(response.statusText);
-      console.log(response.headers);
-      console.log(response.config);
+      //console.log(response.statusText);
+      //console.log(response.headers);
+      //console.log(response.config);
       if (response.status ==200){
         this.setState({callout: "login succesful"});
+        var userId = response.data.userId;
+        var token = response.data.id;
+        var ttl = response.data.ttl;
+
+
       }
     })
       .catch((error) => {
