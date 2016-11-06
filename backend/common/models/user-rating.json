@@ -1,0 +1,29 @@
+{
+  "name": "UserRating",
+  "plural": "UserRatings",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "rating": {
+      "type": "number"
+    },
+    "totalRating": {
+      "type": "number"
+    },
+    "countRating": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "UserRatingUserMain": {
+      "type": "belongsTo",
+      "model": "UserMain",
+      "foreignKey": ""
+    }},
+  "acls": [],
+  "methods": {}
+}

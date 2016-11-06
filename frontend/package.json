@@ -4,17 +4,26 @@
   "private": true,
   "devDependencies": {
     "babel-cli": "^6.18.0",
+<<<<<<< HEAD
     "react-scripts": "0.6.0"
+=======
+    "react-scripts": "0.6.0",
+    "webpack": "^1.13.3"
+>>>>>>> 9a3300b2a77cffed6df4e0047e8affdf03fa5fe0
   },
   "dependencies": {
-    "axios": "^0.14.0",
+    "axios": "^0.15.2",
     "bootstrap": "^3.3.7",
     "classnames": "^2.2.5",
     "lodash": "^4.16.4",
+    "moment": "^2.15.2",
     "react": "^15.3.2",
+    "react-bootstrap": "^0.30.6",
+    "react-day-picker": "^3.1.1",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",
+    "react-router-bootstrap": "^0.23.1",
     "react-router-scroll": "^0.3.2",
     "redux": "^3.6.0"
   },

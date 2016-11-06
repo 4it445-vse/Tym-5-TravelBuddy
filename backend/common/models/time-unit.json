@@ -1,0 +1,23 @@
+{
+  "name": "TimeUnit",
+  "plural": "TimeUnits",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "timeUnit": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+  "TimeUnitProduct": {
+    "type": "belongsTo",
+    "model": "Product",
+    "foreignKey": ""
+  }},
+  "acls": [],
+  "methods": {}
+}

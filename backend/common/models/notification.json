@@ -1,0 +1,41 @@
+{
+  "name": "Notification",
+  "plural": "Notifications",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "date": {
+      "type": "date"
+    },
+    "isRead": {
+      "type": "boolean"
+    },
+    "message": {
+      "type": "string"
+    },
+    "refRecipientUserId": {
+      "type": "number"
+    },
+    "refSenderUserId": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "NotificationRecipe": {
+      "type": "belongsTo",
+      "model": "UserMain",
+      "foreignKey": ""
+    },
+    "NotificationSend": {
+      "type": "belongsTo",
+      "model": "UserMain",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
