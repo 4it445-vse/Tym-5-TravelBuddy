@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { DatePicker } from '../common/DatePicker/DatePicker.js';
 import { FormGroup, ControlLabel, FormControl, HelpBlock, OverlayTrigger,
-  Popover, ButtonGroup, Button, Alert } from 'react-bootstrap';
+  Popover, ButtonGroup, Button, Alert, Checkbox } from 'react-bootstrap';
 import moment from 'moment';
 
 import api from '../../api.js';
@@ -14,11 +14,13 @@ export class RegistrationForm extends Component {
     this.state = {
       clientErrors: {},
       errors: {},
+      gender: '',
       formSuccess: false,
-      gender: ''
+      agreeToTerms: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setAgreeOnTerms = this.setAgreeOnTerms.bind(this);
   }
 
   createPopover(text) {
@@ -62,7 +64,7 @@ export class RegistrationForm extends Component {
           />
         );
 
-      case 'radio':
+      case 'radio-gender':
         return (
           <ButtonGroup className="block">
             {values.map((value) => {
@@ -70,7 +72,7 @@ export class RegistrationForm extends Component {
                 <Button
                   key={value}
                   type="button"
-                  onClick={this.onRadioClick.bind(this, value)}
+                  onClick={this.setGender.bind(this, value)}
                   active={this.state.gender === value}
                 >
                   {value}
@@ -93,10 +95,22 @@ export class RegistrationForm extends Component {
     );
   }
 
-  onRadioClick(option) {
+  setGender(value) {
     this.setState({
-      gender: option
+      gender: value
     });
+  }
+
+  setAgreeOnTerms(event) {
+    if (!this.state.agreeToTerms) {
+      this.setState({
+        agreeToTerms: true
+      });
+    } else {
+      this.setState({
+        agreeToTerms: false
+      });
+    }
   }
 
   formDataToJSON(formData) {
@@ -119,7 +133,7 @@ export class RegistrationForm extends Component {
 
     if (Object.keys(clientErrors).length === 0) {
       const params = this.formDataToJSON(formData);
-      // console.log('---json formdata', params);
+      console.log('---json formdata', params, this.agreeToTerms);
 
       api.post('usermain', params)
       .then(({ data }) => {
@@ -168,6 +182,11 @@ export class RegistrationForm extends Component {
     if (psw.length < 6) {
      errors['password'] = "Password is too short!"
     }
+
+    if (!this.state.agreeToTerms) {
+      errors['agreeToTerms'] = "You must agree to terms of service!";
+    }
+
     return errors;
   }
 
@@ -178,7 +197,7 @@ export class RegistrationForm extends Component {
       ['firstName', 'First name', 'text', ''],
       ['lastName', 'Last name', 'text', ''],
       ['birthdate', 'Birthdate', 'date', ''],
-      ['gender', 'Your gender', 'radio', '', ['Male', 'Female']],
+      ['gender', 'Your gender', 'radio-gender', '', ['Male', 'Female']],
       ['email', 'Your email', 'text', 'Enter valid email. You will use it for login and password reset'],
       ['password', 'Password', 'password', 'At least 6 characters long'],
       ['password2', 'Re-enter your password', 'password']
@@ -213,6 +232,10 @@ export class RegistrationForm extends Component {
                     </FormGroup>
                   );
               })}
+              <FormGroup>
+                <Checkbox onChange={this.setAgreeOnTerms}>I agree with <strong>terms of service</strong></Checkbox>
+                <HelpBlock>{clientErrors['agreeToTerms']}</HelpBlock>
+              </FormGroup>
               <Button type="submit" bsStyle="primary" bsSize="large" block>Register!</Button>
           </form>
         </div>
