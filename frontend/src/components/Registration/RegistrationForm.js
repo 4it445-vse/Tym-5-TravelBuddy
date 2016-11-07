@@ -3,6 +3,7 @@ import { DatePicker } from '../common/DatePicker/DatePicker.js';
 import { FormGroup, ControlLabel, FormControl, HelpBlock, OverlayTrigger,
   Popover, ButtonGroup, Button, Alert, Checkbox } from 'react-bootstrap';
 import moment from 'moment';
+import { Link } from 'react-router';
 
 import api from '../../api.js';
 
@@ -157,34 +158,35 @@ export class RegistrationForm extends Component {
   validateForm(formData) {
     var errors = {};
 
-    for (var pair of formData.entries()) {
-     if (!pair[1]) {
-      errors[pair[0]] = "Required!";
-     }
-     if (pair[0] === 'email') {
-       const emailPattern = /(.+)@(.+){2,}\.(.+){2,}/;
-       if (!emailPattern.test(pair[1])) {
-         errors[pair[0]] = 'Enter a valid email';
-       }
-     }
-     if (pair[0] === 'birthdate') {
-       if (moment(pair[1]).isSameOrAfter(new Date(), 'day')) {
-         errors[pair[0]] = 'Birthdate cannot be set in future!';
-       }
-     }
-    }
-
     var psw = formData.get('password');
     var psw2 = formData.get('password2');
     if (psw !== psw2) {
-     errors['password'] = "Passwords are not same!";
+    errors['password'] = "Passwords are not same!";
     }
     if (psw.length < 6) {
-     errors['password'] = "Password is too short!"
+    errors['password'] = "Password is too short!"
+    }
+
+    for (var pair of formData.entries()) {
+      if (pair[0] === 'email') {
+        const emailPattern = /(.+)@(.+){2,}\.(.+){2,}/;
+        if (!emailPattern.test(pair[1])) {
+          errors[pair[0]] = 'Enter a valid email';
+        }
+      }
+      if (!pair[1]) {
+      errors[pair[0]] = "Required!";
+      }
+
+      if (pair[0] === 'birthdate') {
+       if (moment(pair[1]).isSameOrAfter(new Date(), 'day')) {
+         errors[pair[0]] = 'Birthdate cannot be set in future!';
+       }
+      }
     }
 
     if (!this.state.agreeToTerms) {
-      errors['agreeToTerms'] = "You must agree to terms of service!";
+    errors['agreeToTerms'] = "You must agree to terms of service!";
     }
 
     return errors;
@@ -233,7 +235,7 @@ export class RegistrationForm extends Component {
                   );
               })}
               <FormGroup>
-                <Checkbox onChange={this.setAgreeOnTerms}>I agree with <strong>terms of service</strong></Checkbox>
+                <Checkbox onChange={this.setAgreeOnTerms}>I agree with <strong><Link to="/terms">terms of service</Link></strong></Checkbox>
                 <HelpBlock>{clientErrors['agreeToTerms']}</HelpBlock>
               </FormGroup>
               <Button type="submit" bsStyle="primary" bsSize="large" block>Register!</Button>
