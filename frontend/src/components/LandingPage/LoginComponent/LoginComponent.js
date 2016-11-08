@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, HelpBlock, Form } from 'react-bootstrap';
 import api from '../../../api.js';
-
+import { browserHistory } from 'react-router'
 
 
 export class LoginComponent extends Component{
@@ -33,8 +33,6 @@ export class LoginComponent extends Component{
     console.log("email: ", this.state.loginEmail);
     console.log("pwd: ", this.state.loginPassword);
 
-    //const formData = new FormData(event.target);
-
     var email = this.state.loginEmail;
     var pwd = this.state.loginPassword;
 
@@ -51,17 +49,23 @@ export class LoginComponent extends Component{
       //console.log(response.statusText);
       //console.log(response.headers);
       //console.log(response.config);
-      if (response.status ==200){
+      if (response.status === 200){
         this.setState({callout: "login succesful"});
         var userId = response.data.userId;
         var token = response.data.id;
         var ttl = response.data.ttl;
 
+        //store access token with user ID in sessionStorage
+        sessionStorage.setItem("userId",userId);
+        sessionStorage.setItem("accessToken",token);
 
+        //redirect after succesful login
+        //browserHistory.push('/')
       }
     })
       .catch((error) => {
-        console.log("Errorx: ", error.response);
+        console.log("Error: ", error);
+        console.log("Error: ", error.response);
         this.setState({callout: "login failed"});
       });
 
