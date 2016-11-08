@@ -134,7 +134,7 @@ export class RegistrationForm extends Component {
 
     if (Object.keys(clientErrors).length === 0) {
       // const params = this.formDataToJSON(formData);
-      console.log('---json formdata', params, this.agreeToTerms);
+      // console.log('---json formdata', params, this.agreeToTerms);
 
       api.post('usermain', formData)
       .then(({ data }) => {
