@@ -10,10 +10,10 @@ module.exports = function(app) {
 
       UserMain.create([
         {
-          FirstName: 'Rocky',
-          LastName: 'Balboa',
-          Email: 'rocky@balboa.com',
-          Password: 'rocky123'
+          firstName: 'Rocky',
+          lastName: 'Balboa',
+          email: 'rocky@balboa.com',
+          password: 'rocky123'
         }
       ], function(err, users) {
         if (err) throw err;
@@ -22,8 +22,10 @@ module.exports = function(app) {
       });
     });
   });
-  app.dataSources.mysqlds.autoupdate('User', function(err) {
-    const { User } = app.models;
-    if (!User) { return; }
-  });
+
+  // We dont want to create built-in User table yet
+  // app.dataSources.mysqlds.autoupdate('User', function(err) {
+  //   const { User } = app.models;
+  //   if (!User) { return; }
+  // });
 };

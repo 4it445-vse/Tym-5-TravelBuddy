@@ -133,10 +133,10 @@ export class RegistrationForm extends Component {
     var clientErrors = this.validateForm(formData);
 
     if (Object.keys(clientErrors).length === 0) {
-      const params = this.formDataToJSON(formData);
+      // const params = this.formDataToJSON(formData);
       console.log('---json formdata', params, this.agreeToTerms);
 
-      api.post('usermain', params)
+      api.post('usermain', formData)
       .then(({ data }) => {
         console.log('---then data', data);
         this.setState({ clientErrors: {} });
