@@ -3,38 +3,34 @@ import {LoginComponent} from '../LoginComponent/LoginComponent';
 
 export class PageHeader extends Component {
     render() {
+        const menuItems = [
+            ["#at-home", "Home"],
+            ["#at-about", "Platform"],
+            ["#at-register", "Register"],
+        ];
         return (
-            <header className="header-navbar">
+            <nav className="navbar navbar-default navbar-fixed-top">
                 <div className="container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <nav className="navbar main-nav navbar-default" role="navigation">
-                                <div className="navbar-header">
-                                    <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".at-navbar">
-                                        <span className="sr-only">Toggle navigation</span>
-                                        <span className="icon-bar"></span>
-                                        <span className="icon-bar"></span>
-                                        <span className="icon-bar"></span>
-                                    </button>
-                                    <a href="#">Travel Buddy</a>
+                    <div className="navbar-header">
+                        <a className="navbar-brand" href="#">Travel Buddy</a>
+                    </div>
+                    <div id="navbar" className="navbar-collapse collapse">
+                        <ul className="nav navbar-nav">
+                            {menuItems.map(([link, title], index) => (
+                                <li key={index}>
+                                    <a href={link}>{title}</a>
+                                </li>
+                            ))}
+                        </ul>
+                       <ul className="nav navbar-nav navbar-right">
+                           <div className="login-form-element">
 
-                                  {/*  <a href="#" className="logo"><img src="logo" alt="logo"></a>*/}
-                                </div>
-                                <div className="collapse navbar-collapse at-navbar">
-                                    <ul className="nav navbar-nav navbar-right">
-                                        <li className="current"><a href="#landing">Landing</a></li>
-                                        <li><a href="#platform">Platform</a></li>
-                                        <li><a href="#how-to">How To</a></li>
-                                    </ul>
-                                    <div className="pull-right">
-                                        <LoginComponent/>
-                                    </div>
-                                </div>
-                            </nav>
-                        </div>
+                           </div>
+                        </ul>
+
                     </div>
                 </div>
-            </header>
+            </nav>
         );
     }
 }

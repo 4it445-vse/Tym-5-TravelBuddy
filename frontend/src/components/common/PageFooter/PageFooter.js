@@ -4,13 +4,11 @@ import React, { Component } from 'react';
 export class PageFooter extends Component {
     render() {
     return (
-    <footer className="bgwhite">
+    <footer className="footer">
         <div className="copyright">
             <div className="container">
                 <div className="row">
-                    <div className="col-md-12">
-                        &copy; {new Date().getFullYear()} - TravelBuddy - Version 1.0.0
-                    </div>
+                    <p className="text-muted">&copy; {new Date().getFullYear()} - TravelBuddy - Version 1.0.0.</p>
                 </div>
             </div>
         </div>

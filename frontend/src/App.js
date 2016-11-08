@@ -6,11 +6,11 @@ import { useScroll } from 'react-router-scroll';
 import { createRoutes } from './createRoutes.js';
 
 // Import CSS styles
+
 import '../public/css/bootstrap.min.css';
 import '../public/css/App.css';
 
 // Import JavaScript
-
 
 
 export class App extends Component {
