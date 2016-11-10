@@ -67,10 +67,13 @@ body {
   margin: auto;
   width: 50%;
 }
-.block {
-  display: block;
+.register .block {
+  display: flex;
 }
-
+.register .form-horizontal .has-feedback .form-control-feedback {
+  top: 25px;
+  right: 0;
+}
 
 
 /* Responsive: Portrait tablets and up */
