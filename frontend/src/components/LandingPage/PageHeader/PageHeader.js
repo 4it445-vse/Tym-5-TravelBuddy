@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {LoginComponent} from '../LoginComponent/LoginComponent';
+
 
 export class PageHeader extends Component {
     render() {

@@ -1,3 +1,4 @@
+// Start Import
 
 import React, { Component } from 'react';
 import { Provider } from 'react-redux'
@@ -13,26 +14,14 @@ import '../public/css/App.css';
 // Import JavaScript
 
 
-<<<<<<< HEAD
-class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-    render() {
-        return (
-            <div className="container">
-                <LandingPage/>
-            </div>
-        );
-    }
-=======
+// End Import
+
 export class App extends Component {
   render() {
     const { store } = this.props;
     const routes = createRoutes();
     return (
-      <Provider store={store}>
+      <Provider  store={store}>
         <Router history={browserHistory} render={applyRouterMiddleware(useScroll())}>
           {routes}
         </Router>
