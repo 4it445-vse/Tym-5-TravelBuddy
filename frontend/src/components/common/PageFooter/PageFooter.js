@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 const appName ='TravelBuddy';
-const version = '1.0.0';
+const version = 'Version 1.0.0';
 const currentYear = new Date().getFullYear();
 const copyright = <span>&copy;</span>;
 
-export default class PageFooter extends Component {
+export class PageFooter extends Component {
 
     render() {
     return (

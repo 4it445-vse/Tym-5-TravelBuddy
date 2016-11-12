@@ -94,7 +94,7 @@ export class LoginComponent extends Component{
 
 
     return(
-      <div className="login">
+    <div>
       <div className="login-form-element"> {this.state.callout} </div>
         <Form inline onSubmit={this.handleSubmit} >
 
@@ -115,7 +115,7 @@ export class LoginComponent extends Component{
             <button type="submit" className="btn btn-default">Login</button>
           </div>
         </Form>
-      </div>
+  </div>
     );
   }
 }

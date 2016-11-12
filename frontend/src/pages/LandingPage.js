@@ -7,6 +7,7 @@ import {PageFooter} from '../components/common/PageFooter/PageFooter';
 export class LandingPage extends Component {
   render() {
     return (
+
         <div>
             <PageHeader/>
             <div className="ident-top">
