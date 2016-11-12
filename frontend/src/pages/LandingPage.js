@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PageHeader } from '../components/LandingPage/PageHeader/PageHeader';
-import {PageFooter} from '../components/common/PageFooter/PageFooter'
+import  PageFooter  from '../components/common/PageFooter/PageFooter'
 import { AboutPlatform } from '../components/LandingPage/AboutPlatform/AboutPlatform';
 
 
