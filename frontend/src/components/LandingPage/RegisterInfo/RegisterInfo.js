@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-class RegisterInfo extends Component {
+export class RegisterInfo extends Component {
 
     render() {
         return (
@@ -13,5 +13,3 @@ class RegisterInfo extends Component {
         );
     }
 }
-
-export default RegisterInfo;

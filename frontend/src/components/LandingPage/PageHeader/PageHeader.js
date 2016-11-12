@@ -6,18 +6,22 @@ export class PageHeader extends Component {
     render() {
         const menuItems = [
             ["#at-home", "Home"],
-            ["#at-about", "Platform"],
+            ["#at-platform", "Platform"],
             ["#at-register", "Register"],
         ];
         return (
         <Navbar fixedTop>
+
             <Navbar.Header>
                 <Navbar.Brand>
                     <a href="#">Travel Buddy</a>
                 </Navbar.Brand>
                 <Navbar.Toggle/>
             </Navbar.Header>
+            <div className="width-fix">
+
             <Navbar.Collapse>
+
                 <Nav>
                     {menuItems.map(([link, title], index) => (
                         <NavItem key={index} eventKey={index} href={link}>
@@ -25,10 +29,14 @@ export class PageHeader extends Component {
                         </NavItem>
                     ))}
                 </Nav>
-                <Nav pullRight>
+
+                <Nav bsClass="login-centered">
                     <LoginComponent/>
                </Nav>
             </Navbar.Collapse>
+
+                </div>
+
         </Navbar>
         );
     }

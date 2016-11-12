@@ -1,3 +1,19 @@
-/**
- * Created by James on 12.11.2016.
- */
+import React, { Component } from 'react';
+
+export class MainLogo extends Component {
+
+    render() {
+        return (
+            <div className="container contentContainer" id="topContainer">
+                <div className="row">
+                    <div className="col-md-6 col-md-offset-3" id="topRow">
+
+                        <p className="bold marginTop">Interested? Join Travel Buddy!</p>
+
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+}
