@@ -108,3 +108,7 @@ body {
 .bgwhite {
   background-color: #fff !important;
 }
+
+.ident-top {
+  margin-top: 60px;
+}
