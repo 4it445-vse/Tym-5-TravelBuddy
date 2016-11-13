@@ -1,3 +1,4 @@
+// Start Import
 
 import React, { Component } from 'react';
 import { Provider } from 'react-redux'
@@ -6,24 +7,30 @@ import { useScroll } from 'react-router-scroll';
 import { createRoutes } from './createRoutes.js';
 
 // Import CSS styles
+
+
+import '../public/css/font-awesome.min.css';
 import '../public/css/bootstrap.min.css';
 import '../public/css/App.css';
 
 // Import JavaScript
 
 
-class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-    render() {
-        return (
-            <div className="container">
-                <LandingPage/>
-            </div>
-        );
-    }
+
+// End Import
+
+export class App extends Component {
+  render() {
+    const { store } = this.props;
+    const routes = createRoutes();
+    return (
+      <Provider  store={store}>
+        <Router history={browserHistory} render={applyRouterMiddleware(useScroll())}>
+          {routes}
+        </Router>
+      </Provider>
+    );
+  }
 }
 
 export default App;

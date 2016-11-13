@@ -5,7 +5,7 @@ import { LandingPage } from './pages/LandingPage.js';
 import { RegistrationPage } from './pages/RegistrationPage.js';
 import { TermsOfServicePage } from './pages/TermsOfServicePage.js';
 import { VerifiedPage } from './pages/VerifiedPage.js';
-import { NoMatchPage } from './pages/NoMatchPage.js';
+import { PageNotFound } from './pages/PageNotFound.js';
 
 export function createRoutes() {
   return (
@@ -14,7 +14,7 @@ export function createRoutes() {
       <Route path="/registration" component={RegistrationPage}/>
       <Route path="/terms" component={TermsOfServicePage}/>
       <Route path="/verified" component={VerifiedPage}/>
-      <Route path="*" component={NoMatchPage}/>
+      <Route path="*" component={PageNotFound}/>
     </Route>
   );
 }

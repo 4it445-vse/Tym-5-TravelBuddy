@@ -6,7 +6,9 @@ export class AppPage extends Component {
   render() {
      const {children} = this.props;
     return (
-      <div className="container">
+
+      <div>
+        {/*<div className="container">*/}
           {children}
       </div>
     );

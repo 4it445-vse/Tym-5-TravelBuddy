@@ -1,40 +1,45 @@
 import React, { Component } from 'react';
-import {LoginComponent} from '../LoginComponent/LoginComponent';
+import { LoginComponent } from '../LoginComponent/LoginComponent';
+import { Nav, Navbar, NavItem } from 'react-bootstrap';
 
 export class PageHeader extends Component {
     render() {
+        const menuItems = [
+            ["#at-home", "Home"],
+            ["#at-platform", "Platform"],
+            ["#at-register", "Register"],
+        ];
         return (
-            <header className="header-navbar">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <nav className="navbar main-nav navbar-default" role="navigation">
-                                <div className="navbar-header">
-                                    <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".at-navbar">
-                                        <span className="sr-only">Toggle navigation</span>
-                                        <span className="icon-bar"></span>
-                                        <span className="icon-bar"></span>
-                                        <span className="icon-bar"></span>
-                                    </button>
-                                    <a href="#">Travel Buddy</a>
+        <Navbar fixedTop>
 
-                                  {/*  <a href="#" className="logo"><img src="logo" alt="logo"></a>*/}
-                                </div>
-                                <div className="collapse navbar-collapse at-navbar">
-                                    <ul className="nav navbar-nav navbar-right">
-                                        <li className="current"><a href="#landing">Landing</a></li>
-                                        <li><a href="#platform">Platform</a></li>
-                                        <li><a href="#how-to">How To</a></li>
-                                    </ul>
-                                    <div className="pull-right">
-                                        <LoginComponent/>
-                                    </div>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
+            <Navbar.Header>
+                <Navbar.Brand>
+                    <a href="#">Travel Buddy</a>
+                </Navbar.Brand>
+                <Navbar.Toggle/>
+            </Navbar.Header>
+            <div className="width-fix">
+
+            <Navbar.Collapse>
+
+                <Nav>
+                    {menuItems.map(([link, title], index) => (
+                        <NavItem key={index} eventKey={index} href={link}>
+                            {title}
+                        </NavItem>
+                    ))}
+                </Nav>
+
+                <Nav bsClass="login-centered">
+                    <LoginComponent/>
+               </Nav>
+            </Navbar.Collapse>
+
                 </div>
-            </header>
+
+        </Navbar>
         );
     }
 }
+
+

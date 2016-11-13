@@ -4,6 +4,8 @@ import { Link } from 'react-router';
 export class TopNavigation extends Component {
   render() {
     return (
+
+
       <div className="header">
         <ul className="nav nav-pills pull-right">
           <li><Link to="/search">Search</Link></li>
