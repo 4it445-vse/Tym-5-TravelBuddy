@@ -4,10 +4,18 @@ import { Nav, Navbar, NavItem, Button } from 'react-bootstrap';
 
 
 export class PageHeader extends Component {
+    constructor(props) {
+        super(props);
+
+        this.props.locat
+
+    }
+
+
     render() {
         const menuItems = [
             ["/", "Search"],
-            ["/profile", "Profile"],
+            ["profile", "Profile"],
         ];
         return (
         <Navbar fixedTop>
@@ -18,22 +26,18 @@ export class PageHeader extends Component {
                 </Navbar.Brand>
                 <Navbar.Toggle/>
             </Navbar.Header>
-
-
             <Navbar.Collapse >
                 <Nav pullRight>
                     {menuItems.map(([link, title], index) => (
                       <LinkContainer to={link}>
                          {/*   <Button>{title}</Button>*/}
-                        <NavItem key={index} eventKey={index} >
+                        <NavItem eventKey={link} >
                             {title}
                         </NavItem>
                       </LinkContainer>
                     ))}
                 </Nav>
-
             </Navbar.Collapse>
-
         </Navbar>
         );
     }

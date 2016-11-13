@@ -4,7 +4,8 @@ import {Table,Button} from 'react-bootstrap';
 export class TopPropositions extends Component {
     render() {
         return (
-            <div>
+            <div className="container">
+                <div className="h3">The latest offers:</div>
                 <Table striped bordered condensed hover>
                     <thead>
                     <tr>
@@ -13,6 +14,7 @@ export class TopPropositions extends Component {
                         <th>Last Name</th>
                         <th>Username</th>
                         <th>Service Type</th>
+                        <th>Detail</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -23,7 +25,8 @@ export class TopPropositions extends Component {
                         <td>Káňa</td>
                         <td>@xkanj</td>
                         <td>Service type</td>
-                        <td><Button>Propose</Button></td>
+                        <td><Button>Detail</Button></td>
+                        <td><Button>Request for</Button></td>
                     </tr>
                     <tr>
                         <td>2</td>
@@ -31,7 +34,8 @@ export class TopPropositions extends Component {
                         <td>Thornton</td>
                         <td>@fat</td>
                         <td>Service type</td>
-                        <td><Button>Propose</Button></td>
+                        <td><Button>Detail</Button></td>
+                        <td><Button>Request for</Button></td>
                     </tr>
                     <tr>
                         <td>3</td>
@@ -39,23 +43,26 @@ export class TopPropositions extends Component {
                         <td>Goldberg</td>
                         <td>@twitter</td>
                         <td>Service type</td>
-                        <td><Button>Propose</Button></td>
+                        <td><Button>Detail</Button></td>
+                        <td><Button>Request for</Button></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td>4</td>
                         <td>Mar</td>
                         <td>Tyn</td>
                         <td>@bootstrap</td>
                         <td>Service type</td>
-                        <td><Button>Propose</Button></td>
+                        <td><Button>Detail</Button></td>
+                        <td><Button>Request for</Button></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td>5</td>
                         <td>Jiří</td>
                         <td>Foršt</td>
                         <td>@surfing</td>
                         <td>Service type</td>
-                        <td><Button>Propose</Button></td>
+                        <td><Button>Detail</Button></td>
+                        <td><Button>Request for</Button></td>
                     </tr>
                     </tbody>
                 </Table>

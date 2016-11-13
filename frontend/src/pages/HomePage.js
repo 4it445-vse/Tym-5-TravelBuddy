@@ -14,8 +14,7 @@ export class HomePage extends Component {
           <h1>Home page</h1>
         </div>
           <div className="ident-top marginBottom">
-              <div className="h3">Welcome to your home page.</div>
-
+              <SearchSection/>
               <TopPropositions/>
           </div>
           <PageFooter/>
