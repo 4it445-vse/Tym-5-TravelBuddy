@@ -1,85 +1,39 @@
 import React, {Component} from 'react';
-import { FormGroup, ControlLabel, FormControl, HelpBlock, Button} from 'react-bootstrap';
+import {Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 
 
 export class SearchSection extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            clientErrors: {},
-            errors: {},
-            formSuccess: false
-        };
-
-    }
-
-    createField(type, key, desc, values) {
-        switch (type) {
-            case 'text':
-            case 'password':
-            case 'email':
-                if (!desc) {
-                    return (
-                        <FormControl
-                            type={type}
-                            name={key}
-                        />
-                    );
-                }
-                else {
-                    const popover = this.createPopover(desc);
-                    return (
-                        <OverlayTrigger trigger="focus" placement="right" overlay={popover} delay={100}>
-                            <FormControl type={type} name={key} />
-                        </OverlayTrigger>
-                    );
-                }
-
-            case 'date':
-                return (
-                    <DatePicker
-                        type="birthdate"
-                        name="birthdate"
-                    />
-                );
-
-
-
-            default:
-                return {};
-        }
     }
 
 
 
     render() {
         const fields = [
-            /*key, label, type, desc, array with possible choices*/
-            ['city', 'City', 'text', ''],
-            ['dateFrom', 'Date from', 'text', ''],
-            ['dateTo', 'Date to', 'date', ''],
-            ['service', 'Service Type', 'text', ''],
-            ['priceFrom', 'Price from', 'text', ''],
-            ['priceTo', 'Price to', 'text', ''],
-
+            /*key, label, type, desc*/
+            ['location', 'Location', 'text', ''],
+            ['service', 'Service category', 'text', ''],
+            ['product', 'Product', 'text', ''],
+            ['price', 'Price ($)', 'text', ''],
+            ['rating', 'Rating', 'text', ''],
         ];
 
         return (
-            <div>
-                <form  className="form-horizontal">
-                    {fields.map(([key, label, type, desc]) => {
-                        return (
-                                <FieldGroup key={key}
-                                    id="formControlsText"
-                                    type={type}
-                                    label={label}
-                                    placeholder={label}
-                                />
-                        );
-                    })}
+            <div className="container">
+                <div className="h3">Search</div>
+                <form>
+                {fields.map(([key, label, type, desc]) => {
+                return (
+                    <div className="form-group">
+                        <label for="exampleInputEmail1">{label}</label>
+                        <input type={type} className="form-control" id="exampleInputEmail1" placeholder={label}/>
 
-                    <Button type="submit" bsStyle="primary">Search!</Button>
+                            </div>
+                   );})}
+
+                <Button type="submit" bsStyle="primary">Search!</Button>
                 </form>
             </div>
         );
