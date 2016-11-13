@@ -17,15 +17,15 @@ export class RegisterInfo extends Component {
                     <Col md={12} lg={12}>
                         <Panel header={title} bsClass="panel" bsStyle="primary">
                             <div id="at-register">
-                                <p>{para_1}</p>
-                                <p>{para_2}</p>
-                                <p>{para_3}</p>
+                                <ul>
+                                    <li>{para_1}</li>
+                                    <li>{para_2}</li>
+                                    <li>{para_3}</li>
+                                </ul>
+                                
                                 <LinkContainer to="/registration">
-                                    <Button bsSize="large" block><Glyphicon glyph="glyphicon-user" />
-                                        Register
-                                    </Button>
+                                    <Button bsSize="large" block><Glyphicon glyph="user" /> Register</Button>
                                 </LinkContainer>
-
                             </div>
                         </Panel>
                     </Col>
