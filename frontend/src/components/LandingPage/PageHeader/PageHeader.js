@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { LoginComponent } from '../LoginComponent/LoginComponent';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
 
+
 export class PageHeader extends Component {
     render() {
         const menuItems = [
@@ -21,7 +22,6 @@ export class PageHeader extends Component {
             <div className="width-fix">
 
             <Navbar.Collapse>
-
                 <Nav>
                     {menuItems.map(([link, title], index) => (
                         <NavItem key={index} eventKey={index} href={link}>
@@ -29,14 +29,11 @@ export class PageHeader extends Component {
                         </NavItem>
                     ))}
                 </Nav>
-
                 <Nav bsClass="login-centered">
                     <LoginComponent/>
                </Nav>
             </Navbar.Collapse>
-
-                </div>
-
+    </div>
         </Navbar>
         );
     }

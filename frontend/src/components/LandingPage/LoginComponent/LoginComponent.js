@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl, HelpBlock, Form } from 'react-bootstrap';
-import api from '../../../api.js';
-
-
+import { FormGroup, FormControl, Form, Overlay, Popover } from 'react-bootstrap';
+//import api from '../../../api.js';
+import ReactDOM from 'react-dom';
+import {loginAction} from "../../../actions";
+import { connect } from 'react-redux';
+//import {bindActionCreators} from "redux"
+//import { browserHistory } from 'react-router';
 
 export class LoginComponent extends Component{
   constructor(props){
@@ -11,7 +14,7 @@ export class LoginComponent extends Component{
     this.state = {
       loginEmail : "",
       loginPassword : "",
-      callout : " "
+      callout : " ",
     }
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -29,54 +32,30 @@ export class LoginComponent extends Component{
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log('--- submitted: ', event.target);
-    console.log("email: ", this.state.loginEmail);
-    console.log("pwd: ", this.state.loginPassword);
-
-    //const formData = new FormData(event.target);
 
     var email = this.state.loginEmail;
     var pwd = this.state.loginPassword;
 
-    if (pwd==="" || email===""){
-      console.log("empty values");
-      return;
-    }
-
-    api.post('/UserMain/login', {"email":email, "password":pwd})
-    .then((response) => {
-      console.log("Response: ");
-      console.log(response.data);
-      console.log(response.status);
-      //console.log(response.statusText);
-      //console.log(response.headers);
-      //console.log(response.config);
-      if (response.status ==200){
-        this.setState({callout: "login succesful"});
-        var userId = response.data.userId;
-        var token = response.data.id;
-        var ttl = response.data.ttl;
-
-
-      }
-    })
-      .catch((error) => {
-        console.log("Errorx: ", error.response);
-        this.setState({callout: "login failed"});
-      });
-
-
+    this.props.dispatch(loginAction(email,pwd));
+    this.setState({loginPassword : ""});
   }
+
 
   createField(type, key, desc,) {
     switch (type) {
       case 'password':
+
       return (
-        <FormControl type={type} name={key} placeholder={type} value={this.state.loginPassword} onChange={this.handlePasswordChange}/>
+        <div>
+        <FormControl type={type} name={key} ref='passwordTarget' placeholder={type} value={this.state.loginPassword} onChange={this.handlePasswordChange}/>
+
+        </div>
       );
       case 'email':
       return (
-        <FormControl type={type} name={key} placeholder={type} value={this.state.loginEmail} onChange={this.handleEmailChange}/>
+        <div>
+        <FormControl type={type} name={key} ref='emailTarget' placeholder={type} value={this.state.loginEmail} onChange={this.handleEmailChange}/>
+        </div>
       );
 
       default:
@@ -91,7 +70,6 @@ export class LoginComponent extends Component{
       ['email', 'Email', 'email', ''],
       ['password', 'Password', 'password', '']
     ];
-
 
     return(
     <div>
@@ -112,7 +90,19 @@ export class LoginComponent extends Component{
         })}
 
           <div className="login-form-element">
-            <button type="submit" className="btn btn-default">Login</button>
+            <button type="submit" ref="submitTarget" className="btn btn-default">Login</button>
+
+            <Overlay
+              show={this.props.statusText ? true:false}//{this.state.show}
+              target={ () => ReactDOM.findDOMNode(this.refs.submitTarget)}
+              placement="bottom"
+              containerPadding={0}
+            >
+              <Popover id="popover-contained">
+                {this.props.statusText ? this.props.statusText : ""}
+              </Popover>
+            </Overlay>
+
           </div>
         </Form>
       <div className="login-form-element"> {this.state.callout} </div>
@@ -120,3 +110,26 @@ export class LoginComponent extends Component{
     );
   }
 }
+
+
+
+
+//---Mapping functions and React-redux connection
+
+const mapStateToProps = (state) => {
+
+  return {
+    statusText: state.authentificationReducer.statusText
+  };
+}
+/*
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  };
+}
+*/
+export const LoginComponentContainer = connect(
+  mapStateToProps //,
+  //mapDispatchToProps
+)(LoginComponent);

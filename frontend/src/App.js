@@ -16,15 +16,13 @@ import '../public/css/App.css';
 // Import JavaScript
 
 
-
 // End Import
 
 export class App extends Component {
   render() {
-    const { store } = this.props;
     const routes = createRoutes();
     return (
-      <Provider  store={store}>
+      <Provider store={this.props.store}>
         <Router history={browserHistory} render={applyRouterMiddleware(useScroll())}>
           {routes}
         </Router>

@@ -33,6 +33,10 @@
     },
     "isActive": {
       "type": "boolean"
+    },
+    "isFirstLogin": {
+      "type": "boolean",
+      "default": true
     }
   },
   "validations": [],
