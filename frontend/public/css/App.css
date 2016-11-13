@@ -100,14 +100,13 @@ body {
 
 
 .login-centered {
-  padding-bottom: 10px;
+  padding-top: 10px;
   margin-right: 30px;
-  padding-left: inherit;
+  padding-left: 5px;
 }
 
 .login-form-element {
   display: inline-block;
-
   margin-left: 5px;
   margin-right: 5px;
 }
@@ -117,7 +116,7 @@ body {
 }
 
 .ident-top {
-  margin-top: 60px;
+  margin-top: 30px;
 }
 .ident-top-sm{
   padding-top:10px;
@@ -129,9 +128,9 @@ body {
 
 #topContainer {
   background-image:url("../images/main_logo_low.jpg");
-
-  height:400px;
-  width:inherit;
+  max-width:inherit;
+  height:700px;
+  width:100% !important;
   background-size:cover;
 }
 #topRow {
@@ -168,4 +167,8 @@ body {
 }
 .width-fix {
   width:inherit;
+}
+
+.panel-body {
+height:250px;
 }
