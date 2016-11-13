@@ -23,9 +23,22 @@ module.exports = function(app) {
     });
   });
 
+  app.dataSources.mysqlds.autoupdate('UserDetail', function(err) {
+
+    const { UserDetail } = app.models;
+    if (!UserDetail) { return; }
+
+    UserDetail.count({}, function(err, count) {
+      if (count !== 0) { return };
+
+    });
+  });
+
+};
+
+
   // We dont want to create built-in User table yet
   // app.dataSources.mysqlds.autoupdate('User', function(err) {
   //   const { User } = app.models;
   //   if (!User) { return; }
   // });
-};
