@@ -24,11 +24,9 @@ export class PageHeader extends Component {
             <Navbar.Collapse>
                 <Nav>
                     {menuItems.map(([link, title], index) => (
-
                         <NavItem key={index} eventKey={index} href={link}>
                             {title}
                         </NavItem>
-
                     ))}
                 </Nav>
                 <Nav bsClass="login-centered">

@@ -48,7 +48,6 @@ export class LoginComponent extends Component{
       return (
         <div>
         <FormControl type={type} name={key} ref='passwordTarget' placeholder={type} value={this.state.loginPassword} onChange={this.handlePasswordChange}/>
-
         </div>
       );
       case 'email':
