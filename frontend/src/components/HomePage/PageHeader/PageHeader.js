@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-
-import { Nav, Navbar, NavItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Nav, Navbar, NavItem, Button } from 'react-bootstrap';
 
 
 export class PageHeader extends Component {
     render() {
         const menuItems = [
-            ["", ""],
+            ["/", "Search"],
+            ["/profile", "Profile"],
         ];
         return (
         <Navbar fixedTop>
@@ -19,12 +20,15 @@ export class PageHeader extends Component {
             </Navbar.Header>
             <div className="width-fix">
 
-            <Navbar.Collapse>
+            <Navbar.Collapse pullRight>
                 <Nav>
                     {menuItems.map(([link, title], index) => (
-                        <NavItem key={index} eventKey={index} href={link}>
+                      <LinkContainer to={link}>
+                         {/*   <Button>{title}</Button>*/}
+                        <NavItem key={index} eventKey={index} >
                             {title}
                         </NavItem>
+                      </LinkContainer>
                     ))}
                 </Nav>
 
