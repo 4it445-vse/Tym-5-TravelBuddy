@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {LoginComponent} from '../LoginComponent/LoginComponent';
+import {LoginComponentContainer} from '../LoginComponent/LoginComponent.js';
 
 export class PageHeader extends Component {
     render() {
@@ -27,7 +27,7 @@ export class PageHeader extends Component {
                                         <li><a href="#how-to">How To</a></li>
                                     </ul>
                                     <div className="pull-right">
-                                        <LoginComponent/>
+                                        <LoginComponentContainer/>
                                     </div>
                                 </div>
                             </nav>
