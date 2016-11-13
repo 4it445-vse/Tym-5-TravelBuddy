@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { LoginComponent } from '../LoginComponent/LoginComponent';
+
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
 
 
