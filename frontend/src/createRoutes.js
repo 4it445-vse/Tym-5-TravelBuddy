@@ -18,8 +18,8 @@ export function createRoutes() {
       <Route path="/registration" component={RegistrationPage}/>
       <Route path="/terms" component={TermsOfServicePage}/>
       <Route path="/verified" component={VerifiedPage}/>
-      <Route path="*" component={PageNotFound}/>
       <Route path="/profile" component={AuthenticationWrapper(ProfilePage)}/>
+      <Route path="*" component={PageNotFound}/>
     </Route>
   );
 }
