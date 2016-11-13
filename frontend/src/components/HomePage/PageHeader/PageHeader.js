@@ -18,10 +18,10 @@ export class PageHeader extends Component {
                 </Navbar.Brand>
                 <Navbar.Toggle/>
             </Navbar.Header>
-            <div className="width-fix">
 
-            <Navbar.Collapse pullRight>
-                <Nav>
+
+            <Navbar.Collapse >
+                <Nav pullRight>
                     {menuItems.map(([link, title], index) => (
                       <LinkContainer to={link}>
                          {/*   <Button>{title}</Button>*/}
@@ -33,7 +33,7 @@ export class PageHeader extends Component {
                 </Nav>
 
             </Navbar.Collapse>
-    </div>
+
         </Navbar>
         );
     }
