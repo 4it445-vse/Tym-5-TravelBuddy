@@ -41,6 +41,14 @@ module.exports = function(Usermain) {
    */
    Usermain.afterRemote('login', function(context, usermain, next) {
      console.log('> Usermain.afterRemote "login" triggered', usermain);
-     next();
+     Usermain.updateAll({id: usermain.userId}, {lastLoginDate: new Date()} ,function(err, response) {
+       if (err) {
+         next(err);
+       } else {
+         next();
+       }
+     });
    });
-};
+
+}
+
