@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { LoginComponentContainer } from '../LoginComponent/LoginComponent';
+import { LoginComponent } from '../LoginComponent/LoginComponent';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
 
 
 export class PageHeader extends Component {
     render() {
         const menuItems = [
-            ["#at-home", "Home"],
-            ["#at-platform", "Platform"],
-            ["#at-register", "Register"],
+            ["", ""],
         ];
         return (
         <Navbar fixedTop>
@@ -24,16 +22,12 @@ export class PageHeader extends Component {
             <Navbar.Collapse>
                 <Nav>
                     {menuItems.map(([link, title], index) => (
-
                         <NavItem key={index} eventKey={index} href={link}>
                             {title}
                         </NavItem>
-
                     ))}
                 </Nav>
-                <Nav bsClass="login-centered">
-                    <LoginComponentContainer/>
-               </Nav>
+
             </Navbar.Collapse>
     </div>
         </Navbar>

@@ -6,7 +6,7 @@ export class RegisterInfo extends Component {
 
     render() {
 
-        const title = 'Join TravelBuddy';
+        const title = 'Join Travel Buddy';
         const para_1 = 'Are you a traveller who would like to get help with guiding at some destination or just to hang out with locals?';
         const para_2 = 'Or are you a local who would like to offer some services for travellers or just to meet new people?';
         const para_3 = 'Then join Travel Buddy!';

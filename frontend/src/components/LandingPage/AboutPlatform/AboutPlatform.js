@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Panel, Grid, Row, Col, Clearfix } from 'react-bootstrap';
+import { Panel, Grid, Row, Col} from 'react-bootstrap';
 
 export class AboutPlatform extends Component {
 
@@ -25,7 +25,6 @@ export class AboutPlatform extends Component {
                     <Row bsClass="marginTop" className="show-grid">
 
                         <Col md={4} lg={4}>
-
                                 <Panel header={panel_title_1} bsClass="panel" bsStyle="primary">
                                     <div className="info-height">
                                     {icon_1}    {panel_text_1}
