@@ -37,18 +37,18 @@ module.exports = function(Usermain) {
   });
 
   /*
-   * update lastLoginDate after successful login
+   * update info after successful login
    */
    Usermain.afterRemote('login', function(context, usermain, next) {
      console.log('> Usermain.afterRemote "login" triggered', usermain);
+     //update lastLoginDate
      Usermain.updateAll({id: usermain.userId}, {lastLoginDate: new Date()} ,function(err, response) {
        if (err) {
          next(err);
        } else {
-         next();
+        next();
        }
      });
    });
 
 }
-

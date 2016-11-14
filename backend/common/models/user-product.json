@@ -19,16 +19,17 @@
   },
   "validations": [],
   "relations": {
-  "UserProductUserMain": {
-    "type": "belongsTo",
-    "model": "UserMain",
-    "foreignKey": ""
+    "UserProductUserMain": {
+      "type": "belongsTo",
+      "model": "UserMain",
+      "foreignKey": ""
+    },
+    "UserProductProduct": {
+      "type": "belongsTo",
+      "model": "Product",
+      "foreignKey": ""
+    }
   },
-  "UserProductProduct": {
-    "type": "belongsTo",
-    "model": "Product",
-    "foreignKey": ""
-  }},
   "acls": [],
   "methods": {}
 }

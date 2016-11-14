@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, Button, Image } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 
-export class WizardFormComponent extends Component {
+export default class WizardFormComponent extends Component {
 
   constructor(props) {
     super(props);
@@ -13,10 +13,11 @@ export class WizardFormComponent extends Component {
       homeLocation: "",
       motto: "",
       aboutMe: "",
-      interests: ""
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handlePictureChange = this.handlePictureChange.bind(this);
+
   }
 
   handlePictureChange(event){
@@ -88,9 +89,12 @@ export class WizardFormComponent extends Component {
       picture: this.state.picture,
       homeLocation: this.state.homeLocation,
       motto: this.state.motto,
-      aboutMe: this.state.aboutMe,
-      interests: this.state.interests
+      aboutMe: this.state.aboutMe
     }
+  }
+
+  handleSubmit() {
+    console.log('--- wizard form data', this.getFormData());
   }
 
   render() {
@@ -99,14 +103,13 @@ export class WizardFormComponent extends Component {
       ['photo', 'Profile picture', 'file', null],
       ['homeLocation', 'Home location', 'text', null],
       ['motto', 'Life motto', 'textarea', null],
-      ['aboutMe', 'About Me', 'textarea', null],
-      ['interests', 'Interests', 'textarea', null]
+      ['aboutMe', 'About Me', 'textarea', null]
     ];
 
       return(
         <div style={{margin:"auto"}}>
         <div style={{background:"#2fa4e7", color:"white", width:"100%", padding: "10px"}}>
-        Please fill in the following details that will be handy for other users considering you a traveller or a buddy (however, you can skip this step and complete it later on via your profile page, where you will also be able to upload some pictures and videos):
+        Please fill in the following details that will be handy for other users considering you are a traveller or a buddy (however, you can skip this step and complete it later on your profile page, where you will also be able to upload some pictures):
 
         </div>
           <div>

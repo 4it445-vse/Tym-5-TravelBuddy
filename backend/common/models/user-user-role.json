@@ -16,16 +16,17 @@
   },
   "validations": [],
   "relations": {
-     "UserRoleUser": {
+    "UserRoleUser": {
       "type": "belongsTo",
       "model": "UserMain",
       "foreignKey": ""
     },
     "UserRoleRole": {
-        "type": "belongsTo",
-        "model": "Role",
-        "foreignKey": ""
-      }},
+      "type": "belongsTo",
+      "model": "Role",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }

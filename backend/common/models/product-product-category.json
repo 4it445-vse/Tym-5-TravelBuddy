@@ -16,16 +16,17 @@
   },
   "validations": [],
   "relations": {
-  "CategoryProduct": {
-    "type": "belongsTo",
-    "model": "ProductCategory",
-    "foreignKey": ""
+    "CategoryProduct": {
+      "type": "belongsTo",
+      "model": "ProductCategory",
+      "foreignKey": ""
+    },
+    "ProductCategories": {
+      "type": "belongsTo",
+      "model": "Product",
+      "foreignKey": ""
+    }
   },
-  "ProductCategories": {
-    "type": "belongsTo",
-    "model": "Product",
-    "foreignKey": ""
-  }},
   "acls": [],
   "methods": {}
 }

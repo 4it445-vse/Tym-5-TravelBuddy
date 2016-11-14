@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import { Alert, ButtonGroup, Button, Glyphicon, Modal} from 'react-bootstrap';
-import { SlideIndicator } from '../common/SlideIndicator/SlideIndicator.js';
+import { Button, Glyphicon, Modal} from 'react-bootstrap';
+// import { SlideIndicator } from '../common/SlideIndicator/SlideIndicator.js';
+import WizardFormComponent from './WizardFormComponent.js';
+import { WizardPageComponent } from './WizardPageComponent.js';
+
+import api from '../../api.js';
 
 const overlayStyle = {
   background: "rgba(0,0,0,0.6)"
@@ -9,11 +13,10 @@ const overlayStyle = {
 export class WelcomeWizardModal extends Component {
   constructor(props) {
     super(props);
-    const { show } = this.props;
     this.state = {
-      "show": show,
+      "show": true,
       "currentStep": 1,
-      "lastStep": 3
+      "lastStep": this.props.steps
     }
 
     this.moveLeft = this.moveLeft.bind(this);
@@ -34,25 +37,45 @@ export class WelcomeWizardModal extends Component {
     }
   }
 
-  handleSubmit() {
-    this.setState({show: false});
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log('--- wizard form', this._form.getFormData());
+    console.log('--- formData', event.target);
+    console.log('--- sessionStorage', sessionStorage);
+
+    var data = this._form.getFormData();
+    const userId = sessionStorage.userId;
+    const srvUrl = '/UserMain/' + userId + '/userDetail' + '?access_token=' + sessionStorage.accessToken;
+    api.post(srvUrl, data)
+      .then(({data})=> {
+        this.setState({show: false});
+      })
+      .catch((error)=> {
+        console.log('<!>', error);
+      });
+
+  }
+
+  componentDidMount() {
+    // console.log('--- wiazrd form', this._form.getFormData());
   }
 
   render() {
     return (
-      <Modal bsSize="large" show={this.state.show} aria-labelledby="contained-modal-title-lg" style={overlayStyle} onHide={this.handleSubmit}>
+      <Modal bsSize="large" show={this.state.show} aria-labelledby="contained-modal-title-lg" style={overlayStyle} onHide={this.handleSubmit} backdrop="static">
         <Modal.Header>
-          <Modal.Title>Welcome Tutorial</Modal.Title>
+          {/* <Modal.Title>Welcome Tutorial</Modal.Title> */}
           <Modal.Body>
-            <p>sem prijde komponenta od Dana</p>
-            <h1>{this.state.currentStep} {this.state.show}</h1>
+          {/* <WizardFormComponent ref={(form) => { this._form = form; }}/> */}
+            {this.state.currentStep === 1 ? <WizardPageComponent/> : undefined}
+            {this.state.currentStep === this.state.lastStep ? <WizardFormComponent ref={(form) => { this._form = form; }}/> : undefined}
           </Modal.Body>
           <Modal.Footer>
             {this.state.currentStep !== 1 ? <Button onClick={this.moveLeft}><Glyphicon glyph="glyphicon glyphicon-chevron-left"></Glyphicon></Button> : undefined}
             {this.state.currentStep !== this.state.lastStep ?
               <Button onClick={this.moveRight}><Glyphicon glyph="glyphicon glyphicon-chevron-right"></Glyphicon></Button>
               :
-              <Button bsStyle="primary" onClick={this.handleSubmit}>Done</Button>
+              <Button type="submit" bsStyle="primary" onClick={this.handleSubmit}>Done</Button>
             }
             {/* <SlideIndicator/> */}
 

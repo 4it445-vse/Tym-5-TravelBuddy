@@ -11,7 +11,8 @@
   "mailserver": {
     "name": "mailserver",
     "connector": "mail",
-    "transports": [{
+    "transports": [
+      {
         "type": "SMTP",
         "host": "smtp.gmail.com",
         "port": 465,
@@ -22,6 +23,7 @@
           "user": "noreply.tym5@gmail.com",
           "pass": "travelbuddy"
         }
-    }]
+      }
+    ]
   }
 }

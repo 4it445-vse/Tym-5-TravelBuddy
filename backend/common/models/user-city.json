@@ -22,16 +22,17 @@
   },
   "validations": [],
   "relations": {
-  "User_cityCity": {
-    "type": "belongsTo",
-    "model": "City",
-    "foreignKey": ""
+    "User_cityCity": {
+      "type": "belongsTo",
+      "model": "City",
+      "foreignKey": ""
+    },
+    "User_cityUser": {
+      "type": "belongsTo",
+      "model": "UserMain",
+      "foreignKey": ""
+    }
   },
-  "User_cityUser": {
-    "type": "belongsTo",
-    "model": "UserMain",
-    "foreignKey": ""
-  }},
   "acls": [],
   "methods": {}
 }
