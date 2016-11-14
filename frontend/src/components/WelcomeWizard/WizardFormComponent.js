@@ -21,13 +21,13 @@ export class WizardFormComponent extends Component {
 
   handlePictureChange(event){
     event.preventDefault();
-    console.log("xxx", event);
+    //console.log("xxx", event);
 
     let reader = new FileReader();
     let file = event.target.files[0];
 
     reader.onloadend = () => {
-      console.log("ee", reader.result);
+      //console.log("ee", reader.result);
       this.setState({
         picture: file,
         imagePreviewUrl: reader.result
@@ -51,7 +51,7 @@ export class WizardFormComponent extends Component {
           </div>
           <div style={{display:"inline-block", margin:"10px"}}>
             <input type={type} ref="fileInput" style={{display: "none"}} onChange={(e)=>this.handlePictureChange(e)}/>
-            <Button type="submit" onClick={() => ReactDOM.findDOMNode(this.refs.fileInput).click()}>
+            <Button type="submit" onClick={(e) => {e.preventDefault(); ReactDOM.findDOMNode(this.refs.fileInput).click();}}>
               Choose file
             </Button>
 
@@ -104,13 +104,13 @@ export class WizardFormComponent extends Component {
     ];
 
       return(
-        <div style={{width: "50%", margin:"auto"}}>
-        <div style={{background:"#2fa4e7", color:"white", width:"100%"}}>
+        <div style={{margin:"auto"}}>
+        <div style={{background:"#2fa4e7", color:"white", width:"100%", padding: "10px"}}>
         Please fill in the following details that will be handy for other users considering you a traveller or a buddy (however, you can skip this step and complete it later on via your profile page, where you will also be able to upload some pictures and videos):
 
         </div>
           <div>
-            <form  onSubmit={this.handleSubmit} className="form-horizontal">
+            <form  onSubmit={this.handleSubmit} style={{padding: "10px"}}>
                 {fields.map(([key, label, type]) => {
                     return (
                       <FormGroup key={key} controlId={key}>
