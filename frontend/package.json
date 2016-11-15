@@ -1,6 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
+  "main": "node_modules/react-scripts/scripts/start.js",
   "private": true,
   "devDependencies": {
     "babel-cli": "^6.18.0",

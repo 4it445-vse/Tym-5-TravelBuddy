@@ -1,5 +1,12 @@
 'use strict';
 
+const {
+  API_HOST,
+  API_PORT,
+  API_PROTOCOL,
+  VERIFY_EMAIL_REDIRECT
+} = process.env;
+
 module.exports = function(Usermain) {
 
   /*
@@ -8,18 +15,17 @@ module.exports = function(Usermain) {
   Usermain.afterRemote('create', function(context, usermain, next) {
     console.log('> Usermain.afterRemote triggered');
 
-
-    //TODO:
-    // - localhost for local dev is hardcoded
-    // - currently email is sent from gmail account and not from noreply@travelbuddy.com
     var options = {
       type: 'email',
       to: usermain.email,
       from: 'noreply@travelbuddy.com',
       subject: 'Travel Buddy | Verify email',
       template: 'server/views/verify.ejs',
-      redirect: 'http://localhost:3000/verified',
-      user: usermain
+      redirect: VERIFY_EMAIL_REDIRECT,
+      user: usermain,
+      host: API_HOST,
+      port: API_PORT,
+      protocol: API_PROTOCOL
     };
 
     console.log('---- options', options);

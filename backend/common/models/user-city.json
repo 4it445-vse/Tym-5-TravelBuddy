@@ -1,6 +1,6 @@
 {
-  "name": "User_city",
-  "plural": "User_cities",
+  "name": "User_City",
+  "plural": "User_Cities",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
