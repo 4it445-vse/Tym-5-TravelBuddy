@@ -41,11 +41,11 @@ export class WelcomeWizardModal extends Component {
     event.preventDefault();
     console.log('--- wizard form', this._form.getFormData());
     console.log('--- formData', event.target);
-    console.log('--- sessionStorage', sessionStorage);
+    console.log('--- localStorage', localStorage);
 
     var data = this._form.getFormData();
-    const userId = sessionStorage.userId;
-    const srvUrl = '/UserMain/' + userId + '/userDetail' + '?access_token=' + sessionStorage.accessToken;
+    const userId = localStorage.userId;
+    const srvUrl = '/UserMain/' + userId + '/userDetail' + '?access_token=' + localStorage.accessToken;
     api.post(srvUrl, data)
       .then(({data})=> {
         this.setState({show: false});

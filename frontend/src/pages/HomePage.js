@@ -19,7 +19,7 @@ export class HomePage extends Component {
   }
 
   showModal() {
-    api.get('UserMain/' + sessionStorage.userId)
+    api.get('UserMain/' + localStorage.userId)
       .then((response)=> {
         console.log('--- homepage api get', response);
         this.setState({showWelcomeWizard: response.data.isFirstLogin});

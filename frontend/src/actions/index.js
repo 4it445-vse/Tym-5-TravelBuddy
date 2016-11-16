@@ -1,15 +1,16 @@
 import api from '../api.js';
-//import { browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 
 //list of all action types
 export const ACTION_TYPE_LOGGED_IN = 'ACTION_TYPE_LOGGED_IN';
+export const ACTION_TYPE_LOG_OUT = 'ACTION_TYPE_LOG_OUT';
 export const ACTION_TYPE_LOG_IN_FAILED = 'ACTION_TYPE_LOG_IN_FAILED';
 
 //implement actions
 export const userLoggedInAction = (accessToken, userId) => {
-  //store access token in sessionStorage
-  sessionStorage.setItem('accessToken', accessToken);
-  sessionStorage.setItem('userId', userId);
+  //store access token in localStorage
+  localStorage.setItem('accessToken', accessToken);
+  localStorage.setItem('userId', userId);
 
   return {
     type: ACTION_TYPE_LOGGED_IN,
@@ -56,4 +57,13 @@ export const loginAction = (email, password) => (dispatch) => {
 
     }
   });
+}
+
+export const logoutAction = () => {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('userId')
+  browserHistory.push('/');
+  return {
+    type : ACTION_TYPE_LOG_OUT
+  }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Nav, Navbar, NavItem, Button } from 'react-bootstrap';
-
+import {LogoutComponentContainer} from '../../LogoutComponent/LogoutComponent.js'
 
 export class PageHeader extends Component {
     constructor(props) {
@@ -36,11 +36,12 @@ export class PageHeader extends Component {
                         </NavItem>
                       </LinkContainer>
                     ))}
+                    <NavItem>
+                    <LogoutComponentContainer />
+                    </NavItem>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
         );
     }
 }
-
-

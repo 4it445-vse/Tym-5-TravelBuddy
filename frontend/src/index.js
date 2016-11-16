@@ -13,8 +13,8 @@ import {userLoggedInAction} from "./actions";
 
 let store = createStore(containerReducer,applyMiddleware(thunk));
 
-let accessToken = sessionStorage.getItem('accessToken');
-let userId = sessionStorage.getItem('userId');
+let accessToken = localStorage.getItem('accessToken');
+let userId = localStorage.getItem('userId');
 if (accessToken && userId) {
   store.dispatch(userLoggedInAction(accessToken, userId));
 }

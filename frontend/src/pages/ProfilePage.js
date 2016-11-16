@@ -13,6 +13,7 @@ export class ProfilePage extends Component {
       </div>
       <div className="ident-top marginBottom">
           <div className="h3"> Welcome to your profile page.</div>
+          
       </div>
       <PageFooter/>
       </div>
