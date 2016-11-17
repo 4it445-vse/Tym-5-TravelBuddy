@@ -8,7 +8,7 @@ export class PageHeader extends Component {
         const menuItems = [
             ["#at-home", "Home"],
             ["#at-platform", "Platform"],
-            ["#at-register", "Register"],
+            ["/registration", "Register"],
         ];
         return (
         <Navbar fixedTop>
@@ -38,5 +38,3 @@ export class PageHeader extends Component {
         );
     }
 }
-
-
