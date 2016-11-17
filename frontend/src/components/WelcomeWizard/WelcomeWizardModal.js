@@ -3,6 +3,7 @@ import { Button, Glyphicon, Modal} from 'react-bootstrap';
 // import { SlideIndicator } from '../common/SlideIndicator/SlideIndicator.js';
 import WizardFormComponent from './WizardFormComponent.js';
 import { WizardPageComponent } from './WizardPageComponent.js';
+import ReactDOM from 'react-dom';
 
 import api from '../../api.js';
 
@@ -16,7 +17,8 @@ export class WelcomeWizardModal extends Component {
     this.state = {
       "show": true,
       "currentStep": 1,
-      "lastStep": this.props.steps
+      "lastStep": this.props.steps,
+      modal: null
     }
 
     this.moveLeft = this.moveLeft.bind(this);
@@ -58,17 +60,18 @@ export class WelcomeWizardModal extends Component {
 
   componentDidMount() {
     // console.log('--- wiazrd form', this._form.getFormData());
+    this.setState({modal: ReactDOM.findDOMNode(this.refs.modal)})
   }
 
   render() {
     return (
       <Modal bsSize="large" show={this.state.show} aria-labelledby="contained-modal-title-lg" style={overlayStyle} onHide={this.handleSubmit} backdrop="static">
-        <Modal.Header>
+        <Modal.Header ref="modal" className="modal-container">
           {/* <Modal.Title>Welcome Tutorial</Modal.Title> */}
-          <Modal.Body>
+          <Modal.Body >
           {/* <WizardFormComponent ref={(form) => { this._form = form; }}/> */}
             {this.state.currentStep === 1 ? <WizardPageComponent/> : undefined}
-            {this.state.currentStep === this.state.lastStep ? <WizardFormComponent ref={(form) => { this._form = form; }}/> : undefined}
+            {this.state.currentStep === this.state.lastStep ? <WizardFormComponent ref={(form) => { this._form = form; }} modal={this.state.modal}/> : undefined}
           </Modal.Body>
           <Modal.Footer>
             {this.state.currentStep !== 1 ? <Button onClick={this.moveLeft}><Glyphicon glyph="glyphicon glyphicon-chevron-left"></Glyphicon></Button> : undefined}
