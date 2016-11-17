@@ -30,10 +30,16 @@ componentDidMount(){
 
     let reader = new FileReader();
     let file = event.target.files[0];
+    event.target.value = '';
     reader.onloadend = () => {
       this.refs.pictureEditor.show();
       this.refs.pictureEditor.setPicture(reader.result);
-
+    }
+    reader.onabort = () =>{
+      console.log("aborted-.");
+    }
+    reader.onerror = () =>{
+      console.log("error");
     }
     reader.readAsDataURL(file);
   }
@@ -56,7 +62,7 @@ componentDidMount(){
             <Image height="100px" width="100px" src={this.state.pictureURL ? this.state.pictureURL : "/images/profilePictureDefault.png"}  thumbnail/>
           </div>
           <div style={{display:"inline-block", margin:"10px"}}>
-            <input type={type} ref="fileInput" style={{display: "none"}} onChange={(e)=>this.handlePictureChange(e)}/>
+            <input type={type} ref="fileInput" style={{display: "none"}} onChange={(e)=>this.handlePictureChange(e)} accept="image/*"/>
             <Button type="submit" onClick={(e) => {e.preventDefault(); ReactDOM.findDOMNode(this.refs.fileInput).click();}}>
               Choose photo
             </Button>

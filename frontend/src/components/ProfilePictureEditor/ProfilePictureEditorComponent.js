@@ -53,39 +53,43 @@ export class ProfilePictureEditorComponent extends Component{
           aria-labelledby="contained-modal-title"
         >
           <Modal.Header >
-            <Modal.Title id="contained-modal-title">Contained Modal</Modal.Title>
+            <Modal.Title id="contained-modal-title">Create profile picture</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div style={{}}>
+            <div>
               <AvatarEditor
                 ref="imgEditor"
                 image={this.state.pictureURL}
                 width={250}
                 height={250}
                 border={50}
-                color={[255, 255, 255, 0.4]} // RGBA
-                scale={this.state.sliderValue} />
+                color={[255, 255, 255, 0.6]} // RGBA
+                scale={this.state.sliderValue}
+                style={{display:"block",marginLeft:"auto",marginRight:"auto"}}
+                 />
             </div>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer  >
 
-          <div style={{display:"inline-block"}}>
+          <div className="col-xs-7 text-center">
             <Glyphicon glyph="picture" style={{fontSize:"100%",verticalAlign:"100%"}}/>
+            {" "}
               <input
                 type="range"
-                style={{width:"160px", display:"inline",verticalAlign:"50%"}}
+                style={{width:"68%", maxWidth:"200px",display:"inline",verticalAlign:"50%"}}
                 value={this.state.sliderValue}
                 min={1.0}
                 max={3.0}
                 step={.01}
                 onChange={(e) =>{this.setState({sliderValue: parseFloat(e.target.value)})}}
                     />
+            {" "}
               <Glyphicon glyph="picture" style={{fontSize:"200%",verticalAlign:"25%"}}/>
             </div>
-            <ButtonToolbar style={{display:"inline-block"}}>
-              <Button onClick={this.handleCancel}>Cancel</Button>
-              <Button onClick={this.handleSave}bsStyle="primary">Save</Button>
-            </ButtonToolbar>
+            <div className="col-xs-5" >
+              <Button onClick={this.handleCancel} bsSize="small">Cancel</Button>
+              <Button onClick={this.handleSave}  bsStyle="primary" bsSize="small">Save</Button>
+            </div>
 
           </Modal.Footer>
         </Modal>
