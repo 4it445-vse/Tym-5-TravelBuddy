@@ -119,9 +119,10 @@ export default class WizardFormComponent extends Component {
         case "select":
           return(
             <FormControl componentClass="select" placeholder="Select your country" value={this.state.country} onChange={this.handleCountryChange}>
+              <option value=""></option>
               {this.state.countries.map((element) => {
                   return (
-                    <option value={element.name} key={element.id}>{element.name}</option>
+                    <option value={element.id} key={element.id}>{element.name}</option>
                   );
               })}
             </FormControl>
@@ -135,7 +136,7 @@ export default class WizardFormComponent extends Component {
   getFormData(){
     return{
       pictureURL: this.state.pictureURL,
-      country: this.state.country,
+      country: this.state.country, //id in table Countries
       motto: this.state.motto,
       aboutMe: this.state.aboutMe
     }
