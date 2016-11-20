@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ButtonToolbar, Button, Glyphicon, Modal } from 'react-bootstrap';
+import { Button, Glyphicon, Modal } from 'react-bootstrap';
 import AvatarEditor from "react-avatar-editor";
 
 export class ProfilePictureEditorComponent extends Component{

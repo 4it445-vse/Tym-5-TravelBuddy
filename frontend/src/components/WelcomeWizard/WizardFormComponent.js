@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, Button, Image } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import { ProfilePictureEditorComponent } from "../ProfilePictureEditor/ProfilePictureEditorComponent.js";
+import api from '../../api.js';
 
 export default class WizardFormComponent extends Component {
 
@@ -11,19 +12,45 @@ export default class WizardFormComponent extends Component {
     this.state = {
       pictureBLOB: null, // so far this is always null!
       pictureURL: null,
-      homeLocation: "",
+      country: "",
       motto: "",
-      aboutMe: ""
+      aboutMe: "",
+
+      countries: []
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handlePictureChange = this.handlePictureChange.bind(this);
     this.setPicture = this.setPicture.bind(this);
+    this.handleCountryChange = this.handleCountryChange.bind(this);
   }
 
-componentDidMount(){
-  this.setState({componentContainer: ReactDOM.findDOMNode(this.refs.componentContainer)})
-}
+  componentDidMount(){
+    this.setState({componentContainer: ReactDOM.findDOMNode(this.refs.componentContainer)});
+    this.loadCountryEntries();
+  }
+
+  loadCountryEntries(){
+    var countries = null;
+    api.get('/Countries')
+    .then((response) => {
+      //console.log(response.data);
+      //console.log(response.status);
+      if (response.status === 200){
+        countries = response.data;
+        this.setState({countries:countries});
+      }
+    })
+    .catch((error) => {
+      console.log("Error: ", error);
+      console.log("Error: ", error.response);
+
+    });
+  }
+
+  handleCountryChange(event){
+    this.setState({country: event.target.value});
+  }
 
   handlePictureChange(event){
     event.preventDefault();
@@ -89,6 +116,16 @@ componentDidMount(){
               onChange={this.handleInputChange}
             />
           );
+        case "select":
+          return(
+            <FormControl componentClass="select" placeholder="Select your country" value={this.state.country} onChange={this.handleCountryChange}>
+              {this.state.countries.map((element) => {
+                  return (
+                    <option value={element.name} key={element.id}>{element.name}</option>
+                  );
+              })}
+            </FormControl>
+          );
 
       default:
         return {};
@@ -98,7 +135,7 @@ componentDidMount(){
   getFormData(){
     return{
       pictureURL: this.state.pictureURL,
-      homeLocation: this.state.homeLocation,
+      country: this.state.country,
       motto: this.state.motto,
       aboutMe: this.state.aboutMe
     }
@@ -112,7 +149,7 @@ componentDidMount(){
     const fields = [
       /*key, label, type, desc, */
       ['photo', 'Profile picture', 'file', null],
-      ['homeLocation', 'Home location', 'text', null],
+      ['country', 'Country', 'select', null],
       ['motto', 'Life motto', 'textarea', null],
       ['aboutMe', 'About Me', 'textarea', null]
     ];
