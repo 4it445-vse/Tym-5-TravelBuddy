@@ -157,11 +157,10 @@ export default class WizardFormComponent extends Component {
 
       return(
         <div style={{margin:"auto"}} >
-        <ProfilePictureEditorComponent container={this.props.modal} ref="pictureEditor" setPicture={this.setPicture}/>
-        <div style={{background:"#2fa4e7", color:"white", width:"100%", padding: "10px"}}>
-        Please fill in the following details that will be handy for other users considering you are a traveller or a buddy (however, you can skip this step and complete it later on your profile page, where you will also be able to upload some pictures):
-
-        </div>
+          <ProfilePictureEditorComponent container={this.props.modal} ref="pictureEditor" setPicture={this.setPicture}/>
+          <div style={{background:"#2fa4e7", color:"white", width:"100%", padding: "10px"}}>
+          Please fill in the following details that will be handy for other users considering you are a traveller or a buddy (however, you can skip this step and complete it later on your profile page, where you will also be able to upload some pictures).
+          </div>
           <div>
             <form  onSubmit={this.handleSubmit} style={{padding: "10px"}}>
                 {fields.map(([key, label, type]) => {
@@ -173,8 +172,8 @@ export default class WizardFormComponent extends Component {
                     );
                 })}
             </form>
-            </div>
           </div>
+        </div>
       );
   }
 }
