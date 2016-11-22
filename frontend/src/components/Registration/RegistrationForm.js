@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { DatePicker } from '../common/DatePicker/DatePicker.js';
 import { FormGroup, ControlLabel, FormControl, HelpBlock, OverlayTrigger,
-  Popover, ButtonGroup, Button, Alert } from 'react-bootstrap';
+  Popover, ButtonGroup, Button, Alert, Checkbox } from 'react-bootstrap';
 import moment from 'moment';
+import { Link } from 'react-router';
 
 import api from '../../api.js';
 
@@ -14,11 +15,13 @@ export class RegistrationForm extends Component {
     this.state = {
       clientErrors: {},
       errors: {},
+      gender: '',
       formSuccess: false,
-      gender: ''
+      agreeToTerms: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setAgreeOnTerms = this.setAgreeOnTerms.bind(this);
   }
 
   createPopover(text) {
@@ -62,7 +65,7 @@ export class RegistrationForm extends Component {
           />
         );
 
-      case 'radio':
+      case 'radio-gender':
         return (
           <ButtonGroup className="block">
             {values.map((value) => {
@@ -70,7 +73,7 @@ export class RegistrationForm extends Component {
                 <Button
                   key={value}
                   type="button"
-                  onClick={this.onRadioClick.bind(this, value)}
+                  onClick={this.setGender.bind(this, value)}
                   active={this.state.gender === value}
                 >
                   {value}
@@ -93,10 +96,22 @@ export class RegistrationForm extends Component {
     );
   }
 
-  onRadioClick(option) {
+  setGender(value) {
     this.setState({
-      gender: option
+      gender: value
     });
+  }
+
+  setAgreeOnTerms(event) {
+    if (!this.state.agreeToTerms) {
+      this.setState({
+        agreeToTerms: true
+      });
+    } else {
+      this.setState({
+        agreeToTerms: false
+      });
+    }
   }
 
   formDataToJSON(formData) {
@@ -118,17 +133,17 @@ export class RegistrationForm extends Component {
     var clientErrors = this.validateForm(formData);
 
     if (Object.keys(clientErrors).length === 0) {
-      const params = this.formDataToJSON(formData);
-      // console.log('---json formdata', params);
+      // const params = this.formDataToJSON(formData);
+      // console.log('---json formdata', params, this.agreeToTerms);
 
-      api.post('usermain', params)
+      api.post('usermain', formData)
       .then(({ data }) => {
-        // console.log('---data', data);
+        console.log('---then data', data);
         this.setState({ clientErrors: {} });
         this.setState({formSuccess: true});
       })
       .catch(error => {
-        // console.log('---response', error.response);
+        console.log('---catch response', error.response);
         const errors = error.response.data.error.details.messages;
         this.setState({ errors });
       });
@@ -143,31 +158,37 @@ export class RegistrationForm extends Component {
   validateForm(formData) {
     var errors = {};
 
-    for (var pair of formData.entries()) {
-     if (!pair[1]) {
-      errors[pair[0]] = "Required!";
-     }
-     if (pair[0] === 'email') {
-       const emailPattern = /(.+)@(.+){2,}\.(.+){2,}/;
-       if (!emailPattern.test(pair[1])) {
-         errors[pair[0]] = 'Enter a valid email';
-       }
-     }
-     if (pair[0] === 'birthdate') {
-       if (moment(pair[1]).isSameOrAfter(new Date(), 'day')) {
-         errors[pair[0]] = 'Birthdate cannot be set in future!';
-       }
-     }
-    }
-
     var psw = formData.get('password');
     var psw2 = formData.get('password2');
     if (psw !== psw2) {
-     errors['password'] = "Passwords are not same!";
+    errors['password'] = "Passwords are not same!";
     }
     if (psw.length < 6) {
-     errors['password'] = "Password is too short!"
+    errors['password'] = "Password is too short!"
     }
+
+    for (var pair of formData.entries()) {
+      if (pair[0] === 'email') {
+        const emailPattern = /(.+)@(.+){2,}\.(.+){2,}/;
+        if (!emailPattern.test(pair[1])) {
+          errors[pair[0]] = 'Enter a valid email';
+        }
+      }
+      if (!pair[1]) {
+      errors[pair[0]] = "Required!";
+      }
+
+      if (pair[0] === 'birthdate') {
+       if (moment(pair[1]).isSameOrAfter(new Date(), 'day')) {
+         errors[pair[0]] = 'Birthdate cannot be set in future!';
+       }
+      }
+    }
+
+    if (!this.state.agreeToTerms) {
+    errors['agreeToTerms'] = "You must agree to terms of service!";
+    }
+
     return errors;
   }
 
@@ -178,7 +199,7 @@ export class RegistrationForm extends Component {
       ['firstName', 'First name', 'text', ''],
       ['lastName', 'Last name', 'text', ''],
       ['birthdate', 'Birthdate', 'date', ''],
-      ['gender', 'Your gender', 'radio', '', ['Male', 'Female']],
+      ['gender', 'Your gender', 'radio-gender', '', ['Male', 'Female']],
       ['email', 'Your email', 'text', 'Enter valid email. You will use it for login and password reset'],
       ['password', 'Password', 'password', 'At least 6 characters long'],
       ['password2', 'Re-enter your password', 'password']
@@ -213,6 +234,10 @@ export class RegistrationForm extends Component {
                     </FormGroup>
                   );
               })}
+              <FormGroup>
+                <Checkbox onChange={this.setAgreeOnTerms}>I agree with <strong><Link to="/terms">terms of service</Link></strong></Checkbox>
+                <HelpBlock>{clientErrors['agreeToTerms']}</HelpBlock>
+              </FormGroup>
               <Button type="submit" bsStyle="primary" bsSize="large" block>Register!</Button>
           </form>
         </div>

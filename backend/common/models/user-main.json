@@ -33,14 +33,18 @@
     },
     "isActive": {
       "type": "boolean"
+    },
+    "isFirstLogin": {
+      "type": "boolean",
+      "default": true
     }
   },
   "validations": [],
   "relations": {
-    "userDetails": {
-      "type": "belongsTo",
+    "userDetail": {
+      "type": "hasOne",
       "model": "UserDetail",
-      "foreignKey": "refUserDetailId"
+      "foreignKey": "refUserMainId"
     },
     "userRatings": {
       "type": "belongsTo",
@@ -95,6 +99,13 @@
       "through": "User_UserRole"
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": {}
 }

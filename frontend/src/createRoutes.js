@@ -1,27 +1,25 @@
 import React from 'react';
 import { IndexRoute, Route } from 'react-router';
-
 import { AppPage } from './pages/AppPage.js';
-import { ContactPage } from './pages/ContactPage.js';
-import { HomePage } from './pages/HomePage.js';
+import { LandingPage } from './pages/LandingPage.js';
 import { RegistrationPage } from './pages/RegistrationPage.js';
-import { NoMatchPage } from './pages/NoMatchPage.js';
-import { ProductDetailPage } from './pages/ProductDetailPage.js'
-import { ProductsPage } from './pages/ProductsPage.js';
-import { ShoppingCartPage } from './pages/ShoppingCartPage.js'
+import { TermsOfServicePage } from './pages/TermsOfServicePage.js';
+import { VerifiedPage } from './pages/VerifiedPage.js';
+import { PageNotFound } from './pages/PageNotFound.js';
+import { ProfilePage } from "./pages/ProfilePage.js";
+import { AuthenticationWrapper } from "./components/AuthenticationWrapper.js";
+import { RootPageWrapper } from "./pages/RootPageWrapper.js";
+import { HomePage } from "./pages/HomePage.js";
 
 export function createRoutes() {
   return (
     <Route path="/" component={AppPage}>
-      <IndexRoute component={HomePage}/>
+      <IndexRoute component={RootPageWrapper(AuthenticationWrapper(HomePage),LandingPage)}/>
       <Route path="/registration" component={RegistrationPage}/>
-      <Route path="/products">
-        <IndexRoute component={ProductsPage}/>
-        <Route path=":productId" component={ProductDetailPage}/>
-      </Route>
-      <Route path="/contact" component={ContactPage}/>
-      <Route path="/cart" component={ShoppingCartPage}/>
-      <Route path="*" component={NoMatchPage}/>
+      <Route path="/terms" component={TermsOfServicePage}/>
+      <Route path="/verified" component={VerifiedPage}/>
+      <Route path="/profile" component={AuthenticationWrapper(ProfilePage)}/>
+      <Route path="*" component={PageNotFound}/>
     </Route>
   );
 }

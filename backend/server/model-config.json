@@ -14,7 +14,7 @@
     ]
   },
   "User": {
-    "dataSource": "mysqlds"
+    "dataSource": "db"
   },
   "AccessToken": {
     "dataSource": "db",
@@ -32,6 +32,16 @@
     "dataSource": "db",
     "public": false
   },
+  "Email": {
+    "dataSource": "mailserver"
+  },
+  "UserMain": {
+    "dataSource": "mysqlds",
+    "public": true,
+    "options": {
+      "emailVerificationRequired": true
+    }
+  },
   "UserDetail": {
     "dataSource": "mysqlds",
     "public": true
@@ -41,10 +51,6 @@
     "public": true
   },
   "UserReview": {
-    "dataSource": "mysqlds",
-    "public": true
-  },
-  "UserMain": {
     "dataSource": "mysqlds",
     "public": true
   },
@@ -60,7 +66,7 @@
     "dataSource": "mysqlds",
     "public": true
   },
-  "User_city": {
+  "User_City": {
     "dataSource": "mysqlds",
     "public": true
   },

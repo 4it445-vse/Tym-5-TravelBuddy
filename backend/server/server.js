@@ -21,6 +21,13 @@ var boot = require('loopback-boot');
 var app = module.exports = loopback();
 var multer = require('multer');
 app.use(multer().none());
+app.use(loopback.token({
+  model: app.models.accessToken
+}));
+
+app.engine('html', require('ejs').renderFile);
+app.set('views', __dirname + '/views');
+app.set('view engine', 'html');
 
 app.get('/hello', function (req, res) {
   const data = {

@@ -1,3 +1,6 @@
 .idea/
+<<<<<<< HEAD
+=======
 *.log
+>>>>>>> 9a3300b2a77cffed6df4e0047e8affdf03fa5fe0
 frontend/npm-debug.log.*

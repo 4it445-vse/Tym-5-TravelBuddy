@@ -23,7 +23,8 @@
       "type": "belongsTo",
       "model": "UserMain",
       "foreignKey": ""
-    }},
+    }
+  },
   "acls": [],
   "methods": {}
 }

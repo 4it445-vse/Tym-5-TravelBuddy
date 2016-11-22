@@ -16,16 +16,17 @@
   },
   "validations": [],
   "relations": {
-  "User_LanguageLanguage": {
-    "type": "belongsTo",
-    "model": "Language",
-    "foreignKey": ""
+    "User_LanguageLanguage": {
+      "type": "belongsTo",
+      "model": "Language",
+      "foreignKey": ""
+    },
+    "User_LanguageMain": {
+      "type": "belongsTo",
+      "model": "UserMain",
+      "foreignKey": ""
+    }
   },
-  "User_LanguageMain": {
-    "type": "belongsTo",
-    "model": "UserMain",
-    "foreignKey": ""
-  }},
   "acls": [],
   "methods": {}
 }

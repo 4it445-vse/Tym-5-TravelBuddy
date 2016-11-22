@@ -13,11 +13,12 @@
   },
   "validations": [],
   "relations": {
-  "TimeUnitProduct": {
-    "type": "belongsTo",
-    "model": "Product",
-    "foreignKey": ""
-  }},
+    "TimeUnitProduct": {
+      "type": "belongsTo",
+      "model": "Product",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }
