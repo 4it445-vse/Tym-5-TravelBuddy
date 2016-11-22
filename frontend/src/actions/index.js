@@ -60,6 +60,7 @@ export const loginAction = (email, password) => (dispatch) => {
 }
 
 export const logoutAction = () => {
+  api.post("/UserMain/logout?access_token="+localStorage.getItem("accessToken"));
   localStorage.removeItem('accessToken');
   localStorage.removeItem('userId')
   browserHistory.push('/');

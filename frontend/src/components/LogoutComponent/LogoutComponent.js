@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { logoutAction } from "../../actions";
 import { connect } from 'react-redux';
-//import { Button } from 'react-bootstrap';
 
 export class LogoutComponent extends Component{
   constructor(props){
@@ -17,7 +16,6 @@ export class LogoutComponent extends Component{
     this.props.dispatch(logoutAction());
   }
 
-
   render(){
     return(
       <p onClick={this.handleClick}>Logout</p>
@@ -26,19 +24,5 @@ export class LogoutComponent extends Component{
 }
 
 //---Mapping functions and React-redux connection
-/*
-const mapStateToProps = (state) => {
-  return {
-  };
-}
-*/
-/*
-const mapDispatchToProps = (dispatch) => {
-  return {
-  };
-}
-*/
-export const LogoutComponentContainer = connect(
-  //mapStateToProps //,
-  //mapDispatchToProps
-)(LogoutComponent);
+
+export const LogoutComponentContainer = connect()(LogoutComponent);

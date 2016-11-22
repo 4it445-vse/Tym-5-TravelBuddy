@@ -16,11 +16,6 @@
   },
   "validations": [],
   "relations": {
-    "locations": {
-      "type": "hasMany",
-      "model": "Location",
-      "foreignKey": "refCountryId"
-    },
     "cities": {
       "type": "hasMany",
       "model": "City",
