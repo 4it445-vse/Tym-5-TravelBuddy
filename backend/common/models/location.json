@@ -31,11 +31,6 @@
       "type": "belongsTo",
       "model": "Country",
       "foreignKey": ""
-    },
-    "LocationProduct": {
-      "type": "belongsTo",
-      "model": "Product",
-      "foreignKey": ""
     }
   },
   "acls": [],

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl, Form, Overlay, Popover } from 'react-bootstrap';
-//import api from '../../../api.js';
 import ReactDOM from 'react-dom';
 import {loginAction} from "../../../actions";
 import { connect } from 'react-redux';

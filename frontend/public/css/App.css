@@ -171,3 +171,11 @@ body {
 .panel-body {
 height:250px;
 }
+
+/* necesary for contained modal component*/
+.modal-container {
+  position: relative;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+  position: absolute;
+}
