@@ -86,10 +86,11 @@ export default class WizardFormComponent extends Component {
 
   getFormData(){
     return{
-      picture: this.state.picture,
+      profilePicture: this.state.picture,
+      //this will be change to refCityId
       homeLocation: this.state.homeLocation,
       motto: this.state.motto,
-      aboutMe: this.state.aboutMe
+      bio: this.state.aboutMe
     }
   }
 

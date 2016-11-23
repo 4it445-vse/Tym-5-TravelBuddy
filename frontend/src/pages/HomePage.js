@@ -14,12 +14,12 @@ export class HomePage extends Component {
     }
 
     // this.showModal = this.showModal.bind(this);
-    this.showModal();
+    this.handleShowWelcomeWizard();
 
   }
 
-  showModal() {
-    api.get('UserMain/' + sessionStorage.userId)
+  handleShowWelcomeWizard() {
+    api.get('UserMain/' + localStorage.userId)
       .then((response)=> {
         console.log('--- homepage api get', response);
         this.setState({showWelcomeWizard: response.data.isFirstLogin});

@@ -35,6 +35,14 @@
   "Email": {
     "dataSource": "mailserver"
   },
+  "Container": {
+    "dataSource": "storage",
+    "public": true
+  },
+  "File": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
   "UserMain": {
     "dataSource": "mysqlds",
     "public": true,
