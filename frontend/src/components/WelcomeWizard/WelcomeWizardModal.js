@@ -42,20 +42,46 @@ export class WelcomeWizardModal extends Component {
   handleSubmit(event) {
     event.preventDefault();
     console.log('--- wizard form', this._form.getFormData());
-    console.log('--- formData', event.target);
-    console.log('--- localStorage', localStorage);
+    // console.log('--- formData', event.target);
+    // console.log('--- localStorage', localStorage);
 
     var data = this._form.getFormData();
     const userId = localStorage.userId;
-    const srvUrl = '/UserMain/' + userId + '/userDetail' + '?access_token=' + localStorage.accessToken;
+
+    console.log('--- profilePicture', data.profilePicture);
+    // api.post('/containers/profilePictures/upload', {file: data.profilePicture})
+    //   .then(({data})=>{
+    //     console.log('--- upload successful', data);
+    //   })
+    //   .catch((error) => {
+    //     console.log('<!> upload Failed', error);
+    //   });
+    this.saveUserDetail(userId, data);
+    this.setFalseIsFirstLogin(userId);
+
+  }
+
+  saveUserDetail(userId, data) {
+    const srvUrl = '/UserMain/' + userId + '/userDetail?access_token=' + localStorage.accessToken;
     api.post(srvUrl, data)
       .then(({data})=> {
         this.setState({show: false});
       })
       .catch((error)=> {
-        console.log('<!>', error);
+        console.log('<!> saveUserDetail', error);
+        this.setState({show: false});
       });
+  }
 
+  setFalseIsFirstLogin(userId) {
+    const srvUrl = '/UserMain/' + userId + '?access_token=' + localStorage.accessToken;
+    api.patch(srvUrl, {'isFirstLogin': false})
+      .then(({data})=> {
+        console.log('--- update isFirstLogin ok', data);
+      })
+      .catch((error)=> {
+        console.log('<!> setFalseIsFirstLogin', error);
+      });
   }
 
   componentDidMount() {

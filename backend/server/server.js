@@ -22,7 +22,9 @@ var app = module.exports = loopback();
 var multer = require('multer');
 app.use(multer().none());
 app.use(loopback.token({
-  model: app.models.accessToken
+  //model: app.models.accessToken,
+  currentUserLiteral: 'me'        //The currentUserLiteral defines a special token that can be used in the URL for REST APIs, for example:
+                                  //curl -X GET http://localhost:3000/api/users/me/orders?access_token=$ACCESS_TOKEN
 }));
 
 app.engine('html', require('ejs').renderFile);

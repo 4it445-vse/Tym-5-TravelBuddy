@@ -138,7 +138,7 @@ export default class WizardFormComponent extends Component {
       pictureURL: this.state.pictureURL,
       country: this.state.country, //id in table Countries
       motto: this.state.motto,
-      aboutMe: this.state.aboutMe
+      bio: this.state.aboutMe
     }
   }
 
