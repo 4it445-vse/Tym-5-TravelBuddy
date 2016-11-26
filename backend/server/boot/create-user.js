@@ -2,6 +2,7 @@
 
 module.exports = function(app) {
     const { UserMain } = app.models;
+    const { UserDetail } = app.models;
     if (!UserMain) { return; }
 
     UserMain.count({}, function(err, count) {
