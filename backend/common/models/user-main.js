@@ -42,9 +42,8 @@ module.exports = function(Usermain) {
     });
   });
 
-  /*
-   * update info after successful login
-   */
+   /* TODO This implementation is causing problems with authorization, it NEEDS to be remade!!
+
    Usermain.afterRemote('login', function(context, usermain, next) {
      console.log('> Usermain.afterRemote "login" triggered', usermain);
      //update lastLoginDate
@@ -56,5 +55,7 @@ module.exports = function(Usermain) {
        }
      });
    });
+   
+   */
 
 }
