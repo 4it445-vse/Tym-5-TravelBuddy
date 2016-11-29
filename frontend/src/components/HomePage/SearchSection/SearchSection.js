@@ -1,40 +1,55 @@
 import React, {Component} from 'react';
-import {Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
-
+import {FormGroup, FormControl, InputGroup, Glyphicon} from 'react-bootstrap';
+import { ItemList } from 'ItemList';
+import api from '../../../api';
 
 export class SearchSection extends Component {
     constructor(props) {
         super(props);
+        this.state = {searchTerm: '',
+                    products: {},
+        };
 
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+
+    getSearchResult(searchText) {
+            api.get();
+    }
+
+    getValidationState() {
+        const length = this.state.searchTerm.length;
+        if (length > 0) return 'success';
+        if (length === 0) return 'error';
+    }
+
+    handleChange(event) {
+        this.setState({searchTerm: event.target.value});
     }
 
 
 
     render() {
-        const fields = [
-            /*key, label, type, desc*/
-            ['location', 'Location', 'text', ''],
-            ['service', 'Service category', 'text', ''],
-            ['product', 'Product', 'text', ''],
-            ['price', 'Price ($)', 'text', ''],
-            ['rating', 'Rating', 'text', ''],
-        ];
-
         return (
             <div className="container">
-                <div className="h3">Search</div>
                 <form>
-                {fields.map(([key, label, type, desc]) => {
-                return (
-                    <div className="form-group">
-                        <label for="exampleInputEmail1">{label}</label>
-                        <input type={type} className="form-control" id="exampleInputEmail1" placeholder={label}/>
+                    <FormGroup controlId="searchForm" validationState={this.getValidationState()}>
+                        <InputGroup>
+                            <InputGroup.Addon><Glyphicon glyph="search"/></InputGroup.Addon>
+                        <FormControl
+                            type="text"
+                            value={this.state.searchTerm}
+                            placeholder="City, Product, Category, ...."
+                            onChange={this.handleChange} on/>
+                        <FormControl.Feedback/>
+                        </InputGroup>
+                    </FormGroup>
+               </form>
 
-                            </div>
-                   );})}
-
-                <Button type="submit" bsStyle="primary">Search!</Button>
-                </form>
+                <div className="resultSet">
+                    <ItemList products={this.state.products}/>
+                </div>
             </div>
         );
     }
