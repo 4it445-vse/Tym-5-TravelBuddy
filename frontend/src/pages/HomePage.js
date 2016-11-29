@@ -4,6 +4,7 @@ import { PageHeader } from '../components/HomePage/PageHeader/PageHeader';
 import { SearchSection } from '../components/HomePage/SearchSection/SearchSection';
 import { TopPropositions } from '../components/HomePage/TopPropositions/TopPropositions';
 import { WelcomeWizardModal } from '../components/WelcomeWizard/WelcomeWizardModal.js';
+import { CreateProductComponent } from "../components/CreateProduct/CreateProductComponent.js";
 import api from '../api.js';
 export class HomePage extends Component {
 
@@ -19,7 +20,7 @@ export class HomePage extends Component {
   }
 
   handleShowWelcomeWizard() {
-    api.get('UserMain/' + localStorage.userId)
+    api.get('UserMain/me?access_token=' + localStorage.accessToken)
       .then((response)=> {
         console.log('--- homepage api get', response);
         this.setState({showWelcomeWizard: response.data.isFirstLogin});

@@ -94,7 +94,7 @@ export class CreateProductComponent extends Component{
         refCityId: this.state.city.id
       };
 
-      api.post("/products?access_token="+localStorage.accessToken, params)
+      api.post("/usermain/me/owns?access_token="+localStorage.accessToken, params)
       .then((response) =>{
         console.log(response);
         if (response.status === 200){

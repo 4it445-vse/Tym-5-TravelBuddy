@@ -62,7 +62,7 @@ export class WelcomeWizardModal extends Component {
   }
 
   saveUserDetail(userId, data) {
-    const srvUrl = '/UserMain/' + userId + '/userDetail?access_token=' + localStorage.accessToken;
+    const srvUrl = '/UserMain/me/userDetail?access_token=' + localStorage.accessToken;
     api.post(srvUrl, data)
       .then(({data})=> {
         this.setState({show: false});
@@ -74,7 +74,7 @@ export class WelcomeWizardModal extends Component {
   }
 
   setFalseIsFirstLogin(userId) {
-    const srvUrl = '/UserMain/' + userId + '?access_token=' + localStorage.accessToken;
+    const srvUrl = '/UserMain/me?access_token=' + localStorage.accessToken;
     api.patch(srvUrl, {'isFirstLogin': false})
       .then(({data})=> {
         console.log('--- update isFirstLogin ok', data);
