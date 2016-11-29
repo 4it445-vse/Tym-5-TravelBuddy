@@ -159,7 +159,7 @@ export class RegistrationForm extends Component {
         Object.assign(errors, {"password2": true});
       }
       this.setState({ errors });
-      console.log('--- submit usermain failed', response);
+      console.log('--- submit usermain failed');
     });
   }
 
@@ -203,7 +203,7 @@ export class RegistrationForm extends Component {
                       <ControlLabel>{label}</ControlLabel>
                       {this.createField(type, key, desc, values)}
                       <FormControl.Feedback />
-                      <HelpBlock>{errorMsg == "can't be blank" ? "Required!" : errorMsg}</HelpBlock>
+                      <HelpBlock>{errorMsg === "can't be blank" ? "Required!" : errorMsg}</HelpBlock>
                     </FormGroup>
                   );
               })}
