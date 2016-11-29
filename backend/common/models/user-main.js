@@ -101,13 +101,13 @@ module.exports = function(Usermain) {
      next();
    }
 
-  /*
+   /*
    * update info after successful login
    */
+   /* TODO This implementation is causing problems with authorization, it NEEDS to be remade!!
   //  Usermain.afterRemote('login', function(context, usermain, next) {
   //    console.log('> Usermain.afterRemote "login" triggered', usermain);
   //    //update lastLoginDate
-  //    //TODO this fuck up authorization
   //    Usermain.updateAll({id: usermain.userId}, {lastLoginDate: new Date()} ,function(err, response) {
   //      if (err) {
   //        next(err);

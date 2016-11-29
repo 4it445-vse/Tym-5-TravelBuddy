@@ -9,19 +9,24 @@ export class CreateProductComponent extends Component{
   constructor(props){
     super(props);
     this.state = {
-      show: true,
-      dropdownMenu: null,
-
+      //form data---
+      show: false,
+      showDropdown: false,
       formHelperData: {
         categories: [],
         cities: []
       },
 
-      showDropdown: false,
+      labelError: "",
+      categoryError: "",
+      cityError: "",
+      //-----
+
+
 
       //product data----
       label: "",
-      category: "",
+      category: -1,
       city: {
         id: null,
         name: "",
@@ -52,6 +57,23 @@ export class CreateProductComponent extends Component{
     this.fetchCategoryData();
   }
 
+  checkInputs(){
+    let error = false;
+    if (this.state.label.length === 0) {
+      error = true;
+      this.setState({labelError:"Label cannot be empty.",});
+    }else this.setState({labelError:""});
+    if (this.state.category < 0){
+      error = true;
+      this.setState({categoryError:"Select a category."});
+    }else this.setState({categoryError:""});
+    if (!this.state.city.id){
+      error = true;
+      this.setState({cityError:"Invalid city."});
+    }else this.setState({cityError:""});
+    return error;
+  }
+
   handleKeyDownInCity(event){
     if(event.which === 40){
       event.preventDefault();
@@ -63,26 +85,27 @@ export class CreateProductComponent extends Component{
   }
 
   handleCreateProduct(){
-    const params = {
-      price: this.state.price,
-      label: this.state.label,
-      description: this.state.description,
-      refOwnedUserId: localStorage.getItem('userId'),
-      refCityId: this.state.city.id
-    };
+    let inputError = this.checkInputs();
+    if (!inputError){
+      const params = {
+        price: this.state.price,
+        label: this.state.label,
+        description: this.state.description,
+        refCityId: this.state.city.id
+      };
 
-    api.post("/products?access_token="+localStorage.accessToken, params)
-    .then((response) =>{
-      console.log(response);
-      if (response.status === 200){
-        this.hide();
-      }
-    })
-    .catch((error) => {
-      console.log("Error: ", error);
-      console.log("Error: ", error.response);
-    });
-
+      api.post("/products?access_token="+localStorage.accessToken, params)
+      .then((response) =>{
+        console.log(response);
+        if (response.status === 200){
+          this.hide();
+        }
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+        console.log("Error: ", error.response);
+      });
+    }
   }
 
   fetchCityData(searchTerm){
@@ -98,7 +121,11 @@ export class CreateProductComponent extends Component{
         console.log("Error: ", error.response);
       });
     }else{
-      this.setState({formHelperData:{...this.state.formHelperData,cities: []}, showDropdown:false});
+      this.setState({
+        formHelperData:{...this.state.formHelperData,cities: []},
+        showDropdown:false,
+        city:{...this.state.city, id:null}
+      });
     }
   }
 
@@ -152,29 +179,26 @@ export class CreateProductComponent extends Component{
           <Modal.Body>
 
             <form>
-              <FormGroup controlId="formLabel">
-                <ControlLabel>Label</ControlLabel>
+              <FormGroup controlId="formLabel" validationState={(this.state.labelError === "") ? null:"error"}>
+                <ControlLabel>Label<span style={{fontSize:"150%", color:"red"}}>*</span></ControlLabel>
                 <FormControl
                   type="text"
                   value={this.state.label}
                   placeholder="Enter label"
                   onChange={(e) => {this.setState({label:e.target.value})}}
                 />
-                <FormControl.Feedback>
-                  <span style={{fontSize:"150%", color:"red"}}>*</span>
-                </FormControl.Feedback>
-                <HelpBlock ></HelpBlock>
+                <HelpBlock>{this.state.labelError}</HelpBlock>
               </FormGroup>
 
-              <FormGroup controlId="formCategory">
-                <ControlLabel>Category</ControlLabel>
+              <FormGroup controlId="formCategory" validationState={(this.state.categoryError === "") ? null:"error"}>
+                <ControlLabel>Category<span style={{fontSize:"150%", color:"red"}}>*</span></ControlLabel>
                 <FormControl
                   componentClass="select"
                   value={this.state.category}
                   placeholder="Select category"
                   onChange={(e) => {this.setState({category:e.target.value})}}
                 >
-                  <option value="">Select category</option>
+                  <option value={-1}>Select category</option>
 
                   {this.state.formHelperData.categories.map((element) => {
                       return (
@@ -183,11 +207,11 @@ export class CreateProductComponent extends Component{
                   })}
 
                 </FormControl>
+                <HelpBlock>{this.state.categoryError}</HelpBlock>
               </FormGroup>
 
-
-              <FormGroup controlId="formCity">
-                <ControlLabel>City</ControlLabel>
+              <FormGroup controlId="formCity" validationState={(this.state.cityError === "") ? null:"error"}>
+                <ControlLabel>City<span style={{fontSize:"150%", color:"red"}}>*</span></ControlLabel>
                 <FormControl
                   type="text"
                   value={this.state.city.name}
@@ -196,10 +220,9 @@ export class CreateProductComponent extends Component{
                   autoComplete="off"
                   onKeyDown={this.handleKeyDownInCity}
                 />
-
-                <Dropdown id="cityDropdown" open={this.state.showDropdown} onToggle={(isOpen) =>{}} style={{width:"100%"}} onSelect={(eventKey, event)=>{this.setState({city:{id:eventKey.id,name:eventKey.name},showDropdown:false})}}>
+                <Dropdown id="cityDropdown" open={this.state.showDropdown} onToggle={(isOpen) =>{}} style={{width:"100%",display:"block"}} onSelect={(eventKey, event)=>{this.setState({city:{id:eventKey.id,name:eventKey.name},showDropdown:false})}}>
                   <CustomToggle bsRole="toggle"/>
-                  <Dropdown.Menu ref={(menu) => { this.dropdownMenu=menu;}} style={{top: "-10px", width:"100%"}} role="menu">
+                  <Dropdown.Menu ref={(menu) => { this.dropdownMenu=menu;}} style={{width:"100%"}} role="menu">
                     {this.state.formHelperData.cities.map((element) => {
                         return (
                           <MenuItem key={element.id} eventKey={{id:element.id, name:element.name}} >{element.name}</MenuItem>
@@ -207,6 +230,7 @@ export class CreateProductComponent extends Component{
                     })}
                   </Dropdown.Menu>
                 </Dropdown>
+                <HelpBlock>{this.state.cityError}</HelpBlock>
               </FormGroup>
 
               <FormGroup controlId="formPrice">
@@ -239,7 +263,6 @@ export class CreateProductComponent extends Component{
             <Button onClick={this.handleCreateProduct}  bsStyle="primary" bsSize="small">Create</Button>
           </Modal.Footer>
         </Modal>
-
 
     );
   }
