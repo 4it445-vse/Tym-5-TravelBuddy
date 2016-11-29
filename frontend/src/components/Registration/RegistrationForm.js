@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { DatePicker } from '../common/DatePicker/DatePicker.js';
 import { FormGroup, ControlLabel, FormControl, HelpBlock, OverlayTrigger,
   Popover, ButtonGroup, Button, Alert, Checkbox } from 'react-bootstrap';
-import moment from 'moment';
+// import moment from 'moment';
 import { Link } from 'react-router';
 
 import api from '../../api.js';
@@ -13,15 +13,24 @@ export class RegistrationForm extends Component {
     super(props);
 
     this.state = {
+      firstName: '',
+      lastName: '',
+      birthdate: '',
+      gender: '',
+      email: '',
+      password: '',
+      password2: '',
+      agreeToTerms: false,
+
       clientErrors: {},
       errors: {},
-      gender: '',
-      formSuccess: false,
-      agreeToTerms: false
+
+      formSuccess: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setAgreeOnTerms = this.setAgreeOnTerms.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   createPopover(text) {
@@ -45,6 +54,7 @@ export class RegistrationForm extends Component {
             <FormControl
               type={type}
               name={key}
+              onChange={this.handleInputChange}
             />
           );
         }
@@ -52,7 +62,7 @@ export class RegistrationForm extends Component {
           const popover = this.createPopover(desc);
           return (
             <OverlayTrigger trigger="focus" placement="right" overlay={popover} delay={100}>
-              <FormControl type={type} name={key} />
+              <FormControl type={type} name={key} onChange={this.handleInputChange}/>
             </OverlayTrigger>
           );
         }
@@ -62,6 +72,7 @@ export class RegistrationForm extends Component {
           <DatePicker
             type="birthdate"
             name="birthdate"
+            onChange={this.handleInputChange}
           />
         );
 
@@ -114,84 +125,43 @@ export class RegistrationForm extends Component {
     }
   }
 
-  formDataToJSON(formData) {
-    var json = {};
-    for(var pair of formData.entries()) {
-      if (pair[0] !== 'password2') {
-        json[pair[0]] = pair[1];
-      }
-    }
-    return json;
+  handleInputChange(event){
+        this.setState({[event.target.name] : event.target.value});
+        // console.log('--- state', this.state);
   }
 
   handleSubmit(event) {
     event.preventDefault();
 
-    const formData = new FormData(event.target);
+    let errors = {};
+
+    let formData = new FormData(event.target);
     formData.append('gender', this.state.gender);
 
-    var clientErrors = this.validateForm(formData);
-
-    if (Object.keys(clientErrors).length === 0) {
-      // const params = this.formDataToJSON(formData);
-      // console.log('---json formdata', params, this.agreeToTerms);
-
-      api.post('usermain', formData)
-      .then(({ data }) => {
-        console.log('---then data', data);
-        this.setState({ clientErrors: {} });
-        this.setState({formSuccess: true});
-      })
-      .catch(error => {
-        console.log('---catch response', error.response);
-        const errors = error.response.data.error.details.messages;
-        this.setState({ errors });
-      });
-      console.log('---form valid!');
+    if (!this.state.agreeToTerms) {
+      errors['agreeToTerms'] = "You must agree to terms of service!";
+      this.setState({ clientErrors: errors });
+    } else {
       this.setState({ clientErrors: {} });
     }
-    else {
-      this.setState({ clientErrors });
-    }
+
+    api.post('UserMain/submit', formData)
+    .then(response => {
+      console.log('--- post usermain ok');
+      this.setState({ clientErrors: {} });
+      this.setState({ errors: {} });
+      this.setState({ formSuccess: true });
+    })
+    .catch(error => {
+      const { response } = error;
+      const { errors } = response.data.error.details;
+      if (errors.password) {
+        Object.assign(errors, {"password2": true});
+      }
+      this.setState({ errors });
+      console.log('--- submit usermain failed', response);
+    });
   }
-
-  validateForm(formData) {
-    var errors = {};
-
-    var psw = formData.get('password');
-    var psw2 = formData.get('password2');
-    if (psw !== psw2) {
-    errors['password'] = "Passwords are not same!";
-    }
-    if (psw.length < 6) {
-    errors['password'] = "Password is too short!"
-    }
-
-    for (var pair of formData.entries()) {
-      if (pair[0] === 'email') {
-        const emailPattern = /(.+)@(.+){2,}\.(.+){2,}/;
-        if (!emailPattern.test(pair[1])) {
-          errors[pair[0]] = 'Enter a valid email';
-        }
-      }
-      if (!pair[1]) {
-      errors[pair[0]] = "Required!";
-      }
-
-      if (pair[0] === 'birthdate') {
-       if (moment(pair[1]).isSameOrAfter(new Date(), 'day')) {
-         errors[pair[0]] = 'Birthdate cannot be set in future!';
-       }
-      }
-    }
-
-    if (!this.state.agreeToTerms) {
-    errors['agreeToTerms'] = "You must agree to terms of service!";
-    }
-
-    return errors;
-  }
-
 
   render() {
     const fields = [
@@ -219,22 +189,25 @@ export class RegistrationForm extends Component {
               {fields.map(([key, label, type, desc, values]) => {
                   const clientErrorMsg = clientErrors[key] || [];
                   const errorMsg = errors[key] || [];
-                  var isValid = false;
+                  let isValid = false;
                   if (errorMsg.length || clientErrorMsg.length) {
                     isValid = false;
                   } else {
                     isValid = true;
+                  }
+                  if (errors[key] === true && key === "password2") {
+                    isValid = false;
                   }
                   return (
                     <FormGroup validationState={isValid ? undefined : "error" } key={key} controlId={key}>
                       <ControlLabel>{label}</ControlLabel>
                       {this.createField(type, key, desc, values)}
                       <FormControl.Feedback />
-                      <HelpBlock>{clientErrorMsg}{errorMsg}</HelpBlock>
+                      <HelpBlock>{errorMsg == "can't be blank" ? "Required!" : errorMsg}</HelpBlock>
                     </FormGroup>
                   );
               })}
-              <FormGroup>
+              <FormGroup validationState={this.state.agreeToTerms ? undefined : "error"}>
                 <Checkbox onChange={this.setAgreeOnTerms}>I agree with <strong><Link to="/terms">terms of service</Link></strong></Checkbox>
                 <HelpBlock>{clientErrors['agreeToTerms']}</HelpBlock>
               </FormGroup>

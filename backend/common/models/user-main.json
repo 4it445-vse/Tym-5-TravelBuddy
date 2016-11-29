@@ -107,5 +107,46 @@
       "permission": "ALLOW"
     }
   ],
-  "methods": {}
+  "methods": {
+    "submit": {
+      "accepts": [
+        {
+          "arg": "firstName",
+          "type": "string"
+        },
+        {
+          "arg": "lastName",
+          "type": "string"
+        },
+        {
+          "arg": "birthdate",
+          "type": "date"
+        },
+        {
+          "arg": "gender",
+          "type": "string"
+        },
+        {
+          "arg": "email",
+          "type": "string"
+        },
+        {
+          "arg": "password",
+          "type": "string"
+        },
+        {
+          "arg": "password2",
+          "type": "string"
+        }
+      ],
+      "returns": [],
+      "description": "Register a new user into application",
+      "http": [
+        {
+          "path": "/submit",
+          "verb": "post"
+        }
+      ]
+    }
+  }
 }
