@@ -65,15 +65,20 @@ body {
 .register {
   position: relative;
   margin: auto;
-  width: 50%;
+  width: 500px;
 }
-.register .block {
-  display: flex;
-}
-.register .form-horizontal .has-feedback .form-control-feedback {
-  top: 25px;
-  right: 0;
-}
+  .register .block {
+    display: flex;
+  }
+  .register .form-horizontal .has-feedback .form-control-feedback {
+    top: 25px;
+    right: 0;
+  }
+  .register .btn.btn-primary {
+    width: 50%;
+    margin: auto;
+    position: relative;
+  }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
