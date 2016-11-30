@@ -1,21 +1,16 @@
 import React, {Component} from 'react';
 import {FormGroup, FormControl, InputGroup, Glyphicon} from 'react-bootstrap';
-import { ItemList } from 'ItemList';
+import { ItemList } from './ItemList';
 import api from '../../../api';
 
 export class SearchSection extends Component {
     constructor(props) {
         super(props);
         this.state = {searchTerm: '',
-                    products: {},
-        };
-
+                    products: [],
+       };
         this.handleChange = this.handleChange.bind(this);
-    }
 
-
-    getSearchResult(searchText) {
-            api.get();
     }
 
     getValidationState() {
@@ -28,21 +23,58 @@ export class SearchSection extends Component {
         this.setState({searchTerm: event.target.value});
     }
 
+    fetchProductData(searchTerm){
 
+        if (searchTerm.length > 0){
+
+
+            api.get("/products", {params: this.paramsForSearchTerm(searchTerm)})
+                .then((response) =>{
+                    if (response.status === 200){
+                        this.setState({products: response.data});
+                    }
+                })
+                .catch((error) => {
+                    console.log("Error: ", error);
+                    console.log("Error: ", error.response);
+                });
+        }else{
+            this.setState({
+                products: []}
+                );
+        }
+    }
+
+    paramsForSearchTerm(searchTerm){
+        if (!searchTerm) return {};
+        else{
+            return {
+                filter:{
+                    where:{
+                        label:{
+                            like: "%"+searchTerm+"%"
+                        }
+                    },
+                    limit: 100
+                }
+            };
+        }
+    }
 
     render() {
         return (
             <div className="container">
-                <form>
-                    <FormGroup controlId="searchForm" validationState={this.getValidationState()}>
+                <form onSubmit={this.fetchProductData(this.state.searchTerm)}>
+                    <FormGroup role="form" controlId="searchForm" validationState={this.getValidationState()}>
                         <InputGroup>
                             <InputGroup.Addon><Glyphicon glyph="search"/></InputGroup.Addon>
                         <FormControl
                             type="text"
                             value={this.state.searchTerm}
                             placeholder="City, Product, Category, ...."
-                            onChange={this.handleChange} on/>
-                        <FormControl.Feedback/>
+                            onChange={this.handleChange}
+
+                        />
                         </InputGroup>
                     </FormGroup>
                </form>

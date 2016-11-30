@@ -94,8 +94,7 @@ export class LoginComponent extends Component{
               show={this.props.statusText ? true:false}//{this.state.show}
               target={ () => ReactDOM.findDOMNode(this.refs.submitTarget)}
               placement="bottom"
-              containerPadding={0}
-            >
+              containerPadding={0}            >
               <Popover id="popover-contained">
                 {this.props.statusText ? this.props.statusText : ""}
               </Popover>

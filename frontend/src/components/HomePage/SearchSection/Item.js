@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 
 
-export default class Item {
+export class Item extends Component{
     constructor(props) {
         super(props);
         this.state = {product: ''};
