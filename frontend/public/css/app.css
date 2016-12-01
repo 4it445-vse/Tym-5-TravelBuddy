@@ -97,12 +97,19 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
-
 }
 
 /* Custom CSS */
+.filterForm {
+  margin: 20px auto;
+}
+.resultSet {
+  margin: 50px auto;
+}
 
-
+.show-grid div {
+  padding: 3px;
+}
 .login-centered {
   padding-top: 10px;
   margin-right: 30px;

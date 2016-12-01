@@ -12,7 +12,7 @@ export class HomePage extends Component {
     super(props);
     this.state = {
       showWelcomeWizard: false
-    }
+    };
 
     // this.showModal = this.showModal.bind(this);
     this.handleShowWelcomeWizard();
@@ -60,7 +60,6 @@ export class HomePage extends Component {
           </div>
           <div className="ident-top marginBottom">
               <SearchSection/>
-              <TopPropositions/>
           </div> */}
           <PageFooter/>
       </div>
