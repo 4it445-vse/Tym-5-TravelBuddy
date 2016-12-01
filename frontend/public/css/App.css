@@ -105,11 +105,10 @@ body {
 }
 .resultSet {
   margin: 50px auto;
-  border: 1px solid black;
 }
-.resultSet .row div {
+
+.show-grid div {
   padding: 3px;
-  border: 1px solid black;
 }
 .login-centered {
   padding-top: 10px;

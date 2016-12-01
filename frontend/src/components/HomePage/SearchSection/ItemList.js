@@ -21,9 +21,11 @@ render () {
           </div>
             <Grid>
                 <Row>
-                    <Col sm={3} md={3} lg={3}>Label</Col>
+                    <Col sm={2} md={2} lg={2}>Label</Col>
                     <Col sm={3} md={3} lg={3}>Description</Col>
-                    <Col sm={3} md={3} lg={3}>Price</Col>
+                    <Col sm={2} md={2} lg={2}>Price</Col>
+                    <Col sm={2} md={2} lg={2}>Detail</Col>
+                    <Col sm={2} md={2} lg={2}>Buddy</Col>
                 </Row>
                     {productItems}
             </Grid>
