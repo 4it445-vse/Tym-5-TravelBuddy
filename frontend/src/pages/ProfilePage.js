@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { PageHeader } from '../components/HomePage/PageHeader/PageHeader';
 import { PageFooter} from '../components/common/PageFooter/PageFooter';
+import { EditProfile} from '../components/ProfilePage/EditProfile';
+import {ProfilePictureEditorComponent} from "../components/ProfilePictureEditor/ProfilePictureEditorComponent.js";
+
 
 export class ProfilePage extends Component {
   constructor(props){
@@ -18,7 +21,7 @@ export class ProfilePage extends Component {
       <div className="ident-top marginBottom">
           <div className="h3"> Welcome to your profile page.</div>
           <div>
-
+          <EditProfile/>
           </div>
       </div>
       <PageFooter/>
