@@ -12,11 +12,13 @@ module.exports = function(Container) {
          modelInstance.updateAttribute("profilePicture",modifiedfileName,(err,instance)=>{
            if(!err){
              next();
+           }else{
+             next(err);
            }
          });
+       }else{
+         next(err);
        }
      });
-
-    //next();
   });
 }

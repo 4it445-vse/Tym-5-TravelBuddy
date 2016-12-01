@@ -57,10 +57,11 @@ export default class WizardFormComponent extends Component {
 
     let reader = new FileReader();
     let file = event.target.files[0];
-    event.target.value = '';
+
     reader.onloadend = () => {
       this.refs.pictureEditor.show();
       this.refs.pictureEditor.setPicture(reader.result);
+      //console.log("loadend",reader.result);
     }
     reader.onabort = () =>{
       console.log("aborted-.");
@@ -89,8 +90,8 @@ export default class WizardFormComponent extends Component {
             <Image height="100px" width="100px" src={this.state.pictureURL ? this.state.pictureURL : "/images/profilePictureDefault.png"}  thumbnail/>
           </div>
           <div style={{display:"inline-block", margin:"10px"}}>
-            <input type={type} ref="fileInput" style={{display: "none"}} onChange={(e)=>this.handlePictureChange(e)} accept="image/*"/>
-            <Button type="submit" onClick={(e) => {e.preventDefault(); ReactDOM.findDOMNode(this.refs.fileInput).click();}}>
+            <input type={type} ref="fileInput" style={{display: "none"}} onChange={(e)=>this.handlePictureChange(e)} accept="image/*" autocomplete="off"/>
+            <Button type="submit" onClick={(e) => {e.preventDefault(); var input = ReactDOM.findDOMNode(this.refs.fileInput); input.click(); input.value = null;}}>
               Choose photo
             </Button>
 
@@ -162,7 +163,7 @@ export default class WizardFormComponent extends Component {
           Please fill in the following details that will be handy for other users considering you are a traveller or a buddy (however, you can skip this step and complete it later on your profile page, where you will also be able to upload some pictures).
           </div>
           <div>
-            <form  onSubmit={this.handleSubmit} style={{padding: "10px"}}>
+            <form autocomplete="off" onSubmit={this.handleSubmit} style={{padding: "10px"}}>
                 {fields.map(([key, label, type]) => {
                     return (
                       <FormGroup key={key} controlId={key}>
