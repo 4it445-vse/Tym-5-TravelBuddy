@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl, Form, Overlay, Popover } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
-import {loginAction} from "../../../actions";
+import {loginAction} from "../../actions";
 import { connect } from 'react-redux';
 //import {bindActionCreators} from "redux"
 //import { browserHistory } from 'react-router';
