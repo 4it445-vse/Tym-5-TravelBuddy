@@ -101,9 +101,11 @@ export class RegistrationForm extends Component {
 
   showAlert(type) {
     return (
-      <Alert bsStyle={type}>
-        <strong>Thank you for registering!</strong> Now visit your email inbox and proceed with verification link!
-      </Alert>
+      <div className="container">
+          <Alert bsStyle={type}>
+            <strong>Thank you for registering!</strong> Now visit your email inbox and proceed with verification link!
+          </Alert>
+      </div>
     );
   }
 

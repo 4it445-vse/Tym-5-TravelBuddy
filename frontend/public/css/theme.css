@@ -147,10 +147,50 @@ aside {
     color: #F05F40;
   }
 }
-/*Modal Component*/
+/*APP NAVBAR*/
+.homepage .navbar-default, .profile-page .navbar-default {
+  background: #f05f40;
+}
+/*LOGIN*/
+.login {
+
+}
+  .login input.form-control {
+    border-bottom: 1px rgba(255,255,255,0.7) solid;
+    color: #000;
+    font-size: 14px;
+  }
+  .login input.form-control:focus {
+    border-bottom: 1px rgba(255,255,255,0.7) solid;
+  }
+  .login ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+      color:    #000;
+  }
+  .login :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+     color:    #000;
+     opacity:  1;
+  }
+  .login ::-moz-placeholder { /* Mozilla Firefox 19+ */
+     color:    #000;
+     opacity:  1;
+  }
+  .login :-ms-input-placeholder { /* Internet Explorer 10-11 */
+     color:    #000;
+  }
+  .login .btn.btn-default {
+    margin: auto;
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+  }
+  .login .form-group {
+    padding-bottom: 20px;
+  }
+/*LOGIN MODAL*/
 .login-modal {
   position: absolute;
   right: 0;
+  top: 51px;
   padding: 20px 30px 20px 30px;
 }
   .login-modal.affix {
@@ -159,14 +199,13 @@ aside {
   .login-modal.affix-top {
     background: none;
   }
-  .login-modal input {
-    border: none;
-    outline: none;
-    background: none;
-    box-shadow: none;
-    border-radius: 0px;
+  .login-modal input.form-control {
     border-bottom: 1px rgba(255,255,255,0.7) solid;
     color: #000;
+    font-size: 14px;
+  }
+  .login-modal input.form-control:focus {
+    border-bottom: 1px rgba(255,255,255,0.7) solid;
   }
   .login-modal ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
       color:    #000;
@@ -276,6 +315,12 @@ footer {
     footer a.footer-brand:hover {
       text-decoration: none;
     }
+  footer .row.footer {
+
+  }
+    footer .row.footer a:hover {
+      color: #000;
+    }
 .section-heading {
   margin-top: 0;
 }
@@ -350,6 +395,12 @@ footer {
 }
 .text-primary {
   color: #F05F40;
+}
+.text-default {
+  color: #fff;
+}
+.text-align-left {
+  text-align: left;
 }
 .no-gutter > [class*='col-'] {
   padding-right: 0;
@@ -481,4 +532,51 @@ img::-moz-selection {
 }
 body {
   webkit-tap-highlight-color: #222222;
+}
+/* BOOTSTRAP OVERRIDE */
+.row.last {
+  margin-top: 50px;
+}
+.list-group-item {
+  background-color: transparent;
+  border: none;
+}
+  .list-group-item h4 {
+    color: #f05f40;
+  }
+label {
+  font-family: "Open Sans", Arial, sans-serif;
+  text-transform: uppercase;
+  font-size: 1.2em;
+}
+input.form-control {
+  background: none;
+  border: none;
+  border-radius: 0px;
+  outline: none;
+  border-bottom: 1px solid white;
+  padding: 0;
+  box-shadow: none;
+  color: #fff;
+  font-size: 1.3em;
+}
+input.form-control:focus {
+  box-shadow: none;
+  border-bottom-color: #f05f40;
+}
+.has-error input.form-control:focus {
+  box-shadow: none;
+}
+.form-group .btn-group {
+  padding-top: 5px;
+}
+.btn-default.active:focus {
+  border: none;
+}
+.btn-group .btn-default.active {
+  background: #f05f40;
+}
+a:hover {
+  cursor: pointer;
+  text-decoration: none;
 }

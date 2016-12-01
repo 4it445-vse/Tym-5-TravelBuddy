@@ -38,16 +38,30 @@ export class HomePage extends Component {
     }
 
     return (
-      <div>
+      <div id="main-wrapper" className="homepage">
           {welcomeWizard}
           <PageHeader/>
-          <div className="jumbotron">
+          <section className="no-padding" id="portfolio">
+          </section>
+
+          <aside className="bg-dark">
+              <div className="container">
+                  <div className="row">
+                    <SearchSection/>
+                  </div>
+              </div>
+          </aside>
+
+          <section className="bg-primary">
+              <TopPropositions/>
+          </section>
+          {/* <div className="jumbotron">
             <h1>Home page</h1>
           </div>
           <div className="ident-top marginBottom">
               <SearchSection/>
               <TopPropositions/>
-          </div>
+          </div> */}
           <PageFooter/>
       </div>
 

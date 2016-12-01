@@ -46,7 +46,7 @@ export const loginAction = (email, password) => (dispatch) => {
           var userId = response.data.userId;
           var token = response.data.id;
           dispatch(userLoggedInAction(token, userId));
-          //browserHistory.push('/');
+          browserHistory.push('/');
         }
       })
       .catch((error) => {

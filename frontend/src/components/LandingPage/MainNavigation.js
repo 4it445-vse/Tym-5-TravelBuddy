@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Affix } from 'react-overlays';
-import { Button, Collapse } from 'react-bootstrap';
+import { Button, Fade } from 'react-bootstrap';
 import Scroll from 'react-scroll';
-import { LoginComponent } from '../LoginComponent/LoginComponent.js';
+import { LoginComponentContainer } from '../LoginComponent/LoginComponent.js';
 
 const Link = Scroll.Link;
 
@@ -27,7 +27,7 @@ export class MainNavigation extends Component {
                     <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span className="sr-only">Toggle navigation</span> Menu <i className="fa fa-bars"></i>
                     </button>
-                    <a className="navbar-brand page-scroll" href="#page-top">TravelBuddy</a>
+                    <a className="navbar-brand page-scroll" href="/" onClick={() => {Scroll.animateScroll.scrollToTop(500)}}>TravelBuddy</a>
                 </div>
 
                 {/* <!-- Collect the nav links, forms, and other content for toggling --> */}
@@ -53,11 +53,11 @@ export class MainNavigation extends Component {
                 {/* <!-- /.navbar-collapse --> */}
             </div>
             {/* <!-- /.container-fluid --> */}
-            <Collapse in={this.state.open} className={`login-modal ${this.state.style}`} timeout="100">
+            <Fade in={this.state.open} className={`login-modal ${this.state.style}`} timeout="100">
               <div>
-                  <LoginComponent/>
+                  <LoginComponentContainer/>
               </div>
-            </Collapse>
+            </Fade>
         </nav>
       </Affix>
     );
