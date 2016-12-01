@@ -10,7 +10,7 @@ export class CreateProductComponent extends Component{
     super(props);
     this.state = {
       //form data---
-      show: false,
+      show: this.props.show,
       showDropdown: false,
       formHelperData: {
         categories: [],
