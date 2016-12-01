@@ -18,15 +18,18 @@ export class ProfilePictureEditorComponent extends Component{
   }
 
   handleSave(){
-    var canvas = this.refs.imgEditor.getImage(); // This is a HTMLCanvasElement.
+    //var canvas = this.refs.imgEditor.getImage(); // This is a HTMLCanvasElement.
     // It can be made into a data URL or a blob, drawn on another canvas, or added to the DOM.
-    let croppedImgURL = canvas.toDataURL('image/jpeg');
-      this.props.setPicture(null,croppedImgURL);
-      this.hide();
+    //let croppedImgURL = canvas.toDataURL('image/jpeg');
+
 
     // If you want the image resized to the canvas size (also a HTMLCanvasElement)
-    //var canvasScaled = this.refs.imgEditor.getImageScaledToCanvas();
+    var canvasScaled = this.refs.imgEditor.getImageScaledToCanvas();
+    let croppedImgURL = canvasScaled.toDataURL('image/jpeg');
     //console.log("canvasScaled",canvasScaled);
+
+    this.props.setPicture(null,croppedImgURL);
+    this.hide();
   }
 
   handleCancel(){
