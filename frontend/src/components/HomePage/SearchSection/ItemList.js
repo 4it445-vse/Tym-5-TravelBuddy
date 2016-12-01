@@ -1,17 +1,39 @@
 import React, { Component } from 'react';
-
-
-
+import { Item } from './Item';
+import { Grid, Row, Col} from 'react-bootstrap';
+import { FilterForm } from './FilterForm';
 export class ItemList extends Component{
 
 
 render () {
-    const products = this.props.products;
-    return (
-      <div className="alert alert-info">
+    const productItems = this.props.products.map((product) => {
+        return (
+              <Item key={product.id} product={product} />
+        );
 
-      </div>
-    );
+    });
+
+    if (productItems.length > 0) {
+      return (
+        <div>
+          <div className="filterForm">
+              <FilterForm/>
+          </div>
+            <Grid>
+                <Row>
+                    <Col sm={3} md={3} lg={3}>Label</Col>
+                    <Col sm={3} md={3} lg={3}>Description</Col>
+                    <Col sm={3} md={3} lg={3}>Price</Col>
+                </Row>
+                    {productItems}
+            </Grid>
+        </div>
+      );
+    } else {
+      return (
+          <Grid></Grid>
+      );
+    }
 
 
 }

@@ -1,44 +1,38 @@
 import React, {Component} from 'react';
-
-import {FormGroup, FormControl, InputGroup, Glyphicon} from 'react-bootstrap';
-import { ItemList } from './ItemList';
+import {Form, FormGroup, FormControl, InputGroup, Glyphicon, Button} from 'react-bootstrap';
+import {ItemList} from './ItemList';
 import api from '../../../api';
 
 export class SearchSection extends Component {
     constructor(props) {
         super(props);
-        this.state = {searchTerm: '',
-        products:[]};
+        this.state = {
+            searchTerm: '',
+            products: [],
+            errorMsg: ''
+        };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    getValidationState() {
-        const length = this.state.searchTerm.length;
-        if (length > 0) {
-            return 'success';
-        }
-        else {
-            return 'error';
-        }
-    }
-
-    handleChange(event) {
-        this.setState({searchTerm: event.target.value });
-
-    }
 
     handleSubmit(event) {
         event.preventDefault();
+        console.log(event);
 
-        if (event.keyPress == 13) {
-            alert('Enter has been pressed!');
+        if (this.state.searchTerm.length > 0) {
+            const searchTerm = this.state.searchTerm;
+            console.log(searchTerm);
+            this.fetchProductData(searchTerm);
+            console.log(this.state.products);
+
+            this.setState({searchTerm: ''});
+        } else {
+            this.setState({errorMsg: 'Enter searched text!'});
         }
 
-        this.setState({searchTerm : ''});
     }
-
 
     getValidationState() {
         const length = this.state.searchTerm.length;
@@ -50,13 +44,13 @@ export class SearchSection extends Component {
         this.setState({searchTerm: event.target.value});
     }
 
-    fetchProductData(searchTerm){
+    fetchProductData(searchTerm) {
 
-        if (searchTerm.length > 0){
+        if (searchTerm.length > 0) {
 
-            api.get("/products", {params: this.paramsForSearchTerm(searchTerm)})
-                .then((response) =>{
-                    if (response.status === 200){
+            api.get("/Products?access_token=" + localStorage.getItem("accessToken"), {params: this.paramsForSearchTerm(searchTerm)})
+                .then((response) => {
+                    if (response.status === 200) {
                         this.setState({products: response.data});
                     }
                 })
@@ -64,54 +58,60 @@ export class SearchSection extends Component {
                     console.log("Error: ", error);
                     console.log("Error: ", error.response);
                 });
-        }else{
+        } else {
             this.setState({
-                products: []}
-                );
+                    products: []
+                }
+            );
         }
     }
 
-    paramsForSearchTerm(searchTerm){
+    paramsForSearchTerm(searchTerm) {
         if (!searchTerm) return {};
-        else{
+        else {
             return {
-                filter:{
-                    where:{
-                        label:{
-                            like: "%"+searchTerm+"%"
-                        }
+                    filter: {
+                        where: {
+                            or: [
+                                {label: {like: "%" + searchTerm + "%"}},
+                                {description: {like: "%" + searchTerm + "%"}},
+                                {price: {like: "%" + searchTerm + "%"}}
+                            ]
+                        },
+                        fields: {
+                            id: true, label: true, description: true, price: true
+                        },
                     },
                     limit: 100
-                }
-            };
+                };
         }
     }
+
 
     render() {
         return (
             <div className="container">
-
-                <Form onSubmit={this.handleSubmit}>
+                <Form horizontal onSubmit={this.handleSubmit}>
                     <FormGroup controlId="searchForm" validationState={this.getValidationState()}>
-                        <ControlLabel>Search:</ControlLabel>
                         <InputGroup>
                             <InputGroup.Addon><Glyphicon glyph="search"/></InputGroup.Addon>
-                        <FormControl
-                            type="text"
-                            value={this.state.searchTerm}
-                            placeholder="City, Product, Category..."
-                            onChange={this.handleChange}
-                        />
+                            <FormControl
+                                type="text"
+                                value={this.state.searchTerm}
+                                placeholder="City, Product, Category..."
+                                onChange={this.handleChange}/>
+                            <InputGroup.Button>
+                                <Button type='submit' bsStyle="primary">Search</Button>
+                            </InputGroup.Button>
                         </InputGroup>
                     </FormGroup>
+
                 </Form>
 
 
-                <div className="resultSet">
                     <ItemList products={this.state.products}/>
-                </div>
-            </div>
 
+            </div>
         );
     }
 }

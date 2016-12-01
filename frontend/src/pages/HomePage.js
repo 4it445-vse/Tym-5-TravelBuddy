@@ -46,7 +46,6 @@ export class HomePage extends Component {
           </div>
           <div className="ident-top marginBottom">
               <SearchSection/>
-              <TopPropositions/>
           </div>
           <PageFooter/>
       </div>

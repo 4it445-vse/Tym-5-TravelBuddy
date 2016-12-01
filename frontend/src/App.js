@@ -11,6 +11,7 @@ import { createRoutes } from './createRoutes.js';
 
 import '../public/css/font-awesome.min.css';
 import '../public/css/bootstrap.min.css';
+import '../public/css/react-bootstrap-table-all.min.css';
 import '../public/css/App.css';
 
 // Import JavaScript
