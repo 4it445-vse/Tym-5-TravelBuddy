@@ -44,17 +44,17 @@ export class HomePage extends Component {
           <section className="no-padding" id="portfolio">
           </section>
 
-          <aside className="bg-dark">
+          <section className="bg-dark">
               <div className="container">
                   <div className="row">
                     <SearchSection/>
                   </div>
               </div>
-          </aside>
-
-          <section className="bg-primary">
-              <TopPropositions/>
           </section>
+
+          {/* <section className="bg-primary">
+              <TopPropositions/>
+          </section> */}
           {/* <div className="jumbotron">
             <h1>Home page</h1>
           </div>

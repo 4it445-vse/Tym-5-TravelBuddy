@@ -67,7 +67,7 @@ export class LandingPage extends Component {
                             <div className="col-lg-3 col-md-6 text-center">
                                 <div className="service-box">
                                     <i className="fa fa-4x fa-map-signs text-default sr-icons"></i>
-                                    <h3>Plan your trip</h3>
+                                    <h3>Plan Your Trip</h3>
                                     <p className="text-faded">Visiting new places, but not sure what is worthy to visit? Grab your buddy and find out!</p>
                                 </div>
                             </div>
