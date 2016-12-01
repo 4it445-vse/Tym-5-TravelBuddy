@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { Item } from './Item';
 import { Grid, Row, Col} from 'react-bootstrap';
 import { FilterForm } from './FilterForm';
-export class ItemList extends Component{
 
+
+
+export class ItemList extends Component {
 
 render () {
     const productItems = this.props.products.map((product) => {
         return (
               <Item key={product.id} product={product} />
         );
-
     });
 
     if (productItems.length > 0) {
@@ -33,10 +34,12 @@ render () {
       );
     } else {
       return (
-          <Grid></Grid>
+          <Grid>
+              <Row>
+                  <Col sm={12} md={12} lg={12}>No records have been found!</Col>
+              </Row>
+          </Grid>
       );
     }
-
-
 }
 }
