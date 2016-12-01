@@ -8,7 +8,7 @@ export class ProfilePictureEditorComponent extends Component{
     this.state = {
       sliderValue: 1.0,
       show: false,
-      pictureURL: "/images/profilePictureDefault.png"
+      pictureURL: null
     }
     this.handleSave = this.handleSave.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
