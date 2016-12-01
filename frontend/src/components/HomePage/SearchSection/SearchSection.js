@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {FormGroup, FormControl, ControlLabel, Form} from 'react-bootstrap';
+import { ItemList } from './'
 
-
-export default class SearchSection extends Component {
+export class SearchSection extends Component {
     constructor(props) {
         super(props);
-        this.state = {searchTerm: ''};
+        this.state = {searchTerm: '',
+        products:[]};
 
         this.handleChange = this.handleChange.bind(this);
-
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -34,7 +34,6 @@ export default class SearchSection extends Component {
             alert('Enter has been pressed!');
         }
 
-
         this.setState({searchTerm : ''});
     }
     render() {
@@ -50,11 +49,14 @@ export default class SearchSection extends Component {
                             placeholder="City, Product, Category..."
                             onChange={this.handleChange}
                         />
-                        <FormControl.Feedback />
-                        <HelpBlock>Search box cannot be empty!</HelpBlock>
                     </FormGroup>
                 </Form>
+
+                <div className="resultSet">
+                    <ItemList products={this.state.products}></ItemList>
+                </div>
             </div>
+
         );
     }
 }
