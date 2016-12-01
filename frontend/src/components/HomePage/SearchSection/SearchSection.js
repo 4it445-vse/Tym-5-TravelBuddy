@@ -1,40 +1,59 @@
 import React, {Component} from 'react';
-import {Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
+import {FormGroup, FormControl, ControlLabel, Form} from 'react-bootstrap';
 
 
-export class SearchSection extends Component {
+export default class SearchSection extends Component {
     constructor(props) {
         super(props);
+        this.state = {searchTerm: ''};
+
+        this.handleChange = this.handleChange.bind(this);
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    getValidationState() {
+        const length = this.state.searchTerm.length;
+        if (length > 0) {
+            return 'success';
+        }
+        else {
+            return 'error';
+        }
+    }
+
+    handleChange(event) {
+        this.setState({searchTerm: event.target.value });
 
     }
 
+    handleSubmit(event) {
+        event.preventDefault();
+
+        if (event.keyPress == 13) {
+            alert('Enter has been pressed!');
+        }
 
 
+        this.setState({searchTerm : ''});
+    }
     render() {
-        const fields = [
-            /*key, label, type, desc*/
-            ['location', 'Location', 'text', ''],
-            ['service', 'Service category', 'text', ''],
-            ['product', 'Product', 'text', ''],
-            ['price', 'Price ($)', 'text', ''],
-            ['rating', 'Rating', 'text', ''],
-        ];
 
         return (
             <div className="container">
-                <div className="h3">Search</div>
-                <form>
-                {fields.map(([key, label, type, desc]) => {
-                return (
-                    <div className="form-group">
-                        <label for="exampleInputEmail1">{label}</label>
-                        <input type={type} className="form-control" id="exampleInputEmail1" placeholder={label}/>
-
-                            </div>
-                   );})}
-
-                <Button type="submit" bsStyle="primary">Search!</Button>
-                </form>
+                <Form onSubmit={this.handleSubmit}>
+                    <FormGroup controlId="searchForm" validationState={this.getValidationState()}>
+                        <ControlLabel>Search:</ControlLabel>
+                        <FormControl
+                            type="text"
+                            value={this.state.searchTerm}
+                            placeholder="City, Product, Category..."
+                            onChange={this.handleChange}
+                        />
+                        <FormControl.Feedback />
+                        <HelpBlock>Search box cannot be empty!</HelpBlock>
+                    </FormGroup>
+                </Form>
             </div>
         );
     }

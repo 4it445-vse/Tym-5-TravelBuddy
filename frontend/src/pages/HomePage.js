@@ -11,7 +11,7 @@ export class HomePage extends Component {
     super(props);
     this.state = {
       showWelcomeWizard: false
-    }
+    };
 
     // this.showModal = this.showModal.bind(this);
     this.handleShowWelcomeWizard();
