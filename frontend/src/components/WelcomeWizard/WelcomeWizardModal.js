@@ -43,27 +43,52 @@ export class WelcomeWizardModal extends Component {
     event.preventDefault();
     console.log('--- wizard form', this._form.getFormData());
     // console.log('--- formData', event.target);
-    // console.log('--- localStorage', localStorage);
 
     var data = this._form.getFormData();
-    const userId = localStorage.userId;
 
-    console.log('--- profilePicture', data.profilePicture);
-    // api.post('/containers/profilePictures/upload', {file: data.profilePicture})
-    //   .then(({data})=>{
-    //     console.log('--- upload successful', data);
-    //   })
-    //   .catch((error) => {
-    //     console.log('<!> upload Failed', error);
-    //   });
-    this.saveUserDetail(userId, data);
-    this.setFalseIsFirstLogin(userId);
-
+    this.uploadProfilePicture(data);
+    this.saveUserDetail(data);
+    this.setFalseIsFirstLogin();
   }
 
-  saveUserDetail(userId, data) {
-    const srvUrl = '/UserMain/' + userId + '/userDetail?access_token=' + localStorage.accessToken;
-    api.post(srvUrl, data)
+  uploadProfilePicture(data){
+    if(data.pictureURL){
+
+      var blob = this.dataURLtoBlob(data.pictureURL);
+      var formData = new FormData();
+      var fileName = "profilePicture.jpg";
+      formData.append("imageFile",blob, fileName);
+
+      console.log('--- profilePicture');
+       api.post('/containers/profilePictures/upload?access_token=' + localStorage.accessToken, formData)
+         .then((data)=>{
+           console.log('--- upload successful', data);
+         })
+         .catch((error) => {
+           console.log('<!> upload Failed', error);
+         });
+
+    }
+  }
+
+  dataURLtoBlob(dataurl) {
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], {type:mime});
+  }
+
+  saveUserDetail(data) {
+    var dataToSend = {
+      bio:data.bio,
+      motto:data.motto,
+      refCountryId: data.country
+    }
+
+    const srvUrl = '/UserMain/me/userDetail?access_token=' + localStorage.accessToken;
+    api.post(srvUrl, dataToSend)
       .then(({data})=> {
         this.setState({show: false});
       })
@@ -73,8 +98,8 @@ export class WelcomeWizardModal extends Component {
       });
   }
 
-  setFalseIsFirstLogin(userId) {
-    const srvUrl = '/UserMain/' + userId + '?access_token=' + localStorage.accessToken;
+  setFalseIsFirstLogin() {
+    const srvUrl = '/UserMain/me?access_token=' + localStorage.accessToken;
     api.patch(srvUrl, {'isFirstLogin': false})
       .then(({data})=> {
         console.log('--- update isFirstLogin ok', data);
