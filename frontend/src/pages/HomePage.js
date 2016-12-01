@@ -49,10 +49,10 @@ export class HomePage extends Component {
           </div>
 
           <div className="ident-top marginBottom">
-              <CreateProductComponent show={this.state.showCreateProducts}/>
+              <CreateProductComponent show={this.state.showCreateProducts} ref="a"/>
               <div className="row">
                   <div className="col-lg-4 col-md-4 col-sm-4">
-                    <Button bsStyle="primary" onClick={(e) => this.setState({showCreateProducts: true})}>Add Product</Button>
+                    <Button bsStyle="primary" onClick={() => {this.refs.a.show()}}>Add Product</Button>
                   </div>
               </div>
 
