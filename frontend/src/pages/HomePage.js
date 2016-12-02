@@ -5,13 +5,14 @@ import { SearchSection } from '../components/HomePage/SearchSection/SearchSectio
 import { TopPropositions } from '../components/HomePage/TopPropositions/TopPropositions';
 import { WelcomeWizardModal } from '../components/WelcomeWizard/WelcomeWizardModal.js';
 import { CreateProductComponent } from "../components/CreateProduct/CreateProductComponent.js";
+import { Button } from 'react-bootstrap';
 import api from '../api.js';
 export class HomePage extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      showWelcomeWizard: false
+      showCreateProducts: false,
     };
 
     // this.showModal = this.showModal.bind(this);
@@ -58,9 +59,19 @@ export class HomePage extends Component {
           {/* <div className="jumbotron">
             <h1>Home page</h1>
           </div>
+
           <div className="ident-top marginBottom">
+              <CreateProductComponent show={this.state.showCreateProducts} ref="a"/>
+              <div className="row">
+                  <div className="col-lg-4 col-md-4 col-sm-4">
+                    <Button bsStyle="primary" onClick={() => {this.refs.a.show()}}>Add Product</Button>
+                  </div>
+              </div>
+
+              <div className="row">
               <SearchSection/>
-          </div> */}
+              </div>
+          </div>
           <PageFooter/>
       </div>
 
