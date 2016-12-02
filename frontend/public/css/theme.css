@@ -151,6 +151,10 @@ aside {
 .homepage .navbar-default, .profile-page .navbar-default {
   background: #f05f40;
 }
+/*PROFILE PAGE*/
+.profile-page form {
+  color: black;
+}
 /*LOGIN*/
 .login {
 
