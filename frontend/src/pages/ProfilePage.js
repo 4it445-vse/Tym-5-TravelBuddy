@@ -6,25 +6,31 @@ import {ProfilePictureEditorComponent} from "../components/ProfilePictureEditor/
 
 
 export class ProfilePage extends Component {
-  constructor(props){
-    super(props);
-  }
-
 
   render() {
     return (
       <div id="main-wrapper" className="profile-page">
-      <PageHeader/>
-      <div className="jumbotron">
-          <h1>Profile page</h1>
-      </div>
-      <div className="ident-top marginBottom">
-          <div className="h3"> Welcome to your profile page.</div>
-          <div>
-          <EditProfile/>
+        <PageHeader/>
+        {/* profile info */}
+        <section>
+          <div className="container">
+            <div className="col-lg-4">
+              {/* placeholder */}
+              <img src="http://www.howtowriteacv.guru/wp-content/uploads/2016/02/cv-icon-3.png"/>
+              <ProfilePictureEditorComponent/>
+            </div>
+            <div className="col-lg-8">
+              <EditProfile/>
+            </div>
+
           </div>
-      </div>
-      <PageFooter/>
+        </section>
+        {/* products */}
+        <section>
+
+        </section>
+        {/* comments */}
+        <PageFooter/>
       </div>
     );
   }

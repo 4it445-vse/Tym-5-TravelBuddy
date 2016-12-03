@@ -32,17 +32,16 @@ export class HomePage extends Component {
   }
 
   render() {
+    let welcomeWizard = undefined;
     if(this.state.showWelcomeWizard) {
-      var welcomeWizard = <WelcomeWizardModal steps={2}/>;
-    } else {
-      var welcomeWizard = undefined;
+      welcomeWizard = <WelcomeWizardModal steps={2}/>;
     }
 
     return (
       <div id="main-wrapper" className="homepage">
           {welcomeWizard}
           <PageHeader/>
-          <section className="no-padding" id="portfolio">
+          <section className="no-padding">
           </section>
 
           <section className="bg-dark">

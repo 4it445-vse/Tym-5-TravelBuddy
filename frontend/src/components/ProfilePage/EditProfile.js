@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     FormGroup,
     ControlLabel,
@@ -13,21 +13,15 @@ import {
     Image
 } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
-import {ProfilePictureEditorComponent} from "../ProfilePictureEditor/ProfilePictureEditorComponent.js";
+import { ProfilePictureEditorComponent } from "../ProfilePictureEditor/ProfilePictureEditorComponent.js";
 import api from '../../api.js';
-import {DatePicker} from '../common/DatePicker/DatePicker.js';
+import { DatePicker } from '../common/DatePicker/DatePicker.js';
 import moment from 'moment';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 
 export class EditProfile extends Component {
     constructor(props) {
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
-        //vypnuto pro potreby ladeni validace
-        //  this.handlePictureChange = this.handlePictureChange.bind(this);
-        //    this.setPicture = this.setPicture.bind(this);
-        this.handleCountryChange = this.handleCountryChange.bind(this);
         this.state = {
             //  pictureBLOB: null, // so far this is always null!
             //  profilePicture: null,
@@ -47,6 +41,12 @@ export class EditProfile extends Component {
             countryName: {},
             formSuccess: false
         };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+        //vypnuto pro potreby ladeni validace
+        //  this.handlePictureChange = this.handlePictureChange.bind(this);
+        //    this.setPicture = this.setPicture.bind(this);
+        this.handleCountryChange = this.handleCountryChange.bind(this);
         this.loadUserMain();
         this.loadUserDetail();
         //this.loadUserCountry();
@@ -355,9 +355,7 @@ export class EditProfile extends Component {
         const {clientErrors} = this.state;
         const {errors} = this.state;
         return (
-            <div class="col-md-1" style={{
-                margin: "auto"
-            }}>
+            <div>
                 <ProfilePictureEditorComponent container={this.props.modal} ref="pictureEditor" setPicture={this.setPicture}/>
                 <div>
                     <form onSubmit={this.handleSubmit} style={{

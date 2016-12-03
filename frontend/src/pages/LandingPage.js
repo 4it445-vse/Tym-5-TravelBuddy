@@ -160,9 +160,7 @@ export class LandingPage extends Component {
                 </section>
                 <Collapse in={this.state.open}>
                     <section className="bg-dark" id="register">
-                        <div className="row">
-                            <RegistrationForm/>
-                        </div>
+                        <RegistrationForm/>
                     </section>
                 </Collapse>
             </Element>

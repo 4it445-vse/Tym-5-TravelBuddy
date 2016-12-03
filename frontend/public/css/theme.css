@@ -148,9 +148,19 @@ aside {
   }
 }
 /*APP NAVBAR*/
-.homepage .navbar-default, .profile-page .navbar-default {
+.navbar.navbar-app {
   background: #f05f40;
 }
+  @media (min-width: 768px) {
+    .navbar-app .nav > li > a, .navbar-app .nav > li > a:focus {
+      color: #fff;
+    }
+  }
+  @media (min-width: 768px) {
+    .navbar-app .nav > li > a:hover, .navbar-app .nav > li > a:focus:hover {
+      color: rgba(255,255,255,0.7);
+    }
+  }
 /*PROFILE PAGE*/
 .profile-page form {
   color: black;
