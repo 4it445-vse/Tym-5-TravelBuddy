@@ -6,7 +6,10 @@ import { FilterForm } from './FilterForm';
 
 
 export class ItemList extends Component {
-
+constructor(props) {
+    super (props);
+    this.state = {firstSearch: false}
+}
 render () {
     const productItems = this.props.products.map((product) => {
         return (
@@ -22,24 +25,33 @@ render () {
           </div>
             <Grid>
                 <Row>
+                    <Col sm={2} md={2} lg={2}>City</Col>
                     <Col sm={2} md={2} lg={2}>Label</Col>
-                    <Col sm={3} md={3} lg={3}>Description</Col>
                     <Col sm={2} md={2} lg={2}>Price</Col>
                     <Col sm={2} md={2} lg={2}>Detail</Col>
-                    <Col sm={2} md={2} lg={2}>Buddy</Col>
+                    <Col sm={2} md={2} lg={2}>Reply</Col>
                 </Row>
                     {productItems}
             </Grid>
         </div>
       );
-    } else {
+    } else if(this.state.firstSearch == false){
+        this.setState({firstSearch:true});
       return (
           <Grid>
               <Row>
-                  <Col sm={12} md={12} lg={12}>No records have been found!</Col>
+                  <Col sm={12} md={12} lg={12}>Type keyword you desire to search!</Col>
               </Row>
           </Grid>
       );
+    } else {
+        return (
+        <Grid>
+            <Row>
+                <Col sm={12} md={12} lg={12}>No records have been found!</Col>
+            </Row>
+        </Grid>
+        );
     }
 }
 }

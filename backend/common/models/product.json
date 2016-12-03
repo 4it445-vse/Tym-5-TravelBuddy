@@ -37,9 +37,6 @@
     },
     "refTimeOut": {
       "type": "number"
-    },
-    "refCityId": {
-      "type": "number"
     }
   },
   "validations": [],
@@ -60,6 +57,11 @@
       "type": "hasOne",
       "model": "TimeUnit",
       "foreignKey": "refTimeUnit"
+    },
+    "productCity": {
+      "type": "belongsTo",
+      "model": "City",
+      "foreignKey": "refCityId"
     }
   },
   "acls": [

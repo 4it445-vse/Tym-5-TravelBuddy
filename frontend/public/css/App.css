@@ -122,12 +122,18 @@ body {
   margin-right: 5px;
 }
 
+.offerButton {
+  display: flex;
+  justify-content: center;
+  margin: 25px auto;
+}
+
 .bgwhite {
   background-color: #fff !important;
 }
 
 .ident-top {
-  margin-top: 30px;
+  margin-top: 50px;
 }
 .ident-top-sm{
   padding-top:10px;

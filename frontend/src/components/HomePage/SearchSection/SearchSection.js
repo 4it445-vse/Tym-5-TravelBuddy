@@ -10,6 +10,7 @@ export class SearchSection extends Component {
             searchTerm: '',
             products: [],
             errorMsg: ''
+
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -51,6 +52,7 @@ export class SearchSection extends Component {
             api.get("/Products?access_token=" + localStorage.getItem("accessToken"), {params: this.paramsForSearchTerm(searchTerm)})
                 .then((response) => {
                     if (response.status === 200) {
+                        console.log("Response data",response.data);
                         this.setState({products: response.data});
                     }
                 })
@@ -66,21 +68,37 @@ export class SearchSection extends Component {
         }
     }
 
+    secondLevelFiltering(firstLevelProducts,searchTerm) {
+       var secondLevel = firstLevelProducts;
+            for (var product of secondLevel) {
+               if(product.productCity.name) {
+
+               }
+
+        }
+
+       this.setState({products: secondLevel})
+    }
+
     paramsForSearchTerm(searchTerm) {
         if (!searchTerm) return {};
         else {
             return {
                     filter: {
+                        include: [
+                            {relation: 'productCity', scope: {fields:['name']}},
+                            {relation: 'productProductCategories'}
+                        ],
                         where: {
                             or: [
                                 {label: {like: "%" + searchTerm + "%"}},
                                 {description: {like: "%" + searchTerm + "%"}},
-                                {price: {like: "%" + searchTerm + "%"}}
+                                {price: {like: "%" + searchTerm + "%"}},
                             ]
                         },
-                        fields: {
+                       /* fields: {
                             id: true, label: true, description: true, price: true
-                        },
+                        },*/
                     },
                     limit: 100
                 };
@@ -98,7 +116,7 @@ export class SearchSection extends Component {
                             <FormControl
                                 type="text"
                                 value={this.state.searchTerm}
-                                placeholder="City, Product, Category..."
+                                placeholder="City..."
                                 onChange={this.handleChange}/>
                             <InputGroup.Button>
                                 <Button type='submit' bsStyle="primary">Search</Button>
