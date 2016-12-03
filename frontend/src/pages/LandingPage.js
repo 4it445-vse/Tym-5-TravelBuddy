@@ -23,9 +23,9 @@ export class LandingPage extends Component {
   render() {
 
     const faq = [
-      ['Is application free?', 'Yes, every feature is accessible to everyone without any payment.'],
-      ['Is it world-wide?', 'We are covering whole world, you can find buddy almost everywhere.'],
-      ['How can I become a buddy?', 'You need to register yourself first, than enter your profile page and create offfer. That makes you a buddy.']
+      ['1', 'Is application free?', 'Yes, every feature is accessible to everyone without any payment.'],
+      ['2', 'Is it world-wide?', 'We are covering whole world, you can find buddy almost everywhere.'],
+      ['3', 'How can I become a buddy?', 'You need to register yourself first, than enter your profile page and create offfer. That makes you a buddy.']
     ];
 
     return (
@@ -114,7 +114,7 @@ export class LandingPage extends Component {
                         <div className="row">
                             <div className="col-lg-8 col-lg-offset-2">
                                 <ListGroup>
-                                {faq.map(([question, answer]) => {
+                                {faq.map(([key, question, answer]) => {
                                   return (
                                     <ListGroupItem header={question}>{answer}</ListGroupItem>
                                   );
@@ -159,7 +159,7 @@ export class LandingPage extends Component {
                     </div>
                 </section>
                 <Collapse in={this.state.open}>
-                    <section className="bg-dark">
+                    <section className="bg-dark" id="register">
                         <div className="row">
                             <RegistrationForm/>
                         </div>

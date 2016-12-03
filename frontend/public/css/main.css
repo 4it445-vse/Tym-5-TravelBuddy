@@ -90,6 +90,9 @@ body {
   .register .btn-group .btn-default {
     padding: 6px 20px;
   }
+  .register input {
+    color: #fff;
+  }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

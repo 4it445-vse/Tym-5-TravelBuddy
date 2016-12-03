@@ -72,6 +72,13 @@ export class DatePicker extends Component {
   clickedInside = false;
   clickTimeout = null;
 
+  getFormData() {
+    return {
+      selectedDay: this.state.selectedDay,
+      value: this.state.value
+    };
+  }
+
   handleContainerMouseDown() {
     this.clickedInside = true;
     this.clickTimeout = setTimeout(() => {

@@ -72,7 +72,7 @@ export class HomePage extends Component {
               <SearchSection/>
               </div>
           </div>
-          <PageFooter/>
+          <PageFooter/>*/}
       </div>
 
 
