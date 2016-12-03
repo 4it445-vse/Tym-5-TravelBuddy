@@ -12,7 +12,7 @@ export class HomePage extends Component {
         super(props);
         this.state = {
             showWelcomeWizard: false,
-            showCreateProducts: false,
+      showCreateProducts: false,
         };
 
         // this.showModal = this.showModal.bind(this);
@@ -39,25 +39,41 @@ export class HomePage extends Component {
             welcomeWizard = undefined;
         }
 
-
         return (
-            <div>
+      <div id="main-wrapper" className="homepage">
                 {welcomeWizard}
                 <PageHeader/>
-                <div className="ident-top marginBottom">
-                    <CreateProductComponent ref="a"/>
-                        <div className="container">
-                            <div className="row">
-                                <div className="offerButton">
-                                    <Button bsStyle="success" onClick={() => {
-                                        this.refs.a.show()
-                                    }}>Offer Product</Button>
-                                </div>
-                            </div>
-                        </div>
+          <section className="no-padding" id="portfolio">
+          </section>
+
+          <section className="bg-dark">
+              <div className="container">
+                  <div className="row">
                     <SearchSection/>
-                </div>
-                <PageFooter/>
+                  </div>
+              </div>
+          </section>
+
+          {/* <section className="bg-primary">
+              <TopPropositions/>
+          </section> */}
+          {/* <div className="jumbotron">
+            <h1>Home page</h1>
+          </div>
+
+          <div className="ident-top marginBottom">
+              <CreateProductComponent show={this.state.showCreateProducts} ref="a"/>
+              <div className="row">
+                  <div className="col-lg-4 col-md-4 col-sm-4">
+                    <Button bsStyle="primary" onClick={() => {this.refs.a.show()}}>Add Product</Button>
+                  </div>
+              </div>
+
+              <div className="row">
+              <SearchSection/>
+              </div>
+          </div>
+          <PageFooter/>*/}
             </div>
 
 

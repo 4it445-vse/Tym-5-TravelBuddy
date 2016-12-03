@@ -7,11 +7,17 @@ const {
   VERIFY_EMAIL_REDIRECT
 } = process.env;
 
+const MAX_PASSWORD_LENGTH = 32;
+
 module.exports = function(Usermain) {
 
-  Usermain.validatesPresenceOf('gender', 'birthdate');
+  //This actually seeks to do nothing despite doc description
+  Usermain.validatesPresenceOf('gender', 'birthdate', 'password');
 
-  Usermain.submit = function(firstName, lastName, birthdate, gender, email, password, password2, callback) {
+  Usermain.submit = function(
+      firstName, lastName, birthdate, gender, email, password, password2,
+      agreeToTerms, callback
+    ) {
 
     const user = Usermain({
       firstName,
@@ -20,7 +26,8 @@ module.exports = function(Usermain) {
       gender,
       email,
       password,
-      password2
+      password2,
+      agreeToTerms
     });
 
     user.isValid(userIsValid => {
@@ -29,8 +36,12 @@ module.exports = function(Usermain) {
       console.log('--- user valid', userIsValid);
       if (!userIsValid) {
         anyErrors = true;
+        console.log('--- errors', user.errors);
         Object.assign(errors, user.errors);
       }
+
+      Object.assign(errors, Usermain.validatePassword(password));
+
       if (password !== password2) {
         Object.assign(errors, {password: ['Passwords are not same!']});
       }
@@ -47,8 +58,15 @@ module.exports = function(Usermain) {
           Object.assign(errors, {email: ['Enter a valid email!']});
         }
       }
-      if (!birthdate) {
-        Object.assign(errors, {birthdate: ['Please enter your birthdate!']});
+      if (!agreeToTerms) {
+        Object.assign(errors, {agreeToTerms: ['You must agree to terms!']});
+      }
+      //TODO this is stupid workaround to get date validation working. Frontend
+      //sends date 01-01-1001 indicating error, which is still valid date and real
+      //error is created here. It could be validates Frontend-only but this is preparation
+      //for backend-only solution
+      if (birthdate < Date.parse("12/31/1001")) {
+        Object.assign(errors, {birthdate: ['Enter a valid birthdate!']});
       }
 
       if (anyErrors) {
@@ -65,6 +83,34 @@ module.exports = function(Usermain) {
       callback(null, { user });
     });
   };
+
+  /*
+   * override built-in user model function
+   */
+  Usermain.validatePassword = function(plain) {
+    var err;
+    if (plain && typeof plain === 'string' && plain.length <= MAX_PASSWORD_LENGTH) {
+      return;
+    }
+    if (!plain || plain == undefined) {
+      return {password: ['Required']};
+    }
+    if (plain.length > MAX_PASSWORD_LENGTH) {
+      return {password: ['Password is too long!']};
+    }
+  };
+
+  // Usermain.observe('before save', function beforeSaveUsermainValidation(ctx, next) {
+  //   console.log('--- op hook before save fired', ctx);
+  // });
+
+  Usermain.beforeRemote('submit', function(ctx, unused, next) {
+    console.log('---beforeRemote submit fired', ctx.args);
+    if (ctx.args.birthdate === "Invalid Date") {
+      ctx.args.birthdate = "01-01-1000";
+    }
+    next();
+  });
 
   /*
    * send verification email after registration

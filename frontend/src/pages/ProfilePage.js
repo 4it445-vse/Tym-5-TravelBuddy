@@ -13,7 +13,7 @@ export class ProfilePage extends Component {
 
   render() {
     return (
-      <div>
+      <div id="main-wrapper" className="profile-page">
       <PageHeader/>
       <div className="jumbotron">
           <h1>Profile page</h1>

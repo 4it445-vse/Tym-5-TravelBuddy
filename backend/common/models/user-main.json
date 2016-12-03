@@ -150,6 +150,10 @@
         {
           "arg": "password2",
           "type": "string"
+        },
+        {
+          "arg": "agreeToTerms",
+          "type": "boolean"
         }
       ],
       "returns": [],

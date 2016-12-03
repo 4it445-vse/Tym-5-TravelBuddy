@@ -18,7 +18,7 @@ export class LogoutComponent extends Component{
 
   render(){
     return(
-      <p onClick={this.handleClick}>Logout</p>
+      <a onClick={this.handleClick}>Logout</a>
     );
   }
 }

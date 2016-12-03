@@ -61,7 +61,7 @@ export class EditProfile extends Component {
 
     loadUserMain() {
         const userId = localStorage.userId;
-        const srvUrl = '/UserMain/' + userId;
+        const srvUrl = '/UserMain/' + userId + '?access_token=' + localStorage.accessToken;
         api.get(srvUrl).then((response) => {
             if (response.status === 200) {
                 var keys = ["lastName", "firstName", "birthdate", "email"];
@@ -81,7 +81,7 @@ export class EditProfile extends Component {
 
     loadUserDetail() {
         const userId = localStorage.userId;
-        const srvUrl = '/UserMain/' + userId + '/userDetail';
+        const srvUrl = '/UserMain/' + userId + '/userDetail?access_token=' + localStorage.accessToken;
         api.get(srvUrl).then((response) => {
             if (response.status === 200) {
                 var keys = ["phone", "skype", "facebook", "bio", "motto"];

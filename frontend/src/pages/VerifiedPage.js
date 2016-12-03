@@ -1,24 +1,40 @@
 import React, { Component } from 'react';
 import { Alert, Button } from 'react-bootstrap';
-import { Link } from 'react-router';
+import { LoginComponentContainer } from '../components/LoginComponent/LoginComponent.js';
 
 export class VerifiedPage extends Component {
+
+  constructor(props) {
+    super(props);
+  }
 
   render() {
 
     const wellStyles = {maxWidth: '100%', margin: '0 auto 10px'};
 
     return (
-      <div>
-        <div className="jumbotron">
-          <h1>Thank you!</h1>
-        </div>
-        <Alert bsStyle="success">
-          <strong>Now you can login into app!</strong> Follow the link below!
-        </Alert>
-        <div className="well" style={wellStyles}>
-          <Link to="/"><Button bsStyle="primary" bsSize="large" block>Sign in!</Button></Link>
-        </div>
+      <div id="main-wrapper" class="verified-page">
+        <header>
+            <div className="header-content">
+              <div className="row">
+                <div className="col-lg-4">
+                  <Alert bsStyle="success">
+                    <strong>Now you can login into app!</strong> Follow the link below!
+                  </Alert>
+                  <div className="well bg-primary login" style={wellStyles}>
+                    <LoginComponentContainer/>
+                  </div>
+                </div>
+                <div className="col-lg-8">
+                  <div className="header-content-inner">
+                      <h1 id="homeHeading">Travel Buddy</h1>
+                      <hr/>
+                      <p>TravelBuddy helps travellers to connect with locals and provide them unique experience in discovering!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </header>
       </div>
     );
   }

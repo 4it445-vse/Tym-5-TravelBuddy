@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { DatePicker } from '../common/DatePicker/DatePicker.js';
 import { FormGroup, ControlLabel, FormControl, HelpBlock, OverlayTrigger,
   Popover, ButtonGroup, Button, Alert, Checkbox } from 'react-bootstrap';
-// import moment from 'moment';
 import { Link } from 'react-router';
 
 import api from '../../api.js';
@@ -15,6 +14,9 @@ export class RegistrationForm extends Component {
     this.state = {
       firstName: '',
       lastName: '',
+      //birthdate is reffered from Daypicker component and fetched into formData
+      //on submit, so it is not actually setting state on onChange event.
+      //So that means this property is not neccessary
       birthdate: '',
       gender: '',
       email: '',
@@ -72,7 +74,7 @@ export class RegistrationForm extends Component {
           <DatePicker
             type="birthdate"
             name="birthdate"
-            onChange={this.handleInputChange}
+            ref={(form) => { this._form = form; }}
           />
         );
 
@@ -94,6 +96,11 @@ export class RegistrationForm extends Component {
           </ButtonGroup>
         );
 
+      case 'checkbox-terms':
+        return (
+          <Checkbox name={key} onChange={this.setAgreeOnTerms}>I agree with <strong><Link to="/terms">terms of service</Link></strong></Checkbox>
+        );
+
       default:
         return {};
     }
@@ -101,9 +108,11 @@ export class RegistrationForm extends Component {
 
   showAlert(type) {
     return (
-      <Alert bsStyle={type}>
-        <strong>Thank you for registering!</strong> Now visit your email inbox and proceed with verification link!
-      </Alert>
+      <div className="container">
+          <Alert bsStyle={type}>
+            <strong>Thank you for registering!</strong> Now visit your email inbox and proceed with verification link!
+          </Alert>
+      </div>
     );
   }
 
@@ -135,14 +144,26 @@ export class RegistrationForm extends Component {
 
     let errors = {};
 
-    let formData = new FormData(event.target);
-    formData.append('gender', this.state.gender);
+    // let formData = new FormData(event.target);
+    // formData.append('gender', this.state.gender);
 
-    if (!this.state.agreeToTerms) {
-      errors['agreeToTerms'] = "You must agree to terms of service!";
-      this.setState({ clientErrors: errors });
-    } else {
-      this.setState({ clientErrors: {} });
+    let birthdate = this._form.getFormData().selectedDay;
+
+    //TODO workaround for backend, if date is not date send dummy date to tell
+    // backend that date is wrong
+    if (!birthdate || !Date.parse(birthdate)) {
+      birthdate = "01-01-1001";
+    }
+
+    let formData = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      birthdate: birthdate,
+      gender: this.state.gender,
+      email: this.state.email,
+      password: this.state.password,
+      password2: this.state.password2,
+      agreeToTerms: this.state.agreeToTerms
     }
 
     api.post('UserMain/submit', formData)
@@ -161,6 +182,7 @@ export class RegistrationForm extends Component {
       this.setState({ errors });
       console.log('--- submit usermain failed');
     });
+
   }
 
   render() {
@@ -172,7 +194,8 @@ export class RegistrationForm extends Component {
       ['gender', 'Your gender', 'radio-gender', '', ['Male', 'Female']],
       ['email', 'Your email', 'text', 'Enter valid email. You will use it for login and password reset'],
       ['password', 'Password', 'password', 'At least 6 characters long'],
-      ['password2', 'Re-enter your password', 'password']
+      ['password2', 'Re-enter your password', 'password'],
+      ['agreeToTerms', '', 'checkbox-terms', '']
     ];
 
     const { clientErrors } = this.state;
@@ -203,14 +226,10 @@ export class RegistrationForm extends Component {
                       <ControlLabel>{label}</ControlLabel>
                       {this.createField(type, key, desc, values)}
                       <FormControl.Feedback />
-                      <HelpBlock>{errorMsg === "can't be blank" ? "Required!" : errorMsg}</HelpBlock>
+                      <HelpBlock>{errorMsg == "can't be blank" ? "Required!" : errorMsg}</HelpBlock>
                     </FormGroup>
                   );
               })}
-              <FormGroup validationState={this.state.agreeToTerms ? undefined : "error"}>
-                <Checkbox onChange={this.setAgreeOnTerms}>I agree with <strong><Link to="/terms">terms of service</Link></strong></Checkbox>
-                <HelpBlock>{clientErrors['agreeToTerms']}</HelpBlock>
-              </FormGroup>
               <Button type="submit" bsStyle="primary" bsSize="large" block>Register!</Button>
           </form>
         </div>

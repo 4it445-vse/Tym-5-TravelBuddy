@@ -9,9 +9,8 @@ import { createRoutes } from './createRoutes.js';
 // Import CSS styles
 
 
-import '../public/css/font-awesome.min.css';
-import '../public/css/bootstrap.min.css';
-import '../public/css/App.css';
+
+
 
 // Import JavaScript
 

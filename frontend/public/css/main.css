@@ -1,9 +1,17 @@
-
-
+/* TravelBuddy Custom styling */
+#root {
+  height: 100%;
+}
+#main {
+  height: 100%;
+}
+#main-wrapper {
+  height: 100%;
+}
 /* Space out content a bit */
 body {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  /*padding-top: 20px;
+  padding-bottom: 20px;*/
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -28,15 +36,15 @@ body {
 
 /* Custom page footer */
 .footer {
-  padding-top: 19px;
+  /*padding-top: 19px;
   color: #777;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e5e5e5;*/
 }
 
 /* Customize container */
 @media (min-width: 768px) {
   .container {
-    max-width: 730px;
+    /*max-width: 730px;*/
   }
 }
 .container-narrow > hr {
@@ -79,6 +87,12 @@ body {
     margin: auto;
     position: relative;
   }
+  .register .btn-group .btn-default {
+    padding: 6px 20px;
+  }
+  .register input {
+    color: #fff;
+  }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
@@ -97,20 +111,13 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+
 }
 
 /* Custom CSS */
-.filterForm {
-  margin: 20px auto;
-}
-.resultSet {
-  margin: 50px auto;
-}
 
-.show-grid div {
-  padding: 3px;
-}
-.login-centered {
+
+/*.login-centered {
   padding-top: 10px;
   margin-right: 30px;
   padding-left: 5px;
@@ -189,11 +196,11 @@ body {
 .panel-body {
 height:250px;
 }
-
+*/
 /* necesary for contained modal component*/
-.modal-container {
+/*.modal-container {
   position: relative;
 }
 .modal-container .modal, .modal-container .modal-backdrop {
   position: absolute;
-}
+}*/
