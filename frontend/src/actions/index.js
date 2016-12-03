@@ -6,7 +6,6 @@ import { browserHistory } from 'react-router';
 export const ACTION_TYPE_LOGGED_IN = 'ACTION_TYPE_LOGGED_IN';
 export const ACTION_TYPE_LOG_OUT = 'ACTION_TYPE_LOG_OUT';
 export const ACTION_TYPE_LOG_IN_FAILED = 'ACTION_TYPE_LOG_IN_FAILED';
-export const SEARCH_PRODUCTS = 'SEARCH_PRODUCTS';
 
 //implement actions
 export const userLoggedInAction = (accessToken, userId) => {
@@ -21,40 +20,11 @@ export const userLoggedInAction = (accessToken, userId) => {
   };
 }
 
-export const searchProducts = (searchTerm) => {
-  let request_data = [];
-
-
-
-    if (searchTerm.length > 0) {
-        api.get("/Products?access_token=" + localStorage.getItem("accessToken"), {params: this.paramsForSearchTerm(searchTerm)})
-            .then((response) => {
-                if (response.status === 200) {
-                    request_data = response.data;
-                }
-            })
-            .catch((error) => {
-                console.log("Error: ", error);
-                console.log("Error: ", error.response);
-            });
-    } else {
-        request_data = []
-    }
-
-  return {
-    type: SEARCH_PRODUCTS,
-      payload: request_data
-  }
-};
-
-
 export const userLoginFailedAction = () => {
   return {
     type: ACTION_TYPE_LOG_IN_FAILED
   };
 };
-
-
 
 
 export const loginAction = (email, password) => (dispatch) => {

@@ -17,6 +17,7 @@ export class FilterForm extends Component {
 
 
     render() {
+
         return (
             <Panel>
             <Form horizontal onSubmit={this.handleSubmit}>

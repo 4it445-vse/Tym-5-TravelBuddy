@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Form, FormGroup, FormControl, InputGroup, Glyphicon, Button} from 'react-bootstrap';
 import {ItemList} from './ItemList';
+import {DetailProduct} from '../DetailProduct/DetailProduct';
+import {FilterForm} from './FilterForm';
 import api from '../../../api';
 
 export class SearchSection extends Component {
@@ -9,8 +11,9 @@ export class SearchSection extends Component {
         this.state = {
             searchTerm: '',
             products: [],
-            errorMsg: ''
-
+            errorMsg: '',
+            showCreateProducts: false,
+            firstSearch: true
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -28,7 +31,7 @@ export class SearchSection extends Component {
             this.fetchProductData(searchTerm);
             console.log(this.state.products);
 
-            this.setState({searchTerm: ''});
+            this.setState({searchTerm: '',firstSearch:false});
         } else {
             this.setState({errorMsg: 'Enter searched text!'});
         }
@@ -53,6 +56,7 @@ export class SearchSection extends Component {
                 .then((response) => {
                     if (response.status === 200) {
                         console.log("Response data",response.data);
+
                         this.setState({products: response.data});
                     }
                 })
@@ -66,18 +70,6 @@ export class SearchSection extends Component {
                 }
             );
         }
-    }
-
-    secondLevelFiltering(firstLevelProducts,searchTerm) {
-       var secondLevel = firstLevelProducts;
-            for (var product of secondLevel) {
-               if(product.productCity.name) {
-
-               }
-
-        }
-
-       this.setState({products: secondLevel})
     }
 
     paramsForSearchTerm(searchTerm) {
@@ -107,8 +99,10 @@ export class SearchSection extends Component {
 
 
     render() {
+
         return (
             <div className="container">
+                <DetailProduct ref="detailProduct"/>
                 <Form horizontal onSubmit={this.handleSubmit}>
                     <FormGroup controlId="searchForm" validationState={this.getValidationState()}>
                         <InputGroup>
@@ -123,12 +117,9 @@ export class SearchSection extends Component {
                             </InputGroup.Button>
                         </InputGroup>
                     </FormGroup>
-
                 </Form>
 
-
-                    <ItemList products={this.state.products}/>
-
+                    <ItemList isFirst={this.state.firstSearch} products={this.state.products}/>
             </div>
         );
     }

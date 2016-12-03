@@ -1,57 +1,67 @@
-import React, { Component } from 'react';
-import { Item } from './Item';
-import { Grid, Row, Col} from 'react-bootstrap';
-import { FilterForm } from './FilterForm';
-
+import React, {Component} from 'react';
+import {Item} from './Item';
+import { Table } from 'react-bootstrap';
+import {FilterForm} from './FilterForm';
 
 
 export class ItemList extends Component {
-constructor(props) {
-    super (props);
-    this.state = {firstSearch: false}
-}
-render () {
-    const productItems = this.props.products.map((product) => {
-        return (
-              <Item key={product.id} product={product} />
-        );
-    });
+    constructor(props) {
+        super(props);
 
-    if (productItems.length > 0) {
-      return (
-        <div>
-          <div className="filterForm">
-              <FilterForm/>
-          </div>
-            <Grid>
-                <Row>
-                    <Col sm={2} md={2} lg={2}>City</Col>
-                    <Col sm={2} md={2} lg={2}>Label</Col>
-                    <Col sm={2} md={2} lg={2}>Price</Col>
-                    <Col sm={2} md={2} lg={2}>Detail</Col>
-                    <Col sm={2} md={2} lg={2}>Reply</Col>
-                </Row>
-                    {productItems}
-            </Grid>
-        </div>
-      );
-    } else if(this.state.firstSearch == false){
-        this.setState({firstSearch:true});
-      return (
-          <Grid>
-              <Row>
-                  <Col sm={12} md={12} lg={12}>Type keyword you desire to search!</Col>
-              </Row>
-          </Grid>
-      );
-    } else {
-        return (
-        <Grid>
-            <Row>
-                <Col sm={12} md={12} lg={12}>No records have been found!</Col>
-            </Row>
-        </Grid>
-        );
     }
-}
+
+    render() {
+        const productItems = this.props.products.map((product) => {
+            return (
+                <Item key={product.id} product={product}/>
+            );
+        });
+
+        console.log("ProductItems ",productItems);
+        if (productItems.length > 0) {
+            return (
+                <div>
+                    <div className="filterForm">
+                        <FilterForm/>
+                    </div>
+                    <Table striped bordered>
+                        <thead>
+                            <tr>
+                                <th className="col-sm-2 col-md-2 col-lg-2">City</th>
+                                <th className="col-sm-2 col-md-2 col-lg-2">Product label</th>
+                                <th className="col-sm-2 col-md-2 col-lg-2">Price</th>
+                                <th className="col-sm-2 col-md-2 col-lg-2">Product detail</th>
+                                <th className="col-sm-2 col-md-2 col-lg-2">Reply</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {productItems}
+                        </tbody>
+                    </Table>
+                </div>
+            );
+        }
+        if (this.props.isFirst) {
+            return (
+                <Table bordered>
+                    <tbody>
+                    <tr>
+                        <td colSpan="10" className="bg bg-info">Type keyword you desire to search!</td>
+                    </tr>
+                    </tbody>
+                </Table>
+            );
+        }
+        if (productItems.length == 0) {
+            return (
+                <Table bordered>
+                    <tbody>
+                        <tr>
+                            <td colSpan="10" className="bg bg-danger">No records have been found!</td>
+                        </tr>
+                    </tbody>
+                </Table>
+            );
+        }
+    }
 }

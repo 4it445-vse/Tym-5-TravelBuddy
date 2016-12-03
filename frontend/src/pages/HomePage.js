@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {PageFooter} from '../components/common/PageFooter/PageFooter';
 import {PageHeader} from '../components/HomePage/PageHeader/PageHeader';
 import {SearchSection} from '../components/HomePage/SearchSection/SearchSection';
-import {TopPropositions} from '../components/HomePage/TopPropositions/TopPropositions';
 import {WelcomeWizardModal} from '../components/WelcomeWizard/WelcomeWizardModal.js';
 import {CreateProductComponent} from "../components/CreateProduct/CreateProductComponent.js";
 import {Button} from 'react-bootstrap';
@@ -33,10 +32,11 @@ export class HomePage extends Component {
     }
 
     render() {
+        let welcomeWizard;
         if (this.state.showWelcomeWizard) {
-            var welcomeWizard = <WelcomeWizardModal steps={2}/>;
+            welcomeWizard = <WelcomeWizardModal steps={2}/>;
         } else {
-            var welcomeWizard = undefined;
+            welcomeWizard = undefined;
         }
 
 
@@ -44,10 +44,8 @@ export class HomePage extends Component {
             <div>
                 {welcomeWizard}
                 <PageHeader/>
-
-
                 <div className="ident-top marginBottom">
-                    <CreateProductComponent show={this.state.showCreateProducts} ref="a"/>
+                    <CreateProductComponent ref="a"/>
                         <div className="container">
                             <div className="row">
                                 <div className="offerButton">
@@ -57,7 +55,7 @@ export class HomePage extends Component {
                                 </div>
                             </div>
                         </div>
-                            <SearchSection/>
+                    <SearchSection/>
                 </div>
                 <PageFooter/>
             </div>

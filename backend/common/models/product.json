@@ -77,6 +77,5 @@
       "principalId": "$authenticated",
       "permission": "ALLOW"
     }
-  ],
-  "methods": {}
+  ]
 }
