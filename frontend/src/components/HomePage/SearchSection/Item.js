@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Row, Col, Button} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 
 
 
@@ -8,20 +8,23 @@ export class Item extends Component{
         super(props);
 
 }
+
     render() {
         return (
-          <Row className="show-grid">
-              <Col xs={2} sm={2} md={2} >{this.props.product.label}</Col>
-              <Col xs={3} sm={3} md={3}>{this.props.product.description}</Col>
-              <Col xs={2} sm={2} md={2}>{this.props.product.price}</Col>
-              <Col xs={2} sm={2} md={2}>
-                  <Button type='submit' bsStyle="primary">Detail</Button>
-              </Col>
-              <Col xs={2} sm={2} md={2}>
-                  <Button type='submit' bsStyle="primary">Buddy</Button>
-              </Col>
+          <tr>
 
-          </Row>
+              <td>{this.props.product.label}</td>
+              <td>{this.props.product.price}</td>
+              <td>{this.props.product.description}</td>
+              <td>
+                  <Button type='submit' bsStyle="primary">Detail</Button>
+              </td>
+              <td>
+                  <Button type='submit' bsStyle="primary">Reply</Button>
+              </td>
+
+          </tr>
+
         );
     }
 }
