@@ -61,7 +61,7 @@ export class EditProfile extends Component {
 
     loadUserMain() {
         const userId = localStorage.userId;
-        const srvUrl = '/UserMain/' + userId + '?access_token=' + localStorage.accessToken;
+        const srvUrl = '/UserMain/me' + '?access_token=' + localStorage.accessToken;
         api.get(srvUrl).then((response) => {
             if (response.status === 200) {
                 var keys = ["lastName", "firstName", "birthdate", "email"];
@@ -81,7 +81,7 @@ export class EditProfile extends Component {
 
     loadUserDetail() {
         const userId = localStorage.userId;
-        const srvUrl = '/UserMain/' + userId + '/userDetail?access_token=' + localStorage.accessToken;
+        const srvUrl = '/UserMain/me' + '/userDetail?access_token=' + localStorage.accessToken;
         api.get(srvUrl).then((response) => {
             if (response.status === 200) {
                 var keys = ["phone", "skype", "facebook", "bio", "motto"];
@@ -204,12 +204,12 @@ export class EditProfile extends Component {
             case 'password':
             case 'email':
                 if (!desc) {
-                    return (<FormControl type={type} name={key} value={this.state[key]} onChange={this.handleInputChange}/>);
+                    return (<FormControl type={type} name={key} value={this.state[key]} disabled/>);
                 } else {
                     const popover = this.createPopover(desc);
                     return (
                         <OverlayTrigger trigger="focus" placement="right" overlay={popover} delay={100}>
-                            <FormControl type={type} value={this.state[key]} name={key} onChange={this.handleInputChange}/>
+                            <FormControl type={type} value={this.state[key]} name={key} disabled/>
                         </OverlayTrigger>
                     );
                 }
@@ -241,7 +241,7 @@ export class EditProfile extends Component {
                 );
 
             case 'textarea':
-                return (<FormControl type={type} name={key} componentClass={type} value={this.state[key]} onChange={this.handleInputChange}/>);
+                return (<FormControl type={type} name={key} componentClass={type} value={this.state[key]} disabled/>);
             case "select":
                 return (
                     <FormControl componentClass="select" placeholder="Select your country" value={this.state.country} onChange={this.handleCountryChange}>
@@ -268,6 +268,7 @@ export class EditProfile extends Component {
       //  var data = this.getFormData();
         const userId = localStorage.userId;
         //console.log('--- profilePicture', data.profilePicture);
+
 
         const srvUrl = '/UserMain/' + userId;
         api.patch(srvUrl, formData).then(response => {
@@ -319,7 +320,7 @@ export class EditProfile extends Component {
 
     render() {
         const fields = [
-            /*key, label, type, desc, */
+            /*key, label, type, desc, id*/
             /*  [
                 'profilePicture', 'Profile picture', 'file', ''
             ],*/
@@ -385,10 +386,12 @@ export class EditProfile extends Component {
                                 </FormGroup>
                             );
                         })}
-                        <Button type="submit" bsStyle="primary">Save changes</Button>
+
                     </form>
                 </div>
             </div>
         );
     }
 }
+
+//  <Button type="submit" bsStyle="primary">Save changes</Button> odstranen
