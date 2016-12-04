@@ -243,11 +243,11 @@ module.exports = function(Usermain) {
    }
 
    Usermain.beforeRemote("*.__create__owns",(context,instance,next)=>{
-     console.log("before create owns");
+     //console.log("before create owns");
      //console.log(context.method.name);
 
      let userId = context.req.accessToken.userId;
-     context.req.body.refOwnedUserId = userId;
+     context.req.body.refOwnerUserId = userId;
 
      //TODO check inputs....
 
