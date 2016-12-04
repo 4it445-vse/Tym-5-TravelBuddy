@@ -22,8 +22,6 @@ export class CreateProductComponent extends Component{
       cityError: "",
       //-----
 
-
-
       //product data----
       label: "",
       category: -1,

@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import { Alert, Button } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 import { LoginComponentContainer } from '../components/LoginComponent/LoginComponent.js';
 
 export class VerifiedPage extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   render() {
 

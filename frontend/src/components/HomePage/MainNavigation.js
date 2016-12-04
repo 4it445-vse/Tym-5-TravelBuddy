@@ -19,7 +19,7 @@ export class MainNavigation extends Component {
 
   render() {
     return (
-        <nav id="mainNav" className="navbar navbar-default navbar-fixed-top">
+        <nav id="mainNav" className="navbar navbar-app navbar-default navbar-fixed-top">
             <div className="container-fluid">
                 {/* <!-- Brand and toggle get grouped for better mobile display --> */}
                 <div className="navbar-header">
