@@ -60,8 +60,7 @@ export class EditProfile extends Component {
     }
 
     loadUserMain() {
-        const userId = localStorage.userId;
-        const srvUrl = '/UserMain/me' + '?access_token=' + localStorage.accessToken;
+        const srvUrl = '/UserMain/me?access_token=' + localStorage.accessToken;
         api.get(srvUrl).then((response) => {
             if (response.status === 200) {
                 var keys = ["lastName", "firstName", "birthdate", "email"];
@@ -80,8 +79,7 @@ export class EditProfile extends Component {
     }
 
     loadUserDetail() {
-        const userId = localStorage.userId;
-        const srvUrl = '/UserMain/me' + '/userDetail?access_token=' + localStorage.accessToken;
+        const srvUrl = '/UserMain/me/userDetail?access_token=' + localStorage.accessToken;
         api.get(srvUrl).then((response) => {
             if (response.status === 200) {
                 var keys = ["phone", "skype", "facebook", "bio", "motto"];
@@ -98,8 +96,7 @@ export class EditProfile extends Component {
     }
 
     loadUserCountry() {
-        const userId = localStorage.userId;
-        const srvUrl = '/UserMain/' + userId + '/userDetail/';
+        const srvUrl = '/UserMain/me/userDetail/';
         const refCountryId = null;
         api.get(srvUrl).then((response) => {
             if (response.status === 200) {
@@ -204,12 +201,18 @@ export class EditProfile extends Component {
             case 'password':
             case 'email':
                 if (!desc) {
-                    return (<FormControl type={type} name={key} value={this.state[key]} disabled/>);
+                    return (
+                      <FormControl
+                        type={type}
+                        name={key}
+                        value={this.state[key]}
+                        onChange={this.handleInputChange}/>
+                    );
                 } else {
                     const popover = this.createPopover(desc);
                     return (
                         <OverlayTrigger trigger="focus" placement="right" overlay={popover} delay={100}>
-                            <FormControl type={type} value={this.state[key]} name={key} disabled/>
+                            <FormControl type={type} value={this.state[key]} name={key} onChange={this.handleInputChange}/>
                         </OverlayTrigger>
                     );
                 }
@@ -241,7 +244,7 @@ export class EditProfile extends Component {
                 );
 
             case 'textarea':
-                return (<FormControl type={type} name={key} componentClass={type} value={this.state[key]} disabled/>);
+                return (<FormControl type={type} name={key} componentClass={type} value={this.state[key]} onChange={this.handleInputChange}/>);
             case "select":
                 return (
                     <FormControl componentClass="select" placeholder="Select your country" value={this.state.country} onChange={this.handleCountryChange}>
@@ -263,60 +266,62 @@ export class EditProfile extends Component {
     handleSubmit(event) {
         event.preventDefault();
         let errors = {};
-        let formData = new FormData(event.target);
+        let formData = this.getFormData();
+        let userMainFailed = false;
+        let userDetailFailed = false;
         //console.log('--- wizard form data', this.getFormData());
       //  var data = this.getFormData();
-        const userId = localStorage.userId;
         //console.log('--- profilePicture', data.profilePicture);
 
 
-        const srvUrl = '/UserMain/' + userId;
+        const srvUrl = '/UserMain/me?access_token=' + localStorage.accessToken;
         api.patch(srvUrl, formData).then(response => {
             console.log('--- post usermain ok');
             this.setState({clientErrors: {}});
-            this.setState({errors: {}});
-            this.setState({formSuccess: true});
         }).catch((error) => {
-            //console.log('<!> updateUserInfo', error);
-            //this.setState({show: false});
+            console.log('<!> updateUserInfo', error);
+            userMainFailed = true;
             const {response} = error;
-            const {errors} = response.data.error.details;
-                    console.log ('eee error Usermain bey', response.data.erorr);
-            console.log ('eee error Usermain', response.data.erorr.details);
+            const errors = response.data.error.details.messages;
             this.setState({errors});
             console.log('--- edit usermain failed', this.state.errors);
         });
 
-        const srvUrlUD = '/UserMain/' + userId + "/userDetail";
+        const srvUrlUD = '/UserMain/me/userDetail?access_token=' + localStorage.accessToken;
         api.put(srvUrlUD, formData).then(response => {
             console.log('--- post userDetail ok');
             this.setState({clientErrors: {}});
-            this.setState({errors: {}});
-            this.setState({formSuccess: true});
         }).catch((error) => {
-            //console.log('<!> updateUserDetail', error);
-            //this.setState({show: false});
+            console.log('<!> updateUserDetail', error);
+            userDetailFailed = true;
             const {response} = error;
-            const {errors} = response.data.error.details;
+            const errors = response.data.error.details.messages;
             this.setState({errors});
-            //console.log(errors);
         });
+
+        if (!userMainFailed && !userDetailFailed) {
+          this.setState({errors: {}});
+        } else {
+          this.setState({formSuccess: true});
+        }
+
     }
-/*
+
     getFormData() {
         return {
             //  profilePicture: this.state.profilePicture,
-            country: this.state.country, //id in table Countries
+            // country: this.state.country, //id in table Countries
             motto: this.state.motto,
             bio: this.state.bio,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,
+            birthdate: this.state.birthdate,
             skype: this.state.skype,
             facebook: this.state.facebook,
             phone: this.state.phone
         }
-    }*/
+    }
 
     render() {
         const fields = [
@@ -330,12 +335,12 @@ export class EditProfile extends Component {
             [
                 'lastName', 'Last name', 'text', ''
             ],
-            /*  [
-                'birthdate', 'Birthdate', 'date', ''
-            ],*/
-          /*  [
-                'country', 'Country', 'select', ''
-            ],*/
+            // [
+            //     'birthdate', 'Birthdate', 'date', '', this.state.birthdate
+            // ],
+            // [
+            //     'country', 'Country', 'select', ''
+            // ],
             [
                 'email', 'E-mail', 'email', 'Enter valid email. You will use it for login and password reset'
             ],
@@ -384,7 +389,7 @@ export class EditProfile extends Component {
                                 </FormGroup>
                             );
                         })}
-
+                        <Button type="submit" bsStyle="primary">Save changes</Button>
                     </form>
                 </div>
             </div>
