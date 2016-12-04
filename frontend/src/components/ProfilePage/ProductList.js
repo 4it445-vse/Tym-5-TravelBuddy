@@ -2,37 +2,26 @@ import React, { Component } from 'react';
 import { ProductListItem } from './ProductListItem';
 import { Grid, Row, Col} from 'react-bootstrap';
 
-
-
-
-export class ItemList extends Component {
+export class ProductList extends Component {
 
     constructor(props) {
         super(props);
 
-        this.product = {
-            label: "",
+        this.state = {
+            products: []
+            /*label: "",
             description: "",
-            price: "",
+            price: "",*/
         };
-        this.loadUserMain();
-        this.getProducts();
+        this.loadProducts();
     }
 
-
-    loadUserMain() {
-        const userId = localStorage.userId;
-        const srvUrl = '/UserMain/' + userId + '?access_token=' + localStorage.accessToken;
-        api.get(srvUrl).then((response) => {
+    loadProducts() {
+        const dataUrl = '/UserMain/Me/owns' + '?access_token=' + localStorage.accessToken;
+        api.get(dataUrl).then((response) => {
             if (response.status === 200) {
-                var keys = ["lastName", "firstName", "birthdate", "email"];
-                for (let i = 0; i < keys.length; i++) {
-                    this.setState({
-                        [keys[i]]: response.data[keys[i]]
-                    })
-                }
+            this.setState({products: response.data.objects}) // pole hodnot - objects - potřeba zjistit atribut, ve kterým se vrací pole
                 console.log(response);
-                this.setState({birthdate: '10/10/2016'});
             }
         }).catch((error) => {
             console.log("Error: ", error);
@@ -40,35 +29,8 @@ export class ItemList extends Component {
         });
     }
 
-    getProducts() {
-
-        const userId = localStorage.userId;
-        if (searchTerm.length > 0) {
-
-            api.get("/Products?access_token=" + localStorage.getItem("accessToken"), {params: this.paramsForSearchTerm(searchTerm)})
-                .then((response) => {
-                    if (response.status === 200) {
-                        this.setState({products: response.data});
-                    }
-                })
-                .catch((error) => {
-                    console.log("Error: ", error);
-                    console.log("Error: ", error.response);
-                });
-        } else {
-            this.setState({
-                    products: []
-                }
-            );
-        }
-    }
-
-
-
-
-
     render () {
-        const productItems = this.props.products.map((product) => {
+        const productItems = this.state.products.map((product) => {
             return (
                 <ProductListItem key={product.id} product={product} />
             );
