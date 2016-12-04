@@ -15,7 +15,7 @@ export class ProductListItem extends Component{
                 <Col xs={3} sm={3} md={3}>{this.props.product.description}</Col>
                 <Col xs={2} sm={2} md={2}>{this.props.product.price}</Col>
                 <Col xs={2} sm={2} md={2}>
-                    <Button type='submit' bsStyle="primary">Detail</Button>
+                    <Button type='submit' bsStyle="primary">Request</Button>
                 </Col>
             </Row>
         );

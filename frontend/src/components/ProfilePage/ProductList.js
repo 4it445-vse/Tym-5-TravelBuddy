@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ProductListItem } from './ProductListItem';
 import { Grid, Row, Col} from 'react-bootstrap';
+import api from '../../api.js';
 
 export class ProductList extends Component {
 
@@ -17,10 +18,10 @@ export class ProductList extends Component {
     }
 
     loadProducts() {
-        const dataUrl = '/UserMain/Me/owns' + '?access_token=' + localStorage.accessToken;
-        api.get(dataUrl).then((response) => {
+        const dataUrl = '/Products' + '?access_token=' + localStorage.accessToken;
+        api.get(dataUrl, {params: {filter:{where:{refOwnerUserId:localStorage.userId}}}}).then((response) => {
             if (response.status === 200) {
-            this.setState({products: response.data.objects}) // pole hodnot - objects - potřeba zjistit atribut, ve kterým se vrací pole
+            this.setState({products: response.data}) // pole hodnot - objects - potřeba zjistit atribut, ve kterým se vrací pole
                 console.log(response);
             }
         }).catch((error) => {
@@ -44,7 +45,7 @@ export class ProductList extends Component {
                             <Col sm={2} md={2} lg={2}>Label</Col>
                             <Col sm={3} md={3} lg={3}>Description</Col>
                             <Col sm={2} md={2} lg={2}>Price</Col>
-                            <Col sm={2} md={2} lg={2}>Detail</Col>
+                            <Col sm={2} md={2} lg={2}>Request</Col>
                         </Row>
                         {productItems}
                     </Grid>

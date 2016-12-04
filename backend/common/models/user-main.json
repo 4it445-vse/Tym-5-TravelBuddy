@@ -115,6 +115,12 @@
     {
       "accessType": "*",
       "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
       "principalId": "$unauthenticated",
       "permission": "ALLOW",
       "property": ["login","submit"]

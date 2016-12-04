@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { PageHeader } from '../components/HomePage/PageHeader/PageHeader';
 import { PageFooter} from '../components/common/PageFooter/PageFooter';
 import { EditProfile} from '../components/ProfilePage/EditProfile';
+import { ProductList} from '../components/ProfilePage/ProductList';
 import {ProfilePictureEditorComponent} from "../components/ProfilePictureEditor/ProfilePictureEditorComponent.js";
 
 
@@ -27,6 +28,9 @@ export class ProfilePage extends Component {
 
       <div className="ident-top marginBottom">
           <div className="h3"> Below you can see your own products: </div>
+          <div>
+              <ProductList/>
+          </div>
       </div>
 
       <PageFooter/>
