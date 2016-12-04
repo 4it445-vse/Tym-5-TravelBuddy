@@ -6,6 +6,7 @@ import {WelcomeWizardModal} from '../components/WelcomeWizard/WelcomeWizardModal
 import {CreateProductComponent} from "../components/CreateProduct/CreateProductComponent.js";
 import {Button} from 'react-bootstrap';
 import api from '../api.js';
+
 export class HomePage extends Component {
 
     constructor(props) {
@@ -44,36 +45,27 @@ export class HomePage extends Component {
                 {welcomeWizard}
                 <PageHeader/>
           <section className="no-padding" id="portfolio">
+
           </section>
 
           <section className="bg-dark">
+              <CreateProductComponent ref="a"/>
+              <div className="container">
+                  <div className="row">
+                      <div className="col-lg-4 col-md-4 col-sm-4 col-lg-push-4 col-md-push-4 col-sm-push-4 col-xs-push-4 text-center">
+                          <Button bsStyle="primary" onClick={() => {this.refs.a.show()}}>Offer Product</Button>
+                      </div>
+                  </div>
+              </div>
               <div className="container">
                   <div className="row">
                     <SearchSection/>
                   </div>
               </div>
           </section>
-
-          {/* <section className="bg-primary">
-              <TopPropositions/>
-          </section> */}
-          {/* <div className="jumbotron">
-            <h1>Home page</h1>
-          </div>
-
-          <div className="ident-top marginBottom">
-              <CreateProductComponent show={this.state.showCreateProducts} ref="a"/>
-              <div className="row">
-                  <div className="col-lg-4 col-md-4 col-sm-4">
-                    <Button bsStyle="primary" onClick={() => {this.refs.a.show()}}>Add Product</Button>
-                  </div>
-              </div>
-
-              <div className="row">
-              <SearchSection/>
-              </div>
-          </div>
-          <PageFooter/>*/}
+          <section className="text-center">
+          <PageFooter/>
+          </section>
             </div>
 
 

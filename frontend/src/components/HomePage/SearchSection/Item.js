@@ -12,15 +12,13 @@ export class Item extends Component{
 
 
     render() {
-        const productItem = {cityName: this.props.product.productCity.name,
-            label: this.props.product.label,
-            price: this.props.product.price}
+
         return (
 
           <tr>
-              <td>{productItem.cityName}</td>
-              <td>{productItem.label}</td>
-              <td>{productItem.price}</td>
+              <td>{this.props.product.productCity.name}</td>
+              <td>{this.props.product.label}</td>
+              <td>{this.props.product.price}</td>
               <td>
                   <Button type='submit' bsStyle="primary">Detail</Button>
               </td>
