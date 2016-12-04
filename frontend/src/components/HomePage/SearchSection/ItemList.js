@@ -1,45 +1,52 @@
-import React, { Component } from 'react';
-import { Item } from './Item';
-import { Grid, Row, Col} from 'react-bootstrap';
-import { FilterForm } from './FilterForm';
-
+import React, {Component} from 'react';
+import {Item} from './Item';
+import { Table } from 'react-bootstrap';
 
 
 export class ItemList extends Component {
+    constructor(props) {
+        super(props);
 
-render () {
-    const productItems = this.props.products.map((product) => {
-        return (
-              <Item key={product.id} product={product} />
-        );
-    });
-
-    if (productItems.length > 0) {
-      return (
-        <div>
-          <div className="filterForm">
-              <FilterForm/>
-          </div>
-            <Grid>
-                <Row>
-                    <Col sm={2} md={2} lg={2}>Label</Col>
-                    <Col sm={3} md={3} lg={3}>Description</Col>
-                    <Col sm={2} md={2} lg={2}>Price</Col>
-                    <Col sm={2} md={2} lg={2}>Detail</Col>
-                    <Col sm={2} md={2} lg={2}>Buddy</Col>
-                </Row>
-                    {productItems}
-            </Grid>
-        </div>
-      );
-    } else {
-      return (
-          <Grid>
-              <Row>
-                  <Col sm={12} md={12} lg={12}>No records have been found!</Col>
-              </Row>
-          </Grid>
-      );
     }
-}
+
+    render() {
+        const productItems = this.props.products.map((product) => {
+            return (
+                <Item key={product.id} product={product}/>
+            );
+        });
+
+        console.log("ItemList ",productItems);
+        if (productItems.length > 0) {
+            return (
+                <div className="row">
+                    <Table striped bordered>
+                        <thead>
+                        <tr>
+                            <th className="col-sm-2 col-md-2 col-lg-2">Product label</th>
+                            <th className="col-sm-2 col-md-2 col-lg-2">Price</th>
+                            <th className="col-sm-4 col-md-4 col-lg-4">Description</th>
+                            <th className="col-sm-2 col-md-2 col-lg-2 text-center">Product detail</th>
+                            <th className="col-sm-2 col-md-2 col-lg-2 text-center">Reply</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {productItems}
+                        </tbody>
+                    </Table>
+                </div>
+            );
+        }
+        else {
+            return (
+                <Table bordered>
+                    <tbody>
+                        <tr>
+                            <td colSpan="10" className="bg bg-dark">No records have been found!</td>
+                        </tr>
+                    </tbody>
+                </Table>
+            );
+        }
+    }
 }
