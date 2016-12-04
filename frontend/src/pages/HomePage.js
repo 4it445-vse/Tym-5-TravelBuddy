@@ -48,7 +48,7 @@ export class HomePage extends Component {
 
           </section>
 
-          <section className="bg-dark">
+          <section className="">
               <CreateProductComponent ref="a"/>
               <div className="container">
                   <div className="row">

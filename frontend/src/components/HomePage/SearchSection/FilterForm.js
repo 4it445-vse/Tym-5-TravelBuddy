@@ -148,9 +148,9 @@ export class FilterForm extends Component {
                     <div className="row">
                     <form className="form-horizontal" onSubmit={this.handleSubmitFilterData}>
                         <div className="form-group row">
-                            <label classID="inputName" className="col-sm-2 col-form-label">Label:</label>
+                            <label classID="inputName" className="col-sm-2 col-form-label">Name:</label>
                             <div className="col-sm-8">
-                                <input type="text" className="form-control" id="inputName" onChange={this.handleLabelChange} placeholder="Label..."/>
+                                <input type="text" className="form-control" id="inputName" onChange={this.handleLabelChange} placeholder="Name..."/>
                             </div>
                         </div>
                         <div className="form-group row">
@@ -186,14 +186,13 @@ export class FilterForm extends Component {
 
                         <div className="form-group row">
                             <div className="col-sm-offset-2 col-sm-10">
-                                <button type="submit" className="btn btn-default">Filter</button>
+                                <button type="submit" className="btn btn-primary">Filter</button>
                             </div>
                         </div>
                     </form>
                     </div>
                     <div className="row"></div>
-
-            <ItemList products={this.state.filteredProducts}/>
+                    <ItemList products={this.state.filteredProducts}/>
                 </div>
 
             </div>
