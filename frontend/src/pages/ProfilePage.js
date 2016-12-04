@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { PageHeader } from '../components/HomePage/PageHeader/PageHeader';
 import { PageFooter} from '../components/common/PageFooter/PageFooter';
 import { EditProfile} from '../components/ProfilePage/EditProfile';
+import { ProductList} from '../components/ProfilePage/ProductList.js';
 import { ProfilePictureEditorComponent } from "../components/ProfilePictureEditor/ProfilePictureEditorComponent.js";
 import { Tabs, Tab, Row, Col } from "react-bootstrap";
 
@@ -43,7 +44,7 @@ export class ProfilePage extends Component {
               </div>
               <Col lg={9}>
                 <Tabs  activeKey={this.state.tabKey} onSelect={this.handleTabSelect} id="controlled-tab">
-                  <Tab  eventKey={1} title="My Offers">Tab 1 content</Tab>
+                  <Tab  eventKey={1} title="My Offers"><ProductList/></Tab>
                   <Tab  eventKey={2} title="User Reviews">Tab 2 content</Tab>
                   <Tab  eventKey={3} title="Messages">Tab 3 content</Tab>
                 </Tabs>
