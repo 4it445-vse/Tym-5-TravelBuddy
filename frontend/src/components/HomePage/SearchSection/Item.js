@@ -9,16 +9,13 @@ export class Item extends Component{
 
 }
 
-
-
     render() {
-
         return (
-
           <tr>
-              <td>{this.props.product.productCity.name}</td>
+
               <td>{this.props.product.label}</td>
               <td>{this.props.product.price}</td>
+              <td>{this.props.product.description}</td>
               <td>
                   <Button type='submit' bsStyle="primary">Detail</Button>
               </td>

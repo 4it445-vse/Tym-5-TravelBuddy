@@ -37,6 +37,8 @@
     },
     "refTimeOut": {
       "type": "number"
+    },"refCityId": {
+      "type": "number"
     }
   },
   "validations": [],

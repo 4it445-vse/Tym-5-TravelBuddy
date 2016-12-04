@@ -19,19 +19,19 @@ export class ItemList extends Component {
         console.log("ItemList ",productItems);
         if (productItems.length > 0) {
             return (
-                <div>
+                <div className="row">
                     <Table striped bordered>
                         <thead>
                         <tr>
-                            <th className="col-sm-2 col-md-2 col-lg-2">City</th>
                             <th className="col-sm-2 col-md-2 col-lg-2">Product label</th>
                             <th className="col-sm-2 col-md-2 col-lg-2">Price</th>
-                            <th className="col-sm-2 col-md-2 col-lg-2">Product detail</th>
-                            <th className="col-sm-2 col-md-2 col-lg-2">Reply</th>
+                            <th className="col-sm-4 col-md-4 col-lg-4">Description</th>
+                            <th className="col-sm-2 col-md-2 col-lg-2 text-center">Product detail</th>
+                            <th className="col-sm-2 col-md-2 col-lg-2 text-center">Reply</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {productItems}
+                            {productItems}
                         </tbody>
                     </Table>
                 </div>
