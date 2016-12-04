@@ -24,6 +24,11 @@ export class ProfilePage extends Component {
           <EditProfile/>
           </div>
       </div>
+
+      <div className="ident-top marginBottom">
+          <div className="h3"> Below you can see your own products: </div>
+      </div>
+
       <PageFooter/>
       </div>
     );
