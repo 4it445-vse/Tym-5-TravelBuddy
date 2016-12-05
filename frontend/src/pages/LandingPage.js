@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { Button, Collapse, ListGroup, ListGroupItem } from 'react-bootstrap';
-// import {PageHeader} from '../components/LandingPage/PageHeader/PageHeader';
-import { PageFooter } from '../components/PageComponents/PageFooter.js';
+import { PageFooter } from '../components/LandingPage/PageFooter.js';
+import { RegistrationForm } from '../components/Registration/RegistrationForm.js';
+import { MainNavigation } from '../components/LandingPage/MainNavigation.js';
 import Scroll from 'react-scroll';
 
 const Element = Scroll.Element;
 const Link = Scroll.Link;
-import { RegistrationForm } from '../components/Registration/RegistrationForm.js';
-import { MainNavigation } from '../components/LandingPage/MainNavigation.js';
-// import {AboutPlatform} from '../components/LandingPage/AboutPlatform/AboutPlatform';
-// import {RegisterInfo} from '../components/LandingPage/RegisterInfo/RegisterInfo';
 
 export class LandingPage extends Component {
 
@@ -30,15 +27,6 @@ export class LandingPage extends Component {
 
     return (
 
-        // <div>
-        //     <PageHeader/>
-        //     <div className="ident-top marginBottom">
-        //         <MainLogo/>
-        //         <AboutPlatform/>
-        //         <RegisterInfo/>
-        //     </div>
-        //     <PageFooter/>
-        // </div>
         <div id="main-wrapper">
             <MainNavigation/>
             <header>
