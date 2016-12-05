@@ -41,18 +41,19 @@ export class LoginComponent extends Component{
 
 
   createField(type, key, desc,) {
+    let cssStyle = "form-themed";
     switch (type) {
       case 'password':
 
       return (
         <div>
-        <FormControl type={type} name={key} ref='passwordTarget' placeholder={type} value={this.state.loginPassword} onChange={this.handlePasswordChange}/>
+        <FormControl className={cssStyle} type={type} name={key} ref='passwordTarget' placeholder={type} value={this.state.loginPassword} onChange={this.handlePasswordChange}/>
         </div>
       );
       case 'email':
       return (
         <div>
-        <FormControl type={type} name={key} ref='emailTarget' placeholder={type} value={this.state.loginEmail} onChange={this.handleEmailChange}/>
+        <FormControl className={cssStyle} type={type} name={key} ref='emailTarget' placeholder={type} value={this.state.loginEmail} onChange={this.handleEmailChange}/>
         </div>
       );
 
