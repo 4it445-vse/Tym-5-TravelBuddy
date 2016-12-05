@@ -196,6 +196,7 @@ export class EditProfile extends Component {
     }
 
     createField(type, key, desc, values) {
+        let cssClass = "form-themed";
         switch (type) {
             case 'text':
             case 'password':
@@ -203,6 +204,7 @@ export class EditProfile extends Component {
                 if (!desc) {
                     return (
                       <FormControl
+                        className={cssClass}
                         type={type}
                         name={key}
                         value={this.state[key]}
@@ -213,7 +215,7 @@ export class EditProfile extends Component {
                     const popover = this.createPopover(desc);
                     return (
                         <OverlayTrigger trigger="focus" placement="right" overlay={popover} delay={100}>
-                            <FormControl type={type} value={this.state[key]} name={key} onChange={this.handleInputChange} />
+                            <FormControl className={cssClass} type={type} value={this.state[key]} name={key} onChange={this.handleInputChange} />
                         </OverlayTrigger>
                     );
                 }
@@ -245,10 +247,10 @@ export class EditProfile extends Component {
                 );
 
             case 'textarea':
-                return (<FormControl type={type} name={key} componentClass={type} value={this.state[key]} onChange={this.handleInputChange} />);
+                return (<FormControl className={cssClass} type={type} name={key} componentClass={type} value={this.state[key]} onChange={this.handleInputChange} />);
             case "select":
                 return (
-                    <FormControl componentClass="select" placeholder="Select your country" value={this.state.country} onChange={this.handleCountryChange}>
+                    <FormControl className={cssClass} componentClass="select" placeholder="Select your country" value={this.state.country} onChange={this.handleCountryChange}>
                         <option value={this.state[key]}></option>
                         {this.state.countries.map((element) => {
                             return (

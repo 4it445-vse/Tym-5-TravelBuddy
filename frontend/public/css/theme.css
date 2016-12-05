@@ -547,7 +547,7 @@ img::-moz-selection {
 body {
   webkit-tap-highlight-color: #222222;
 }
-/* BOOTSTRAP OVERRIDE */
+/* THEME OVERRIDE AND CUSTOMS*/
 .row.last {
   margin-top: 50px;
 }
@@ -558,12 +558,7 @@ body {
   .list-group-item h4 {
     color: #f05f40;
   }
-label {
-  font-family: "Open Sans", Arial, sans-serif;
-  text-transform: uppercase;
-  font-size: 1.2em;
-}
-input.form-control {
+input.form-control.form-themed {
   background: none;
   border: none;
   border-radius: 0px;

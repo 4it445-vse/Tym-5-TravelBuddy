@@ -145,12 +145,12 @@ export class LandingPage extends Component {
                             <Button className="btn btn-primary btn-xl sr-button" onClick={ ()=> this.setState({ open: !this.state.open })}>Register now!</Button>
                         </div>
                     </div>
+                    <Collapse in={this.state.open}>
+                        <section className="bg-dark registration-form-container">
+                            <RegistrationForm/>
+                        </section>
+                    </Collapse>
                 </section>
-                <Collapse in={this.state.open}>
-                    <section className="bg-dark" id="register">
-                        <RegistrationForm/>
-                    </section>
-                </Collapse>
             </Element>
 
             <PageFooter/>

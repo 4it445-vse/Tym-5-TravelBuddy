@@ -57,6 +57,7 @@ export class DatePicker extends Component {
       showOverlay: false,
       value: '',
       selectedDay: null,
+      cssStyle: this.props.className || undefined
     };
 
     this.handleDayClick = this.handleDayClick.bind(this);
@@ -141,7 +142,7 @@ export class DatePicker extends Component {
               name={name}
               ref={ el => { this.input = el; } }
               placeholder="DD/MM/YYYY"
-              className="form-control"
+              className={'form-control ' +  this.state.cssStyle}
               value={ this.state.value }
               onChange={ this.handleInputChange }
               onFocus={ this.handleInputFocus }
