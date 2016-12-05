@@ -207,13 +207,13 @@ export class EditProfile extends Component {
                         name={key}
                         value={this.state[key]}
                         onChange={this.handleInputChange}
-                        disabled/>
+                        />
                     );
                 } else {
                     const popover = this.createPopover(desc);
                     return (
                         <OverlayTrigger trigger="focus" placement="right" overlay={popover} delay={100}>
-                            <FormControl type={type} value={this.state[key]} name={key} onChange={this.handleInputChange} disabled/>
+                            <FormControl type={type} value={this.state[key]} name={key} onChange={this.handleInputChange} />
                         </OverlayTrigger>
                     );
                 }
@@ -245,7 +245,7 @@ export class EditProfile extends Component {
                 );
 
             case 'textarea':
-                return (<FormControl type={type} name={key} componentClass={type} value={this.state[key]} onChange={this.handleInputChange} disabled/>);
+                return (<FormControl type={type} name={key} componentClass={type} value={this.state[key]} onChange={this.handleInputChange} />);
             case "select":
                 return (
                     <FormControl componentClass="select" placeholder="Select your country" value={this.state.country} onChange={this.handleCountryChange}>
@@ -390,12 +390,10 @@ export class EditProfile extends Component {
                                 </FormGroup>
                             );
                         })}
-                        {/* <Button type="submit" bsStyle="primary">Save changes</Button> */}
+                        <Button type="submit" bsStyle="primary">Save changes</Button>
                     </form>
                 </div>
             </div>
         );
     }
 }
-
-//  <Button type="submit" bsStyle="primary">Save changes</Button> odstranen
