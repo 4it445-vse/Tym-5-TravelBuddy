@@ -87,8 +87,7 @@
     "owns": {
       "type": "hasMany",
       "model": "Product",
-      "foreignKey": "refOwnerUserId",
-      "through": "Product"
+      "foreignKey": "refOwnerUserId"
     },
     "userCities": {
       "type": "hasMany",
@@ -133,7 +132,10 @@
       "principalType": "ROLE",
       "principalId": "$unauthenticated",
       "permission": "ALLOW",
-      "property": ["login","submit"]
+      "property": [
+        "login",
+        "submit"
+      ]
     }
   ],
   "methods": {

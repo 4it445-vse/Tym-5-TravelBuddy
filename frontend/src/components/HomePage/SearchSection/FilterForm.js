@@ -38,7 +38,7 @@ export class FilterForm extends Component {
 
     fetchProductData() {
 
-        api.get("/Products?access_token=" + localStorage.getItem("accessToken"), {params: this.paramsForSearchTerm})
+        api.get("/Products?access_token=" + localStorage.getItem("accessToken"), {params: this.paramsForSearchTerm()})
             .then((response) => {
                 if (response.status === 200) {
                     console.log("FilterForm - Response data",response.data);
