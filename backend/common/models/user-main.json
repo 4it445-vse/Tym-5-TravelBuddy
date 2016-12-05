@@ -62,9 +62,9 @@
       "foreignKey": "refUserRatingId"
     },
     "userReviews": {
-      "type": "belongsTo",
+      "type": "hasMany",
       "model": "UserReview",
-      "foreignKey": ""
+      "foreignKey": "refUserId"
     },
     "RecipientNotifications": {
       "type": "hasMany",
@@ -95,11 +95,12 @@
       "foreignKey": "refUserId",
       "through": "User_city"
     },
-    "userLanguages": {
+    "languages": {
       "type": "hasMany",
-      "model": "User_Language",
+      "model": "Language",
       "foreignKey": "refUserId",
-      "through": "User_Language"
+      "through": "User_Language",
+      "keyThrough": "refLanguageId"
     },
     "userUserroles": {
       "type": "hasMany",

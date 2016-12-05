@@ -16,15 +16,15 @@
   },
   "validations": [],
   "relations": {
-    "User_LanguageLanguage": {
+    "language": {
       "type": "belongsTo",
       "model": "Language",
-      "foreignKey": ""
+      "foreignKey": "id"
     },
-    "User_LanguageMain": {
+    "user": {
       "type": "belongsTo",
       "model": "UserMain",
-      "foreignKey": ""
+      "foreignKey": "id"
     }
   },
   "acls": [],
