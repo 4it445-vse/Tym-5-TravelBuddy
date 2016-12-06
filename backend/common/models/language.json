@@ -16,11 +16,12 @@
   },
   "validations": [],
   "relations": {
-    "userLanguages": {
+    "users": {
       "type": "hasMany",
-      "model": "User_Language",
+      "model": "UserMain",
       "foreignKey": "refLanguageId",
-      "through": "User_Language"
+      "through": "User_Language",
+      "keyThrough": "refUserId"
     }
   },
   "acls": [],

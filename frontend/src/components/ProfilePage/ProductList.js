@@ -18,10 +18,10 @@ export class ProductList extends Component {
     }
 
     loadProducts() {
-        const dataUrl = '/Products' + '?access_token=' + localStorage.accessToken;
-        api.get(dataUrl, {params: {filter:{where:{refOwnerUserId:localStorage.userId}}}}).then((response) => {
+        const dataUrl = '/userMain/me/owns' + '?access_token=' + localStorage.accessToken;
+        api.get(dataUrl).then((response) => {
             if (response.status === 200) {
-            this.setState({products: response.data}) // pole hodnot - objects - potřeba zjistit atribut, ve kterým se vrací pole
+            this.setState({products: response.data}) 
                 console.log(response);
             }
         }).catch((error) => {
