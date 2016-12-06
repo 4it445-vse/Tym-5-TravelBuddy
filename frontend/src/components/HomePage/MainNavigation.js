@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import { Affix } from 'react-overlays';
-// import { Button, Fade } from 'react-bootstrap';
 import Scroll from 'react-scroll';
 import {LogoutComponentContainer} from '../LogoutComponent/LogoutComponent.js';
 
@@ -11,8 +9,10 @@ export class MainNavigation extends Component {
     super(props);
     this.state = {
       open: "",
-      style: "affix"
+      style: "affix",
+      userData: this.props.userData
     };
+    console.log('userData', this.state.userData);
   }
 
   //TODO change class of login-modal on scroll, affix-top on top, affix on affixed
@@ -36,7 +36,7 @@ export class MainNavigation extends Component {
                             <a href="/">Search</a>
                         </li>
                         <li>
-                            <a href="/profile">Profile</a>
+                            <a href="/profile"><i className="fa fa-user"></i>Martin Smid</a>
                         </li>
                         <li>
                             <LogoutComponentContainer/>

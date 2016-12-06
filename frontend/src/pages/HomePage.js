@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {PageFooter} from '../components/common/PageFooter/PageFooter';
-import {PageHeader} from '../components/HomePage/PageHeader/PageHeader';
+import { MainNavigation } from '../components/HomePage/MainNavigation.js';
 import {SearchSection} from '../components/HomePage/SearchSection/SearchSection';
 import {WelcomeWizardModal} from '../components/WelcomeWizard/WelcomeWizardModal.js';
 import {CreateProductComponent} from "../components/CreateProduct/CreateProductComponent.js";
@@ -14,6 +14,7 @@ export class HomePage extends Component {
         this.state = {
             showWelcomeWizard: false,
             showCreateProducts: false,
+            userData: undefined
         };
 
         // this.showModal = this.showModal.bind(this);
@@ -26,6 +27,7 @@ export class HomePage extends Component {
             .then((response) => {
                 console.log('--- homepage api get', response);
                 this.setState({showWelcomeWizard: response.data.isFirstLogin});
+                this.setState({userData: response.data});
             })
             .catch((error) => {
                 console.log("Error: ", error);
@@ -41,7 +43,7 @@ export class HomePage extends Component {
         return (
           <div id="main-wrapper" className="homepage">
               {welcomeWizard}
-              <PageHeader/>
+              <MainNavigation userData={this.state.userData}/>
               <section className="no-padding" id="portfolio">
 
               </section>

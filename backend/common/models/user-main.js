@@ -50,6 +50,10 @@ module.exports = function(Usermain) {
         Object.assign(errors, {email: ['Enter a valid email!']});
       }
     }
+    //TODO this is stupid workaround to get date validation working. Frontend
+    //sends date 01-01-1001 indicating error, which is still valid date and real
+    //error is created here. It could be validates Frontend-only but this is preparation
+    //for backend-only solution
     if (birthdate < Date.parse("12/31/1001")) {
       Object.assign(errors, {birthdate: ['Enter a valid birthdate!']});
     }
@@ -98,85 +102,6 @@ module.exports = function(Usermain) {
       Usermain.create(user);
       callback(null, true);
     });
-
-
-
-    //   if (anyErrors) {
-    //     callback({
-    //       statusCode: 422,
-    //       message: 'Error',
-    //       details: {
-    //         errors,
-    //       },
-    //     });
-    //     return;
-    //   }
-    //   Usermain.create(user);
-    //   callback(null, { user });
-
-    // const user = Usermain({
-    //   firstName,
-    //   lastName,
-    //   birthdate,
-    //   gender,
-    //   email,
-    //   password,
-    //   password2,
-    //   agreeToTerms
-    // });
-    //
-    // user.isValid(userIsValid => {
-    //   let anyErrors = false;
-    //   const errors = {};
-    //   console.log('--- user valid', userIsValid);
-    //   if (!userIsValid) {
-    //     anyErrors = true;
-    //     console.log('--- errors', user.errors);
-    //     Object.assign(errors, user.errors);
-    //   }
-    //
-    //   Object.assign(errors, Usermain.validatePassword(password));
-    //
-    //   if (password !== password2) {
-    //     Object.assign(errors, {password: ['Passwords are not same!']});
-    //   }
-    //   if (password && password.length < 6) {
-    //     Object.assign(errors, {password: ['Password is too short!']})
-    //   }
-    //   if (!gender) {
-    //     Object.assign(errors, {gender: ['Choose your gender!']});
-    //   }
-    //   if (email) {
-    //     const emailPattern = /(.+)@(.+){2,}\.(.+){2,}/;
-    //     if (!emailPattern.test(email)) {
-    //       console.log('--- email invalid');
-    //       Object.assign(errors, {email: ['Enter a valid email!']});
-    //     }
-    //   }
-    //   if (!agreeToTerms) {
-    //     Object.assign(errors, {agreeToTerms: ['You must agree to terms!']});
-    //   }
-    //   //TODO this is stupid workaround to get date validation working. Frontend
-    //   //sends date 01-01-1001 indicating error, which is still valid date and real
-    //   //error is created here. It could be validates Frontend-only but this is preparation
-    //   //for backend-only solution
-    //   if (birthdate < Date.parse("12/31/1001")) {
-    //     Object.assign(errors, {birthdate: ['Enter a valid birthdate!']});
-    //   }
-    //
-    //   if (anyErrors) {
-    //     callback({
-    //       statusCode: 422,
-    //       message: 'Error',
-    //       details: {
-    //         errors,
-    //       },
-    //     });
-    //     return;
-    //   }
-    //   Usermain.create(user);
-    //   callback(null, { user });
-    // });
   };
 
   /*
