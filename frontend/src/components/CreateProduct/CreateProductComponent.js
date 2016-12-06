@@ -20,6 +20,7 @@ export class CreateProductComponent extends Component{
       labelError: "",
       categoryError: "",
       cityError: "",
+      priceError:"",
       //-----
 
       //product data----
@@ -65,6 +66,10 @@ export class CreateProductComponent extends Component{
       error = true;
       this.setState({categoryError:"Select a category."});
     }else this.setState({categoryError:""});
+    if (this.state.price < 0){
+      error = true;
+      this.setState({priceError:"Price cannot be less than 0."});
+    }else this.setState({priceError:""});
     if (!this.state.city.id){
       error = true;
       this.setState({cityError:"Invalid city."});
@@ -232,16 +237,18 @@ export class CreateProductComponent extends Component{
                 <HelpBlock>{this.state.cityError}</HelpBlock>
               </FormGroup>
 
-              <FormGroup controlId="formPrice">
+              <FormGroup controlId="formPrice" validationState={(this.state.priceError === "") ? null:"error"}>
               <ControlLabel>Price</ControlLabel>
                 <InputGroup>
                   <FormControl
                   type="number"
+                  min="0"
                   value={this.state.price}
                   onChange={(e) => {this.setState({price:e.target.value}); }}
                   />
                   <InputGroup.Addon>$</InputGroup.Addon>
                 </InputGroup>
+                <HelpBlock>{this.state.priceError}</HelpBlock>
               </FormGroup>
 
               <FormGroup controlId="formDescription">
