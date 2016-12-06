@@ -48,18 +48,7 @@
     }
   },
   "validations": [],
-  "relations": {
-    "user": {
-      "type": "belongsTo",
-      "model": "UserMain",
-      "foreignKey": "id"
-    },
-    "country": {
-      "type": "belongsTo",
-      "model": "Country",
-      "foreignKey": "id"
-    }
-  },
+  "relations": {},
   "acls": [
     {
       "accessType": "EXECUTE",

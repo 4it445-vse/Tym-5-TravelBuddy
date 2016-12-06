@@ -27,13 +27,16 @@
     "CityCountry": {
       "type": "belongsTo",
       "model": "Country",
-      "foreignKey": "id"
+      "foreignKey": ""
     },
     "CityProduct": {
       "type": "hasMany",
       "model": "Product",
       "foreignKey": "refCityId"
     }
+
+
+
   },
   "acls": [],
   "methods": {}

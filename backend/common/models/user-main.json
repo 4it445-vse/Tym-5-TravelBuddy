@@ -62,9 +62,9 @@
       "foreignKey": "refUserRatingId"
     },
     "userReviews": {
-      "type": "hasMany",
+      "type": "belongsTo",
       "model": "UserReview",
-      "foreignKey": "refUserId"
+      "foreignKey": ""
     },
     "RecipientNotifications": {
       "type": "hasMany",
@@ -87,7 +87,8 @@
     "owns": {
       "type": "hasMany",
       "model": "Product",
-      "foreignKey": "refOwnerUserId"
+      "foreignKey": "refOwnerUserId",
+      "through": "Product"
     },
     "userCities": {
       "type": "hasMany",
@@ -95,12 +96,11 @@
       "foreignKey": "refUserId",
       "through": "User_city"
     },
-    "languages": {
+    "userLanguages": {
       "type": "hasMany",
-      "model": "Language",
+      "model": "User_Language",
       "foreignKey": "refUserId",
-      "through": "User_Language",
-      "keyThrough": "refLanguageId"
+      "through": "User_Language"
     },
     "userUserroles": {
       "type": "hasMany",
@@ -133,10 +133,7 @@
       "principalType": "ROLE",
       "principalId": "$unauthenticated",
       "permission": "ALLOW",
-      "property": [
-        "login",
-        "submit"
-      ]
+      "property": ["login","submit"]
     }
   ],
   "methods": {

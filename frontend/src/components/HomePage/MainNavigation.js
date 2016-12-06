@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+// import { Affix } from 'react-overlays';
+// import { Button, Fade } from 'react-bootstrap';
 import Scroll from 'react-scroll';
 import {LogoutComponentContainer} from '../LogoutComponent/LogoutComponent.js';
 

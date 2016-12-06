@@ -65,6 +65,7 @@ export class DatePicker extends Component {
     this.handleInputFocus = this.handleInputFocus.bind(this);
     this.handleInputBlur = this.handleInputBlur.bind(this);
     this.handleContainerMouseDown = this.handleContainerMouseDown.bind(this);
+    this.setDefaultValue = this.setDefaultValue.bind(this);
 
   }
 
@@ -120,13 +121,27 @@ export class DatePicker extends Component {
     }
   }
 
+  setDefaultValue(dateDefault){
+    var  dtDefaul = new Date (dateDefault);
+    this.setState({
+      value: moment(dtDefaul).format('L'),
+      selectedDay: dtDefaul,
+      showOverlay: false,
+    });
+      console.log ('valueDefault', this.state.value);
+      console.log ('selectedDayDefault', this.state.selectedDay);
+    this.input.blur();
+  }
 
   handleDayClick(e, day) {
+    console.log ('dayDay', day);
     this.setState({
       value: moment(day).format('L'),
       selectedDay: day,
       showOverlay: false,
     });
+    console.log ('valueClick', this.state.value);
+    console.log ('selectedDayClick', this.state.selectedDay);
     this.input.blur();
   }
 

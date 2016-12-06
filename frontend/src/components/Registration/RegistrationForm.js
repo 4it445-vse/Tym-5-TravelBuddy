@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { DatePicker } from '../common/DatePicker/DatePicker.js';
-import { SubmitButton } from '../common/SubmitButton.js';
 import { FormGroup, ControlLabel, FormControl, HelpBlock, OverlayTrigger,
   Popover, ButtonGroup, Button, Alert, Checkbox } from 'react-bootstrap';
 import { Link } from 'react-router';
@@ -28,7 +27,6 @@ export class RegistrationForm extends Component {
       clientErrors: {},
       errors: {},
 
-      isLoading: false,
       formSuccess: false
     };
 
@@ -151,11 +149,13 @@ export class RegistrationForm extends Component {
 
     let errors = {};
 
-    this.setState({isLoading: true});
+    // let formData = new FormData(event.target);
+    // formData.append('gender', this.state.gender);
+
+    let birthdate = this._form.getFormData().selectedDay;
 
     //TODO workaround for backend, if date is not date send dummy date to tell
     // backend that date is wrong
-    let birthdate = this._form.getFormData().selectedDay;
     if (!birthdate || !Date.parse(birthdate)) {
       birthdate = "01-01-1001";
     }
@@ -176,7 +176,6 @@ export class RegistrationForm extends Component {
       console.log('--- post usermain ok');
       this.setState({ clientErrors: {} });
       this.setState({ errors: {} });
-      this.setState({ isLoading: false });
       this.setState({ formSuccess: true });
     })
     .catch(error => {
@@ -186,7 +185,6 @@ export class RegistrationForm extends Component {
         Object.assign(errors, {"password2": true});
       }
       this.setState({ errors });
-      this.setState({ isLoading: false });
       console.log('--- submit usermain failed');
     });
 
@@ -207,9 +205,8 @@ export class RegistrationForm extends Component {
 
     const { clientErrors } = this.state;
     const { errors } = this.state;
-    const { isLoading } = this.state;
 
-    console.log('---backend errors', isLoading);
+    // console.log('---backend errors', errors);
 
     if (this.state.formSuccess === true) {
       return this.showAlert('success');
@@ -238,8 +235,7 @@ export class RegistrationForm extends Component {
                     </FormGroup>
                   );
               })}
-              {/* <Button type="submit" bsStyle="primary" bsSize="large" block>Register!</Button> */}
-              <SubmitButton name="Register!" isLoading={isLoading}/>
+              <Button type="submit" bsStyle="primary" bsSize="large" block>Register!</Button>
           </form>
         </div>
       );

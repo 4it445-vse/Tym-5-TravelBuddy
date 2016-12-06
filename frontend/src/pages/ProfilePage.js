@@ -35,7 +35,7 @@ export class ProfilePage extends Component {
               <div className="col-lg-3">
                 <Row>
                   {/* placeholer */}
-                  <img src="http://www.howtowriteacv.guru/wp-content/uploads/2016/02/cv-icon-3.png"/>
+                
                   <ProfilePictureEditorComponent/>
                 </Row>
                 <Row>

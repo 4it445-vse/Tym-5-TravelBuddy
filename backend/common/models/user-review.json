@@ -37,7 +37,7 @@
     "UserReviewUserMain": {
       "type": "belongsTo",
       "model": "UserMain",
-      "foreignKey": "id"
+      "foreignKey": "refUserId"
     }
   },
   "acls": [],
