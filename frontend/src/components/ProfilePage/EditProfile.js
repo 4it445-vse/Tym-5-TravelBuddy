@@ -18,6 +18,7 @@ import api from '../../api.js';
 import { DatePicker } from '../common/DatePicker/DatePicker.js';
 import moment from 'moment';
 import { Link } from 'react-router';
+import { SubmitButton } from '../common/SubmitButton.js';
 
 export class EditProfile extends Component {
     constructor(props) {
@@ -41,7 +42,8 @@ export class EditProfile extends Component {
             errors: {},
             countryName: {},
             formSuccess: false,
-            refCountryId : ""
+            refCountryId : "",
+            isLoading: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -52,6 +54,7 @@ export class EditProfile extends Component {
         this.loadUserMain();
         this.loadUserDetail();
         this.loadUserCountry();
+
     }
 
     componentDidMount() {
@@ -81,12 +84,7 @@ export class EditProfile extends Component {
                     {
                       dtMonth = '0'+dtMonth;
                     }
-                      console.log("dt",dt);
-                        console.log("dtDate",dtDate);
-                        console.log("dtMonth",dtMonth);
-                        console.log("dtYear",dtYear);
                    var dtDatum =   dtMonth+ '/' + dtDate  +  '/' +dtYear;
-                      console.log("dtDatum",dtDatum);
                     this.setState({
                         [keys[i]]: dtDatum
                     })
@@ -216,6 +214,8 @@ export class EditProfile extends Component {
     //konec obrazku
 
     createField(type, key, desc, values) {
+
+
         let cssClass = "form-themed";
         switch (type) {
             case 'text':
@@ -241,10 +241,13 @@ export class EditProfile extends Component {
                 }
             case 'file':
             var addr = '';
-            if (this.state.profilePicture)
+            console.log('profilePictureNull',this.state.profilePicture);
+              console.log('profilePictureOLD',this.state.oldProfilePicture);
+            if (this.state.profilePicture || (this.state.profilePicture == null && this.state.oldProfilePicture == null))
             {
               addr = this.state.profilePicture ? this.state.profilePicture : "/images/profilePictureDefault.png";
           }
+
           else
           {
                 addr = "/api/containers/profilePictures/download/"+this.state.oldProfilePicture +"?access_token="+localStorage.accessToken;
@@ -273,7 +276,6 @@ export class EditProfile extends Component {
                         </div>
                     </div>
                 );
-
             case 'textarea':
                 return (<FormControl className={cssClass} type={type} name={key} componentClass={type} value={this.state[key]} onChange={this.handleInputChange} />);
             case "select":
@@ -294,12 +296,45 @@ export class EditProfile extends Component {
         }
     }
 
+    setActive(value) {
+      const srvUrl = '/UserMain/me?access_token=' + localStorage.accessToken;
+      var editActive = '';
+
+
+      if (this.state.isActive === null || this.state.isActive === 0)
+      {
+        this.setState({isActive: 1})
+      }
+      else {
+          this.setState({isActive: 0})
+      }
+
+      let formDataActive = this.getFormDataActive();
+      console.log("getFormDataActive",formDataActive);
+
+      api.patch(srvUrl, formDataActive).then(response => {
+          console.log('--- post usermain ok');
+          console.log('isActiveOK', value);
+      }).catch((error) => {
+          console.log('isActiveFail', value);
+      });
+      console.log('srvUrl',srvUrl);
+
+    }
+
+    getFormDataActive() {
+        return {
+            isActive: this.state.isActive
+        }
+    }
+
     handleSubmit(event) {
         event.preventDefault();
         let errors = {};
         let formData = this.getFormData();
         let userMainFailed = false;
         let userDetailFailed = false;
+        this.setState({isLoading: true});
         //this.uploadProfilePicture(formData);
         console.log('--- wizard form data birth', formData.birthdate);
 
@@ -327,12 +362,14 @@ export class EditProfile extends Component {
         api.put(srvUrlUD, formData).then(response => {
             console.log('--- post userDetail ok');
             this.setState({clientErrors: {}});
+            this.setState({ isLoading: false });
         }).catch((error) => {
             console.log('<!> updateUserDetail', error);
             userDetailFailed = true;
             const {response} = error;
             const errors = response.data.error.details.messages;
             this.setState({errors});
+            this.setState({ isLoading: false });
         });
 
         if (!userMainFailed && !userDetailFailed) {
@@ -426,6 +463,7 @@ export class EditProfile extends Component {
         ];
         const {clientErrors} = this.state;
         const {errors} = this.state;
+        const { isLoading } = this.state;
         return (
             <div>
                 <ProfilePictureEditorComponent container={this.props.modal} ref="pictureEditor" setPicture={this.setPicture}/>
@@ -455,7 +493,9 @@ export class EditProfile extends Component {
                                 </FormGroup>
                             );
                         })}
-                        <Button type="submit" bsStyle="primary">Save changes</Button>
+                      {//<SubmitButton type="submit" bsStyle="primary">Save changes</Button>
+                    }
+                          <SubmitButton name="Save changes!" bsStyle="primary" isLoading={isLoading}/>
                     </form>
                 </div>
             </div>
