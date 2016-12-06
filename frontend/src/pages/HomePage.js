@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {PageFooter} from '../components/common/PageFooter/PageFooter';
-import {PageHeader} from '../components/HomePage/PageHeader/PageHeader';
+import { MainNavigation } from '../components/HomePage/MainNavigation.js';
 import {SearchSection} from '../components/HomePage/SearchSection/SearchSection';
 import {WelcomeWizardModal} from '../components/WelcomeWizard/WelcomeWizardModal.js';
 import {CreateProductComponent} from "../components/CreateProduct/CreateProductComponent.js";
