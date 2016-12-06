@@ -34,7 +34,24 @@ export class HomePage extends Component {
             });
     }
 
+    getUserData() {
+      api.get('UserMain/me?access_token=' + localStorage.accessToken)
+        .then((response) => {
+            console.log('--- getUserData', response.data);
+            this.setState({ userData: response.data });
+        })
+        .catch((error) => {
+          console.log("Error: ", error);
+        });
+    }
+
+    componentDidMount() {
+      this.getUserData();
+    }
+
     render() {
+        const { userData } = this.state;
+        console.log('--- userData homepage', userData);
         let welcomeWizard = undefined;
         if (this.state.showWelcomeWizard) {
             welcomeWizard = <WelcomeWizardModal steps={2}/>;
@@ -43,12 +60,8 @@ export class HomePage extends Component {
         return (
           <div id="main-wrapper" className="homepage">
               {welcomeWizard}
-              <MainNavigation userData={this.state.userData}/>
-              <section className="no-padding" id="portfolio">
-
-              </section>
-
-              <section className="">
+              <MainNavigation userData={userData}/>
+              <section className="search">
                   <CreateProductComponent ref="a"/>
                   <div className="container">
                       <div className="row">

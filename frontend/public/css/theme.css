@@ -155,10 +155,15 @@ aside {
     .navbar-app .nav > li > a, .navbar-app .nav > li > a:focus {
       color: #fff;
     }
-  }
-  @media (min-width: 768px) {
     .navbar-app .nav > li > a:hover, .navbar-app .nav > li > a:focus:hover {
       color: rgba(255,255,255,0.7);
+    }
+    .navbar-default .navbar-header .navbar-brand {
+      color: #fff;
+    }
+    .navbar-default .navbar-header .navbar-brand:hover {
+      background: #fff;
+      color: #f05f40;
     }
   }
 /*PROFILE PAGE*/

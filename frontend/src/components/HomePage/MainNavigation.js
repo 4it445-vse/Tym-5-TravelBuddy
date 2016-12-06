@@ -10,14 +10,24 @@ export class MainNavigation extends Component {
     this.state = {
       open: "",
       style: "affix",
-      userData: this.props.userData
+      userData: undefined
     };
-    console.log('userData', this.state.userData);
+    console.log('--- MainNavigation console', this.props.userData);
+  }
+
+  componentDidMount() {
+    console.log('--- MainNavigation didmount', this.props.userData);
+    this.setState({ userData: this.props.userData });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ userData: nextProps.userData });
   }
 
   //TODO change class of login-modal on scroll, affix-top on top, affix on affixed
 
   render() {
+    const { userData } = this.state;
     return (
         <nav id="mainNav" className="navbar navbar-app navbar-default navbar-fixed-top">
             <div className="container-fluid">
@@ -33,10 +43,10 @@ export class MainNavigation extends Component {
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul className="nav navbar-nav navbar-right">
                         <li>
-                            <a href="/">Search</a>
+                            <a href="/"><i className="fa fa-search"></i>&nbsp;Search</a>
                         </li>
                         <li>
-                            <a href="/profile"><i className="fa fa-user"></i>Martin Smid</a>
+                            <a href="/profile"><i className="fa fa-user"></i>&nbsp;{"Profile"}</a>
                         </li>
                         <li>
                             <LogoutComponentContainer/>
