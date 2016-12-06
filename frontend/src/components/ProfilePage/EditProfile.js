@@ -23,9 +23,10 @@ export class EditProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            //  pictureBLOB: null, // so far this is always null!
-            //  profilePicture: null,
+            profilePicture: null,
+            oldProfilePicture: null,
             country: "",
+            countryID: "",
             motto: "",
             bio: "",
             countries: [],
@@ -39,17 +40,18 @@ export class EditProfile extends Component {
             clientErrors: {},
             errors: {},
             countryName: {},
-            formSuccess: false
+            formSuccess: false,
+            refCountryId : ""
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-        //vypnuto pro potreby ladeni validace
-        //  this.handlePictureChange = this.handlePictureChange.bind(this);
-        //    this.setPicture = this.setPicture.bind(this);
+        this.handlePictureChange = this.handlePictureChange.bind(this);
+        this.setPicture = this.setPicture.bind(this);
         this.handleCountryChange = this.handleCountryChange.bind(this);
+        this.loadUserCountry = this.loadUserCountry.bind(this);
         this.loadUserMain();
         this.loadUserDetail();
-        //this.loadUserCountry();
+        this.loadUserCountry();
     }
 
     componentDidMount() {
@@ -65,12 +67,39 @@ export class EditProfile extends Component {
             if (response.status === 200) {
                 var keys = ["lastName", "firstName", "birthdate", "email"];
                 for (let i = 0; i < keys.length; i++) {
+                  if ( i==2)
+                  {
+                    var dt = new Date(response.data[keys[i]]);
+                    var dtDate = dt.getDate();
+                    var dtMonth = dt.getMonth()+1;
+                    var dtYear = dt.getFullYear();
+                    if (dtDate < 10)
+                    {
+                      dtDate = '0'+dtDate;
+                    }
+                    if (dtMonth< 10)
+                    {
+                      dtMonth = '0'+dtMonth;
+                    }
+                      console.log("dt",dt);
+                        console.log("dtDate",dtDate);
+                        console.log("dtMonth",dtMonth);
+                        console.log("dtYear",dtYear);
+                   var dtDatum =   dtMonth+ '/' + dtDate  +  '/' +dtYear;
+                      console.log("dtDatum",dtDatum);
+                    this.setState({
+                        [keys[i]]: dtDatum
+                    })
+                      this.datePicker.setDefaultValue(this.state.birthdate);
+                  }
+                  else {
                     this.setState({
                         [keys[i]]: response.data[keys[i]]
                     })
+                  }
                 }
-                console.log(response);
-                this.setState({birthdate: '10/10/2016'});
+
+                  console.log("birthdate",response.data);
             }
         }).catch((error) => {
             console.log("Error: ", error);
@@ -82,11 +111,20 @@ export class EditProfile extends Component {
         const srvUrl = '/UserMain/me/userDetail?access_token=' + localStorage.accessToken;
         api.get(srvUrl).then((response) => {
             if (response.status === 200) {
-                var keys = ["phone", "skype", "facebook", "bio", "motto"];
+                var keys = ["phone", "skype", "facebook", "bio", "motto","profilePicture","refCountryId"];
                 for (let i = 0; i < keys.length; i++) {
+                  if (i ==5)
+                  {
+                    this.setState({
+                        oldProfilePicture: response.data[keys[i]]
+                    })
+                  }
+                  else
+                  {
                     this.setState({
                         [keys[i]]: response.data[keys[i]]
                     })
+                  }
                 }
             }
         }).catch((error) => {
@@ -96,38 +134,18 @@ export class EditProfile extends Component {
     }
 
     loadUserCountry() {
-        const srvUrl = '/UserMain/me/userDetail/';
-        const refCountryId = null;
+        const srvUrl = '/Countries/' + this.state.refCountryId;
         api.get(srvUrl).then((response) => {
             if (response.status === 200) {
-                var keys = ["refCountryId"];
+                var keys = ["id"];
                 for (let i = 0; i < keys.length; i++) {
                     this.setState({
-                        [keys[i]]: response.data[keys[i]]
+                        countryID: response.data[0][keys[i]]
                     })
                 }
-                  console.log('country', this.state.refCountryId);
-                  const refCountryId = this.state.refCountryId;
-                      console.log('countryxconst', refCountryId);
-                          const srvCountry = '/Countries/' + refCountryId;
-                      api.get(srvCountry)
-                      .then((response) => {
-                        if (response.status === 200) {
-                            var keys = ["name"];
-                            for (let i = 0; i < keys.length; i++) {
-                                this.setState({
-                                    [keys[i]]: response.data[keys[i]]
+                  console.log('countdssa',this.state.country);
+                  }
 
-                                })
-                                  console.log("name",name);
-                                this.setState({country:name});
-                            }
-                        }
-                    }).catch((error) => {
-                        console.log("Error: ", error);
-                        console.log("Error: ", error.response);
-                    });
-            }
         }).catch((error) => {
             console.log("Error: ", error);
             console.log("Error: ", error.response);
@@ -138,8 +156,6 @@ export class EditProfile extends Component {
     loadCountryEntries() {
         var countries = null;
         api.get('/Countries').then((response) => {
-            //console.log(response.data);
-            //console.log(response.status);
             if (response.status === 200) {
                 countries = response.data;
                 this.setState({countries: countries});
@@ -153,6 +169,7 @@ export class EditProfile extends Component {
     handleCountryChange(event) {
         this.setState({country: event.target.value});
     }
+    //zacatek obrazku
 
     handlePictureChange(event) {
         event.preventDefault();
@@ -175,6 +192,7 @@ export class EditProfile extends Component {
 
     setPicture(pictureBLOB, profilePicture) {
         this.setState({pictureBLOB: pictureBLOB, profilePicture: profilePicture});
+        //console.log('priflePictueLog',profilePicture);
     }
 
     handleInputChange(event) {
@@ -194,6 +212,8 @@ export class EditProfile extends Component {
             </Popover>
         );
     }
+
+    //konec obrazku
 
     createField(type, key, desc, values) {
         let cssClass = "form-themed";
@@ -220,14 +240,22 @@ export class EditProfile extends Component {
                     );
                 }
             case 'file':
+            var addr = '';
+            if (this.state.profilePicture)
+            {
+              addr = this.state.profilePicture ? this.state.profilePicture : "/images/profilePictureDefault.png";
+          }
+          else
+          {
+                addr = "/api/containers/profilePictures/download/"+this.state.oldProfilePicture +"?access_token="+localStorage.accessToken;
+          }
+
                 return (
                     <div>
                         <div style={{
                             display: "inline-block"
                         }}>
-                            <Image height="100px" width="100px" src={this.state.profilePicture
-                                ? this.state.profilePicture
-                                : "/images/profilePictureDefault.png"} thumbnail/>
+                            <Image height="250px" width="250px" src={addr} thumbnail/>
                         </div>
                         <div style={{
                             display: "inline-block",
@@ -240,7 +268,7 @@ export class EditProfile extends Component {
                                 e.preventDefault();
                                 ReactDOM.findDOMNode(this.refs.fileInput).click();
                             }}>
-                                Choose photo
+                                Choose new photo
                             </Button>
                         </div>
                     </div>
@@ -250,7 +278,7 @@ export class EditProfile extends Component {
                 return (<FormControl className={cssClass} type={type} name={key} componentClass={type} value={this.state[key]} onChange={this.handleInputChange} />);
             case "select":
                 return (
-                    <FormControl className={cssClass} componentClass="select" placeholder="Select your country" value={this.state.country} onChange={this.handleCountryChange}>
+                    <FormControl className={cssClass} componentClass="select" placeholder="Select your country" value={this.state.countryID} onChange={this.handleCountryChange}>
                         <option value={this.state[key]}></option>
                         {this.state.countries.map((element) => {
                             return (
@@ -260,7 +288,7 @@ export class EditProfile extends Component {
                     </FormControl>
                 );
             case 'date':
-                return (<DatePicker type="birthdate" name="birthdate" onChange={this.handleInputChange}/>);
+                return (<DatePicker type="birthdate" name="birthdate"  onChange={this.handleInputChange} ref={(datePicker) => { this.datePicker = datePicker; }}/>);
             default:
                 return {};
         }
@@ -272,17 +300,22 @@ export class EditProfile extends Component {
         let formData = this.getFormData();
         let userMainFailed = false;
         let userDetailFailed = false;
-        //console.log('--- wizard form data', this.getFormData());
-      //  var data = this.getFormData();
-        //console.log('--- profilePicture', data.profilePicture);
+        //this.uploadProfilePicture(formData);
+        console.log('--- wizard form data birth', formData.birthdate);
 
+        formData.birthdate = this.datePicker.getFormData().selectedDay;
+        console.log('birthdateTEST', formData.birthdate);
+
+        this.uploadProfilePicture(this.state.profilePicture);
 
         const srvUrl = '/UserMain/me?access_token=' + localStorage.accessToken;
         api.patch(srvUrl, formData).then(response => {
             console.log('--- post usermain ok');
+            console.log('birthdateOK', formData.birthdate);
             this.setState({clientErrors: {}});
         }).catch((error) => {
             console.log('<!> updateUserInfo', error);
+            console.log('birthdateFAIL', formData.birthdate);
             userMainFailed = true;
             const {response} = error;
             const errors = response.data.error.details.messages;
@@ -312,8 +345,7 @@ export class EditProfile extends Component {
 
     getFormData() {
         return {
-            //  profilePicture: this.state.profilePicture,
-            // country: this.state.country, //id in table Countries
+            country: this.state.country,
             motto: this.state.motto,
             bio: this.state.bio,
             firstName: this.state.firstName,
@@ -326,24 +358,55 @@ export class EditProfile extends Component {
         }
     }
 
+
+    uploadProfilePicture(data){
+      if(data){
+
+        var blob = this.dataURLtoBlob(data);
+        var formData = new FormData();
+        var fileName = "profilePicture.jpg";
+        formData.append("imageFile",blob, fileName);
+
+        console.log('--- profilePicture');
+         api.post('/containers/profilePictures/upload?access_token=' + localStorage.accessToken, formData)
+           .then((data)=>{
+             console.log('--- upload successful', data);
+           })
+           .catch((error) => {
+             console.log('<!> upload Failed', error);
+           });
+
+      }
+    }
+
+    dataURLtoBlob(dataurl) {
+      var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+          bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+      while(n--){
+          u8arr[n] = bstr.charCodeAt(n);
+      }
+      return new Blob([u8arr], {type:mime});
+    }
+
+
     render() {
         const fields = [
             /*key, label, type, desc, id*/
-            /*  [
-                'profilePicture', 'Profile picture', 'file', ''
-            ],*/
+             [
+                'profilePicture', '', 'file', ''
+            ],
             [
                 'firstName', 'First name', 'text', ''
             ],
             [
                 'lastName', 'Last name', 'text', ''
             ],
-            // [
-            //     'birthdate', 'Birthdate', 'date', '', this.state.birthdate
-            // ],
-            // [
-            //     'country', 'Country', 'select', ''
-            // ],
+            [
+                'birthdate', 'Birthdate', 'date', '',
+            ],
+           [
+                 'country', 'Country', 'select', ''
+             ],
             [
                 'email', 'E-mail', 'email', 'Enter valid email. You will use it for login and password reset'
             ],
