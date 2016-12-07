@@ -171,6 +171,11 @@ aside {
     color: #F05F40 !important;
     background-color: #fff;
   }
+  .navbar-app .nav > li > a.active:hover,
+  .navbar-app .nav > li > a.active:focus:hover {
+    color: #F05F40 !important;
+    background-color: #fff;
+  }
 /*PROFILE PAGE*/
 .profile-page form {
   color: black;
