@@ -45,7 +45,7 @@ export class MainNavigation extends Component {
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul className="nav navbar-nav navbar-right">
                         <li>
-                            <a href="/"><i className="fa fa-search"></i>&nbsp;Search</a>
+                            <a href="/search"><i className="fa fa-search"></i>&nbsp;Search</a>
                         </li>
                         <li>
                             <a href="/profile"><i className="fa fa-user"></i>&nbsp;{"Profile"}</a>
