@@ -16,13 +16,27 @@
   },
   "validations": [],
   "relations": {
-    "userLanguages": {
+    "users": {
       "type": "hasMany",
-      "model": "User_Language",
+      "model": "UserMain",
       "foreignKey": "refLanguageId",
-      "through": "User_Language"
+      "through": "User_Language",
+      "keyThrough": "refUserId"
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": {}
 }
