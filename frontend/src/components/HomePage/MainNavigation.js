@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 // import { Affix } from 'react-overlays';
 // import { Button, Fade } from 'react-bootstrap';
 import Scroll from 'react-scroll';
-import {LogoutComponentContainer} from '../LogoutComponent/LogoutComponent.js';
-
-const Link = Scroll.Link;
+import { Link } from 'react-router';
+import { LogoutComponentContainer } from '../LogoutComponent/LogoutComponent.js';
 
 export class MainNavigation extends Component {
   constructor(props) {
@@ -45,10 +44,11 @@ export class MainNavigation extends Component {
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul className="nav navbar-nav navbar-right">
                         <li>
-                            <a href="/"><i className="fa fa-search"></i>&nbsp;Search</a>
+                            <Link to="/search" activeClassName="active"><i className="fa fa-search"></i>&nbsp;Search</Link>
+                            {/* <a href="/search"><i className="fa fa-search"></i>&nbsp;Search</a> */}
                         </li>
                         <li>
-                            <a href="/profile"><i className="fa fa-user"></i>&nbsp;{"Profile"}</a>
+                            <Link to="/profile" activeClassName="active"><i className="fa fa-user"></i>&nbsp;{'Profile'}</Link>
                         </li>
                         <li>
                             <LogoutComponentContainer/>

@@ -19,6 +19,7 @@ export function createRoutes() {
       <Route path="/terms" component={TermsOfServicePage}/>
       <Route path="/verified" component={VerifiedPage}/>
       <Route path="/profile" component={AuthenticationWrapper(ProfilePage)}/>
+      <Route path="/search" component={AuthenticationWrapper(HomePage)}/>
       <Route path="*" component={PageNotFound}/>
     </Route>
   );

@@ -158,13 +158,23 @@ aside {
     .navbar-app .nav > li > a:hover, .navbar-app .nav > li > a:focus:hover {
       color: rgba(255,255,255,0.7);
     }
-    .navbar-default .navbar-header .navbar-brand {
+    .navbar-app .navbar-header .navbar-brand {
       color: #fff;
     }
-    .navbar-default .navbar-header .navbar-brand:hover {
+    .navbar-app .navbar-header .navbar-brand:hover {
       background: #fff;
       color: #f05f40;
     }
+  }
+  .navbar-app .nav > li > a.active,
+  .navbar-app .nav > li > a.active:focus {
+    color: #F05F40 !important;
+    background-color: #fff;
+  }
+  .navbar-app .nav > li > a.active:hover,
+  .navbar-app .nav > li > a.active:focus:hover {
+    color: #F05F40 !important;
+    background-color: #fff;
   }
 /*PROFILE PAGE*/
 .profile-page form {

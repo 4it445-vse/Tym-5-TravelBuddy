@@ -99,6 +99,23 @@ body {
     font-size: 1.2em;
   }
 
+/* DatePicker Component */
+.YearNavigation {
+  color: rgba(0,0,0,0.7);
+}
+  .YearNavigation .DayPicker-Day--today {
+    color: #fff;
+    background: #f05f40;
+  }
+
+/* FilterForm Component */
+.container.filter-form {
+
+}
+.container.item-list {
+
+}
+
 /* LandingPage */
 #register .registration-form-container {
   padding-top: 50px;

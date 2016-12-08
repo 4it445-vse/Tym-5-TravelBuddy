@@ -286,7 +286,7 @@ export class EditProfile extends Component {
     createField(type, key, desc, values) {
 
 
-        let cssClass = "form-themed";
+        let cssStyle = "form-themed";
         switch (type) {
             case 'text':
             case 'password':
@@ -294,7 +294,7 @@ export class EditProfile extends Component {
                 if (!desc) {
                     return (
                       <FormControl
-                        className={cssClass}
+                        className={cssStyle}
                         type={type}
                         name={key}
                         value={this.state[key]}
@@ -305,7 +305,7 @@ export class EditProfile extends Component {
                     const popover = this.createPopover(desc);
                     return (
                         <OverlayTrigger trigger="focus" placement="right" overlay={popover} delay={100}>
-                            <FormControl className={cssClass} type={type} value={this.state[key]} name={key} onChange={this.handleInputChange} />
+                            <FormControl className={cssStyle} type={type} value={this.state[key]} name={key} onChange={this.handleInputChange} />
                         </OverlayTrigger>
                     );
                 }
@@ -345,10 +345,10 @@ export class EditProfile extends Component {
                     </div>
                 );
             case 'textarea':
-                return (<FormControl className={cssClass} type={type} name={key} componentClass={type} value={this.state[key]} onChange={this.handleInputChange} />);
+                return (<FormControl className={cssStyle} type={type} name={key} componentClass={type} value={this.state[key]} onChange={this.handleInputChange} />);
             case "select":
                 return (
-                    <FormControl className={cssClass} componentClass="select" placeholder="Select your country" value={this.state.countryID} onChange={this.handleCountryChange}>
+                    <FormControl className={cssStyle} componentClass="select" placeholder="Select your country" value={this.state.countryID} onChange={this.handleCountryChange}>
                         <option value={this.state[key]}></option>
                         {this.state.countries.map((element) => {
                             return (
@@ -358,7 +358,7 @@ export class EditProfile extends Component {
                     </FormControl>
                 );
             case 'date':
-                return (<DatePicker type="birthdate" name="birthdate"  onChange={this.handleInputChange} ref={(datePicker) => { this.datePicker = datePicker; }}/>);
+                return (<DatePicker type="birthdate" name="birthdate" className={cssStyle} onChange={this.handleInputChange} ref={(datePicker) => { this.datePicker = datePicker; }}/>);
             case 'radio-active':
             return (
               <ButtonGroup className="block">
