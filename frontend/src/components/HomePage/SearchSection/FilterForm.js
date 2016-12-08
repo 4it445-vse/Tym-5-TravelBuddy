@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import InputRange from 'react-input-range';
+import { Panel } from 'react-bootstrap';
 import {ItemList} from './ItemList';
 import api from '../../../api';
 
@@ -26,7 +27,8 @@ export class FilterForm extends Component {
           inputRangeLimits: {
             min: 0,
             max: 100,
-          }
+          },
+          filterFormShow: true,
         };
 
 
@@ -45,7 +47,9 @@ export class FilterForm extends Component {
         //this.fetchProductData();
     }
 
+    componentDidMount() {
 
+    }
 
 
     fetchProductData() {
@@ -55,7 +59,7 @@ export class FilterForm extends Component {
                 if (response.status === 200) {
                     console.log("FilterForm - Response data",response.data);
                     this.setState({products: response.data, filteredProducts: response.data});
-                    this.updateInputRangeLimits(response.data);
+                    this.updateInputRange(response.data);
                 }
             })
             .catch((error) => {
@@ -137,19 +141,21 @@ export class FilterForm extends Component {
     handlePriceFromChange(event) {
         event.preventDefault();
         console.log("PriceFromState:",this.state.priceFrom);
-        this.setState({priceFrom: event.target.value})
+        this.setState({priceFrom: event.target.value});
+        // this.setState({inputRangeValues: {min: event.target.value}});
     }
 
     handleDescriptionChange(event){
         event.preventDefault();
         console.log("PriceToState:",this.state.description);
-        this.setState({description: event.target.value})
+        this.setState({description: event.target.value});
     }
 
     handlePriceToChange(event) {
         event.preventDefault();
         console.log("PriceToState:",this.state.priceTo);
-        this.setState({priceTo: event.target.value})
+        this.setState({priceTo: event.target.value});
+        // this.setState({inputRangeValues: {max: event.target.value}});
     }
 
     handleInputRangeValuesChange(component, values) {
@@ -162,14 +168,20 @@ export class FilterForm extends Component {
       });
     }
 
-    updateInputRangeLimits(products) {
+    updateInputRange(products) {
       let prices = [];
       for (let item of products) {
         prices.push(item.price);
       }
+      let priceMin = Math.min.apply(Math, prices);
+      let priceMax = Math.max.apply(Math, prices)
       this.setState({
-        inputRangeLimits: {min: Math.min.apply(Math, prices), max: Math.max.apply(Math, prices)},
-        inputRangeValues: {min: Math.min.apply(Math, prices), max: Math.max.apply(Math, prices)}
+        inputRangeLimits: {min: priceMin, max: priceMax},
+        inputRangeValues: {min: priceMin, max: priceMax}
+      });
+      this.setState({
+        priceFrom: priceMin,
+        priceTo: priceMax,
       });
     }
 
@@ -178,67 +190,69 @@ export class FilterForm extends Component {
 
         return (
             <div>
-                <div className="container">
+                <div className="container filter-form">
                     <div className="row">
-                    <form className="form-horizontal" onSubmit={this.handleSubmitFilterData}>
-                        <div className="form-group row">
-                            <label classID="inputName" className="col-sm-2 col-form-label">Name:</label>
-                            <div className="col-sm-8">
-                                <input type="text" className="form-control" id="inputName" onChange={this.handleLabelChange} placeholder="Name..."/>
+                      <div className="col-lg-8 col-lg-offset-2">
+                      <Panel collapsible expanded={this.state.filterFormShow}>
+                        <form className="form-horizontal" onSubmit={this.handleSubmitFilterData}>
+                            <div className="form-group row">
+                              <div className="col-lg-6">
+                                <input type="text" className="form-control" id="inputName" onChange={this.handleLabelChange} placeholder="Name"/>
+                              </div>
+                              <div className="col-lg-6">
+                                <input type="text" className="form-control" id="inputName" onChange={this.handleDescriptionChange} placeholder="Description"/>
+                              </div>
+
                             </div>
-                        </div>
-                        <div className="form-group row">
-                            <label classID="inputName" className="col-sm-2 col-form-label">Description:</label>
-                            <div className="col-sm-8">
-                                <input type="text" className="form-control" id="inputName" onChange={this.handleDescriptionChange} placeholder="Description..."/>
+                            <div className="form-group row">
+                              <div className="col-lg-12">
+                                <input type="text" className="form-control" id="inputCity" onChange={this.handleCityChange} placeholder="City"/>
+                              </div>
                             </div>
-                        </div>
-                        <div className="form-group row">
-                            <label classID="inputCity" className="col-sm-2 col-form-label">City:</label>
-                            <div className="col-sm-8">
-                                <input type="text" className="form-control" id="inputCity" onChange={this.handleCityChange} placeholder="City..."/>
+                            <div className="form-group row">
+                              <div className="col-lg-12">
+                                <InputRange
+                                  name="inputName"
+                                  // classNames=""
+                                  maxValue={this.state.inputRangeLimits.max}
+                                  minValue={this.state.inputRangeLimits.min}
+                                  value={this.state.inputRangeValues}
+                                  onChange={this.handleInputRangeValuesChange}
+                                />
+                              </div>
                             </div>
-                        </div>
-                        <div className="form-group row">
-                            <label classID="priceFrom" className="col-sm-2 col-form-label">Price:</label>
-                            <div className="col-sm-8">
+                            <div className="row">
+                              <div className="col-lg-6 col-lg-offset-3">
                                 <div className="input-group">
-                                    <div className="input-group-addon">CZK</div>
-                                    <input type="text" className="form-control" onChange={this.handlePriceFromChange} id="priceFrom"/>
-                                    <div className="input-group-addon">between</div>
-                                    <input type="text" className="form-control" onChange={this.handlePriceToChange} id="priceTo"/>
-                                    <div className="input-group-addon">.00</div>
+                                    <div className="input-group-addon">Price from</div>
+                                    <input type="text" className="form-control" onChange={this.handlePriceFromChange} id="priceFrom" value={this.state.priceFrom}/>
+                                    <div className="input-group-addon">to</div>
+                                    <input type="text" className="form-control" onChange={this.handlePriceToChange} id="priceTo" value={this.state.priceTo}/>
                                 </div>
+                              </div>
                             </div>
-                        </div>
-                        <div className="form-group row">
-                          <InputRange
-                            name="inputName"
-                            // classNames=""
-                            maxValue={this.state.inputRangeLimits.max}
-                            minValue={this.state.inputRangeLimits.min}
-                            value={this.state.inputRangeValues}
-                            onChange={this.handleInputRangeValuesChange}
-                          />
-                        </div>
-                        <div className="row">
-
-                                {this.state.errorToPrice != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.errorToPrice}</span> : null}
-                                {this.state.errorFromPrice != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.errorFromPrice}</span> : null}
-
-                        </div>
-
-                        <div className="form-group row">
-                            <div className="col-sm-offset-2 col-sm-10">
-                                <button type="submit" className="btn btn-primary">Filter</button>
+                            <div className="row">
+                              {this.state.errorToPrice != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.errorToPrice}</span> : null}
+                              {this.state.errorFromPrice != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.errorFromPrice}</span> : null}
                             </div>
-                        </div>
-                    </form>
+
+                            <div className="form-group row">
+                              <button type="submit" className="btn btn-primary center-block">Filter</button>
+                            </div>
+                        </form>
+                      </Panel>
+                      </div>
                     </div>
-                    <div className="row"></div>
-                    <ItemList products={this.state.filteredProducts}/>
                 </div>
-
+                <div className="container item-list">
+                  <div className="row">
+                    <div className="col-lg-8 col-lg-offset-2">
+                    <Panel>
+                      <ItemList products={this.state.filteredProducts}/>
+                    </Panel>
+                    </div>
+                  </div>
+                </div>
             </div>
         );
     }

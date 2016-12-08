@@ -108,6 +108,14 @@ body {
     background: #f05f40;
   }
 
+/* FilterForm Component */
+.container.filter-form {
+
+}
+.container.item-list {
+
+}
+
 /* LandingPage */
 #register .registration-form-container {
   padding-top: 50px;
