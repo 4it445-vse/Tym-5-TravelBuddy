@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import InputRange from 'react-input-range';
 import {ItemList} from './ItemList';
 import api from '../../../api';
 
@@ -8,15 +9,25 @@ export class FilterForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {products: [],
-            filteredProducts: [],
-            errorToPrice: '',
-            errorFromPrice:'',
-            label: '',
-            description: '',
-            city: '',
-            priceFrom: 0,
-            priceTo: 9999999};
+        this.state = {
+          products: [],
+          filteredProducts: [],
+          errorToPrice: '',
+          errorFromPrice:'',
+          label: '',
+          description: '',
+          city: '',
+          priceFrom: 0,
+          priceTo: 9999999,
+          inputRangeValues: {
+            min: 0,
+            max: 9999,
+          },
+          inputRangeLimits: {
+            min: 0,
+            max: 100,
+          }
+        };
 
 
 
@@ -27,6 +38,7 @@ export class FilterForm extends Component {
         this.handlePriceToChange = this.handlePriceToChange.bind(this);
         this.handleSubmitFilterData = this.handleSubmitFilterData.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+        this.handleInputRangeValuesChange = this.handleInputRangeValuesChange.bind(this);
     }
 
     componentWillMount() {
@@ -43,6 +55,7 @@ export class FilterForm extends Component {
                 if (response.status === 200) {
                     console.log("FilterForm - Response data",response.data);
                     this.setState({products: response.data, filteredProducts: response.data});
+                    this.updateInputRangeLimits(response.data);
                 }
             })
             .catch((error) => {
@@ -139,6 +152,27 @@ export class FilterForm extends Component {
         this.setState({priceTo: event.target.value})
     }
 
+    handleInputRangeValuesChange(component, values) {
+      this.setState({
+        inputRangeValues: values,
+      });
+      this.setState({
+        priceFrom: values.min,
+        priceTo: values.max
+      });
+    }
+
+    updateInputRangeLimits(products) {
+      let prices = [];
+      for (let item of products) {
+        prices.push(item.price);
+      }
+      this.setState({
+        inputRangeLimits: {min: Math.min.apply(Math, prices), max: Math.max.apply(Math, prices)},
+        inputRangeValues: {min: Math.min.apply(Math, prices), max: Math.max.apply(Math, prices)}
+      });
+    }
+
     render() {
 
 
@@ -176,6 +210,16 @@ export class FilterForm extends Component {
                                     <div className="input-group-addon">.00</div>
                                 </div>
                             </div>
+                        </div>
+                        <div className="form-group row">
+                          <InputRange
+                            name="inputName"
+                            // classNames=""
+                            maxValue={this.state.inputRangeLimits.max}
+                            minValue={this.state.inputRangeLimits.min}
+                            value={this.state.inputRangeValues}
+                            onChange={this.handleInputRangeValuesChange}
+                          />
                         </div>
                         <div className="row">
 
