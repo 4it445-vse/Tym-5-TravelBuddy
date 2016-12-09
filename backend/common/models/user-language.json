@@ -6,8 +6,14 @@
   "options": {
     "validateUpsert": true
   },
+  "indexes":{
+    "UNIQUE_INDEX":  {
+        "columns": "refLanguageId,refUserId",
+        "kind": "unique"
+    }
+  },
   "properties": {
-    
+
   },
   "validations": [],
   "relations": {
