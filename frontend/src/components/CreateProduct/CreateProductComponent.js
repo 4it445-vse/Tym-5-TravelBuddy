@@ -16,8 +16,8 @@ export class CreateProductComponent extends Component{
       show: false,
       showDropdown: false,
       formHelperData: {
-        categories: [],
-        cities: []
+        categories: []
+        //cities: []
       },
 
       labelError: "",
@@ -28,12 +28,8 @@ export class CreateProductComponent extends Component{
 
       //product data----
       label: "",
-      //category: -1,
-      selectedCategory: null,
-      city: {
-        id: null,
-        name: "",
-      },
+      selectedCategory: null, //categoryID
+      selectedCity: null, // cityID
       description: "",
       price: 0
       //-----
@@ -41,11 +37,9 @@ export class CreateProductComponent extends Component{
 
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
-    this.handleCityChange = this.handleCityChange.bind(this);
-    this.handleKeyDownInCity = this.handleKeyDownInCity.bind(this);
     this.handleCreateProduct = this.handleCreateProduct.bind(this);
 
-    this.fetchCitiesDebounced = lodash.debounce(this.fetchCityData, 300);
+    this.fetchCityDataDebounced = lodash.debounce(this.fetchCityData, 300);
   }
 
   show(){
@@ -66,7 +60,7 @@ export class CreateProductComponent extends Component{
       error = true;
       this.setState({labelError:"Label cannot be empty.",});
     }else this.setState({labelError:""});
-    if (this.state.category < 0){
+    if (!this.state.selectedCategory){
       error = true;
       this.setState({categoryError:"Select a category."});
     }else this.setState({categoryError:""});
@@ -74,21 +68,11 @@ export class CreateProductComponent extends Component{
       error = true;
       this.setState({priceError:"Price cannot be less than 0."});
     }else this.setState({priceError:""});
-    if (!this.state.city.id){
+    if (!this.state.selectedCity){
       error = true;
-      this.setState({cityError:"Invalid city."});
+      this.setState({cityError:"Select a city."});
     }else this.setState({cityError:""});
     return error;
-  }
-
-  handleKeyDownInCity(event){
-    if(event.which === 40){
-      event.preventDefault();
-      const node = ReactDOM.findDOMNode(this.dropdownMenu);
-      if (node){
-        node.firstChild.firstChild.focus();
-      }
-    }
   }
 
   handleCreateProduct(){
@@ -98,14 +82,27 @@ export class CreateProductComponent extends Component{
         price: this.state.price,
         label: this.state.label,
         description: this.state.description,
-        refCityId: this.state.city.id
+        refCityId: this.state.selectedCity
       };
 
       api.post("/usermain/me/owns?access_token="+localStorage.accessToken, params)
       .then((response) =>{
         console.log(response);
         if (response.status === 200){
-          this.hide();
+          console.log("data",response.data);
+          let productID = response.data.id;
+          let categoryID = this.state.selectedCategory;
+          const data =  {"refProductId": productID, "refProductCategoryId": categoryID };
+          api.post("/Product_ProductCategories?access_token="+localStorage.accessToken, data)
+          .then((response)=>{
+            if(response.status === 200){
+              this.hide();
+            }
+          })
+          .catch((error) => {
+            console.log("Error: ", error);
+            console.log("Error: ", error.response);
+          });
         }
       })
       .catch((error) => {
@@ -115,25 +112,23 @@ export class CreateProductComponent extends Component{
     }
   }
 
-  fetchCityData(searchTerm){
-    if (searchTerm.length > 0){
-      api.get("/cities", {params: this.paramsForSearchTerm(searchTerm)})
-      .then((response) =>{
-        if (response.status === 200){
-          this.setState({formHelperData:{...this.state.formHelperData,cities: response.data}, showDropdown:true});
-        }
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-        console.log("Error: ", error.response);
-      });
-    }else{
-      this.setState({
-        formHelperData:{...this.state.formHelperData,cities: []},
-        showDropdown:false,
-        city:{...this.state.city, id:null}
-      });
-    }
+  fetchCityData(searchTerm, callback){
+    if (searchTerm.length === 0){callback(null,null);return;}
+    api.get('/cities?access_token='+localStorage.accessToken, {params: this.paramsForSearchTerm(searchTerm)})
+    .then((response) =>{
+      if (response.status === 200){
+        let cities = response.data;
+        const transformedCities = cities.map((city)=>{
+          return {value:city.id, label:city.name};
+        });
+        callback(null,{options: transformedCities, complete:true});
+      }
+    })
+    .catch((error) => {
+      console.log("Error: ", error);
+      console.log("Error: ", error.response);
+      callback(error,null);
+    });
   }
 
   paramsForSearchTerm(searchTerm){
@@ -154,7 +149,7 @@ export class CreateProductComponent extends Component{
 
   fetchCategoryData(){
     var categories = null;
-    api.get('/ProductCategories')
+    api.get('/ProductCategories?access_token='+localStorage.accessToken)
     .then((response) => {
       if (response.status === 200){
         categories = response.data;
@@ -170,11 +165,6 @@ export class CreateProductComponent extends Component{
     });
   }
 
-  handleCityChange(event){
-    let searchTerm = event.target.value;
-    this.fetchCitiesDebounced(searchTerm);
-    this.setState({city:{...this.state.city, name:event.target.value}});
-  }
 
   render(){
     return(
@@ -197,6 +187,7 @@ export class CreateProductComponent extends Component{
                   value={this.state.label}
                   placeholder="Enter label"
                   onChange={(e) => {this.setState({label:e.target.value})}}
+                  autoComplete="off"
                 />
                 <HelpBlock>{this.state.labelError}</HelpBlock>
               </FormGroup>
@@ -211,31 +202,21 @@ export class CreateProductComponent extends Component{
                   multi={false}
                   options={this.state.formHelperData.categories}
                  />
-
-
                 <HelpBlock>{this.state.categoryError}</HelpBlock>
               </FormGroup>
 
               <FormGroup controlId="formCity" validationState={(this.state.cityError === "") ? null:"error"}>
                 <ControlLabel>City<span style={{fontSize:"150%", color:"red"}}>*</span></ControlLabel>
-                <FormControl
-                  type="text"
-                  value={this.state.city.name}
-                  placeholder="Enter city"
-                  onChange={this.handleCityChange}
-                  autoComplete="off"
-                  onKeyDown={this.handleKeyDownInCity}
-                />
-                <Dropdown id="cityDropdown" open={this.state.showDropdown} onToggle={(isOpen) =>{}} style={{width:"100%",display:"block"}} onSelect={(eventKey, event)=>{this.setState({city:{id:eventKey.id,name:eventKey.name},showDropdown:false})}}>
-                  <CustomToggle bsRole="toggle"/>
-                  <Dropdown.Menu ref={(menu) => { this.dropdownMenu=menu;}} style={{width:"100%"}} role="menu">
-                    {this.state.formHelperData.cities.map((element) => {
-                        return (
-                          <MenuItem key={element.id} eventKey={{id:element.id, name:element.name}} >{element.name}</MenuItem>
-                        );
-                    })}
-                  </Dropdown.Menu>
-                </Dropdown>
+
+                <Select.Async
+                  name="selectFieldCity"
+                  value= {this.state.selectedCity}
+                  onChange= {(selected)=>{this.setState({selectedCity:selected.value})}}
+                  multi={false}
+                  options={this.state.formHelperData.categories}
+                  loadOptions={(input, callback)=>{this.fetchCityDataDebounced(input,callback)}}
+                 />
+
                 <HelpBlock>{this.state.cityError}</HelpBlock>
               </FormGroup>
 
@@ -247,6 +228,7 @@ export class CreateProductComponent extends Component{
                   min="0"
                   value={this.state.price}
                   onChange={(e) => {this.setState({price:e.target.value}); }}
+                  style={{zIndex:0}}
                   />
                   <InputGroup.Addon>$</InputGroup.Addon>
                 </InputGroup>
@@ -261,6 +243,7 @@ export class CreateProductComponent extends Component{
                   value={this.state.description}
                   placeholder="Enter description"
                   onChange={(e) => {this.setState({description:e.target.value})}}
+                  autoComplete="off"
                 />
               </FormGroup>
             </form>
