@@ -37,12 +37,31 @@ export class CreateProductComponent extends Component{
 
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
+    this.resetFields = this.resetFields.bind(this);
     this.handleCreateProduct = this.handleCreateProduct.bind(this);
 
     this.fetchCityDataDebounced = lodash.debounce(this.fetchCityData, 300);
   }
 
+  resetFields(){
+    this.setState({
+      labelError: "",
+      categoryError: "",
+      cityError: "",
+      priceError:"",
+      //-----
+
+      //product data----
+      label: "",
+      selectedCategory: null, //categoryID
+      selectedCity: null, // cityID
+      description: "",
+      price: 0
+    });
+  }
+
   show(){
+    this.resetFields();
     this.setState({show:true});
   }
 
