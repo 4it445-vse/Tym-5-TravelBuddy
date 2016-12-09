@@ -19,12 +19,12 @@
     "language": {
       "type": "belongsTo",
       "model": "Language",
-      "foreignKey": "id"
+      "foreignKey": "refLanguageId"
     },
     "user": {
       "type": "belongsTo",
       "model": "UserMain",
-      "foreignKey": "id"
+      "foreignKey": "refUserId"
     }
   },
   "acls": [],
