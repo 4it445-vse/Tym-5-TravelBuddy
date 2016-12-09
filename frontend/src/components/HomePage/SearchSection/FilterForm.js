@@ -178,10 +178,8 @@ export class FilterForm extends Component {
                             </div>
                         </div>
                         <div className="row">
-
                                 {this.state.errorToPrice != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.errorToPrice}</span> : null}
                                 {this.state.errorFromPrice != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.errorFromPrice}</span> : null}
-
                         </div>
 
                         <div className="form-group row">
