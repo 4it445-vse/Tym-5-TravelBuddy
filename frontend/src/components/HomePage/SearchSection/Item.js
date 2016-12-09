@@ -1,30 +1,25 @@
 import React, { Component } from 'react';
-import {Button} from 'react-bootstrap';
-
+import { Button } from 'react-bootstrap';
+import { ListGroupItem } from 'react-bootstrap';
 
 
 export class Item extends Component{
     constructor(props) {
         super(props);
 
-}
+    }
 
     render() {
         return (
-          <tr>
-
-              <td>{this.props.product.label}</td>
-              <td>{this.props.product.price}</td>
-              <td>{this.props.product.description}</td>
-              <td>
-                  <Button type='submit' bsStyle="primary">Detail</Button>
-              </td>
-              <td>
-                  <Button type='submit' bsStyle="primary">Reply</Button>
-              </td>
-
-          </tr>
-
+          <ListGroupItem>
+            <span>
+              {this.props.product.label}
+              {this.props.product.price}
+              {this.props.product.description}
+            </span>
+            <Button type='submit' bsStyle="primary">Detail</Button>
+            <Button type='submit' bsStyle="primary">Reply</Button>
+          </ListGroupItem>
         );
     }
 }

@@ -2,22 +2,33 @@ import React, { Component } from 'react';
 // import { Affix } from 'react-overlays';
 // import { Button, Fade } from 'react-bootstrap';
 import Scroll from 'react-scroll';
-import {LogoutComponentContainer} from '../LogoutComponent/LogoutComponent.js';
-
-const Link = Scroll.Link;
+import { Link } from 'react-router';
+import { LogoutComponentContainer } from '../LogoutComponent/LogoutComponent.js';
 
 export class MainNavigation extends Component {
   constructor(props) {
     super(props);
     this.state = {
       open: "",
-      style: "affix"
+      style: "affix",
+      userData: undefined
     };
+    console.log('--- MainNavigation console', this.props.userData);
+  }
+
+  componentDidMount() {
+    console.log('--- MainNavigation didmount', this.props.userData);
+    this.setState({ userData: this.props.userData });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ userData: nextProps.userData });
   }
 
   //TODO change class of login-modal on scroll, affix-top on top, affix on affixed
 
   render() {
+    const { userData } = this.state;
     return (
         <nav id="mainNav" className="navbar navbar-app navbar-default navbar-fixed-top">
             <div className="container-fluid">
@@ -33,10 +44,11 @@ export class MainNavigation extends Component {
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul className="nav navbar-nav navbar-right">
                         <li>
-                            <a href="/">Search</a>
+                            <Link to="/search" activeClassName="active"><i className="fa fa-search"></i>&nbsp;Search</Link>
+                            {/* <a href="/search"><i className="fa fa-search"></i>&nbsp;Search</a> */}
                         </li>
                         <li>
-                            <a href="/profile">Profile</a>
+                            <Link to="/profile" activeClassName="active"><i className="fa fa-user"></i>&nbsp;{'Profile'}</Link>
                         </li>
                         <li>
                             <LogoutComponentContainer/>

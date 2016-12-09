@@ -16,17 +16,30 @@
   },
   "validations": [],
   "relations": {
-    "CategoryProduct": {
+    "category": {
       "type": "belongsTo",
       "model": "ProductCategory",
-      "foreignKey": ""
+      "foreignKey": "refProductCategoryId"
     },
-    "ProductCategories": {
+    "product": {
       "type": "belongsTo",
       "model": "Product",
-      "foreignKey": ""
+      "foreignKey": "refProductId"
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": {}
 }

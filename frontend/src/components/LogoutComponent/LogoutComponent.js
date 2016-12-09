@@ -18,7 +18,7 @@ export class LogoutComponent extends Component{
 
   render(){
     return(
-      <a onClick={this.handleClick}>Logout</a>
+      <a onClick={this.handleClick}><i className="fa fa-sign-out"></i>&nbsp;Logout</a>
     );
   }
 }

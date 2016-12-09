@@ -6,7 +6,7 @@ import 'react-day-picker/lib/style.css';
 
 const overlayStyle = {
   position: 'absolute',
-  background: 'white',
+  background: '#fff',
   border: 'solid 1px rgb(220,220,220)',
   boxShadow: '0 2px 5px rgba(0, 0, 0, .15)',
   zIndex: 9999

@@ -4,6 +4,9 @@ import ReactDOM from 'react-dom';
 import { ProfilePictureEditorComponent } from "../ProfilePictureEditor/ProfilePictureEditorComponent.js";
 import api from '../../api.js';
 
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
+
 export default class WizardFormComponent extends Component {
 
   constructor(props) {
@@ -12,11 +15,14 @@ export default class WizardFormComponent extends Component {
     this.state = {
       pictureBLOB: null, // so far this is always null!
       pictureURL: null,
-      country: "",
       motto: "",
       aboutMe: "",
 
-      countries: []
+      countries: [],
+      selectedCountry: null,
+
+      languages: [],
+      selectedLanguages: null
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -28,6 +34,26 @@ export default class WizardFormComponent extends Component {
   componentDidMount(){
     this.setState({componentContainer: ReactDOM.findDOMNode(this.refs.componentContainer)});
     this.loadCountryEntries();
+    this.loadLanguageEntries();
+  }
+
+  loadLanguageEntries(){
+    var languages = null;
+    api.get('/Languages?access_token=' + localStorage.accessToken)
+    .then((response) => {
+      //console.log(response.data);
+      if (response.status === 200){
+        languages = response.data;
+        const transformedLanguages = languages.map((language)=>{
+          return {value:language.id, label:language.name};
+        });
+        this.setState({languages:transformedLanguages});
+      }
+    })
+    .catch((error) => {
+      console.log("Error: ", error);
+      console.log("Error: ", error.response);
+    });
   }
 
   loadCountryEntries(){
@@ -35,16 +61,17 @@ export default class WizardFormComponent extends Component {
     api.get('/Countries')
     .then((response) => {
       //console.log(response.data);
-      //console.log(response.status);
       if (response.status === 200){
         countries = response.data;
-        this.setState({countries:countries});
+        const transformedCountries = countries.map((country)=>{
+          return {value:country.id, label:country.name}
+        });
+        this.setState({countries:transformedCountries});
       }
     })
     .catch((error) => {
       console.log("Error: ", error);
       console.log("Error: ", error.response);
-
     });
   }
 
@@ -90,7 +117,7 @@ export default class WizardFormComponent extends Component {
             <Image height="100px" width="100px" src={this.state.pictureURL ? this.state.pictureURL : "/images/profilePictureDefault.png"}  thumbnail/>
           </div>
           <div style={{display:"inline-block", margin:"10px"}}>
-            <input type={type} ref="fileInput" style={{display: "none"}} onChange={(e)=>this.handlePictureChange(e)} accept="image/*" autocomplete="off"/>
+            <input type={type} ref="fileInput" style={{display: "none"}} onChange={(e)=>this.handlePictureChange(e)} accept="image/*" autoComplete="off"/>
             <Button type="submit" onClick={(e) => {e.preventDefault(); var input = ReactDOM.findDOMNode(this.refs.fileInput); input.click(); input.value = null;}}>
               Choose photo
             </Button>
@@ -119,14 +146,26 @@ export default class WizardFormComponent extends Component {
           );
         case "select":
           return(
-            <FormControl componentClass="select" placeholder="Select your country" value={this.state.country} onChange={this.handleCountryChange}>
-              <option value=""></option>
-              {this.state.countries.map((element) => {
-                  return (
-                    <option value={element.id} key={element.id}>{element.name}</option>
-                  );
-              })}
-            </FormControl>
+
+            <Select
+              name="selectFieldCountry"
+              value= {this.state.selectedCountry}
+              onChange= {(selected)=>{this.setState({selectedCountry:selected})}}
+              multi={false}
+              options={this.state.countries}
+             />
+
+          );
+        case "tagInput":
+          return(
+              <Select
+                name="selectFieldLanguages"
+                value= {this.state.selectedLanguages}
+                onChange= {(selected)=>{this.setState({selectedLanguages:selected});}}
+                multi={true}
+                options={this.state.languages}
+               />
+
           );
 
       default:
@@ -137,9 +176,10 @@ export default class WizardFormComponent extends Component {
   getFormData(){
     return{
       pictureURL: this.state.pictureURL,
-      country: this.state.country, //id in table Countries
+      country: this.state.selectedCountry ? this.state.selectedCountry.value : null, //id in table Countries
       motto: this.state.motto,
-      bio: this.state.aboutMe
+      bio: this.state.aboutMe,
+      languages: this.state.selectedLanguages
     }
   }
 
@@ -152,6 +192,7 @@ export default class WizardFormComponent extends Component {
       /*key, label, type, desc, */
       ['photo', 'Profile picture', 'file', null],
       ['country', 'Country', 'select', null],
+      ["languages", "Languages", "tagInput", null],
       ['motto', 'Life motto', 'textarea', null],
       ['aboutMe', 'About Me', 'textarea', null]
     ];
@@ -163,7 +204,7 @@ export default class WizardFormComponent extends Component {
           Please fill in the following details that will be handy for other users considering you are a traveller or a buddy (however, you can skip this step and complete it later on your profile page, where you will also be able to upload some pictures).
           </div>
           <div>
-            <form autocomplete="off" onSubmit={this.handleSubmit} style={{padding: "10px"}}>
+            <form autoComplete="off" onSubmit={this.handleSubmit} style={{padding: "10px"}}>
                 {fields.map(([key, label, type]) => {
                     return (
                       <FormGroup key={key} controlId={key}>
