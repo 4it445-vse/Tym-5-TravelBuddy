@@ -4,6 +4,9 @@ import api from '../../api.js';
 import lodash from "lodash";
 import ReactDOM from 'react-dom';
 
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
+
 
 export class CreateProductComponent extends Component{
   constructor(props){
@@ -25,7 +28,8 @@ export class CreateProductComponent extends Component{
 
       //product data----
       label: "",
-      category: -1,
+      //category: -1,
+      selectedCategory: null,
       city: {
         id: null,
         name: "",
@@ -154,7 +158,10 @@ export class CreateProductComponent extends Component{
     .then((response) => {
       if (response.status === 200){
         categories = response.data;
-        this.setState({formHelperData:{...this.state.formHelperData,categories:categories}});
+        const transformedCategories = categories.map((category)=>{
+          return {value:category.id, label:category.name};
+        });
+        this.setState({formHelperData:{...this.state.formHelperData,categories:transformedCategories}});
       }
     })
     .catch((error) => {
@@ -196,21 +203,16 @@ export class CreateProductComponent extends Component{
 
               <FormGroup controlId="formCategory" validationState={(this.state.categoryError === "") ? null:"error"}>
                 <ControlLabel>Category<span style={{fontSize:"150%", color:"red"}}>*</span></ControlLabel>
-                <FormControl
-                  componentClass="select"
-                  value={this.state.category}
-                  placeholder="Select category"
-                  onChange={(e) => {this.setState({category:e.target.value})}}
-                >
-                  <option value={-1}>Select category</option>
 
-                  {this.state.formHelperData.categories.map((element) => {
-                      return (
-                        <option value={element.id} key={element.id}>{element.name}</option>
-                      );
-                  })}
+                <Select
+                  name="selectFieldCategory"
+                  value= {this.state.selectedCategory}
+                  onChange= {(selected)=>{this.setState({selectedCategory:selected.value})}}
+                  multi={false}
+                  options={this.state.formHelperData.categories}
+                 />
 
-                </FormControl>
+
                 <HelpBlock>{this.state.categoryError}</HelpBlock>
               </FormGroup>
 
