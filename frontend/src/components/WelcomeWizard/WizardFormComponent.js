@@ -150,7 +150,7 @@ export default class WizardFormComponent extends Component {
             <Select
               name="selectFieldCountry"
               value= {this.state.selectedCountry}
-              onChange= {(selected)=>{console.log("selectedCountry",selected);this.setState({selectedCountry:selected});}}
+              onChange= {(selected)=>{this.setState({selectedCountry:selected})}}
               multi={false}
               options={this.state.countries}
              />
@@ -178,7 +178,8 @@ export default class WizardFormComponent extends Component {
       pictureURL: this.state.pictureURL,
       country: this.state.selectedCountry ? this.state.selectedCountry.value : null, //id in table Countries
       motto: this.state.motto,
-      bio: this.state.aboutMe
+      bio: this.state.aboutMe,
+      languages: this.state.selectedLanguages
     }
   }
 

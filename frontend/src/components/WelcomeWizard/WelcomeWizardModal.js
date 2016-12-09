@@ -48,7 +48,33 @@ export class WelcomeWizardModal extends Component {
 
     this.uploadProfilePicture(data);
     this.saveUserDetail(data);
+    this.saveLanguages(data);
     this.setFalseIsFirstLogin();
+  }
+
+  saveLanguages(data){
+    if (data.languages){
+      //console.log("lang",data.languages);
+      const transformedLanguages = data.languages.map((language)=>{
+        return {
+          //"refUserId": "3",
+          "refLanguageId": language.value
+        }
+      });
+      //console.log(transformedLanguages);
+      //Workaround here, for loop of request calls to API, better would be to use bulk create
+      // but at this time API doesnt accept array of objects!
+      transformedLanguages.forEach((item,index)=>{
+        api.post('/UserLanguages?access_token=' + localStorage.accessToken,item)
+          .then((data)=>{
+            console.log('--- upload successful', data);
+          })
+          .catch((error) => {
+            console.log('<!> upload Failed', error);
+          });
+
+      });
+    }
   }
 
   uploadProfilePicture(data){
@@ -67,7 +93,6 @@ export class WelcomeWizardModal extends Component {
          .catch((error) => {
            console.log('<!> upload Failed', error);
          });
-
     }
   }
 
