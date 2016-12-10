@@ -93,12 +93,40 @@ body {
   .register input {
     color: #fff;
   }
-  .register label {
-    font-family: "Open Sans", Arial, sans-serif;
-    text-transform: uppercase;
-    font-size: 1.2em;
+/* WelcomeWizardForm Component */
+.form-welcome-wizard {
+  width: 70%;
+  margin: 0 auto;
+  padding: 15px 20px;
+  border-radius: 6px;
+}
+  .form-welcome-wizard input,
+  .form-welcome-wizard textarea {
+    color: #fff;
   }
-
+  .form-welcome-wizard textarea {
+    max-width: 100%;
+    resize: vertical;
+  }
+  .form-welcome-wizard .textarea-wrapper::after {
+    background-color: #222;
+  }
+  .form-welcome-wizard > p {
+    text-align: justify;
+    font-weight: 100;
+    color: #dedede;
+  }
+@media (max-width: 991px) {
+  .form-welcome-wizard {
+    width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .form-welcome-wizard {
+    border: 1px solid #222;
+    border-radius: 0;
+  }
+}
 /* DatePicker Component */
 .YearNavigation {
   color: rgba(0,0,0,0.7);
@@ -115,7 +143,37 @@ body {
 .container.item-list {
 
 }
+/* WelcomeWizardModal Component */
+.modal-welcome-wizard .modal-body {
+  min-height: 599px;
+  background: url('../images/welcome_wizard_bg_low.jpg') no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+.modal-welcome-wizard .modal-body-container p {
+  padding-top: 30%;
+  color: #fff;
+  text-align: justify;
+  text-align-last: center;
+}
+@media (max-width: 767px) {
+  .modal-welcome-wizard .modal-body {
+    /*width: 100%;*/
+    /*padding: 0;*/
+    /*border-radius: 0;*/
+  }
+}
+/* ProfilePictureEditor Component */
+.modal-create-profile-picture {
 
+}
+  .modal-create-profile-picture .modal-footer {
+    padding-top: 0;
+    text-align: center;
+  }
+  .modal-create-profile-picture .modal-body .row.range-input {
+    padding-top: 15px;
+  }
 /* LandingPage */
 #register .registration-form-container {
   padding-top: 50px;
