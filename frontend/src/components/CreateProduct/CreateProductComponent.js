@@ -5,7 +5,7 @@ import lodash from "lodash";
 import ReactDOM from 'react-dom';
 
 import Select from 'react-select';
-import 'react-select/dist/react-select.css';
+
 
 
 export class CreateProductComponent extends Component{

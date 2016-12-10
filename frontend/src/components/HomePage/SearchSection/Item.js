@@ -14,8 +14,8 @@ export class Item extends Component{
           <ListGroupItem>
             <span>
               {this.props.product.label}
+              {this.props.product.productCity.name}
               {this.props.product.price}
-              {this.props.product.description}
             </span>
             <Button type='submit' bsStyle="primary">Detail</Button>
             <Button type='submit' bsStyle="primary">Reply</Button>
