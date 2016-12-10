@@ -25,6 +25,7 @@ export class WelcomeWizardModal extends Component {
     this.moveRight = this.moveRight.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
+    this.uploadProfilePicture = this.uploadProfilePicture.bind(this);
   }
 
   moveLeft() {
@@ -46,7 +47,6 @@ export class WelcomeWizardModal extends Component {
 
     var data = this._form.getFormData();
 
-    this.uploadProfilePicture(data);
     this.saveUserDetail(data);
     this.saveLanguages(data);
     this.setFalseIsFirstLogin();
@@ -114,7 +114,8 @@ export class WelcomeWizardModal extends Component {
 
     const srvUrl = '/UserMain/me/userDetail?access_token=' + localStorage.accessToken;
     api.post(srvUrl, dataToSend)
-      .then(({data})=> {
+      .then(({responseData})=> {
+        this.uploadProfilePicture(data);
         this.setState({show: false});
       })
       .catch((error)=> {
