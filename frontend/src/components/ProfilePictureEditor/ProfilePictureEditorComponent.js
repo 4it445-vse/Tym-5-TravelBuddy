@@ -54,6 +54,7 @@ export class ProfilePictureEditorComponent extends Component{
           bsSize="large"
           container={this.props.container}
           aria-labelledby="contained-modal-title"
+          className="modal-create-profile-picture"
         >
           <Modal.Header >
             <Modal.Title id="contained-modal-title">Create profile picture</Modal.Title>
@@ -71,29 +72,25 @@ export class ProfilePictureEditorComponent extends Component{
                 style={{display:"block",marginLeft:"auto",marginRight:"auto"}}
                  />
             </div>
+            <div className="row range-input text-center">
+              <Glyphicon glyph="picture" style={{fontSize:"100%",verticalAlign:"100%"}}/>
+              &nbsp;
+                <input
+                  type="range"
+                  style={{width:"68%", maxWidth:"200px",display:"inline",verticalAlign:"50%"}}
+                  value={this.state.sliderValue}
+                  min={1.0}
+                  max={3.0}
+                  step={.01}
+                  onChange={(e) =>{this.setState({sliderValue: parseFloat(e.target.value)})}}
+                      />
+              &nbsp;
+                <Glyphicon glyph="picture" style={{fontSize:"200%",verticalAlign:"25%"}}/>
+            </div>
           </Modal.Body>
           <Modal.Footer  >
-
-          <div className="col-xs-7 text-center">
-            <Glyphicon glyph="picture" style={{fontSize:"100%",verticalAlign:"100%"}}/>
-            {" "}
-              <input
-                type="range"
-                style={{width:"68%", maxWidth:"200px",display:"inline",verticalAlign:"50%"}}
-                value={this.state.sliderValue}
-                min={1.0}
-                max={3.0}
-                step={.01}
-                onChange={(e) =>{this.setState({sliderValue: parseFloat(e.target.value)})}}
-                    />
-            {" "}
-              <Glyphicon glyph="picture" style={{fontSize:"200%",verticalAlign:"25%"}}/>
-            </div>
-            <div className="col-xs-5" >
               <Button onClick={this.handleCancel} bsSize="small">Cancel</Button>
               <Button onClick={this.handleSave}  bsStyle="primary" bsSize="small">Save</Button>
-            </div>
-
           </Modal.Footer>
         </Modal>
 

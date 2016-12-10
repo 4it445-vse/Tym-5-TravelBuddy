@@ -142,25 +142,22 @@ export class WelcomeWizardModal extends Component {
 
   render() {
     return (
-      <Modal bsSize="large" show={this.state.show} aria-labelledby="contained-modal-title-lg" style={overlayStyle} onHide={this.handleSubmit} backdrop="static">
-        <Modal.Header ref="modal" className="modal-container">
-          {/* <Modal.Title>Welcome Tutorial</Modal.Title> */}
-          <Modal.Body >
-          {/* <WizardFormComponent ref={(form) => { this._form = form; }}/> */}
-            {this.state.currentStep === 1 ? <WizardPageComponent/> : undefined}
-            {this.state.currentStep === this.state.lastStep ? <WizardFormComponent ref={(form) => { this._form = form; }} modal={this.state.modal}/> : undefined}
-          </Modal.Body>
+      <Modal
+        className="modal-welcome-wizard"
+        bsSize="large" show={this.state.show}
+        aria-labelledby="contained-modal-title-lg"
+        style={overlayStyle} onHide={this.handleSubmit}
+        backdrop="static">
+          {this.state.currentStep === 1 ? <WizardPageComponent/> : undefined}
+          {this.state.currentStep === this.state.lastStep ? <WizardFormComponent ref={(form) => { this._form = form; }} modal={this.state.modal}/> : undefined}
           <Modal.Footer>
             {this.state.currentStep !== 1 ? <Button onClick={this.moveLeft}><Glyphicon glyph="glyphicon glyphicon-chevron-left"></Glyphicon></Button> : undefined}
             {this.state.currentStep !== this.state.lastStep ?
-              <Button onClick={this.moveRight}><Glyphicon glyph="glyphicon glyphicon-chevron-right"></Glyphicon></Button>
+              <Button onClick={this.moveRight}>Continue&nbsp;<Glyphicon glyph="glyphicon glyphicon-chevron-right"></Glyphicon></Button>
               :
               <Button type="submit" bsStyle="primary" onClick={this.handleSubmit}>Done</Button>
             }
-            {/* <SlideIndicator/> */}
-
           </Modal.Footer>
-        </Modal.Header>
       </Modal>
     );
   }

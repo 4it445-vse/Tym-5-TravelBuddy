@@ -41,19 +41,18 @@ export class LoginComponent extends Component{
 
 
   createField(type, key, desc,) {
-    let cssStyle = "form-themed";
     switch (type) {
       case 'password':
 
       return (
         <div>
-        <FormControl className={cssStyle} type={type} name={key} ref='passwordTarget' placeholder={type} value={this.state.loginPassword} onChange={this.handlePasswordChange}/>
+        <FormControl type={type} name={key} ref='passwordTarget' placeholder={type} value={this.state.loginPassword} onChange={this.handlePasswordChange}/>
         </div>
       );
       case 'email':
       return (
         <div>
-        <FormControl className={cssStyle} type={type} name={key} ref='emailTarget' placeholder={type} value={this.state.loginEmail} onChange={this.handleEmailChange}/>
+        <FormControl type={type} name={key} ref='emailTarget' placeholder={type} value={this.state.loginEmail} onChange={this.handleEmailChange}/>
         </div>
       );
 
@@ -64,6 +63,7 @@ export class LoginComponent extends Component{
 
 
   render(){
+    let cssClass = "form-themed";
     const fields = [
       /*key, label, type, desc*/
       ['email', 'Email', 'email', ''],
@@ -79,7 +79,7 @@ export class LoginComponent extends Component{
 
             return (
               <div key={key} className="login-form-element">
-                <FormGroup key={key} controlId={key} >
+                <FormGroup className={cssClass} key={key} controlId={key} >
 {/*                 <ControlLabel>{label}</ControlLabel> */}
                   {' '}
                   {this.createField(type, key, desc)}

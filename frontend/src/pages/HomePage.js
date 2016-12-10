@@ -16,7 +16,6 @@ export class HomePage extends Component {
             showCreateProducts: false,
         };
 
-        // this.showModal = this.showModal.bind(this);
         this.handleShowWelcomeWizard();
 
     }
