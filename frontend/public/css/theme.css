@@ -640,9 +640,6 @@ a:hover {
   right: -2px;
   /*z-index: 2;*/
 }
-.textarea-wrapper.fa.fa-arrow-v:hover {
-  cursor: pointer;
-}
 /*themed form*/
 .form-group.form-themed input,
 .form-group.form-themed textarea {
@@ -666,6 +663,9 @@ a:hover {
   font-size: 1.2em;
 }
 /*themed form tag input select*/
+.form-themed .Select--single {
+
+}
 .form-themed .Select--multi {
 
 }
@@ -679,6 +679,7 @@ a:hover {
   .form-themed .Select--single .Select-control {
     border-bottom: 1px solid #fff;
     color: #fff;
+    cursor: text;
   }
   .form-themed .Select--single.is-focused .Select-control {
     border-bottom: 1px solid #f05f40;
