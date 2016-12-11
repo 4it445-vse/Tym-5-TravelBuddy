@@ -149,7 +149,8 @@ aside {
 }
 /*APP NAVBAR*/
 .navbar.navbar-app {
-  background: #f05f40;
+  background: rgba(240, 95, 64, 1);;
+  border-bottom: none;
 }
   @media (min-width: 768px) {
     .navbar-app .nav > li > a, .navbar-app .nav > li > a:focus {
@@ -563,6 +564,12 @@ body {
   webkit-tap-highlight-color: #222222;
 }
 /* THEME OVERRIDE AND CUSTOMS*/
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
 .modal-dialog {
 
 }

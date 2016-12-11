@@ -5,11 +5,7 @@ export class SearchSection extends Component {
 
     render() {
         return (
-            <div className="container">
-                <div className="filterForm">
-                    <FilterForm/>
-                </div>
-            </div>
+            <FilterForm/>
         );
     }
 }

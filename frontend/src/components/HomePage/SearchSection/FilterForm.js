@@ -244,7 +244,7 @@ export class FilterForm extends Component {
             <div>
                 <div className="container filter-form">
                     <div className="row">
-                      <div className="col-lg-8 col-lg-offset-2">
+                      <div className="col-lg-10 col-lg-offset-1">
                       <Panel collapsible expanded={this.state.filterFormShow}>
                         <form className="form-horizontal" onSubmit={this.handleSubmitFilterData}>
                             <div className="form-group row">
@@ -308,10 +308,8 @@ export class FilterForm extends Component {
                 </div>
                 <div className="container item-list">
                   <div className="row">
-                    <div className="col-lg-8 col-lg-offset-2">
-                    <Panel>
+                    <div className="col-lg-10 col-lg-offset-1">
                       <ItemList products={this.state.filteredProducts}/>
-                    </Panel>
                     </div>
                   </div>
                 </div>

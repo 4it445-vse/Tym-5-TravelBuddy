@@ -16,7 +16,7 @@ export class ItemList extends Component {
         if (productItems.length > 0) {
             return (
                 <div className="row">
-                    <ListGroup>
+                    <ListGroup className="clearfix">
                         {productItems}
                     </ListGroup>
                 </div>
