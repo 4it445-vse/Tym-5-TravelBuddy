@@ -337,8 +337,8 @@ export class EditProfile extends Component {
                 return (<FormControl type={type} name={key} componentClass={type} value={this.state[key]} onChange={this.handleInputChange} />);
             case "select":
                 return (
-                    <FormControl componentClass="select" placeholder="Select your country" value={this.state.countryID} onChange={this.handleCountryChange}>
-                        <option value={this.state[key]}></option>
+                    <FormControl componentClass="select" placeholder="Select your country" value={this.state.country} onChange={this.handleCountryChange}>
+                        <option value=""></option>
                         {this.state.countries.map((element) => {
                             return (
                                 <option value={element.id} key={element.id}>{element.name}</option>
