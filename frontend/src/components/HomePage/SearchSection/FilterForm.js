@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import InputRange from 'react-input-range';
 import { Panel } from 'react-bootstrap';
-import {ItemList} from './ItemList';
+import { ItemList } from './ItemList';
 import api from '../../../api';
 
 
