@@ -54,7 +54,7 @@ export class EditProfile extends Component {
         this.loadUserCountry = this.loadUserCountry.bind(this);
         this.loadUserMain();
         this.loadUserDetail();
-        this.loadUserCountry();
+
 
     }
 
@@ -144,13 +144,17 @@ export class EditProfile extends Component {
                         oldProfilePicture: response.data[keys[i]]
                     })
                   }
+                  else if (i==6)
+                  {
+                    this.loadUserCountry(response.data[keys[i]]);
+                  }
                   else
                   {
                     this.setState({
                         [keys[i]]: response.data[keys[i]]
                     })
                   }
-                }
+              }
             }
         }).catch((error) => {
             console.log("Error: ", error);
@@ -158,18 +162,18 @@ export class EditProfile extends Component {
         });
     }
 
-    loadUserCountry() {
-        const srvUrl = '/Countries/' + this.state.refCountryId;
+    loadUserCountry(recCountry) {
+        const srvUrl = '/Countries/' + recCountry + '?access_token=' + localStorage.accessToken;
+          console.log('srvUrl',srvUrl);
         api.get(srvUrl).then((response) => {
             if (response.status === 200) {
                 var keys = ["id"];
                 for (let i = 0; i < keys.length; i++) {
                     this.setState({
-                        countryID: response.data[0][keys[i]]
+                        country: response.data[keys[i]]
                     })
                 }
-                  console.log('countdssa',this.state.country);
-                  }
+              }
 
         }).catch((error) => {
             console.log("Error: ", error);
@@ -237,7 +241,6 @@ export class EditProfile extends Component {
     handleCountryChange(event) {
         this.setState({country: event.target.value});
     }
-    //zacatek obrazku
 
     handlePictureChange(event) {
         event.preventDefault();
@@ -260,14 +263,12 @@ export class EditProfile extends Component {
 
     setPicture(pictureBLOB, profilePicture) {
         this.setState({pictureBLOB: pictureBLOB, profilePicture: profilePicture});
-        //console.log('priflePictueLog',profilePicture);
     }
 
     handleInputChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         });
-        console.log('--- state', this.state);
     }
 
     createPopover(text) {
@@ -281,12 +282,10 @@ export class EditProfile extends Component {
         );
     }
 
-    //konec obrazku
-
     createField(type, key, desc, values) {
 
 
-        let cssStyle = "form-themed";
+        let cssClass = "form-themed";
         switch (type) {
             case 'text':
             case 'password':
@@ -294,7 +293,7 @@ export class EditProfile extends Component {
                 if (!desc) {
                     return (
                       <FormControl
-                        className={cssStyle}
+                        className={cssClass}
                         type={type}
                         name={key}
                         value={this.state[key]}
@@ -305,7 +304,7 @@ export class EditProfile extends Component {
                     const popover = this.createPopover(desc);
                     return (
                         <OverlayTrigger trigger="focus" placement="right" overlay={popover} delay={100}>
-                            <FormControl className={cssStyle} type={type} value={this.state[key]} name={key} onChange={this.handleInputChange} />
+                            <FormControl className={cssClass} type={type} value={this.state[key]} name={key} onChange={this.handleInputChange} />
                         </OverlayTrigger>
                     );
                 }
@@ -345,11 +344,11 @@ export class EditProfile extends Component {
                     </div>
                 );
             case 'textarea':
-                return (<FormControl className={cssStyle} type={type} name={key} componentClass={type} value={this.state[key]} onChange={this.handleInputChange} />);
+                return (<FormControl className={cssClass} type={type} name={key} componentClass={type} value={this.state[key]} onChange={this.handleInputChange} />);
             case "select":
                 return (
-                    <FormControl className={cssStyle} componentClass="select" placeholder="Select your country" value={this.state.countryID} onChange={this.handleCountryChange}>
-                        <option value={this.state[key]}></option>
+                    <FormControl className={cssClass} componentClass="select" placeholder="Select your country" value={this.state.country} onChange={this.handleCountryChange}>
+                        <option value=""></option>
                         {this.state.countries.map((element) => {
                             return (
                                 <option value={element.id} key={element.id}>{element.name}</option>
@@ -358,7 +357,7 @@ export class EditProfile extends Component {
                     </FormControl>
                 );
             case 'date':
-                return (<DatePicker type="birthdate" name="birthdate" className={cssStyle} onChange={this.handleInputChange} ref={(datePicker) => { this.datePicker = datePicker; }}/>);
+                return (<DatePicker type="birthdate" name="birthdate"  onChange={this.handleInputChange} ref={(datePicker) => { this.datePicker = datePicker; }}/>);
             case 'radio-active':
             return (
               <ButtonGroup className="block">
@@ -381,34 +380,6 @@ export class EditProfile extends Component {
         }
     }
 
-  /*  setActive(value) {
-      const srvUrl = '/UserMain/me?access_token=' + localStorage.accessToken;
-      var editActive = '';
-
-
-      if (this.state.isActive === null || this.state.isActive === 0)
-      {
-        this.setState({isActive: 1})
-      }
-      else {
-          this.setState({isActive: 0})
-      }
-
-      let formDataActive = this.getFormDataActive();
-      console.log("getFormDataActive",formDataActive);
-
-      api.patch(srvUrl, formDataActive).then(response => {
-          console.log('--- post usermain ok');
-          console.log('isActiveOK', value);
-      }).catch((error) => {
-          console.log('isActiveFail', value);
-      });
-      console.log('srvUrl',srvUrl);
-
-    }*/
-
-
-
     handleSubmit(event) {
         event.preventDefault();
         let errors = {};
@@ -416,8 +387,6 @@ export class EditProfile extends Component {
         let userMainFailed = false;
         let userDetailFailed = false;
         this.setState({isLoading: true});
-        //this.uploadProfilePicture(formData);
-
 
         if (formData.isActive == 'Non-active')
         {
@@ -472,7 +441,7 @@ export class EditProfile extends Component {
 
     getFormData() {
         return {
-            country: this.state.country,
+            refCountryId: this.state.country,
             motto: this.state.motto,
             bio: this.state.bio,
             firstName: this.state.firstName,
@@ -592,10 +561,7 @@ export class EditProfile extends Component {
                                             : errorMsg}</HelpBlock>
                                 </FormGroup>
                             );
-                        })}
-                      {//<SubmitButton type="submit" bsStyle="primary">Save changes</Button>
-                    }
-                          <SubmitButton name="Save changes!" bsStyle="primary" isLoading={isLoading}/>
+                        })}  <SubmitButton name="Save changes!" bsStyle="primary" isLoading={isLoading}/>
                     </form>
                 </div>
             </div>
