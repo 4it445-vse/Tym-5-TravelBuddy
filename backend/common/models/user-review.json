@@ -11,7 +11,7 @@
       "type": "date"
     },
     "createdBy": {
-      "type": "string"
+      "type": "number"
     },
     "reviewType": {
       "type": "string"
@@ -34,10 +34,15 @@
   },
   "validations": [],
   "relations": {
-    "UserReviewUserMain": {
+    "reviewAboutUser": {
       "type": "belongsTo",
       "model": "UserMain",
-      "foreignKey": "id"
+      "foreignKey": "refUserId"
+    },
+    "reviewCreatedByUser": {
+      "type": "belongsTo",
+      "model": "UserMain",
+      "foreignKey": "createdBy"
     }
   },
   "acls": [],

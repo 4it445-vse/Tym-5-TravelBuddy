@@ -66,6 +66,11 @@
       "model": "UserReview",
       "foreignKey": "refUserId"
     },
+    "createdReviews":{
+      "type": "hasMany",
+      "model": "UserReview",
+      "foreignKey": "createdBy"
+    },
     "RecipientNotifications": {
       "type": "hasMany",
       "model": "Notification",
