@@ -40,7 +40,7 @@ export class EditProfile extends Component {
             formSuccess: false,
             refCountryId : "",
             isLoading: false,
-            isActive: '',
+            isActive: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -93,11 +93,11 @@ export class EditProfile extends Component {
                       this.setState({
                         [keys[i]]: response.data[keys[i]]
                     })
-                    if (this.state.isActive === 0 || this.state.isActive === null)
+                    if (this.state.isActive == 0 || this.state.isActive == null)
                     {
                       this.setState({isActive: 'Non-active'})
                     }
-                    if (this.state.isActive === 1)
+                    if (this.state.isActive == 1)
                     {
                       this.setState({isActive: 'Active'})
                     }
@@ -119,7 +119,7 @@ export class EditProfile extends Component {
 
     setActiveDefaultValue(activeParameter)
     {
-      if (activeParameter === 0 || activeParameter === null)
+      if (activeParameter)
       {
         this.setIsActive('Active');
       }
@@ -134,13 +134,13 @@ export class EditProfile extends Component {
             if (response.status === 200) {
                 var keys = ["phone", "skype", "facebook", "bio", "motto","profilePicture","refCountryId"];
                 for (let i = 0; i < keys.length; i++) {
-                  if (i ===5)
+                  if (i === 5)
                   {
                     this.setState({
                         oldProfilePicture: response.data[keys[i]]
                     })
                   }
-                  else if (i==6)
+                  else if (i === 6)
                   {
                     this.loadUserCountry(response.data[keys[i]]);
                   }
@@ -158,8 +158,8 @@ export class EditProfile extends Component {
         });
     }
 
-    loadUserCountry(recCountry) {
-        const srvUrl = '/Countries/' + recCountry + '?access_token=' + localStorage.accessToken;
+    loadUserCountry(refCountry) {
+        const srvUrl = '/Countries/' + refCountry + '?access_token=' + localStorage.accessToken;
           console.log('srvUrl',srvUrl);
         api.get(srvUrl).then((response) => {
             if (response.status === 200) {
@@ -194,12 +194,12 @@ export class EditProfile extends Component {
 
     setIsActive(value) {
       this.setState({isActive: value});
-      if (value === 'Non-active')
+      if (value == 'Non-active')
       {
         value =  '0';
         this.setState({isActive: value});
       }
-      if (value === 'Active')
+      if (value == 'Active')
       {
         value = '1';
         this.setState({isActive: value});
@@ -211,12 +211,12 @@ export class EditProfile extends Component {
       }).catch((error) => {
           console.log('--- edit active failed');
       });
-      if (value === '0')
+      if (value == '0')
       {
         value = 'Non-active';
         this.setState({isActive: value});
       }
-      if (value === '1')
+      if (value == '1')
       {
         value = 'Active';
         this.setState({isActive: value});
@@ -347,22 +347,22 @@ export class EditProfile extends Component {
             case 'date':
                 return (<DatePicker type="birthdate" name="birthdate" onChange={this.handleInputChange} ref={(datePicker) => { this.datePicker = datePicker; }}/>);
             case 'radio-active':
-            return (
-              <ButtonGroup className="block">
-                {values.map((value) => {
-                  return (
-                    <Button
-                      key={value}
-                      type="button"
-                      onClick={this.setIsActive.bind(this, value)}
-                      active={this.state.isActive === value}
-                    >
-                      {value}
-                    </Button>
-                  );
-                })}
-              </ButtonGroup>
-            );
+                return (
+                  <ButtonGroup className="block">
+                    {values.map((value) => {
+                      return (
+                        <Button
+                          key={value}
+                          type="button"
+                          onClick={this.setIsActive.bind(this, value)}
+                          active={this.state.isActive === value}
+                        >
+                          {value}
+                        </Button>
+                      );
+                    })}
+                  </ButtonGroup>
+                );
             default:
                 return {};
         }
@@ -375,13 +375,13 @@ export class EditProfile extends Component {
         let userDetailFailed = false;
         this.setState({isLoading: true});
 
-        if (formData.isActive === 'Non-active')
+        if (formData.isActive == 'Non-active')
         {
-          formData.isActive =  '0';
+          formData.isActive = '0';
         }
-        if (formData.isActive === 'Active')
+        if (formData.isActive == 'Active')
         {
-          formData.isActive =  '1';
+          formData.isActive = '1';
         }
 
         formData.birthdate = this.datePicker.getFormData().selectedDay;
@@ -480,7 +480,7 @@ export class EditProfile extends Component {
             ],
             [
                'isActive', '', 'radio-active', '', ['Active', 'Non-active']
-           ],
+            ],
             [
                 'firstName', 'First name', 'text', ''
             ],
@@ -490,9 +490,9 @@ export class EditProfile extends Component {
             [
                 'birthdate', 'Birthdate', 'date', '',
             ],
-           [
+            [
                  'country', 'Country', 'select', ''
-             ],
+            ],
             [
                 'email', 'E-mail', 'email', 'Enter valid email. You will use it for login and password reset'
             ],
