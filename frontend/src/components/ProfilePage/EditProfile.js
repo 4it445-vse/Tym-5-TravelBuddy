@@ -93,11 +93,11 @@ export class EditProfile extends Component {
                       this.setState({
                         [keys[i]]: response.data[keys[i]]
                     })
-                    if (this.state.isActive == 0 || this.state.isActive == null)
+                    if (this.state.isActive === false || this.state.isActive == null)
                     {
                       this.setState({isActive: 'Non-active'})
                     }
-                    if (this.state.isActive == 1)
+                    if (this.state.isActive === true)
                     {
                       this.setState({isActive: 'Active'})
                     }
@@ -196,27 +196,29 @@ export class EditProfile extends Component {
       this.setState({isActive: value});
       if (value == 'Non-active')
       {
-        value =  '0';
+        value =  false;
         this.setState({isActive: value});
       }
       if (value == 'Active')
       {
-        value = '1';
+        value = true;
         this.setState({isActive: value});
       }
       const srvUrl = '/UserMain/me?access_token=' + localStorage.accessToken;
       let formDataActive = this.getFormDataActive();
-      api.patch(srvUrl, formDataActive).then(response => {
+      //Funkcionalita odstraanen to vyeseni problemu 11.12.2016 JSA
+    /*  api.patch(srvUrl, formDataActive).then(response => {
           console.log('--- edit active passed');
       }).catch((error) => {
           console.log('--- edit active failed');
       });
-      if (value == '0')
+      */
+      if (value === false)
       {
         value = 'Non-active';
         this.setState({isActive: value});
       }
-      if (value == '1')
+      if (value === true)
       {
         value = 'Active';
         this.setState({isActive: value});
@@ -377,11 +379,11 @@ export class EditProfile extends Component {
 
         if (formData.isActive == 'Non-active')
         {
-          formData.isActive = '0';
+          formData.isActive = false;
         }
         if (formData.isActive == 'Active')
         {
-          formData.isActive = '1';
+          formData.isActive = true;
         }
 
         formData.birthdate = this.datePicker.getFormData().selectedDay;
