@@ -4,10 +4,6 @@ import { Alert, ListGroup } from 'react-bootstrap';
 
 
 export class ItemList extends Component {
-    constructor(props) {
-        super(props);
-
-    }
 
     render() {
         const productItems = this.props.products.map((product) => {
