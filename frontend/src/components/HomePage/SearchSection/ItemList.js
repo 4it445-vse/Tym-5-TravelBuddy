@@ -8,7 +8,7 @@ export class ItemList extends Component {
     render() {
         const productItems = this.props.products.map((product) => {
             return (
-                <Item key={product.id} product={product}/>
+                <Item key={product.id} product={product} modal={this.props.modal}/>
             );
         });
 

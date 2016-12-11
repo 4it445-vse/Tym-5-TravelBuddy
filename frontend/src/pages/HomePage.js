@@ -16,9 +16,7 @@ export class HomePage extends Component {
             showWelcomeWizard: false,
             showCreateProducts: false,
         };
-
         this.handleShowWelcomeWizard();
-
     }
 
     handleShowWelcomeWizard() {
@@ -61,7 +59,7 @@ export class HomePage extends Component {
               <MainNavigation userData={userData}/>
               <section className="search">
                   <CreateProductComponent ref="a"/>
-                  <DetailProduct/>
+                  <DetailProduct ref="b"/>
                   <div className="container">
                       <div className="row">
                           <div className="col-lg-4 col-md-4 col-sm-4 col-lg-push-4 col-md-push-4 col-sm-push-4 col-xs-push-4 text-center">
@@ -71,7 +69,7 @@ export class HomePage extends Component {
                   </div>
                   <div className="container">
                       <div className="row">
-                        <SearchSection/>
+                        <SearchSection modal={this.refs.b}/>
                       </div>
                   </div>
               </section>

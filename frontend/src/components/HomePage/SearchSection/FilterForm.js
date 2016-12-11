@@ -44,6 +44,7 @@ export class FilterForm extends Component {
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
         this.handleInputRangeValuesChange = this.handleInputRangeValuesChange.bind(this);
         this.fetchCityDataDebounced = _.debounce(this.fetchCityData, 300);
+
     }
 
     componentWillMount() {
@@ -78,7 +79,11 @@ export class FilterForm extends Component {
             .then((response) => {
                 if (response.status === 200) {
                     console.log("FilterForm - Response data",response.data);
-                    this.setState({products: response.data, filteredProducts: response.data});
+                    var filtered = response.data.filter(function (product) {
+                        return product.user.isActive == true;
+                    });
+                    console.log("FilterForm -Filtered data",filtered);
+                    this.setState({products: filtered, filteredProducts: filtered});
                     this.updateInputRange(response.data);
                 }
             })
@@ -107,9 +112,9 @@ export class FilterForm extends Component {
     paramsForSearchTerm() {
         return {
                 filter: {
-                        include: {
-                            relation: 'productCity',
-                        },
+
+                        include: ['productCity', 'user','categories']
+
                 },
                 limit: 1000
         };
@@ -124,6 +129,7 @@ export class FilterForm extends Component {
         const { label } = this.state;
         const { description } = this.state;
         const { city } = this.state;
+
         let isValid = true;
         let isCity = false;
 
@@ -195,7 +201,7 @@ export class FilterForm extends Component {
         // this.setState({inputRangeValues: {min: event.target.value}});
     }
 
-    handleDescriptionChange(event){
+    handleDescriptionChange(event) {
         event.preventDefault();
         console.log("PriceToState:",this.state.description);
         this.setState({description: event.target.value});
@@ -236,15 +242,13 @@ export class FilterForm extends Component {
     }
 
     render() {
-
-
         return (
             <div>
                 <div className="container filter-form">
                     <div className="row">
                       <div className="col-lg-8 col-lg-offset-2">
                       <Panel collapsible expanded={this.state.filterFormShow}>
-                        <form className="form-horizontal" onSubmit={this.handleSubmitFilterData}>
+                        <form className="form-horizontal" id="form-id" onSubmit={this.handleSubmitFilterData}>
                             <div className="form-group row">
                               <div className="col-lg-6">
                                 <input type="text" className="form-control" id="inputName" onChange={this.handleLabelChange} placeholder="Name"/>
@@ -295,7 +299,6 @@ export class FilterForm extends Component {
                               {this.state.errorFromPrice != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.errorFromPrice}</span> : null}
                                 {this.state.cityError != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.cityError}</span> : null}
                             </div>
-
                             <div className="form-group row">
                               <button type="submit" className="btn btn-primary center-block">Filter</button>
                             </div>
@@ -308,7 +311,7 @@ export class FilterForm extends Component {
                   <div className="row">
                     <div className="col-lg-8 col-lg-offset-2">
                     <Panel>
-                      <ItemList products={this.state.filteredProducts}/>
+                      <ItemList products={this.state.filteredProducts} modal={this.props.modal}/>
                     </Panel>
                     </div>
                   </div>

@@ -7,7 +7,7 @@ export class SearchSection extends Component {
         return (
             <div className="container">
                 <div className="filterForm">
-                    <FilterForm/>
+                    <FilterForm modal={this.props.modal}/>
                 </div>
             </div>
         );

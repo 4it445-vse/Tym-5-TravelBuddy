@@ -191,8 +191,8 @@ export class CreateProductComponent extends Component{
           show={this.state.show}
           bsSize="large"
           container={this.props.modalContainer}
-          onHide={() => {this.hide()}}
-        >
+          onHide={() => {this.hide()}}>
+
           <Modal.Header>
             <Modal.Title id="modal-title">Create product</Modal.Title>
           </Modal.Header>
