@@ -13,13 +13,27 @@
   },
   "validations": [],
   "relations": {
-    "productProductcategories": {
+    "products": {
       "type": "hasMany",
-      "model": "Product_ProductCategory",
+      "model": "Product",
       "foreignKey": "refProductCategoryId",
-      "through": "Product_ProductCategory"
+      "through": "Product_ProductCategory",
+      "keyThrough": "refProductId"
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": {}
 }

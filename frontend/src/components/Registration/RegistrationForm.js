@@ -50,8 +50,6 @@ export class RegistrationForm extends Component {
 
   createField(type, key, desc, values) {
 
-    let cssClass = "form-themed";
-
     switch (type) {
       case 'text':
       case 'password':
@@ -59,7 +57,6 @@ export class RegistrationForm extends Component {
         if (!desc) {
           return (
             <FormControl
-              className={cssClass}
               type={type}
               name={key}
               onChange={this.handleInputChange}
@@ -70,7 +67,7 @@ export class RegistrationForm extends Component {
           const popover = this.createPopover(desc);
           return (
             <OverlayTrigger trigger="focus" placement="right" overlay={popover} delay={100}>
-              <FormControl className={cssClass} type={type} name={key} onChange={this.handleInputChange}/>
+              <FormControl type={type} name={key} onChange={this.handleInputChange}/>
             </OverlayTrigger>
           );
         }
@@ -78,7 +75,6 @@ export class RegistrationForm extends Component {
       case 'date':
         return (
           <DatePicker
-            className={cssClass}
             type="birthdate"
             name="birthdate"
             ref={(form) => { this._form = form; }}
@@ -149,7 +145,6 @@ export class RegistrationForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    let errors = {};
     this.setState({ isLoading: true });
 
     //TODO workaround for backend, if date is not date send dummy date to tell
@@ -192,6 +187,7 @@ export class RegistrationForm extends Component {
   }
 
   render() {
+    let cssClass = "form-themed";
     const fields = [
       /*key, label, type, desc, array with possible choices*/
       ['firstName', 'First name', 'text', ''],
@@ -229,15 +225,15 @@ export class RegistrationForm extends Component {
                     isValid = false;
                   }
                   return (
-                    <FormGroup validationState={isValid ? undefined : "error" } key={key} controlId={key}>
+                    <FormGroup validationState={isValid ? undefined : "error" } key={key} controlId={key} className={cssClass}>
                       <ControlLabel>{label}</ControlLabel>
                       {this.createField(type, key, desc, values)}
                       <FormControl.Feedback />
-                      <HelpBlock>{errorMsg == "can't be blank" ? "Required!" : errorMsg}</HelpBlock>
+                      <HelpBlock>{errorMsg === "can't be blank" ? "Required!" : errorMsg}</HelpBlock>
                     </FormGroup>
                   );
               })}
-              <SubmitButton name="Register!" isLoading={isLoading}/>
+              <SubmitButton name="Register!" isLoading={isLoading} bsStyle="primary" bsSize="large" block/>
           </form>
         </div>
       );

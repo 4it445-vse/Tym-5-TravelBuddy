@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl, Button, Image } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, Button, Image, Modal } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import { ProfilePictureEditorComponent } from "../ProfilePictureEditor/ProfilePictureEditorComponent.js";
 import api from '../../api.js';
@@ -136,21 +136,23 @@ export default class WizardFormComponent extends Component {
       );
       case 'textarea':
           return (
-            <FormControl
-              type={type}
-              name={key}
-              componentClass={type}
-              value={this.state[key]}
-              onChange={this.handleInputChange}
-            />
+            <div className="textarea-wrapper">
+              <FormControl
+                type={type}
+                name={key}
+                componentClass={type}
+                value={this.state[key]}
+                onChange={this.handleInputChange}
+              />
+            </div>
           );
         case "select":
           return(
 
             <Select
               name="selectFieldCountry"
-              value= {this.state.selectedCountry}
-              onChange= {(selected)=>{console.log("selectedCountry",selected);this.setState({selectedCountry:selected});}}
+              value={this.state.selectedCountry}
+              onChange={(selected)=>{this.setState({selectedCountry:selected})}}
               multi={false}
               options={this.state.countries}
              />
@@ -160,8 +162,8 @@ export default class WizardFormComponent extends Component {
           return(
               <Select
                 name="selectFieldLanguages"
-                value= {this.state.selectedLanguages}
-                onChange= {(selected)=>{this.setState({selectedLanguages:selected});}}
+                value={this.state.selectedLanguages}
+                onChange={(selected)=>{this.setState({selectedLanguages:selected});}}
                 multi={true}
                 options={this.state.languages}
                />
@@ -178,7 +180,8 @@ export default class WizardFormComponent extends Component {
       pictureURL: this.state.pictureURL,
       country: this.state.selectedCountry ? this.state.selectedCountry.value : null, //id in table Countries
       motto: this.state.motto,
-      bio: this.state.aboutMe
+      bio: this.state.aboutMe,
+      languages: this.state.selectedLanguages
     }
   }
 
@@ -187,33 +190,39 @@ export default class WizardFormComponent extends Component {
   }
 
   render() {
+    let cssClass = "form-themed";
     const fields = [
       /*key, label, type, desc, */
       ['photo', 'Profile picture', 'file', null],
       ['country', 'Country', 'select', null],
       ["languages", "Languages", "tagInput", null],
-      ['motto', 'Life motto', 'textarea', null],
+      ['motto', 'Life motto', 'text', null],
       ['aboutMe', 'About Me', 'textarea', null]
     ];
 
       return(
-        <div style={{margin:"auto"}} >
-          <ProfilePictureEditorComponent container={this.props.modal} ref="pictureEditor" setPicture={this.setPicture}/>
-          <div style={{background:"#2fa4e7", color:"white", width:"100%", padding: "10px"}}>
-          Please fill in the following details that will be handy for other users considering you are a traveller or a buddy (however, you can skip this step and complete it later on your profile page, where you will also be able to upload some pictures).
-          </div>
-          <div>
-            <form autoComplete="off" onSubmit={this.handleSubmit} style={{padding: "10px"}}>
-                {fields.map(([key, label, type]) => {
-                    return (
-                      <FormGroup key={key} controlId={key}>
-                        <ControlLabel>{label}</ControlLabel>
-                        {this.createField(type, key)}
-                      </FormGroup>
-                    );
-                })}
-            </form>
-          </div>
+        <div>
+          <Modal.Header>
+            <h2>Finish the registration!</h2>
+          </Modal.Header>
+          <Modal.Body>
+            <ProfilePictureEditorComponent container={this.props.modal} ref="pictureEditor" setPicture={this.setPicture}/>
+            <div>
+              <form autoComplete="off" onSubmit={this.handleSubmit} className="bg-dark form-welcome-wizard modal-content">
+                  <p>
+                  Please fill in the following details that will be handy for other users considering you are a traveller or a buddy
+                  </p>
+                  {fields.map(([key, label, type]) => {
+                      return (
+                        <FormGroup key={key} controlId={key} className={cssClass}>
+                          <ControlLabel>{label}</ControlLabel>
+                          {this.createField(type, key)}
+                        </FormGroup>
+                      );
+                  })}
+              </form>
+            </div>
+          </Modal.Body>
         </div>
       );
   }

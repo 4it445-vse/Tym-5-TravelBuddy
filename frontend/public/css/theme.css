@@ -450,7 +450,7 @@ footer {
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
   color: #222222;
-  background-color: #f2f2f2;
+  background-color: #dedede;
   border-color: #ededed;
 }
 .btn-default:active,
@@ -563,6 +563,41 @@ body {
   webkit-tap-highlight-color: #222222;
 }
 /* THEME OVERRIDE AND CUSTOMS*/
+.modal-dialog {
+
+}
+  .modal-dialog .modal-header {
+    text-align: center;
+    text-transform: uppercase;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    background: #F05F40;
+  }
+    .modal-dialog .modal-header h2 {
+      margin: 20px 0;
+      font-weight: 700;
+      color: #fff;
+    }
+    .modal-dialog .modal-header h3,
+    .modal-dialog .modal-header h4 {
+      font-weight: 700;
+      color: #fff
+    }
+  .modal-dialog .modal-body {
+
+  }
+    .modal-dialog .modal-body .modal-body-container {
+      margin: 0 auto;
+      width: 50%;
+    }
+  .modal-dialog .modal-footer {
+    border-top: none;
+  }
+@media (max-width: 767px) {
+  .modal-dialog .modal-body {
+    padding: 0;
+  }
+}
 .row.last {
   margin-top: 50px;
 }
@@ -573,20 +608,6 @@ body {
   .list-group-item h4 {
     color: #f05f40;
   }
-input.form-control.form-themed {
-  background: none;
-  border: none;
-  border-radius: 0px;
-  outline: none;
-  border-bottom: 1px solid white;
-  padding: 0;
-  box-shadow: none;
-  font-size: 1.3em;
-}
-input.form-control:focus {
-  box-shadow: none;
-  border-bottom-color: #f05f40;
-}
 .has-error input.form-control:focus {
   box-shadow: none;
 }
@@ -603,3 +624,124 @@ a:hover {
   cursor: pointer;
   text-decoration: none;
 }
+.textarea-wrapper {
+  position: relative;
+}
+.textarea-wrapper::after {
+  pointer-events: none;
+  content: "\f07d";
+  font: normal normal normal 14px/1 FontAwesome;
+  position: absolute;
+  height: 19px;
+  width: 19px;
+  line-height: 19px;
+  text-align: center;
+  bottom: 1px;
+  right: -2px;
+  /*z-index: 2;*/
+}
+/*themed form*/
+.form-group.form-themed input,
+.form-group.form-themed textarea {
+  background: none;
+  border: none;
+  border-radius: 0px;
+  outline: none;
+  border-bottom: 1px solid white;
+  padding: 0;
+  box-shadow: none;
+  font-size: 1.3em;
+}
+.form-group.form-themed input.form-control:focus,
+.form-group.form-themed textarea.form-control:focus {
+  box-shadow: none;
+  border-bottom-color: #f05f40;
+}
+.form-group.form-themed label {
+  font-family: "Open Sans", Arial, sans-serif;
+  text-transform: uppercase;
+  font-size: 1.2em;
+}
+/*themed form tag input select*/
+.form-themed .Select--single {
+
+}
+.form-themed .Select--multi {
+
+}
+  .form-themed .Select--multi .Select-control,
+  .form-themed .Select--single .Select-control {
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    color: #fff;
+  }
+  .form-themed .Select--single .Select-control {
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    cursor: text;
+  }
+  .form-themed .Select--single.is-focused .Select-control {
+    border-bottom: 1px solid #f05f40;
+  }
+  .form-themed .Select--multi.is-focused .Select-control,
+  .form-themed .Select--single.is-focused .Select-control {
+    box-shadow: none;
+  }
+    .form-themed .Select--multi .Select-control .Select-input input,
+    .form-themed .Select--single .Select-control .Select-input input {
+      border: none;
+      padding: 8px 0 12px;
+      font-size: inherit;
+    }
+    .form-themed .Select--single .Select-control .Select-placeholder,
+    .form-themed .Select--multi .Select-control .Select-placeholder {
+      display: none;
+    }
+    .form-themed .Select--single .Select-control .Select-value {
+      padding-left: 0;
+      font-size: 1.3em;
+    }
+    .form-themed .Select--single .Select-control .Select-value .Select-value-label {
+      color: #fff!important;
+    }
+    .form-themed .Select--multi .Select-control .Select-value {
+      border: 1px solid #c5381a;
+      background: #f05f40;
+      font-size: 1.1em;
+      color: #fff;
+      margin-left: 0;
+      margin-right: 5px;
+    }
+      .form-themed .Select--multi .Select-control .Select-value .Select-value-icon {
+        padding: 0 5px;
+        border-right: 1px solid rgba(34,34,34,0.25);
+      }
+      .form-themed .Select--multi .Select-control .Select-value .Select-value-icon:hover,
+      .form-themed .Select--multi .Select-control .Select-value .Select-value-icon:focus {
+        color: #000;
+        background: transparent;
+      }
+  .form-themed .Select--single .Select-clear-zone,
+  .form-themed .Select--single .Select-arrow {
+    color: #fff;
+    border-color: #fff transparent transparent!important;
+  }
+  .form-themed .Select--multi .Select-clear-zone,
+  .form-themed .Select--multi .Select-arrow-zone {
+    display: inline-block;
+  }
+  .form-themed .Select--multi .Select-clear-zone {
+    display: none;
+  }
+  .form-themed .Select--multi span.Select-arrow {
+    border: none;
+  }
+    .form-themed .Select--multi span.Select-arrow::after {
+      font: normal normal normal 14px/1 FontAwesome;
+      content: "\f067";
+      color: #fff;
+    }
+    .form-themed .Select--multi span.Select-arrow:hover::after {
+      color: #f05f40;
+    }

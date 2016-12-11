@@ -13,7 +13,7 @@ export class LandingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: ""
+      open: false
     };
   }
 
@@ -104,7 +104,7 @@ export class LandingPage extends Component {
                                 <ListGroup>
                                 {faq.map(([key, question, answer]) => {
                                   return (
-                                    <ListGroupItem header={question}>{answer}</ListGroupItem>
+                                    <ListGroupItem key={key} header={question}>{answer}</ListGroupItem>
                                   );
                                 })}
                                 </ListGroup>

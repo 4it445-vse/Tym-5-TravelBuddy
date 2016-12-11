@@ -3,7 +3,6 @@ import Scroll from 'react-scroll';
 
 const Link = Scroll.Link;
 
-const appName ='TravelBuddy';
 const version = 'Version 1.0.0';
 const currentYear = new Date().getFullYear();
 const copyright = <span>&copy;</span>;

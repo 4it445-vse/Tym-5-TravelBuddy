@@ -27,7 +27,7 @@
     "CityCountry": {
       "type": "belongsTo",
       "model": "Country",
-      "foreignKey": "id"
+      "foreignKey": "refCountryId"
     },
     "CityProduct": {
       "type": "hasMany",
@@ -35,6 +35,19 @@
       "foreignKey": "refCityId"
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": {}
 }

@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import InputRange from 'react-input-range';
-import { Panel } from 'react-bootstrap';
+import { Panel, FormGroup } from 'react-bootstrap';
+import Select from 'react-select';
 import { ItemList } from './ItemList';
 import api from '../../../api';
-
-
+import _ from "lodash";
+import 'react-select/dist/react-select.css';
 
 export class FilterForm extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            cityError: '',
+            selectedCity: null,
+            cities: [],
           products: [],
           filteredProducts: [],
           errorToPrice: '',
@@ -41,20 +45,38 @@ export class FilterForm extends Component {
         this.handleSubmitFilterData = this.handleSubmitFilterData.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
         this.handleInputRangeValuesChange = this.handleInputRangeValuesChange.bind(this);
+        this.fetchCityDataDebounced = _.debounce(this.fetchCityData, 300);
     }
 
     componentWillMount() {
-        //this.fetchProductData();
+
     }
 
     componentDidMount() {
 
     }
 
+    fetchCityData(searchTerm, callback){
+        if (searchTerm.length === 0){callback(null,null);return;}
+        api.get('/cities?access_token='+localStorage.accessToken, {params: this.paramsForSearchTermCity(searchTerm)})
+            .then((response) =>{
+                if (response.status === 200){
+                    let cities = response.data;
+                    const transformedCities = cities.map((city)=>{
+                        return {value:city.id, label:city.name};
+                    });
+                    callback(null,{options: transformedCities, complete:true});
+                }
+            })
+            .catch((error) => {
+                console.log("Error: ", error);
+                console.log("Error: ", error.response);
+                callback(error,null);
+            });
+    }
 
     fetchProductData() {
-
-        api.get("/Products?access_token=" + localStorage.getItem("accessToken"), {params: this.paramsForSearchTerm})
+        api.get("/Products?access_token=" + localStorage.getItem("accessToken"), {params: this.paramsForSearchTerm()})
             .then((response) => {
                 if (response.status === 200) {
                     console.log("FilterForm - Response data",response.data);
@@ -66,15 +88,30 @@ export class FilterForm extends Component {
                 console.log("Error: ", error);
                 console.log("Error: ", error.response);
             });
+    }
 
+    paramsForSearchTermCity(searchTerm){
+        if (!searchTerm) return {};
+        else{
+            return {
+                filter:{
+                    where:{
+                        name:{
+                            like: "%"+searchTerm+"%"
+                        }
+                    },
+                    limit: 5
+                }
+            };
+        }
     }
 
     paramsForSearchTerm() {
         return {
                 filter: {
-                    include: [
-                        {relation: 'productCity'}
-                    ],
+                        include: {
+                            relation: 'productCity',
+                        },
                 },
                 limit: 1000
         };
@@ -88,8 +125,13 @@ export class FilterForm extends Component {
         const { priceTo } = this.state;
         const { label } = this.state;
         const { description } = this.state;
-
+        const { city } = this.state;
         let isValid = true;
+        let isCity = false;
+
+        if (city) {
+            isCity = true;
+        }
 
         if (priceTo.length == 0) {
             this.setState({priceTo: 9999999});
@@ -108,17 +150,25 @@ export class FilterForm extends Component {
             this.setState({errorToPrice: 'Price to must be positive number!'});
         }
 
-        if (isValid) {
+        if (isValid && isCity) {
             var filteredProducts = this.state.products.filter(function (product) {
                 return product.price <= priceTo &&
-                    product.label.includes(label) &&
+                    product.label.toLowerCase().includes(label.toLowerCase()) &&
                     product.price >= priceFrom &&
-                    product.description.includes(description);
+                    product.description.toLowerCase().includes(description.toLowerCase()) &&
+                    product.productCity.name.toLowerCase().includes(city.toLowerCase());
             });
             this.setState({filteredProducts: filteredProducts});
             console.log("FilteredProducts", filteredProducts);
         } else {
-
+            var filteredProducts = this.state.products.filter(function (product) {
+                return product.price <= priceTo &&
+                    product.label.toLowerCase().includes(label.toLowerCase()) &&
+                    product.price >= priceFrom &&
+                    product.description.toLowerCase().includes(description.toLowerCase());
+            });
+            this.setState({filteredProducts: filteredProducts});
+            console.log("FilteredProducts", filteredProducts);
         }
     }
 
@@ -132,10 +182,12 @@ export class FilterForm extends Component {
         this.setState({label: event.target.value})
     }
 
-    handleCityChange(event) {
+    handleCityChange(event, selected) {
         event.preventDefault();
-        console.log("CityState:",this.state.city);
-        this.setState({city: event.target.value})
+        console.log("CityState:",this.state.selectedCity);
+        console.log("SelectCityObject", selected);
+        this.setState({city: selected.label});
+        this.setState({selectedCity: selected.value})
     }
 
     handlePriceFromChange(event) {
@@ -204,10 +256,19 @@ export class FilterForm extends Component {
                               </div>
 
                             </div>
-                            <div className="form-group row">
-                              <div className="col-lg-12">
-                                <input type="text" className="form-control" id="inputCity" onChange={this.handleCityChange} placeholder="City"/>
-                              </div>
+                            <div className="row form-group">
+                                <div className="col-lg-12">
+                                  <FormGroup controlId="inputCity" bsClass="selectCityBox" validationState={(this.state.cityError === "") ? null:"error"}>
+                                      <Select.Async
+                                          name="selectFieldCity"
+                                          value={this.state.selectedCity}
+                                          onChange={(selected)=>{this.handleCityChange(event, selected)}}
+                                          multi={false}
+                                          loadOptions={(input, callback)=>{this.fetchCityDataDebounced(input,callback)}}
+                                          placeholder="City"
+                                      />
+                                  </FormGroup>
+                                </div>
                             </div>
                             <div className="form-group row">
                               <div className="col-lg-12">
@@ -234,6 +295,7 @@ export class FilterForm extends Component {
                             <div className="row">
                               {this.state.errorToPrice != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.errorToPrice}</span> : null}
                               {this.state.errorFromPrice != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.errorFromPrice}</span> : null}
+                                {this.state.cityError != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.cityError}</span> : null}
                             </div>
 
                             <div className="form-group row">

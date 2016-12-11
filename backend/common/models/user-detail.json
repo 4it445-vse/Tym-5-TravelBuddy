@@ -52,12 +52,12 @@
     "user": {
       "type": "belongsTo",
       "model": "UserMain",
-      "foreignKey": "id"
+      "foreignKey": "refUserMainId"
     },
     "country": {
       "type": "belongsTo",
       "model": "Country",
-      "foreignKey": "id"
+      "foreignKey": "refCountryId"
     }
   },
   "acls": [

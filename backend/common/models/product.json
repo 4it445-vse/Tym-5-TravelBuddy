@@ -50,11 +50,12 @@
       "foreignKey": "refProductId",
       "through": "UserProduct"
     },
-    "productProductCategories": {
+    "categories": {
       "type": "hasMany",
-      "model": "Product_ProductCategory",
+      "model": "ProductCategory",
       "foreignKey": "refProductId",
-      "through": "Product_ProductCategory"
+      "through": "Product_ProductCategory",
+      "keyThrough": "refProductCategoryId"
     },
     "timeUnits": {
       "type": "hasOne",
@@ -64,12 +65,12 @@
     "productCity": {
       "type": "belongsTo",
       "model": "City",
-      "foreignKey": "id"
+      "foreignKey": "refCityId"
     },
     "user": {
       "type": "belongsTo",
       "model": "UserMain",
-      "foreignKey": "id"
+      "foreignKey": "refOwnerUserId"
     }
   },
   "acls": [

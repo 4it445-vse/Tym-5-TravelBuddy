@@ -8,16 +8,12 @@ import {
     Popover,
     ButtonGroup,
     Button,
-    Alert,
-    Checkbox,
     Image
 } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import { ProfilePictureEditorComponent } from "../ProfilePictureEditor/ProfilePictureEditorComponent.js";
 import api from '../../api.js';
 import { DatePicker } from '../common/DatePicker/DatePicker.js';
-import moment from 'moment';
-import { Link } from 'react-router';
 import { SubmitButton } from '../common/SubmitButton.js';
 
 export class EditProfile extends Component {
@@ -44,7 +40,7 @@ export class EditProfile extends Component {
             formSuccess: false,
             refCountryId : "",
             isLoading: false,
-            isActive: '',
+            isActive: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -54,7 +50,7 @@ export class EditProfile extends Component {
         this.loadUserCountry = this.loadUserCountry.bind(this);
         this.loadUserMain();
         this.loadUserDetail();
-        this.loadUserCountry();
+
 
     }
 
@@ -71,7 +67,7 @@ export class EditProfile extends Component {
             if (response.status === 200) {
                 var keys = ["lastName", "firstName", "birthdate", "email","isActive"];
                 for (let i = 0; i < keys.length; i++) {
-                  if ( i==2)
+                  if ( i===2)
                   {
                     var dt = new Date(response.data[keys[i]]);
                     var dtDate = dt.getDate();
@@ -92,7 +88,7 @@ export class EditProfile extends Component {
                       this.datePicker.setDefaultValue(this.state.birthdate);
                       this.setActiveDefaultValue(this.state.isActive);
                   }
-                  else if (i==4)
+                  else if (i===4)
                   {
                       this.setState({
                         [keys[i]]: response.data[keys[i]]
@@ -123,7 +119,7 @@ export class EditProfile extends Component {
 
     setActiveDefaultValue(activeParameter)
     {
-      if (activeParameter == 0 || activeParameter == null)
+      if (activeParameter)
       {
         this.setIsActive('Active');
       }
@@ -138,11 +134,15 @@ export class EditProfile extends Component {
             if (response.status === 200) {
                 var keys = ["phone", "skype", "facebook", "bio", "motto","profilePicture","refCountryId"];
                 for (let i = 0; i < keys.length; i++) {
-                  if (i ==5)
+                  if (i === 5)
                   {
                     this.setState({
                         oldProfilePicture: response.data[keys[i]]
                     })
+                  }
+                  else if (i === 6)
+                  {
+                    this.loadUserCountry(response.data[keys[i]]);
                   }
                   else
                   {
@@ -150,7 +150,7 @@ export class EditProfile extends Component {
                         [keys[i]]: response.data[keys[i]]
                     })
                   }
-                }
+              }
             }
         }).catch((error) => {
             console.log("Error: ", error);
@@ -158,18 +158,18 @@ export class EditProfile extends Component {
         });
     }
 
-    loadUserCountry() {
-        const srvUrl = '/Countries/' + this.state.refCountryId;
+    loadUserCountry(refCountry) {
+        const srvUrl = '/Countries/' + refCountry + '?access_token=' + localStorage.accessToken;
+          console.log('srvUrl',srvUrl);
         api.get(srvUrl).then((response) => {
             if (response.status === 200) {
                 var keys = ["id"];
                 for (let i = 0; i < keys.length; i++) {
                     this.setState({
-                        countryID: response.data[0][keys[i]]
+                        country: response.data[keys[i]]
                     })
                 }
-                  console.log('countdssa',this.state.country);
-                  }
+              }
 
         }).catch((error) => {
             console.log("Error: ", error);
@@ -194,18 +194,15 @@ export class EditProfile extends Component {
 
     setIsActive(value) {
       this.setState({isActive: value});
-      this.state.isActive = value;
       if (value == 'Non-active')
       {
         value =  '0';
         this.setState({isActive: value});
-        this.state.isActive = value;
       }
       if (value == 'Active')
       {
-        value =  '1';
+        value = '1';
         this.setState({isActive: value});
-        this.state.isActive = value;
       }
       const srvUrl = '/UserMain/me?access_token=' + localStorage.accessToken;
       let formDataActive = this.getFormDataActive();
@@ -216,15 +213,13 @@ export class EditProfile extends Component {
       });
       if (value == '0')
       {
-        value =  'Non-active';
+        value = 'Non-active';
         this.setState({isActive: value});
-        this.state.isActive = value;
       }
       if (value == '1')
       {
-        value =  'Active';
+        value = 'Active';
         this.setState({isActive: value});
-        this.state.isActive = value;
       }
     }
 
@@ -237,7 +232,6 @@ export class EditProfile extends Component {
     handleCountryChange(event) {
         this.setState({country: event.target.value});
     }
-    //zacatek obrazku
 
     handlePictureChange(event) {
         event.preventDefault();
@@ -260,14 +254,12 @@ export class EditProfile extends Component {
 
     setPicture(pictureBLOB, profilePicture) {
         this.setState({pictureBLOB: pictureBLOB, profilePicture: profilePicture});
-        //console.log('priflePictueLog',profilePicture);
     }
 
     handleInputChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         });
-        console.log('--- state', this.state);
     }
 
     createPopover(text) {
@@ -281,12 +273,8 @@ export class EditProfile extends Component {
         );
     }
 
-    //konec obrazku
-
     createField(type, key, desc, values) {
 
-
-        let cssStyle = "form-themed";
         switch (type) {
             case 'text':
             case 'password':
@@ -294,7 +282,6 @@ export class EditProfile extends Component {
                 if (!desc) {
                     return (
                       <FormControl
-                        className={cssStyle}
                         type={type}
                         name={key}
                         value={this.state[key]}
@@ -305,13 +292,13 @@ export class EditProfile extends Component {
                     const popover = this.createPopover(desc);
                     return (
                         <OverlayTrigger trigger="focus" placement="right" overlay={popover} delay={100}>
-                            <FormControl className={cssStyle} type={type} value={this.state[key]} name={key} onChange={this.handleInputChange} />
+                            <FormControl type={type} value={this.state[key]} name={key} onChange={this.handleInputChange} />
                         </OverlayTrigger>
                     );
                 }
             case 'file':
             var addr = '';
-            if (this.state.profilePicture || (this.state.profilePicture == null && this.state.oldProfilePicture == null))
+            if (this.state.profilePicture || (this.state.profilePicture === null && this.state.oldProfilePicture === null))
             {
               addr = this.state.profilePicture ? this.state.profilePicture : "/images/profilePictureDefault.png";
           }
@@ -345,10 +332,10 @@ export class EditProfile extends Component {
                     </div>
                 );
             case 'textarea':
-                return (<FormControl className={cssStyle} type={type} name={key} componentClass={type} value={this.state[key]} onChange={this.handleInputChange} />);
+                return (<FormControl type={type} name={key} componentClass={type} value={this.state[key]} onChange={this.handleInputChange} />);
             case "select":
                 return (
-                    <FormControl className={cssStyle} componentClass="select" placeholder="Select your country" value={this.state.countryID} onChange={this.handleCountryChange}>
+                    <FormControl componentClass="select" placeholder="Select your country" value={this.state.countryID} onChange={this.handleCountryChange}>
                         <option value={this.state[key]}></option>
                         {this.state.countries.map((element) => {
                             return (
@@ -358,74 +345,43 @@ export class EditProfile extends Component {
                     </FormControl>
                 );
             case 'date':
-                return (<DatePicker type="birthdate" name="birthdate" className={cssStyle} onChange={this.handleInputChange} ref={(datePicker) => { this.datePicker = datePicker; }}/>);
+                return (<DatePicker type="birthdate" name="birthdate" onChange={this.handleInputChange} ref={(datePicker) => { this.datePicker = datePicker; }}/>);
             case 'radio-active':
-            return (
-              <ButtonGroup className="block">
-                {values.map((value) => {
-                  return (
-                    <Button
-                      key={value}
-                      type="button"
-                      onClick={this.setIsActive.bind(this, value)}
-                      active={this.state.isActive === value}
-                    >
-                      {value}
-                    </Button>
-                  );
-                })}
-              </ButtonGroup>
-            );
+                return (
+                  <ButtonGroup className="block">
+                    {values.map((value) => {
+                      return (
+                        <Button
+                          key={value}
+                          type="button"
+                          onClick={this.setIsActive.bind(this, value)}
+                          active={this.state.isActive === value}
+                        >
+                          {value}
+                        </Button>
+                      );
+                    })}
+                  </ButtonGroup>
+                );
             default:
                 return {};
         }
     }
 
-  /*  setActive(value) {
-      const srvUrl = '/UserMain/me?access_token=' + localStorage.accessToken;
-      var editActive = '';
-
-
-      if (this.state.isActive === null || this.state.isActive === 0)
-      {
-        this.setState({isActive: 1})
-      }
-      else {
-          this.setState({isActive: 0})
-      }
-
-      let formDataActive = this.getFormDataActive();
-      console.log("getFormDataActive",formDataActive);
-
-      api.patch(srvUrl, formDataActive).then(response => {
-          console.log('--- post usermain ok');
-          console.log('isActiveOK', value);
-      }).catch((error) => {
-          console.log('isActiveFail', value);
-      });
-      console.log('srvUrl',srvUrl);
-
-    }*/
-
-
-
     handleSubmit(event) {
         event.preventDefault();
-        let errors = {};
         let formData = this.getFormData();
         let userMainFailed = false;
         let userDetailFailed = false;
         this.setState({isLoading: true});
-        //this.uploadProfilePicture(formData);
-
 
         if (formData.isActive == 'Non-active')
         {
-          formData.isActive =  '0';
+          formData.isActive = '0';
         }
         if (formData.isActive == 'Active')
         {
-          formData.isActive =  '1';
+          formData.isActive = '1';
         }
 
         formData.birthdate = this.datePicker.getFormData().selectedDay;
@@ -472,7 +428,7 @@ export class EditProfile extends Component {
 
     getFormData() {
         return {
-            country: this.state.country,
+            refCountryId: this.state.country,
             motto: this.state.motto,
             bio: this.state.bio,
             firstName: this.state.firstName,
@@ -485,13 +441,6 @@ export class EditProfile extends Component {
             isActive: this.state.isActive
         }
     }
-
-    getFormDataActive() {
-        return {
-            isActive: this.state.isActive
-        }
-    }
-
 
     uploadProfilePicture(data){
       if(data){
@@ -531,7 +480,7 @@ export class EditProfile extends Component {
             ],
             [
                'isActive', '', 'radio-active', '', ['Active', 'Non-active']
-           ],
+            ],
             [
                 'firstName', 'First name', 'text', ''
             ],
@@ -541,9 +490,9 @@ export class EditProfile extends Component {
             [
                 'birthdate', 'Birthdate', 'date', '',
             ],
-           [
+            [
                  'country', 'Country', 'select', ''
-             ],
+            ],
             [
                 'email', 'E-mail', 'email', 'Enter valid email. You will use it for login and password reset'
             ],
@@ -564,6 +513,7 @@ export class EditProfile extends Component {
         const {clientErrors} = this.state;
         const {errors} = this.state;
         const { isLoading } = this.state;
+        let cssClass = 'form-themed';
         return (
             <div>
                 <ProfilePictureEditorComponent container={this.props.modal} ref="pictureEditor" setPicture={this.setPicture}/>
@@ -583,7 +533,7 @@ export class EditProfile extends Component {
                             return (
                                 <FormGroup validationState={isValid
                                     ? undefined
-                                    : "error"} key={key} controlId={key}>
+                                    : "error"} key={key} controlId={key} className={cssClass}>
                                     <ControlLabel>{label}</ControlLabel>
                                     {this.createField(type, key, desc, values)}
                                     <FormControl.Feedback/>
@@ -592,10 +542,7 @@ export class EditProfile extends Component {
                                             : errorMsg}</HelpBlock>
                                 </FormGroup>
                             );
-                        })}
-                      {//<SubmitButton type="submit" bsStyle="primary">Save changes</Button>
-                    }
-                          <SubmitButton name="Save changes!" bsStyle="primary" isLoading={isLoading}/>
+                        })}  <SubmitButton name="Save changes!" bsStyle="primary" isLoading={isLoading}/>
                     </form>
                 </div>
             </div>

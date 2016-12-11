@@ -8,7 +8,10 @@ export class SubmitButton extends Component {
 
     this.state = {
       name: this.props.name || "",
-      isLoading: this.props.isLoading
+      isLoading: this.props.isLoading,
+      bsStyle: this.props.bsStyle,
+      bsSize: this.props.bsSize,
+      block: this.props.block
     }
 
     // this.handleClick = this.handleClick.bind(this);
@@ -20,14 +23,15 @@ export class SubmitButton extends Component {
 
   render() {
     let isLoading = this.state.isLoading;
+    let { bsStyle } = this.state;
+    let { bsSize } = this.state;
     if (isLoading) {
       return (
         <Button
-          bsStyle="primary"
-          bsSize="large"
           type="submit"
-          block
           disabled={isLoading}
+          bsStyle={bsStyle}
+          bsSize={bsSize}
           // onClick={!isLoading ? this.handleClick : null}
           >
           {this.state.name}&nbsp;<i className="fa fa-spinner fa-pulse fa-fw"></i>
@@ -36,11 +40,10 @@ export class SubmitButton extends Component {
     } else {
       return(
         <Button
-          bsStyle="primary"
-          bsSize="large"
           type="submit"
-          block
           disabled={isLoading}
+          bsStyle={bsStyle}
+          bsSize={bsSize}
           // onClick={!isLoading ? this.handleClick : null}
           >
           {this.state.name}

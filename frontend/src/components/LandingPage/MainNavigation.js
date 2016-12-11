@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Affix } from 'react-overlays';
-import { Button, Fade } from 'react-bootstrap';
+import { Fade } from 'react-bootstrap';
 import Scroll from 'react-scroll';
 import { LoginComponentContainer } from '../LoginComponent/LoginComponent.js';
 
@@ -10,7 +10,7 @@ export class MainNavigation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: "",
+      showLogin: false,
       style: "affix"
     };
   }
@@ -19,7 +19,7 @@ export class MainNavigation extends Component {
 
   render() {
     return (
-      <Affix affixClassName="affix" topStyle="affix-top">
+      <Affix affixClassName="affix" topClassName="affix-top">
         <nav id="mainNav" className="navbar navbar-default navbar-fixed-top">
             <div className="container-fluid">
                 {/* <!-- Brand and toggle get grouped for better mobile display --> */}
@@ -46,14 +46,14 @@ export class MainNavigation extends Component {
                             <Link activeClass="active" to="register" spy={true} smooth={true} duration={500}>Register</Link>
                         </li>
                         <li>
-                            <a onClick={ ()=> this.setState({ open: !this.state.open })}><i className="fa fa-user"></i> Login</a>
+                            <a onClick={ ()=> this.setState({ showLogin: !this.state.showLogin })}><i className="fa fa-user"></i> Login</a>
                         </li>
                     </ul>
                 </div>
                 {/* <!-- /.navbar-collapse --> */}
             </div>
             {/* <!-- /.container-fluid --> */}
-            <Fade in={this.state.open} className={`login-modal ${this.state.style}`} timeout="100">
+            <Fade in={this.state.showLogin} className={`login-modal ${this.state.style}`} timeout={100}>
               <div>
                   <LoginComponentContainer/>
               </div>
