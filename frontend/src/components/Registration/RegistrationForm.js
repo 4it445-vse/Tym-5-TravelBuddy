@@ -145,7 +145,6 @@ export class RegistrationForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    let errors = {};
     this.setState({ isLoading: true });
 
     //TODO workaround for backend, if date is not date send dummy date to tell
@@ -230,11 +229,11 @@ export class RegistrationForm extends Component {
                       <ControlLabel>{label}</ControlLabel>
                       {this.createField(type, key, desc, values)}
                       <FormControl.Feedback />
-                      <HelpBlock>{errorMsg == "can't be blank" ? "Required!" : errorMsg}</HelpBlock>
+                      <HelpBlock>{errorMsg === "can't be blank" ? "Required!" : errorMsg}</HelpBlock>
                     </FormGroup>
                   );
               })}
-              <SubmitButton name="Register!" isLoading={isLoading}/>
+              <SubmitButton name="Register!" isLoading={isLoading} bsStyle="primary" bsSize="large" block/>
           </form>
         </div>
       );

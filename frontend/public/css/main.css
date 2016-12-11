@@ -93,6 +93,9 @@ body {
   .register input {
     color: #fff;
   }
+  .register button[type=submit] {
+    display: block;
+  }
 /* WelcomeWizardForm Component */
 .form-welcome-wizard {
   width: 70%;

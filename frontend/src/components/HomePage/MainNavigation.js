@@ -28,7 +28,7 @@ export class MainNavigation extends Component {
   //TODO change class of login-modal on scroll, affix-top on top, affix on affixed
 
   render() {
-    const { userData } = this.state;
+    // const { userData } = this.state;
     return (
         <nav id="mainNav" className="navbar navbar-app navbar-default navbar-fixed-top">
             <div className="container-fluid">

@@ -4,10 +4,7 @@ import {Row, Col, Button} from 'react-bootstrap';
 
 
 export class ProductListItem extends Component{
-    constructor(props) {
-        super(props);
 
-    }
     render() {
         return (
             <Row className="show-grid">

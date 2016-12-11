@@ -18,7 +18,7 @@ export class ProductList extends Component {
     }
 
     loadProducts() {
-        const dataUrl = '/Products' + '?access_token=' + localStorage.accessToken;
+        const dataUrl = '/Products?access_token=' + localStorage.accessToken;
         api.get(dataUrl, {params: {filter:{where:{refOwnerUserId:localStorage.userId}}}}).then((response) => {
             if (response.status === 200) {
             this.setState({products: response.data}) // pole hodnot - objects - potřeba zjistit atribut, ve kterým se vrací pole

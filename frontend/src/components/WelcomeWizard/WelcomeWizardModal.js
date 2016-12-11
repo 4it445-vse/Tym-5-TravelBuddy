@@ -3,6 +3,7 @@ import { Button, Glyphicon, Modal} from 'react-bootstrap';
 // import { SlideIndicator } from '../common/SlideIndicator/SlideIndicator.js';
 import WizardFormComponent from './WizardFormComponent.js';
 import { WizardPageComponent } from './WizardPageComponent.js';
+import { SubmitButton } from '../common/SubmitButton.js';
 import ReactDOM from 'react-dom';
 
 import api from '../../api.js';
@@ -18,7 +19,8 @@ export class WelcomeWizardModal extends Component {
       "show": true,
       "currentStep": 1,
       "lastStep": this.props.steps,
-      modal: null
+      modal: null,
+      isLoading: false
     }
 
     this.moveLeft = this.moveLeft.bind(this);
@@ -43,7 +45,6 @@ export class WelcomeWizardModal extends Component {
     event.preventDefault();
     console.log('--- wizard form', this._form.getFormData());
     // console.log('--- formData', event.target);
-
     var data = this._form.getFormData();
 
     this.uploadProfilePicture(data);
@@ -53,6 +54,7 @@ export class WelcomeWizardModal extends Component {
   }
 
   saveLanguages(data){
+    this.setState({isLoading: true});
     if (data.languages){
       //console.log("lang",data.languages);
       const transformedLanguages = data.languages.map((language)=>{
@@ -67,6 +69,7 @@ export class WelcomeWizardModal extends Component {
       transformedLanguages.forEach((item,index)=>{
         api.post('/UserLanguages?access_token=' + localStorage.accessToken,item)
           .then((data)=>{
+            this.setState({isLoading: false});
             console.log('--- upload successful', data);
           })
           .catch((error) => {
@@ -78,6 +81,7 @@ export class WelcomeWizardModal extends Component {
   }
 
   uploadProfilePicture(data){
+    this.setState({isLoading: true});
     if(data.pictureURL){
 
       var blob = this.dataURLtoBlob(data.pictureURL);
@@ -88,6 +92,7 @@ export class WelcomeWizardModal extends Component {
       console.log('--- profilePicture');
        api.post('/containers/profilePictures/upload?access_token=' + localStorage.accessToken, formData)
          .then((data)=>{
+           this.setState({isLoading: false});
            console.log('--- upload successful', data);
          })
          .catch((error) => {
@@ -106,6 +111,7 @@ export class WelcomeWizardModal extends Component {
   }
 
   saveUserDetail(data) {
+    this.setState({isLoading: true});
     var dataToSend = {
       bio:data.bio,
       motto:data.motto,
@@ -115,6 +121,7 @@ export class WelcomeWizardModal extends Component {
     const srvUrl = '/UserMain/me/userDetail?access_token=' + localStorage.accessToken;
     api.post(srvUrl, dataToSend)
       .then(({data})=> {
+        this.setState({isLoading: false});
         this.setState({show: false});
       })
       .catch((error)=> {
@@ -154,7 +161,7 @@ export class WelcomeWizardModal extends Component {
             {this.state.currentStep !== this.state.lastStep ?
               <Button onClick={this.moveRight}>Continue&nbsp;<Glyphicon glyph="glyphicon glyphicon-chevron-right"></Glyphicon></Button>
               :
-              <Button type="submit" bsStyle="primary" onClick={this.handleSubmit}>Done</Button>
+              <span onClick={this.handleSubmit}><SubmitButton name="Done" bsStyle="primary" isLoading={this.state.isLoading}/></span>
             }
           </Modal.Footer>
       </Modal>

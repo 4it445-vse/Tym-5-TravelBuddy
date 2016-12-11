@@ -151,8 +151,8 @@ export default class WizardFormComponent extends Component {
 
             <Select
               name="selectFieldCountry"
-              value= {this.state.selectedCountry}
-              onChange= {(selected)=>{this.setState({selectedCountry:selected})}}
+              value={this.state.selectedCountry}
+              onChange={(selected)=>{this.setState({selectedCountry:selected})}}
               multi={false}
               options={this.state.countries}
              />
@@ -162,8 +162,8 @@ export default class WizardFormComponent extends Component {
           return(
               <Select
                 name="selectFieldLanguages"
-                value= {this.state.selectedLanguages}
-                onChange= {(selected)=>{this.setState({selectedLanguages:selected});}}
+                value={this.state.selectedLanguages}
+                onChange={(selected)=>{this.setState({selectedLanguages:selected});}}
                 multi={true}
                 options={this.state.languages}
                />
