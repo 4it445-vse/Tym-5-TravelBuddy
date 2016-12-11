@@ -15,27 +15,25 @@ export class FilterForm extends Component {
             cityError: '',
             selectedCity: null,
             cities: [],
-          products: [],
-          filteredProducts: [],
-          errorToPrice: '',
-          errorFromPrice:'',
-          label: '',
-          description: '',
-          city: '',
-          priceFrom: 0,
-          priceTo: 9999999,
-          inputRangeValues: {
+            products: [],
+            filteredProducts: [],
+            errorToPrice: '',
+            errorFromPrice:'',
+            label: '',
+            description: '',
+            city: '',
+            priceFrom: 0,
+            priceTo: 9999999,
+            inputRangeValues: {
             min: 0,
             max: 9999,
           },
-          inputRangeLimits: {
+            inputRangeLimits: {
             min: 0,
             max: 100,
           },
-          filterFormShow: true,
+            filterFormShow: true,
         };
-
-
 
         this.fetchProductData();
         this.handleLabelChange = this.handleLabelChange.bind(this);

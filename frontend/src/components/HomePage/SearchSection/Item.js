@@ -13,7 +13,8 @@ export class Item extends Component{
               {this.props.product.productCity.name}
               {this.props.product.price}
             </span>
-            <Button type='submit' bsStyle="primary">Detail</Button>
+            <Button type='submit' bsStyle="primary" onClick={() => {this.refs.detailProduct.open()}}>Detail</Button>
+            <Button type='submit' bsStyle="primary">Weather</Button>
             <Button type='submit' bsStyle="primary">Reply</Button>
           </ListGroupItem>
         );

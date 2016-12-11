@@ -3,6 +3,7 @@ import {PageFooter} from '../components/common/PageFooter/PageFooter';
 import { MainNavigation } from '../components/HomePage/MainNavigation.js';
 import {SearchSection} from '../components/HomePage/SearchSection/SearchSection';
 import {WelcomeWizardModal} from '../components/WelcomeWizard/WelcomeWizardModal.js';
+import {DetailProduct} from '../components/HomePage/DetailProduct/DetailProduct';
 import {CreateProductComponent} from "../components/CreateProduct/CreateProductComponent.js";
 import {Button} from 'react-bootstrap';
 import api from '../api.js';
@@ -60,6 +61,7 @@ export class HomePage extends Component {
               <MainNavigation userData={userData}/>
               <section className="search">
                   <CreateProductComponent ref="a"/>
+                  <DetailProduct/>
                   <div className="container">
                       <div className="row">
                           <div className="col-lg-4 col-md-4 col-sm-4 col-lg-push-4 col-md-push-4 col-sm-push-4 col-xs-push-4 text-center">

@@ -18,7 +18,9 @@ export const userLoggedInAction = (accessToken, userId) => {
     accessToken: accessToken,
     userId: userId
   };
-}
+};
+
+
 
 export const userLoginFailedAction = () => {
   return {

@@ -8,6 +8,7 @@ export class DetailProduct extends Component {
         super(props);
         this.state = {
             show: false,
+            product:[]
         }
     }
 
@@ -25,10 +26,11 @@ export class DetailProduct extends Component {
         return(
             <Modal
                 show={this.state.show}
-                bsSize="small"
+                bsSize="large"
                 container={this.props.modalContainer}
+                onHide={this.hide}
             >
-                <Modal.Header>
+                <Modal.Header closeButton>
                     <Modal.Title id="modal-title">Product detail</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -69,7 +71,9 @@ export class DetailProduct extends Component {
                     </Form>
 
                 </Modal.Body>
-
+                <Modal.Footer>
+                    <Button onClick={this.hide}>Close</Button>
+                </Modal.Footer>
             </Modal>
         );
     }
