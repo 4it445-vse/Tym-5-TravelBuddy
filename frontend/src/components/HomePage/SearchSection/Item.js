@@ -25,16 +25,35 @@ export class Item extends Component{
     }
 
     render() {
+        //TODO clicking on item will fire up detail
         return (
-          <ListGroupItem>
-            <span>
-              {this.state.product.label}
-              {this.state.product.productCity.name}
-              {this.state.product.price}
-            </span>
-            <Button type='submit' bsStyle="primary" onClick={() => {this.state.modal.show(this.state.product,this.state.product.productCity,this.state.product.user,this.state.product.categories)}}>Detail</Button>
-            <Button type='submit' bsStyle="primary">Reply</Button>
-          </ListGroupItem>
+          <div className="col-lg-4">
+            <ListGroupItem>
+              <div className="title">
+                <h3>{this.props.product.label}</h3>
+              </div>
+              <div className="body">
+                {this.props.product.description}
+              </div>
+              <div className="footer">
+                <span className="text-left">
+                  <i className="fa fa-map-marker" aria-hidden="true"></i>
+                  &nbsp;
+                  {this.props.product.productCity.name}
+                </span>
+                <span className="text-right">
+                  {this.props.product.price !== 0 ? <i className="fa fa-eur" aria-hidden="true">&nbsp;</i> : undefined}
+                  {this.props.product.price === 0 ? "Free!" : this.props.product.price}
+                </span>
+              </div>
+              <div className="wrapper-overlay text-center">
+                <span><i className="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span>
+				<Button type='submit' bsStyle="primary" onClick={() => {this.state.modal.show(this.state.product,this.state.product.productCity,this.state.product.user,this.state.product.categories)}}>Detail</Button>
+              </div>
+              {/* <Button type='submit' bsStyle="primary">Detail</Button> */}
+              {/* <Button type='submit' bsStyle="primary">Reply</Button> */}
+            </ListGroupItem>
+          </div>
         );
     }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import InputRange from 'react-input-range';
-import { Panel, FormGroup } from 'react-bootstrap';
+import { Button, Panel, FormGroup } from 'react-bootstrap';
 import Select from 'react-select';
 import { ItemList } from './ItemList';
 import api from '../../../api';
@@ -32,7 +32,7 @@ export class FilterForm extends Component {
             min: 0,
             max: 100,
           },
-            filterFormShow: true,
+          filterFormShow: false,
         };
 
         this.fetchProductData();
@@ -246,73 +246,75 @@ export class FilterForm extends Component {
             <div>
                 <div className="container filter-form">
                     <div className="row">
-                      <div className="col-lg-8 col-lg-offset-2">
+                      <div className="col-lg-10 col-lg-offset-1">
+                      <Button type="button" className="btn-filter center-block" onClick={ ()=> this.setState({ filterFormShow: !this.state.filterFormShow })}>
+                        Filter&nbsp;
+                        {this.state.filterFormShow ? <i className="fa fa-chevron-up" aria-hidden="true"></i> : <i className="fa fa-chevron-down" aria-hidden="true"></i>}
+                      </Button>
                       <Panel collapsible expanded={this.state.filterFormShow}>
                         <form className="form-horizontal" id="form-id" onSubmit={this.handleSubmitFilterData}>
-                            <div className="form-group row">
-                              <div className="col-lg-6">
+                            <div className="form-group">
+                              <div className="col-lg-4">
                                 <input type="text" className="form-control" id="inputName" onChange={this.handleLabelChange} placeholder="Name"/>
                               </div>
-                              <div className="col-lg-6">
+                              <div className="col-lg-4">
                                 <input type="text" className="form-control" id="inputName" onChange={this.handleDescriptionChange} placeholder="Description"/>
+                              </div>
+                              <div className="col-lg-4">
+                                <FormGroup controlId="inputCity" bsClass="" validationState={(this.state.cityError === "") ? null:"error"}>
+                                    <Select.Async
+                                        name="selectFieldCity"
+                                        value={this.state.selectedCity}
+                                        onChange={(selected)=>{this.handleCityChange(event, selected)}}
+                                        multi={false}
+                                        loadOptions={(input, callback)=>{this.fetchCityDataDebounced(input,callback)}}
+                                        placeholder="City"
+                                    />
+                                </FormGroup>
                               </div>
 
                             </div>
-                            <div className="row form-group">
-                                <div className="col-lg-12">
-                                  <FormGroup controlId="inputCity" bsClass="selectCityBox" validationState={(this.state.cityError === "") ? null:"error"}>
-                                      <Select.Async
-                                          name="selectFieldCity"
-                                          value={this.state.selectedCity}
-                                          onChange={(selected)=>{this.handleCityChange(event, selected)}}
-                                          multi={false}
-                                          loadOptions={(input, callback)=>{this.fetchCityDataDebounced(input,callback)}}
-                                          placeholder="City"
+                            <div className="form-group input-range-controls">
+                              <div className="col-lg-8 col-lg-offset-2">
+                                <div className="row">
+                                    <div className="col-lg-3">
+                                      <input type="text" className="form-control" onChange={this.handlePriceFromChange} id="priceFrom" value={this.state.priceFrom}/>
+                                    </div>
+                                    <div className="col-lg-6">
+                                      <InputRange
+                                        name="inputName"
+                                        // classNames=""
+                                        maxValue={this.state.inputRangeLimits.max}
+                                        minValue={this.state.inputRangeLimits.min}
+                                        value={this.state.inputRangeValues}
+                                        onChange={this.handleInputRangeValuesChange}
                                       />
-                                  </FormGroup>
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                              <div className="col-lg-12">
-                                <InputRange
-                                  name="inputName"
-                                  // classNames=""
-                                  maxValue={this.state.inputRangeLimits.max}
-                                  minValue={this.state.inputRangeLimits.min}
-                                  value={this.state.inputRangeValues}
-                                  onChange={this.handleInputRangeValuesChange}
-                                />
-                              </div>
-                            </div>
-                            <div className="row">
-                              <div className="col-lg-6 col-lg-offset-3">
-                                <div className="input-group">
-                                    <div className="input-group-addon">Price from</div>
-                                    <input type="text" className="form-control" onChange={this.handlePriceFromChange} id="priceFrom" value={this.state.priceFrom}/>
-                                    <div className="input-group-addon">to</div>
-                                    <input type="text" className="form-control" onChange={this.handlePriceToChange} id="priceTo" value={this.state.priceTo}/>
+                                    </div>
+                                    <div className="col-lg-3">
+                                      <input type="text" className="form-control" onChange={this.handlePriceToChange} id="priceTo" value={this.state.priceTo}/>
+                                    </div>
                                 </div>
                               </div>
                             </div>
-                            <div className="row">
+                            {/* <div className="form-group">
                               {this.state.errorToPrice != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.errorToPrice}</span> : null}
                               {this.state.errorFromPrice != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.errorFromPrice}</span> : null}
                                 {this.state.cityError != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.cityError}</span> : null}
-                            </div>
-                            <div className="form-group row">
-                              <button type="submit" className="btn btn-primary center-block">Filter</button>
-                            </div>
+                            </div> */}
+                            <button type="submit" className="btn btn-default center-block">Search</button>
+                            {/* <button type="button" className="btn btn-default center-block">Reset</button> */}
                         </form>
                       </Panel>
                       </div>
                     </div>
                 </div>
+                <div className="container">
+                  {/* status */}
+                </div>
                 <div className="container item-list">
                   <div className="row">
-                    <div className="col-lg-8 col-lg-offset-2">
-                    <Panel>
+                    <div className="col-lg-10 col-lg-offset-1">
                       <ItemList products={this.state.filteredProducts} modal={this.props.modal}/>
-                    </Panel>
                     </div>
                   </div>
                 </div>

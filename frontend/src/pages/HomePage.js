@@ -55,25 +55,22 @@ export class HomePage extends Component {
 
         return (
           <div id="main-wrapper" className="homepage">
+            <div className="gradient-wrapper">
               {welcomeWizard}
               <MainNavigation userData={userData}/>
               <section className="search">
-                  <CreateProductComponent ref="a"/>
-                  <DetailProduct ref="b"/>
-                  <div className="container">
-                      <div className="row">
-                          <div className="col-lg-4 col-md-4 col-sm-4 col-lg-push-4 col-md-push-4 col-sm-push-4 col-xs-push-4 text-center">
-                              <Button bsStyle="primary" onClick={() => {this.refs.a.show()}}>Offer Product</Button>
-                          </div>
+                  <CreateProductComponent ref="createProductModal"/>
+                  {/* <div className="container">
+                      <div className="col-lg-4 col-md-4 col-sm-4 col-lg-push-4 col-md-push-4 col-sm-push-4 col-xs-push-4 text-center">
+                          <Button bsStyle="primary" onClick={() => {this.refs.createProductModal.show()}}>Offer Product</Button>
                       </div>
-                  </div>
+                  </div> */}
                   <div className="container">
-                      <div className="row">
                         <SearchSection modal={this.refs.b}/>
-                      </div>
                   </div>
               </section>
-            <PageFooter/>
+              <PageFooter/>
+            </div>
           </div>
         );
     }

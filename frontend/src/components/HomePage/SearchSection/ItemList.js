@@ -16,7 +16,7 @@ export class ItemList extends Component {
         if (productItems.length > 0) {
             return (
                 <div className="row">
-                    <ListGroup>
+                    <ListGroup className="clearfix">
                         {productItems}
                     </ListGroup>
                 </div>
@@ -24,7 +24,7 @@ export class ItemList extends Component {
         }
         else {
             return (
-                <Alert bsStyle="warning">No records have been found!</Alert>
+                <Alert bsStyle="danger"><i className="fa fa-exclamation-triangle"></i><span>No records have been found!</span></Alert>
             );
         }
     }

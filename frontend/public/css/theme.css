@@ -149,7 +149,8 @@ aside {
 }
 /*APP NAVBAR*/
 .navbar.navbar-app {
-  background: #f05f40;
+  background: rgba(240, 95, 64, 1);;
+  border-bottom: none;
 }
   @media (min-width: 768px) {
     .navbar-app .nav > li > a, .navbar-app .nav > li > a:focus {
@@ -563,6 +564,28 @@ body {
   webkit-tap-highlight-color: #222222;
 }
 /* THEME OVERRIDE AND CUSTOMS*/
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.box-sh {
+  -webkit-box-shadow: 0 1px 5px rgb(0, 0, 0);
+  box-shadow: 0 1px 5px rgb(0, 0, 0);
+}
+.btn:focus {
+  outline: none!important;
+  background: #dedede;
+}
+.form-control {
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #222;
+  color: #000;
+}
 .modal-dialog {
 
 }
@@ -624,6 +647,25 @@ a:hover {
   cursor: pointer;
   text-decoration: none;
 }
+.alert {
+  border: none;
+  border-radius: 0;
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.alert span {
+  font-size: 1.2em;
+  line-height: 3em;
+}
+  .alert.alert-danger {
+    background: #f04343;
+    color: #fff;
+  }
+  .alert i.fa {
+    font-size: 3em;
+    padding-right: 15px;
+  }
 .textarea-wrapper {
   position: relative;
 }
@@ -684,10 +726,6 @@ a:hover {
   .form-themed .Select--single.is-focused .Select-control {
     border-bottom: 1px solid #f05f40;
   }
-  .form-themed .Select--multi.is-focused .Select-control,
-  .form-themed .Select--single.is-focused .Select-control {
-    box-shadow: none;
-  }
     .form-themed .Select--multi .Select-control .Select-input input,
     .form-themed .Select--single .Select-control .Select-input input {
       border: none;
@@ -745,3 +783,34 @@ a:hover {
     .form-themed .Select--multi span.Select-arrow:hover::after {
       color: #f05f40;
     }
+.Select--multi .Select-control,
+.Select--single .Select-control {
+  border: none;
+  border-radius: 0;
+  outline: none;
+  background-color: #fff;
+  color: #000;
+  border-bottom: 1px solid #222;
+}
+.Select--multi.is-focused > .Select-control,
+.Select--single.is-focused > .Select-control {
+  box-shadow: none!important;
+}
+/* Input Range */
+#main-wrapper .InputRange .InputRange-label--min,
+#main-wrapper .InputRange .InputRange-label--max,
+#main-wrapper .InputRange .InputRange-label--value {
+  display: none;
+}
+#main-wrapper .InputRange-track--active {
+  background: #fff;
+}
+#main-wrapper .InputRange-slider {
+  background-color: #fff;
+}
+.form-group.input-range-controls {
+  margin-bottom: 5px;
+}
+.form-group.input-range-slider {
+
+}

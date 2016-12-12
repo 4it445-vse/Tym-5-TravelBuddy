@@ -22,7 +22,7 @@ export class PageFooter extends Component {
         //         </div>
         //     </div>
         // </footer>
-        <footer className="bg-primary">
+        <footer className="bg-primary footer-app">
             <div className="container">
                 <div className="row legal">
                     <div className="col-lg-12">
