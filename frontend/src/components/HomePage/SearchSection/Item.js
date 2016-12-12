@@ -14,6 +14,7 @@ export class Item extends Component{
                 <h3>{this.props.product.label}</h3>
               </div>
               <div className="body">
+                {this.props.product.description}
               </div>
               <div className="footer">
                 <span className="text-left">
@@ -22,10 +23,12 @@ export class Item extends Component{
                   {this.props.product.productCity.name}
                 </span>
                 <span className="text-right">
-                  <i className="fa fa-eur" aria-hidden="true"></i>
-                  &nbsp;
-                  {this.props.product.price}
+                  {this.props.product.price !== 0 ? <i className="fa fa-eur" aria-hidden="true">&nbsp;</i> : undefined}
+                  {this.props.product.price === 0 ? "Free!" : this.props.product.price}
                 </span>
+              </div>
+              <div className="wrapper-overlay text-center">
+                <span><i className="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span>
               </div>
               {/* <Button type='submit' bsStyle="primary">Detail</Button> */}
               {/* <Button type='submit' bsStyle="primary">Reply</Button> */}
