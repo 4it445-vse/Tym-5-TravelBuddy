@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
 import { Button, Modal, Form, FormGroup, ControlLabel, FormControl, Col } from 'react-bootstrap';
+import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchWeather } from '../../../actions/index';
+import { WeatherList } from '../../Weather/WeatherList';
+
 
 
 export class DetailProduct extends Component {
@@ -104,7 +109,11 @@ export class DetailProduct extends Component {
                                 <FormControl componentClass="textArea" value={this.state.product.description} disabled/>
                             </Col>
                         </FormGroup>
-
+                        <FormGroup controlId="weatherData">
+                            <Col sm={12}>
+                                <WeatherList cityName={this.state.city.name}/>
+                            </Col>
+                        </FormGroup>
                     </Form>
 
                 </Modal.Body>

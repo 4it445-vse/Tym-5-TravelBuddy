@@ -7,6 +7,7 @@ export const ACTION_TYPE_LOGGED_IN = 'ACTION_TYPE_LOGGED_IN';
 export const ACTION_TYPE_LOG_OUT = 'ACTION_TYPE_LOG_OUT';
 export const ACTION_TYPE_LOG_IN_FAILED = 'ACTION_TYPE_LOG_IN_FAILED';
 
+
 //implement actions
 export const userLoggedInAction = (accessToken, userId) => {
   //store access token in localStorage

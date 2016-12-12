@@ -225,7 +225,20 @@ body {
 }
 
 /* Custom CSS */
+.input-group {
+  margin: 20px 0;
 
+}
+
+td, th {
+  vertical-align: middle !important;
+  text-align: center !important;
+}
+
+.weatherItem td:first-of-type {
+  height: 200px;
+  width: 250px;
+}
 
 /*.login-centered {
   padding-top: 10px;
