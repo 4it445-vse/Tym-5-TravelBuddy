@@ -4,7 +4,6 @@ import { MainNavigation } from '../components/HomePage/MainNavigation.js';
 import {SearchSection} from '../components/HomePage/SearchSection/SearchSection';
 import {WelcomeWizardModal} from '../components/WelcomeWizard/WelcomeWizardModal.js';
 import {DetailProduct} from '../components/HomePage/DetailProduct/DetailProduct';
-import {CreateProductComponent} from "../components/CreateProduct/CreateProductComponent.js";
 import {Button} from 'react-bootstrap';
 import api from '../api.js';
 
@@ -14,7 +13,6 @@ export class HomePage extends Component {
         super(props);
         this.state = {
             showWelcomeWizard: false,
-            showCreateProducts: false,
         };
         this.handleShowWelcomeWizard();
     }
@@ -59,14 +57,9 @@ export class HomePage extends Component {
               {welcomeWizard}
               <MainNavigation userData={userData}/>
               <section className="search">
-                  <CreateProductComponent ref="createProductModal"/>
-                  {/* <div className="container">
-                      <div className="col-lg-4 col-md-4 col-sm-4 col-lg-push-4 col-md-push-4 col-sm-push-4 col-xs-push-4 text-center">
-                          <Button bsStyle="primary" onClick={() => {this.refs.createProductModal.show()}}>Offer Product</Button>
-                      </div>
-                  </div> */}
+                  <DetailProduct ref="detailProductModal"/>
                   <div className="container">
-                        <SearchSection modal={this.refs.b}/>
+                        <SearchSection modal={this.refs.detailProductModal}/>
                   </div>
               </section>
               <PageFooter/>

@@ -576,7 +576,12 @@ body {
 }
 .btn:focus {
   outline: none!important;
+}
+.btn.btn-default:focus {
   background: #dedede;
+}
+.btn.btn-primary:focus {
+  background: #f04f50;
 }
 .form-control {
   border-radius: 0;
@@ -666,6 +671,14 @@ a:hover {
     font-size: 3em;
     padding-right: 15px;
   }
+.input-group {
+
+}
+.input-group-addon {
+  border: none!important;
+  border-radius: 0!important;
+  background: transparent!important;
+}
 .textarea-wrapper {
   position: relative;
 }
@@ -740,8 +753,8 @@ a:hover {
       padding-left: 0;
       font-size: 1.3em;
     }
-    .form-themed .Select--single .Select-control .Select-value .Select-value-label {
-      color: #fff!important;
+    #main-wrapper .form-themed .Select--single .Select-control .Select-value .Select-value-label {
+      color: #fff;
     }
     .form-themed .Select--multi .Select-control .Select-value {
       border: 1px solid #c5381a;

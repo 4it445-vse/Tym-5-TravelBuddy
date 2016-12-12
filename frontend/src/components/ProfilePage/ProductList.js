@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ProductListItem } from './ProductListItem';
-import { Grid, Row, Col} from 'react-bootstrap';
+import { Grid, Row, Col, ListGroup, Alert } from 'react-bootstrap';
 import api from '../../api.js';
 
 export class ProductList extends Component {
@@ -39,25 +39,34 @@ export class ProductList extends Component {
 
         if (productItems.length > 0) {
             return (
-                <div>
-                    <Grid>
-                        <Row>
-                            <Col sm={2} md={2} lg={2}>Label</Col>
-                            <Col sm={3} md={3} lg={3}>Description</Col>
-                            <Col sm={2} md={2} lg={2}>Price</Col>
-                            <Col sm={2} md={2} lg={2}>Request</Col>
-                        </Row>
-                        {productItems}
-                    </Grid>
+                // <div>
+                //     <Grid>
+                //         <Row>
+                //             <Col sm={2} md={2} lg={2}>Label</Col>
+                //             <Col sm={3} md={3} lg={3}>Description</Col>
+                //             <Col sm={2} md={2} lg={2}>Price</Col>
+                //             <Col sm={2} md={2} lg={2}>Request</Col>
+                //         </Row>
+                //         {productItems}
+                //     </Grid>
+                // </div>
+                <div className="container item-list">
+                  <br/>
+                  <div className="row">
+                      <ListGroup className="clearfix">
+                          {productItems}
+                      </ListGroup>
+                  </div>
                 </div>
             );
         } else {
             return (
-                <Grid>
-                    <Row>
-                        <Col sm={12} md={12} lg={12}>No records have been found!</Col>
-                    </Row>
-                </Grid>
+                // <Grid>
+                //     <Row>
+                //         <Col sm={12} md={12} lg={12}>No records have been found!</Col>
+                //     </Row>
+                // </Grid>
+                <Alert bsStyle="danger"><i className="fa fa-exclamation-triangle"></i><span>No records have been found!</span></Alert>
             );
         }
     }

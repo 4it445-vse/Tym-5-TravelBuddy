@@ -186,20 +186,22 @@ export class CreateProductComponent extends Component{
 
 
   render(){
+    let cssClass = "form-themed";
     return(
       <Modal
           show={this.state.show}
           bsSize="large"
           container={this.props.modalContainer}
-          onHide={() => {this.hide()}}>
-
+          onHide={() => {this.hide()}}
+          className="modal-create-product"
+          >
           <Modal.Header>
             <Modal.Title id="modal-title">Create product</Modal.Title>
           </Modal.Header>
           <Modal.Body>
 
-            <form>
-              <FormGroup controlId="formLabel" validationState={(this.state.labelError === "") ? null:"error"}>
+            <form className="form-create-product">
+              <FormGroup className={cssClass} controlId="formLabel" validationState={(this.state.labelError === "") ? null:"error"}>
                 <ControlLabel>Label<span style={{fontSize:"150%", color:"red"}}>*</span></ControlLabel>
                 <FormControl
                   type="text"
@@ -211,7 +213,7 @@ export class CreateProductComponent extends Component{
                 <HelpBlock>{this.state.labelError}</HelpBlock>
               </FormGroup>
 
-              <FormGroup controlId="formCategory" validationState={(this.state.categoryError === "") ? null:"error"}>
+              <FormGroup className={cssClass} controlId="formCategory" validationState={(this.state.categoryError === "") ? null:"error"}>
                 <ControlLabel>Category<span style={{fontSize:"150%", color:"red"}}>*</span></ControlLabel>
 
                 <Select
@@ -224,7 +226,7 @@ export class CreateProductComponent extends Component{
                 <HelpBlock>{this.state.categoryError}</HelpBlock>
               </FormGroup>
 
-              <FormGroup controlId="formCity" validationState={(this.state.cityError === "") ? null:"error"}>
+              <FormGroup className={cssClass} controlId="formCity" validationState={(this.state.cityError === "") ? null:"error"}>
                 <ControlLabel>City<span style={{fontSize:"150%", color:"red"}}>*</span></ControlLabel>
 
                 <Select.Async
@@ -239,9 +241,9 @@ export class CreateProductComponent extends Component{
                 <HelpBlock>{this.state.cityError}</HelpBlock>
               </FormGroup>
 
-              <FormGroup controlId="formPrice" validationState={(this.state.priceError === "") ? null:"error"}>
-              <ControlLabel>Price</ControlLabel>
+              <FormGroup className={cssClass} controlId="formPrice" validationState={(this.state.priceError === "") ? null:"error"}>
                 <InputGroup>
+                  <ControlLabel>Price</ControlLabel>
                   <FormControl
                   type="number"
                   min="0"
@@ -249,12 +251,12 @@ export class CreateProductComponent extends Component{
                   onChange={(e) => {this.setState({price:e.target.value}); }}
                   style={{zIndex:0}}
                   />
-                  <InputGroup.Addon>$</InputGroup.Addon>
+                  <InputGroup.Addon><i className="fa fa-eur"></i></InputGroup.Addon>
                 </InputGroup>
                 <HelpBlock>{this.state.priceError}</HelpBlock>
               </FormGroup>
 
-              <FormGroup controlId="formDescription">
+              <FormGroup className={cssClass} controlId="formDescription">
                 <ControlLabel>Description</ControlLabel>
                 <FormControl
                   componentClass="textarea"

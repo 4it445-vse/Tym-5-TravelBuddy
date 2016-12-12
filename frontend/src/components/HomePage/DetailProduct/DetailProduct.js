@@ -54,7 +54,7 @@ export class DetailProduct extends Component {
                 bsSize="large"
                 onHide={this.hide}>
 
-                <Modal.Header closeButton>
+                <Modal.Header>
                     <Modal.Title id="modal-title">Product detail</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -118,7 +118,8 @@ export class DetailProduct extends Component {
 
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => {this.hide()}} bsSize="small">Cancel</Button>
+                    <Button onClick={() => {this.hide()}}>Cancel</Button>
+                    <Button type='button' bsStyle="primary">Reply</Button>
                 </Modal.Footer>
             </Modal>
         );

@@ -6,6 +6,7 @@ import { ItemList } from './ItemList';
 import api from '../../../api';
 import _ from "lodash";
 import 'react-select/dist/react-select.css';
+import { CreateProductComponent } from "../../CreateProduct/CreateProductComponent.js";
 
 export class FilterForm extends Component {
     constructor(props) {
@@ -33,6 +34,8 @@ export class FilterForm extends Component {
             max: 100,
           },
           filterFormShow: false,
+          showCreateProducts: false,
+          isLoading: true,
         };
 
         this.fetchProductData();
@@ -79,6 +82,7 @@ export class FilterForm extends Component {
             .then((response) => {
                 if (response.status === 200) {
                     console.log("FilterForm - Response data",response.data);
+                    this.setState({ isLoading: false });
                     var filtered = response.data.filter(function (product) {
                         return product.user.isActive == true;
                     });
@@ -88,6 +92,7 @@ export class FilterForm extends Component {
                 }
             })
             .catch((error) => {
+                this.setState({ isLoading: false });
                 console.log("Error: ", error);
                 console.log("Error: ", error.response);
             });
@@ -244,13 +249,23 @@ export class FilterForm extends Component {
     render() {
         return (
             <div>
+                <CreateProductComponent ref="createProductModal"/>
                 <div className="container filter-form">
                     <div className="row">
                       <div className="col-lg-10 col-lg-offset-1">
-                      <Button type="button" className="btn-filter center-block" onClick={ ()=> this.setState({ filterFormShow: !this.state.filterFormShow })}>
-                        Filter&nbsp;
-                        {this.state.filterFormShow ? <i className="fa fa-chevron-up" aria-hidden="true"></i> : <i className="fa fa-chevron-down" aria-hidden="true"></i>}
-                      </Button>
+                      {!this.state.isLoading ?
+                        <div className="clearfix">
+                          <Button type="button" className="btn-filter" onClick={ ()=> this.setState({ filterFormShow: !this.state.filterFormShow })}>
+                            Filter&nbsp;
+                            {this.state.filterFormShow ? <i className="fa fa-chevron-up" aria-hidden="true"></i> : <i className="fa fa-chevron-down" aria-hidden="true"></i>}
+                          </Button>
+                          <Button className="btn-offer-product" bsStyle="primary" onClick={() => {this.refs.createProductModal.show()}}>
+                            <i className="fa fa-plus" aria-hidden="true">&nbsp;</i>Offer
+                          </Button>
+                        </div>
+                          :
+                          undefined
+                      }
                       <Panel collapsible expanded={this.state.filterFormShow}>
                         <form className="form-horizontal" id="form-id" onSubmit={this.handleSubmitFilterData}>
                             <div className="form-group">
@@ -314,7 +329,10 @@ export class FilterForm extends Component {
                 <div className="container item-list">
                   <div className="row">
                     <div className="col-lg-10 col-lg-offset-1">
-                      <ItemList products={this.state.filteredProducts} modal={this.props.modal}/>
+                      {this.state.isLoading ?
+                        <div className="loading-bar text-center"><i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>
+                        :
+                        <ItemList products={this.state.filteredProducts} modal={this.props.modal}/>}
                     </div>
                   </div>
                 </div>

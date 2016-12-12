@@ -119,6 +119,12 @@ body {
     font-weight: 100;
     color: #dedede;
   }
+  .form-welcome-wizard .has-value.Select--single > .Select-control .Select-value .Select-value-label,
+  .form-welcome-wizard .has-value.Select--multi > .Select-control .Select-value .Select-value-label,
+  .form-welcome-wizard .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label,
+  .form-welcome-wizard .has-value.is-pseudo-focused.Select--multi > .Select-control .Select-value .Select-value-label {
+    color: #fff;
+  }
 @media (max-width: 991px) {
   .form-welcome-wizard {
     width: 100%;
@@ -157,10 +163,18 @@ footer.footer-app {
   }
   .filter-form .btn-filter {
     display: block;
+    float: left;
+  }
+  .filter-form .btn-offer-product {
+    display: block;
+    float: right;
   }
 .container.item-list {
 
 }
+  .item-list .loading-bar {
+    margin-top: 50px;
+  }
   .item-list .list-group-item {
     background: rgba(255,255,255,1);
     background: #f05f40;
@@ -268,6 +282,24 @@ footer.footer-app {
   }
 }
 /* ProfilePictureEditor Component */
+.form-create-product {
+  max-width: 400px;
+  display: block;
+  position: relative;
+  margin: 0 auto;
+}
+.form-create-product .form-group.form-themed input,
+.form-create-product .form-group.form-themed textarea {
+  border-bottom: 1px solid #222;
+}
+.form-create-product .form-themed .Select--single .Select-control,
+.form-create-product .form-themed .Select--multi .Select-control {
+  border-bottom: 1px solid #222;
+}
+.form-create-product .form-themed .Select--single .Select-control input,
+.form-create-product .form-themed .Select--multi .Select-control input {
+  color: #000!important;
+}
 .modal-create-profile-picture {
 
 }
@@ -277,6 +309,13 @@ footer.footer-app {
   }
   .modal-create-profile-picture .modal-body .row.range-input {
     padding-top: 15px;
+  }
+/* CreateProduct Component */
+.modal-create-product .Select-control {
+  color: #000;
+}
+  .modal-create-product {
+
   }
 /* LandingPage */
 #register .registration-form-container {
