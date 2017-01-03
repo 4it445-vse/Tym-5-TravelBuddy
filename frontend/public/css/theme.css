@@ -183,7 +183,6 @@ aside {
 }
 /*LOGIN*/
 .login {
-
 }
   .login input.form-control {
     border-bottom: 1px rgba(255,255,255,0.7) solid;
@@ -191,7 +190,7 @@ aside {
     font-size: 14px;
   }
   .login input.form-control:focus {
-    border-bottom: 1px rgba(255,255,255,0.7) solid;
+    border-bottom: 1px rgba(0,0,0,1) solid!important;
   }
   .login ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
       color:    #000;
@@ -210,7 +209,7 @@ aside {
   .login .btn.btn-default {
     margin: auto;
     display: block;
-    width: 100%;
+    width: 100px;
     margin-top: 10px;
   }
   .login .form-group {
@@ -235,7 +234,7 @@ aside {
     font-size: 14px;
   }
   .login-modal input.form-control:focus {
-    border-bottom: 1px rgba(255,255,255,0.7) solid;
+    border-bottom: 1px rgba(0,0,0,1) solid!important;
   }
   .login-modal ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
       color:    #000;
@@ -627,7 +626,7 @@ body {
   }
 }
 .row.last {
-  margin-top: 50px;
+  margin-top: 100px;
 }
 .list-group-item {
   background-color: transparent;

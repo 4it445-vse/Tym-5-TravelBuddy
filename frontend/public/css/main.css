@@ -318,11 +318,13 @@ footer.footer-app {
 
   }
 /* LandingPage */
+#register {
+  background: #222;
+}
 #register .registration-form-container {
   padding-top: 50px;
   margin-top: 50px;
 }
-
 /* HomePage */
 .homepage {
   height: 100%;
@@ -347,6 +349,47 @@ footer.footer-app {
     min-height: 100%;
     padding-bottom: 0;
   }
+/* Verified Page */
+.verified-page {
+
+}
+.verified-page h1 a {
+  color: white;
+}
+@media screen and (max-width: 1199px) {
+  .verified-page .col-lg-4 {
+    width: 100%;
+    margin: 0 auto;
+    /*padding: 15px;*/
+  }
+  .verified-page .login {
+    margin-top: 50px;
+    padding: 15px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .verified-page .header-content {
+    /*padding: 0;*/
+    height: 100%;
+    width: 100%;
+  }
+  .verified-page .header-content > .row,
+  .verified-page .col-lg-4,
+  .verified-page .col-lg-8 {
+    height: 100%;
+  }
+  .verified-page .col-lg-4 {
+    background: #f05f40;
+    padding-top: 15px;
+
+  }
+  .verified-page .col-lg-8 .header-content-inner {
+    margin-top: 100px;
+  }
+  .verified-page .login {
+    margin-top: 100px;
+  }
+}
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

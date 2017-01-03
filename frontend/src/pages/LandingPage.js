@@ -40,6 +40,27 @@ export class LandingPage extends Component {
                 </div>
             </header>
 
+            <aside className="">
+                <div className="container text-center">
+                    <div className="call-to-action">
+                        <h2>Top Offers</h2>
+                    </div>
+                </div>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-4 text-center">
+                            <a href="">Offer 1</a>
+                        </div>
+                        <div className="col-lg-4 text-center">
+                            <a href="">Offer 2</a>
+                        </div>
+                        <div className="col-lg-4 text-center">
+                            <a href="">Offer 3</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
             <Element name="about">
                 <section className="bg-primary" id="about">
                     <div className="container">
@@ -114,29 +135,8 @@ export class LandingPage extends Component {
                 </section>
             </Element>
 
-            <section className="no-padding" id="portfolio">
-            </section>
-
-            <aside className="bg-dark">
-                <div className="container text-center">
-                    <div className="call-to-action">
-                        <h2>Top Offers</h2>
-                    </div>
-                </div>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-4 text-center">
-                            <a href="">Offer 1</a>
-                        </div>
-                        <div className="col-lg-4 text-center">
-                            <a href="">Offer 2</a>
-                        </div>
-                        <div className="col-lg-4 text-center">
-                            <a href="">Offer 3</a>
-                        </div>
-                    </div>
-                </div>
-            </aside>
+            {/* <section className="no-padding" id="portfolio">
+            </section> */}
 
             <Element name="register">
                 <section id="register">
