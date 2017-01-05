@@ -250,9 +250,9 @@ export class FilterForm extends Component {
         return (
             <div>
                 <CreateProductComponent ref="createProductModal"/>
-                <div className="container filter-form">
+                <div className="filter-form">
                     <div className="row">
-                      <div className="col-lg-10 col-lg-offset-1">
+                      <div className="col-md-10 col-md-offset-1">
                       {!this.state.isLoading ?
                         <div className="clearfix">
                           <Button type="button" className="btn-filter" onClick={ ()=> this.setState({ filterFormShow: !this.state.filterFormShow })}>
@@ -269,13 +269,13 @@ export class FilterForm extends Component {
                       <Panel collapsible expanded={this.state.filterFormShow}>
                         <form className="form-horizontal" id="form-id" onSubmit={this.handleSubmitFilterData}>
                             <div className="form-group">
-                              <div className="col-lg-4">
+                              <div className="col-md-4 col-sm-6">
                                 <input type="text" className="form-control" id="inputName" onChange={this.handleLabelChange} placeholder="Name"/>
                               </div>
-                              <div className="col-lg-4">
+                              <div className="col-md-4 col-sm-6">
                                 <input type="text" className="form-control" id="inputName" onChange={this.handleDescriptionChange} placeholder="Description"/>
                               </div>
-                              <div className="col-lg-4">
+                              <div className="col-md-4">
                                 <FormGroup controlId="inputCity" bsClass="" validationState={(this.state.cityError === "") ? null:"error"}>
                                     <Select.Async
                                         name="selectFieldCity"
@@ -287,15 +287,14 @@ export class FilterForm extends Component {
                                     />
                                 </FormGroup>
                               </div>
-
                             </div>
                             <div className="form-group input-range-controls">
-                              <div className="col-lg-8 col-lg-offset-2">
+                              <div className="col-md-8 col-md-offset-2">
                                 <div className="row">
-                                    <div className="col-lg-3">
+                                    <div className="col-sm-3">
                                       <input type="text" className="form-control" onChange={this.handlePriceFromChange} id="priceFrom" value={this.state.priceFrom}/>
                                     </div>
-                                    <div className="col-lg-6">
+                                    <div className="col-sm-6">
                                       <InputRange
                                         name="inputName"
                                         // classNames=""
@@ -305,7 +304,7 @@ export class FilterForm extends Component {
                                         onChange={this.handleInputRangeValuesChange}
                                       />
                                     </div>
-                                    <div className="col-lg-3">
+                                    <div className="col-sm-3">
                                       <input type="text" className="form-control" onChange={this.handlePriceToChange} id="priceTo" value={this.state.priceTo}/>
                                     </div>
                                 </div>
@@ -323,12 +322,14 @@ export class FilterForm extends Component {
                       </div>
                     </div>
                 </div>
-                <div className="container">
-                  {/* status */}
+                <div className="status-bar">
+                  <div className="col-md-10 col-md-offset-1">
+                  Found: {this.state.filteredProducts.length}
+                  </div>
                 </div>
-                <div className="container item-list">
+                <div className="item-list">
                   <div className="row">
-                    <div className="col-lg-10 col-lg-offset-1">
+                    <div className="col-md-10 col-md-offset-1">
                       {this.state.isLoading ?
                         <div className="loading-bar text-center"><i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>
                         :

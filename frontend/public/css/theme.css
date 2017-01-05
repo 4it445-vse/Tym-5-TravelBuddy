@@ -63,7 +63,9 @@ aside {
 }
 .navbar-default {
   background-color: white;
-  border-color: rgba(34, 34, 34, 0.05);
+  /*border-color: rgba(34, 34, 34, 0.05);*/
+  border: none;
+  outline: 1px solid rgba(255,255,255,0.3);
   font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
   -webkit-transition: all 0.35s;
   -moz-transition: all 0.35s;
@@ -82,9 +84,16 @@ aside {
 .navbar-default .navbar-header .navbar-toggle {
   font-weight: 700;
   font-size: 12px;
-  color: #222222;
+  color: #222;
   text-transform: uppercase;
+  border: none;
+  /*background: #fff;
+  color: #f05f40;*/
 }
+  .navbar-default .navbar-header .navbar-toggle:hover,
+  .navbar-default .navbar-header .navbar-toggle:focus {
+    /*background-color: transparent;*/
+  }
 .navbar-default .nav > li > a,
 .navbar-default .nav > li > a:focus {
   text-transform: uppercase;
@@ -151,16 +160,39 @@ aside {
 .navbar.navbar-app {
   background: rgba(240, 95, 64, 1);;
   border-bottom: none;
+  outline: none;
+  /*box-shadow: 0 0 5px 5px rgba(66,66,66,0.1);
+  -webkit-box-shadow: 0 0 5px 5px rgba(66,66,66,0.1);*/
 }
+.navbar-app .navbar-header .navbar-brand {
+  color: #fff;
+}
+.navbar-app .navbar-header .navbar-toggle {
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  border: none;
+  background: #fff;
+  color: #f05f40;
+}
+  .navbar-app .navbar-header .navbar-toggle:hover,
+  .navbar-app .navbar-header .navbar-toggle:focus {
+    background-color: #fff;
+  }
+  .navbar-app .navbar-collapse {
+    border: none;
+  }
+  @media screen and (max-width: 767px) {
+    .navbar-app .navbar-collapse {
+      background: #fff;
+    }
+  }
   @media (min-width: 768px) {
     .navbar-app .nav > li > a, .navbar-app .nav > li > a:focus {
       color: #fff;
     }
     .navbar-app .nav > li > a:hover, .navbar-app .nav > li > a:focus:hover {
       color: rgba(255,255,255,0.7);
-    }
-    .navbar-app .navbar-header .navbar-brand {
-      color: #fff;
     }
     .navbar-app .navbar-header .navbar-brand:hover {
       background: #fff;
@@ -219,7 +251,6 @@ aside {
 .login-modal {
   position: absolute;
   right: 0;
-  top: 51px;
   padding: 20px 30px 20px 30px;
 }
   .login-modal.affix {
@@ -694,6 +725,12 @@ a:hover {
   right: -2px;
   /*z-index: 2;*/
 }
+/*regular form override*/
+#main-wrapper .form-control:focus {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  border-color: inherit;
+}
 /*themed form*/
 .form-group.form-themed input,
 .form-group.form-themed textarea {
@@ -825,4 +862,16 @@ a:hover {
 }
 .form-group.input-range-slider {
 
+}
+@media screen and (max-width: 767px) {
+  .form-group.input-range-controls .col-sm-3 {
+    width: 25%;
+  }
+  .form-group.input-range-controls .col-sm-6 {
+    width: 50%;
+  }
+  .form-group.input-range-controls .col-sm-3,
+  .form-group.input-range-controls .col-sm-6 {
+    float: left;
+  }
 }

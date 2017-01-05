@@ -27,7 +27,7 @@ export class Item extends Component{
     render() {
         //TODO clicking on item will fire up detail
         return (
-          <div className="col-lg-4">
+          <div className="item col-md-4">
             <ListGroupItem>
               <div className="title">
                 <h3>{this.props.product.label}</h3>

@@ -59,7 +59,8 @@ export class HomePage extends Component {
               <section className="search">
                   <DetailProduct ref="detailProductModal"/>
                   <div className="container">
-                        <SearchSection modal={this.refs.detailProductModal}/>
+                      <h1 className="text-center">Offers</h1>
+                      <SearchSection modal={this.refs.detailProductModal}/>
                   </div>
               </section>
               <PageFooter/>
