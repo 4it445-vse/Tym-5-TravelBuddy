@@ -322,11 +322,13 @@ export class FilterForm extends Component {
                       </div>
                     </div>
                 </div>
-                <div className="status-bar">
-                  <div className="col-md-10 col-md-offset-1">
-                  Found: {this.state.filteredProducts.length}
+                {/* <div className="status-bar">
+                  <div className="row">
+                    <div className="col-md-10 col-md-offset-1">
+                    Found: {this.state.filteredProducts.length}
+                    </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="item-list">
                   <div className="row">
                     <div className="col-md-10 col-md-offset-1">
