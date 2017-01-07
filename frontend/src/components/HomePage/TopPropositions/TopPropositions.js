@@ -2,6 +2,12 @@ import React, {Component} from 'react';
 import {Table,Button} from 'react-bootstrap';
 
 export class TopPropositions extends Component {
+
+    constructor(props) {
+      super(props);
+      this.state = {};
+    }
+
     render() {
         return (
             <div className="container">

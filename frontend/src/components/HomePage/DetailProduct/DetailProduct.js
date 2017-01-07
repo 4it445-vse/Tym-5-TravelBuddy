@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchWeather } from '../../../actions/index';
 import { WeatherList } from '../../Weather/WeatherList';
+import api from '../../../api.js';
 
 
 
@@ -21,9 +22,11 @@ export class DetailProduct extends Component {
 
         this.show = this.show.bind(this);
         this.hide = this.hide.bind(this);
+
+
     }
 
-    show(product,city,user,categories){
+    show(product, city, user, categories) {
         console.log("Product", product);
         console.log("User",user);
         console.log("City", city);
@@ -33,11 +36,29 @@ export class DetailProduct extends Component {
             user:user,
             city:city,
             categories:categories});
+
+        this.updateViews(product.id);
     }
 
-    hide(){
+    hide() {
         this.setState({ show:false });
     }
+
+    updateViews(productId) {
+      const srvUrl = '/Products/' + productId + '?access_token=' + localStorage.accessToken;
+      api.get(srvUrl)
+        .then(({data})=> {
+          api.patch(srvUrl, {"views": data.views + 1}).then(({data})=> {
+
+          }).catch((error)=> {
+            console.log('<!> updateViews', error);
+          });
+        })
+        .catch((error)=> {
+          console.log('<!> updateViews', error);
+        });
+    }
+
     returnCategories() {
         var categoriesString = '';
         for (var i = 0; i < this.state.categories.length; i++) {
@@ -46,6 +67,7 @@ export class DetailProduct extends Component {
 
         return categoriesString.substr(0, categoriesString.length-1);
     }
+
     render() {
         return(
 

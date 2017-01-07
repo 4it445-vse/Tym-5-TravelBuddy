@@ -35,6 +35,10 @@
     "state": {
       "type": "number"
     },
+    "views": {
+      "type": "number",
+      "default": 0  
+    },
     "refTimeOut": {
       "type": "number"
     },
