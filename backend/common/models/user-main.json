@@ -67,7 +67,7 @@
       "model": "UserReview",
       "foreignKey": "refUserId"
     },
-    "createdReviews":{
+    "createdReviews": {
       "type": "hasMany",
       "model": "UserReview",
       "foreignKey": "createdBy"

@@ -13,23 +13,23 @@ export class FilterForm extends Component {
         super(props);
 
         this.state = {
-            cityError: '',
-            selectedCity: null,
-            cities: [],
-            products: [],
-            filteredProducts: [],
-            errorToPrice: '',
-            errorFromPrice:'',
-            label: '',
-            description: '',
-            city: '',
-            priceFrom: 0,
-            priceTo: 9999999,
-            inputRangeValues: {
+          cityError: '',
+          selectedCity: null,
+          cities: [],
+          products: [],
+          filteredProducts: [],
+          errorToPrice: '',
+          errorFromPrice:'',
+          label: '',
+          description: '',
+          city: '',
+          priceFrom: 0,
+          priceTo: 9999999,
+          inputRangeValues: {
             min: 0,
             max: 9999,
           },
-            inputRangeLimits: {
+          inputRangeLimits: {
             min: 0,
             max: 100,
           },

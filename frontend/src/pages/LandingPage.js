@@ -3,6 +3,7 @@ import { Button, Collapse, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { PageFooter } from '../components/LandingPage/PageFooter.js';
 import { RegistrationForm } from '../components/Registration/RegistrationForm.js';
 import { MainNavigation } from '../components/LandingPage/MainNavigation.js';
+import { TopPropositions } from '../components/TopPropositions/TopPropositions.js';
 import Scroll from 'react-scroll';
 
 const Element = Scroll.Element;
@@ -40,28 +41,21 @@ export class LandingPage extends Component {
                 </div>
             </header>
 
-            <aside className="">
-                <div className="container text-center">
-                    <div className="call-to-action">
-                        <h2>Top Offers</h2>
-                    </div>
-                </div>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-4 text-center">
-                            <a href="">Offer 1</a>
-                        </div>
-                        <div className="col-lg-4 text-center">
-                            <a href="">Offer 2</a>
-                        </div>
-                        <div className="col-lg-4 text-center">
-                            <a href="">Offer 3</a>
-                        </div>
-                    </div>
-                </div>
-            </aside>
+
 
             <Element name="about">
+                <aside className="">
+
+                    <div className="container text-center">
+                        <div className="call-to-action">
+                            <h2>Top Offers</h2>
+                            <hr className="primary"/>
+                        </div>
+                    </div>
+                    <div className="container">
+                        <TopPropositions limit="3" className="top-offers"/>
+                    </div>
+                </aside>
                 <section className="bg-primary" id="about">
                     <div className="container">
                         <div className="row">
