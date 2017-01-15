@@ -179,6 +179,8 @@ footer.footer-app {
       padding-bottom: 15px;
     }
   }
+
+/* ItemList Component */
 .item-list {
 
 }
@@ -279,6 +281,44 @@ footer.footer-app {
       border-bottom: none;*/
     }
   }
+/* TopPropositions Component */
+.top-offers.item-list {
+
+}
+  .top-offers.item-list .list-group-item {
+    background: transparent;
+    height: auto;
+    cursor: default;
+  }
+  .top-offers.item-list .list-group-item:hover {
+    background: transparent;
+    color: currentColor;
+  }
+  .top-offers.item-list .list-group-item .title {
+    color: #222;
+    text-align: center;
+
+  }
+  .top-offers.item-list .list-group-item .body {
+    background: url('../images/product_item_list_placeholder_bg.jpg');
+    background-size: cover;
+    height: 200px;
+    width: 200px;
+    background-position: 50% 50%;
+    margin: 0 auto;
+    border-radius: 50%;
+
+  }
+  .top-offers.item-list .list-group-item .footer {
+    position: relative;
+    background: transparent;
+    height: auto;
+    border: none;
+  }
+  .top-offers.item-list .list-group-item .footer span {
+    width: 100%;
+  }
+
 /* WelcomeWizardModal Component */
 .modal-welcome-wizard .modal-body {
   min-height: 599px;

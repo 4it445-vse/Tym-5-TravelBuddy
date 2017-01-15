@@ -3,18 +3,16 @@
   "plural": "UserLanguages",
   "base": "PersistedModel",
   "idInjection": true,
+  "indexes": {
+    "UNIQUE_INDEX": {
+      "columns": "refLanguageId,refUserId",
+      "kind": "unique"
+    }
+  },
   "options": {
     "validateUpsert": true
   },
-  "indexes":{
-    "UNIQUE_INDEX":  {
-        "columns": "refLanguageId,refUserId",
-        "kind": "unique"
-    }
-  },
-  "properties": {
-
-  },
+  "properties": {},
   "validations": [],
   "relations": {
     "language": {

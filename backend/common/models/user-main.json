@@ -56,17 +56,18 @@
       "model": "UserDetail",
       "foreignKey": "refUserMainId"
     },
-    "userRatings": {
+    "rating": {
       "type": "belongsTo",
       "model": "UserRating",
-      "foreignKey": "refUserRatingId"
+      "foreignKey": "refUserRatingId",
+      "description": "Fetches rating of user by Id"
     },
     "userReviews": {
       "type": "hasMany",
       "model": "UserReview",
       "foreignKey": "refUserId"
     },
-    "createdReviews":{
+    "createdReviews": {
       "type": "hasMany",
       "model": "UserReview",
       "foreignKey": "createdBy"

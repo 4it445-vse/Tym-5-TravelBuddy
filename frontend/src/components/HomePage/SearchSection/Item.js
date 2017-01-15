@@ -25,7 +25,6 @@ export class Item extends Component{
     }
 
     render() {
-        //TODO clicking on item will fire up detail
         return (
           <div className="item col-md-4">
             <ListGroupItem>

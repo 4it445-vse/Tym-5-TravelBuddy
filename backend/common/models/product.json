@@ -17,6 +17,9 @@
     "durationTo": {
       "type": "date"
     },
+    "picture": {
+      "type": "string"
+    },
     "price": {
       "type": "number"
     },
@@ -34,6 +37,10 @@
     },
     "state": {
       "type": "number"
+    },
+    "views": {
+      "type": "number",
+      "default": 0
     },
     "refTimeOut": {
       "type": "number"
@@ -85,6 +92,19 @@
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "find"
     }
   ],
   "methods": {}

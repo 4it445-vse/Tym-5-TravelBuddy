@@ -19,10 +19,10 @@
   },
   "validations": [],
   "relations": {
-    "UserRatingUserMain": {
+    "user": {
       "type": "belongsTo",
       "model": "UserMain",
-      "foreignKey": ""
+      "foreignKey": "refUserMainId"
     }
   },
   "acls": [],
