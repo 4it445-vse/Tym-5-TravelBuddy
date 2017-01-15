@@ -168,7 +168,7 @@ export class FilterForm extends Component {
             isCity = true;
         }
 
-        if (categories) {
+        if (categories && categories.length != 0) {
             console.log("Category is presented",categories);
             isCategory = true;
         }
