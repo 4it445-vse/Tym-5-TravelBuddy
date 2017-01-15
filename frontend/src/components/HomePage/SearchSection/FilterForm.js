@@ -14,6 +14,9 @@ export class FilterForm extends Component {
 
         this.state = {
             cityError: '',
+            categoriesError: '',
+            categories: [],
+            selectedCategories: null,
             selectedCity: null,
             cities: [],
             products: [],
@@ -46,6 +49,7 @@ export class FilterForm extends Component {
         this.handleSubmitFilterData = this.handleSubmitFilterData.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
         this.handleInputRangeValuesChange = this.handleInputRangeValuesChange.bind(this);
+
         this.fetchCityDataDebounced = _.debounce(this.fetchCityData, 300);
 
     }
@@ -55,7 +59,7 @@ export class FilterForm extends Component {
     }
 
     componentDidMount() {
-
+        this.loadCategoriesEntries();
     }
 
     fetchCityData(searchTerm, callback){
@@ -98,6 +102,27 @@ export class FilterForm extends Component {
             });
     }
 
+
+    loadCategoriesEntries(){
+        var categories = null;
+        api.get('/ProductCategories?access_token=' + localStorage.accessToken)
+            .then((response) => {
+                console.log("Product Categories:",response.data);
+                if (response.status === 200){
+                    categories = response.data;
+                    const transformedCategories = categories.map((category)=>{
+                        return {value:category.id, label:category.name};
+                    });
+                    this.setState({categories:transformedCategories});
+                }
+            })
+            .catch((error) => {
+                console.log("Error: ", error);
+                console.log("Error: ", error.response);
+            });
+    }
+
+
     paramsForSearchTermCity(searchTerm){
         if (!searchTerm) return {};
         else{
@@ -129,17 +154,23 @@ export class FilterForm extends Component {
         event.preventDefault();
         this.setState({errorFromPrice: '', errorToPrice: ''});
 
-        const { priceFrom }= this.state;
-        const { priceTo } = this.state;
-        const { label } = this.state;
-        const { description } = this.state;
-        const { city } = this.state;
+        const {priceFrom}= this.state;
+        const {priceTo} = this.state;
+        const {label} = this.state;
+        const {description} = this.state;
+        const {city} = this.state;
+        const categories = this.state.selectedCategories;
 
         let isValid = true;
         let isCity = false;
-
+        let isCategory = false;
         if (city) {
             isCity = true;
+        }
+
+        if (categories) {
+            console.log("Category is presented",categories);
+            isCategory = true;
         }
 
         if (priceTo.length == 0) {
@@ -149,37 +180,105 @@ export class FilterForm extends Component {
             this.setState({priceFrom: 0});
         }
 
-        if(!this.isNumber(priceFrom) && priceFrom.length != 0) {
+        if (!this.isNumber(priceFrom) && priceFrom.length != 0) {
             isValid = false;
             this.setState({errorFromPrice: 'Price from must be positive number!'});
         }
 
-        if(!this.isNumber(priceTo) && priceTo.length != 0) {
+        if (!this.isNumber(priceTo) && priceTo.length != 0) {
             isValid = false;
             this.setState({errorToPrice: 'Price to must be positive number!'});
         }
+        var filteredProducts;
+
 
         if (isValid && isCity) {
-            var filteredProducts = this.state.products.filter(function (product) {
-                return product.price <= priceTo &&
-                    product.label.toLowerCase().includes(label.toLowerCase()) &&
-                    product.price >= priceFrom &&
-                    product.description.toLowerCase().includes(description.toLowerCase()) &&
-                    product.productCity.name.toLowerCase().includes(city.toLowerCase());
+
+
+
+            filteredProducts = this.state.products.filter(function (product) {
+                if (isCategory) {
+                    var presented = false;
+
+                    for (var i = 0;i < categories.length;i++) {
+                        console.log("Checking category",categories[i].label);
+                        console.log("Against product category",product.categories[0].name);
+                        if(categories[i].label == product.categories[0].name) {
+                            presented = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (isCategory) {
+                    return product.price <= priceTo &&
+                        product.label.toLowerCase().includes(label.toLowerCase()) &&
+                        product.price >= priceFrom &&
+                        product.description.toLowerCase().includes(description.toLowerCase()) &&
+                        product.productCity.name.toLowerCase().includes(city.toLowerCase())&&
+                        presented;
+
+                }
+                else{
+                    return product.price <= priceTo &&
+                        product.label.toLowerCase().includes(label.toLowerCase()) &&
+                        product.price >= priceFrom &&
+                        product.description.toLowerCase().includes(description.toLowerCase()) &&
+                        product.productCity.name.toLowerCase().includes(city.toLowerCase());
+                }
+
+
             });
+
             this.setState({filteredProducts: filteredProducts});
             console.log("FilteredProducts", filteredProducts);
         } else {
-            var filteredProducts = this.state.products.filter(function (product) {
-                return product.price <= priceTo &&
-                    product.label.toLowerCase().includes(label.toLowerCase()) &&
-                    product.price >= priceFrom &&
-                    product.description.toLowerCase().includes(description.toLowerCase());
+
+
+
+            filteredProducts = this.state.products.filter(function (product) {
+                if (isCategory) {
+                    var presented = false;
+
+                    for (var i = 0;i < categories.length;i++) {
+                        console.log("Checking category",categories[i].label);
+                        console.log("Against product category",product.categories[0].name);
+                        if(categories[i].label == product.categories[0].name) {
+                            presented = true;
+                            break;
+                        }
+                    }
+                }
+                if (isCategory) {
+                    return product.price <= priceTo &&
+                        product.label.toLowerCase().includes(label.toLowerCase()) &&
+                        product.price >= priceFrom &&
+                        product.description.toLowerCase().includes(description.toLowerCase()) &&
+                        presented;
+                } else {
+                    return product.price <= priceTo &&
+                        product.label.toLowerCase().includes(label.toLowerCase()) &&
+                        product.price >= priceFrom &&
+                        product.description.toLowerCase().includes(description.toLowerCase());
+                }
+
             });
+
+
+
+
+
+
+
+
             this.setState({filteredProducts: filteredProducts});
             console.log("FilteredProducts", filteredProducts);
         }
     }
+
+
+
+
 
     isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
@@ -198,6 +297,7 @@ export class FilterForm extends Component {
         this.setState({city: selected.label});
         this.setState({selectedCity: selected.value})
     }
+
 
     handlePriceFromChange(event) {
         event.preventDefault();
@@ -287,6 +387,19 @@ export class FilterForm extends Component {
                                     />
                                 </FormGroup>
                               </div>
+                                <div className="col-sm-12 col-md-12">
+                                    <FormGroup controlId="inputCategories" key="inputCategories" bsClass="" validationState={(this.state.categoriesError === "") ? null:"error"}>
+                                        <Select
+                                            name="selectFieldCategories"
+                                            value={this.state.selectedCategories}
+                                            onChange={(selected)=>{this.setState({selectedCategories:selected});}}
+                                            multi={true}
+                                            options={this.state.categories}
+                                            placeholder="Categories"
+                                        />
+                                    </FormGroup>
+
+                                </div>
                             </div>
                             <div className="form-group input-range-controls">
                               <div className="col-md-8 col-md-offset-2">
