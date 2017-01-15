@@ -25,14 +25,18 @@ export class Item extends Component{
     }
 
     render() {
+        var imageUrl = "/api/containers/productPictures/download/"+this.props.product.picture +"?access_token="+localStorage.accessToken;
+        var style = {
+          backgroundImage: "url(" + imageUrl + ")",
+        }
         return (
           <div className="item col-md-4">
-            <ListGroupItem>
+            <ListGroupItem style={style}>
               <div className="title">
                 <h3>{this.props.product.label}</h3>
               </div>
               <div className="body">
-                {this.props.product.description}
+                {/* {this.props.product.description} */}
               </div>
               <div className="footer">
                 <span className="text-left">
@@ -45,7 +49,16 @@ export class Item extends Component{
                   {this.props.product.price === 0 ? "Free!" : this.props.product.price}
                 </span>
               </div>
-              <div className="wrapper-overlay text-center" onClick={() => {this.state.modal.show(this.state.product,this.state.product.productCity,this.state.product.user,this.state.product.categories)}}>
+              <div
+                className="wrapper-overlay text-center"
+                onClick={() => {
+                    this.state.modal.show(
+                      this.state.product,
+                      this.state.product.productCity,
+                      this.state.product.user,
+                      this.state.product.categories
+                    )
+                  }}>
                 <span><i className="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span>
 				        {/* <Button type='submit' bsStyle="primary" onClick={() => {this.state.modal.show(this.state.product,this.state.product.productCity,this.state.product.user,this.state.product.categories)}}>Detail</Button> */}
               </div>

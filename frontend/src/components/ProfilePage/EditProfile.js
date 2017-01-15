@@ -390,7 +390,7 @@ export class EditProfile extends Component {
             console.log('--- wizard form data isActive', formData);
 
         this.uploadProfilePicture(this.state.profilePicture);
-
+        console.log('--- editpage handle submit', this.state.profilePicture);
         const srvUrl = '/UserMain/me?access_token=' + localStorage.accessToken;
         api.patch(srvUrl, formData).then(response => {
             console.log('--- post usermain ok');

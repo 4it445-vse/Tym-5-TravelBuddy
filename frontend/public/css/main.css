@@ -200,11 +200,17 @@ footer.footer-app {
     border-radius: 0;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   .item-list .list-group-item:hover {
-    background: #fff;
-    color: #dedede;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /*color: #dedede;*/
   }
+    .item-list .list-group:hover .wrapper-overlay:hover {
+      background: rgba(255,255,255,0.4);
+    }
     .item-list .list-group-item .title,
     .item-list .list-group-item .body,
     .item-list .list-group-item .footer {
@@ -216,7 +222,7 @@ footer.footer-app {
       color: #fff;
     }
       .item-list .list-group-item:hover .title {
-        color: #dedede;
+        /*color: #dedede;*/
       }
       .item-list .list-group-item .title h3 {
         margin-top: 0;
@@ -241,8 +247,8 @@ footer.footer-app {
         transition: color 0.2s ease;
         line-height: 200px;
       }
-      .item-list .list-group-item:hover .wrapper-overlay span {
-        color: #f05f40;
+      .item-list .list-group-item:hover .wrapper-overlay:hover span {
+        color: #fff;
       }
     .item-list .list-group-item .footer {
       position: absolute;
