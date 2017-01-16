@@ -24,17 +24,6 @@ app.engine('html', require('ejs').renderFile);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
 
-app.get('/hello', function (req, res) {
-  const data = {
-    hello: 'world',
-    time: new Date(),
-  };
-  res.header({ 'Content-Type': 'application/json' });
-  res.send(JSON.stringify(data));
-});
-
-
-
 app.start = function() {
   // start the web server
   return app.listen(function() {

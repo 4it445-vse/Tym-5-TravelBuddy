@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Glyphicon, Modal, Form, FormGroup, ControlLabel, FormControl, InputGroup,ListGroup,ListGroupItem, Dropdown, MenuItem, Col,HelpBlock } from 'react-bootstrap';
+import { ImageUploader } from '../common/ImageUploader/ImageUploader.js';
 import api from '../../api.js';
 import lodash from "lodash";
 import ReactDOM from 'react-dom';
@@ -31,7 +32,8 @@ export class CreateProductComponent extends Component{
       selectedCategory: null, //categoryID
       selectedCity: null, // cityID
       description: "",
-      price: 0
+      price: 0,
+      picture: undefined
       //-----
     }
 
@@ -56,7 +58,8 @@ export class CreateProductComponent extends Component{
       selectedCategory: null, //categoryID
       selectedCity: null, // cityID
       description: "",
-      price: 0
+      price: 0,
+      picture: undefined
     });
   }
 
@@ -101,17 +104,20 @@ export class CreateProductComponent extends Component{
         price: this.state.price,
         label: this.state.label,
         description: this.state.description,
-        refCityId: this.state.selectedCity
+        refCityId: this.state.selectedCity,
+        picture: this._imgUp.getImage()
       };
-
+      console.log('---create prod params', params);
       api.post("/usermain/me/owns?access_token="+localStorage.accessToken, params)
       .then((response) =>{
-        console.log(response);
+        // console.log(response);
         if (response.status === 200){
-          console.log("data",response.data);
           let productID = response.data.id;
           let categoryID = this.state.selectedCategory;
           const data =  {"refProductId": productID, "refProductCategoryId": categoryID };
+
+          this.uploadProfilePicture(params.picture, productID);
+
           api.post("/Product_ProductCategories?access_token="+localStorage.accessToken, data)
           .then((response)=>{
             if(response.status === 200){
@@ -129,6 +135,33 @@ export class CreateProductComponent extends Component{
         console.log("Error: ", error.response);
       });
     }
+  }
+
+  uploadProfilePicture(image, productId){
+    if(image && productId){
+
+      var blob = this.dataURLtoBlob(image);
+      var formData = new FormData();
+      var fileName = "profilePicture.jpg";
+      formData.append("imageFile", blob, fileName);
+
+       api.post('/containers/productPictures/upload?access_token=' + localStorage.accessToken + '&productId=' + productId, formData)
+         .then((data)=>{
+           console.log('--- upload successful', data);
+         })
+         .catch((error) => {
+           console.log('<!> upload Failed', error);
+         });
+    }
+  }
+
+  dataURLtoBlob(dataurl) {
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], {type:mime});
   }
 
   fetchCityData(searchTerm, callback){
@@ -183,7 +216,6 @@ export class CreateProductComponent extends Component{
       console.log("Error: ", error.response);
     });
   }
-
 
   render(){
     let cssClass = "form-themed";
@@ -267,6 +299,12 @@ export class CreateProductComponent extends Component{
                   autoComplete="off"
                 />
               </FormGroup>
+
+              <FormGroup className={cssClass} controlId="formPicture">
+                <ControlLabel>Picture</ControlLabel>
+                <ImageUploader ref={(imgUp) => { this._imgUp = imgUp; }}/>
+              </FormGroup>
+
             </form>
 
           </Modal.Body>

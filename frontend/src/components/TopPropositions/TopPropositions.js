@@ -51,12 +51,12 @@ export class TopPropositions extends Component {
                     let products = response.data;
                     this.setState({ isLoading: false });
                     this.setState({ products: products });
-                    console.log('--- TopPropositions data', response);
+                    // console.log('--- TopPropositions data', response);
                 }
             })
             .catch((error) => {
                 this.setState({ isLoading: false });
-                console.log("<!> fetchProductData: ", error);
+                // console.log("<!> fetchProductData: ", error);
             });
     }
 
@@ -70,13 +70,17 @@ export class TopPropositions extends Component {
               :
               <div className="row">
                   {products.map((product, i) => {
+                    var imageUrl = "/api/containers/productPictures/download/" + product.picture;
+                    var style = {
+                      backgroundImage: "url(" + imageUrl + ")",
+                    }
                     return (
                       <div className={`item col-md-${cols}`} key={i}>
                           <div className="list-group-item">
                             <div className="title">
                               <h3>{product.label}</h3>
                             </div>
-                            <div className="body">
+                            <div className="body" style={style}>
                               {/* <img src="../images/product_item_list_placeholder_bg.jpg"/> */}
                               {/* {product.description} */}
                             </div>

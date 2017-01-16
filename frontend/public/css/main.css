@@ -191,20 +191,24 @@ footer.footer-app {
     background: rgba(255,255,255,1);
     background: #f05f40;
     overflow: hidden;
-    /*background: url('../images/product_item_list_placeholder_bg.jpg');*/
     height: 200px;
     margin-bottom: 15px;
-    /*display: table;*/
     width: 100%;
     padding: 0;
     border-radius: 0;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   .item-list .list-group-item:hover {
-    background: #fff;
-    color: #dedede;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /*color: #dedede;*/
   }
+    .item-list .list-group:hover .wrapper-overlay:hover {
+      background: rgba(255,255,255,0.4);
+    }
     .item-list .list-group-item .title,
     .item-list .list-group-item .body,
     .item-list .list-group-item .footer {
@@ -216,7 +220,7 @@ footer.footer-app {
       color: #fff;
     }
       .item-list .list-group-item:hover .title {
-        color: #dedede;
+        /*color: #dedede;*/
       }
       .item-list .list-group-item .title h3 {
         margin-top: 0;
@@ -241,8 +245,8 @@ footer.footer-app {
         transition: color 0.2s ease;
         line-height: 200px;
       }
-      .item-list .list-group-item:hover .wrapper-overlay span {
-        color: #f05f40;
+      .item-list .list-group-item:hover .wrapper-overlay:hover span {
+        color: #fff;
       }
     .item-list .list-group-item .footer {
       position: absolute;
@@ -300,7 +304,7 @@ footer.footer-app {
 
   }
   .top-offers.item-list .list-group-item .body {
-    background: url('../images/product_item_list_placeholder_bg.jpg');
+    /*background: url('../images/product_item_list_placeholder_bg.jpg');*/
     background-size: cover;
     height: 200px;
     width: 200px;
@@ -318,7 +322,76 @@ footer.footer-app {
   .top-offers.item-list .list-group-item .footer span {
     width: 100%;
   }
+/* DetailProduct Component */
+.detail-product {
 
+}
+.detail-product .modal-body {
+  padding: 0;
+}
+.detail-product .modal-header {
+  height: 400px;
+}
+  .detail-product .modal-header h4 {
+    font-size: 4em;
+    text-align: left;
+    line-height: 1;
+    padding-left: 10px;
+  }
+  .detail-product .modal-header .price {
+    font-weight: 700;
+    font-size: 3em;
+    position: absolute;
+    top: 325px;
+    right: 15px;
+    background: #f05f40;
+    border-radius: 6px;
+    padding: 0 15px;
+    color: white;
+  }
+  .detail-product .info-bar {
+    padding: 0 15px;
+  }
+  .detail-product .info-bar .profile-picture {
+    height: 100px;
+    width: 100px;
+    background: #f05f40;
+    background-size: 100px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    position: absolute;
+    top: -50px;
+  }
+  .detail-product .info-bar span {
+    margin-left: 15px;
+    padding-right: 15px;
+    border-right: 1px solid #e0e0e0;
+    font-size: 1.2em;
+    line-height: 50px;
+  }
+  .detail-product .info-bar span.name {
+    margin-left: 110px;
+    font-weight: 700;
+  }
+  .detail-product .info-bar span.category {
+    border: none;
+  }
+  .detail-product .description {
+    margin-top: 20px;
+    margin-left: 40px;
+  }
+/* Weather Component */
+.weather {
+  padding: 15px;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+.weather .chart {
+
+}
+  .weather .chart > div {
+    text-align: center;
+  }
 /* WelcomeWizardModal Component */
 .modal-welcome-wizard .modal-body {
   min-height: 599px;
