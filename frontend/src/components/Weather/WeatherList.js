@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { Col, Grid, Row } from 'react-bootstrap';
 import Chart from './Chart';
 import GoogleMap from './google_map';
 import axios from 'axios';
@@ -40,39 +41,49 @@ export class WeatherList extends Component {
         const humidities= cityData.list.map(weather => weather.main.humidity);
         const {lon, lat} = cityData.city.coord;
         return (
-            <tr className="weatherItem" key={name}>
-                <td>
-                    <GoogleMap lat={lat} lon={lon} />
-                </td>
-                <td>
-                    <Chart data={temps} color="orange" units="C"/>
-                </td>
-                <td>
-                    <Chart data={pressures} color="green" units="hPa"/>
-                </td>
-                <td>
-                    <Chart data={humidities} color="black" units="%"/>
-                </td>
-            </tr>
+          <Row>
+            <Col md={6} style={{height: "300px"}}>
+              <GoogleMap lat={lat} lon={lon} />
+            </Col>
+            <Col md={6} className="chart">
+              <Chart data={temps} color="orange" units="C"/>
+            </Col>
+          </Row>
+            // <tr className="weatherItem" key={name}>
+            //     <td>
+            //         <GoogleMap lat={lat} lon={lon} />
+            //     </td>
+            //     <td>
+            //         <Chart data={temps} color="orange" units="C"/>
+            //     </td>
+            //     {/* <td>
+            //         <Chart data={pressures} color="green" units="hPa"/>
+            //     </td>
+            //     <td>
+            //         <Chart data={humidities} color="black" units="%"/>
+            //     </td> */}
+            // </tr>
         );
     }
     render() {
         return(
-            <table className="table table-hover">
-                <thead>
-                    <tr>
-                        <th>City</th>
-                        <th>Temperature (C)</th>
-                        <th>Pressure (hPa)</th>
-                        <th>Humidity (%)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {this.state.weather != null ? this.renderWeather(this.state.weather) : <tr></tr>}
-
-                </tbody>
-            </table>
+          <div className="weather">
+            {this.state.weather != null ? this.renderWeather(this.state.weather) : <tr></tr>}
+          </div>
+            // <table className="table">
+            //     <thead>
+            //         <tr>
+            //             <th>Map</th>
+            //             <th>Temperature (C)</th>
+            //             {/* <th>Pressure (hPa)</th>
+            //             <th>Humidity (%)</th> */}
+            //         </tr>
+            //     </thead>
+            //     <tbody>
+            //     {this.state.weather != null ? this.renderWeather(this.state.weather) : <tr></tr>}
+            //
+            //     </tbody>
+            // </table>
         );
     }
 }
-

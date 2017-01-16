@@ -13,10 +13,25 @@ export class FilterForm extends Component {
         super(props);
 
         this.state = {
-          cityError: '',
+<<<<<<< HEAD
+            cityError: '',
             categoriesError: '',
             categories: [],
             selectedCategories: null,
+            selectedCity: null,
+            cities: [],
+            products: [],
+            filteredProducts: [],
+            errorToPrice: '',
+            errorFromPrice:'',
+            label: '',
+            description: '',
+            city: '',
+            priceFrom: 0,
+            priceTo: 9999999,
+            inputRangeValues: {
+=======
+          cityError: '',
           selectedCity: null,
           cities: [],
           products: [],
@@ -29,6 +44,7 @@ export class FilterForm extends Component {
           priceFrom: 0,
           priceTo: 9999999,
           inputRangeValues: {
+>>>>>>> d0f2d8da71ec25b7b70f30c68bb66b6c4096bf65
             min: 0,
             max: 9999,
           },
@@ -168,7 +184,7 @@ export class FilterForm extends Component {
             isCity = true;
         }
 
-        if (categories && categories.length != 0) {
+        if (categories) {
             console.log("Category is presented",categories);
             isCategory = true;
         }
@@ -201,9 +217,9 @@ export class FilterForm extends Component {
                     var presented = false;
 
                     for (var i = 0;i < categories.length;i++) {
-                        console.log("Checking category 1",categories[i].label);
-                        // console.log("Against product category",product.categories[0].label);
-                        if(product.categories.length > 0 && categories[i].label == product.categories[0].name) {
+                        console.log("Checking category",categories[i].label);
+                        console.log("Against product category",product.categories[0].name);
+                        if(categories[i].label == product.categories[0].name) {
                             presented = true;
                             break;
                         }
@@ -241,9 +257,9 @@ export class FilterForm extends Component {
                     var presented = false;
 
                     for (var i = 0;i < categories.length;i++) {
-                        console.log("Checking category 2",categories[i].label, product);
-                        // console.log("Against product category",product.categories[0].label);
-                        if(product.categories.length > 0 && categories[i].label == product.categories[0].name) {
+                        console.log("Checking category",categories[i].label);
+                        console.log("Against product category",product.categories[0].name);
+                        if(categories[i].label == product.categories[0].name) {
                             presented = true;
                             break;
                         }

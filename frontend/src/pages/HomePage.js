@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {PageFooter} from '../components/common/PageFooter/PageFooter';
+import { PageFooter } from '../components/common/PageFooter/PageFooter';
 import { MainNavigation } from '../components/HomePage/MainNavigation.js';
-import {SearchSection} from '../components/HomePage/SearchSection/SearchSection';
-import {WelcomeWizardModal} from '../components/WelcomeWizard/WelcomeWizardModal.js';
-import {DetailProduct} from '../components/HomePage/DetailProduct/DetailProduct';
-import {Button} from 'react-bootstrap';
+import { SearchSection } from '../components/HomePage/SearchSection/SearchSection';
+import { WelcomeWizardModal } from '../components/WelcomeWizard/WelcomeWizardModal.js';
+import { DetailProduct } from '../components/HomePage/DetailProduct/DetailProduct';
+import { Button } from 'react-bootstrap';
 import api from '../api.js';
 
 export class HomePage extends Component {
@@ -59,7 +59,8 @@ export class HomePage extends Component {
               <section className="search">
                   <DetailProduct ref="detailProductModal"/>
                   <div className="container">
-                        <SearchSection modal={this.refs.detailProductModal}/>
+                      <h1 className="text-center">Offers</h1>
+                      <SearchSection modal={this.refs.detailProductModal}/>
                   </div>
               </section>
               <PageFooter/>

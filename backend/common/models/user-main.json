@@ -63,10 +63,11 @@
       "through": "Connection",
       "keyThrough": "refUser2"
     },
-    "userRatings": {
+    "rating": {
       "type": "belongsTo",
       "model": "UserRating",
-      "foreignKey": "refUserRatingId"
+      "foreignKey": "refUserRatingId",
+      "description": "Fetches rating of user by Id"
     },
     "userReviews": {
       "type": "hasMany",

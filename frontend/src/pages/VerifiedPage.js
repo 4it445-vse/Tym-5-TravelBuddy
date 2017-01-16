@@ -6,26 +6,24 @@ export class VerifiedPage extends Component {
 
   render() {
 
-    const wellStyles = {maxWidth: '100%', margin: '0 auto 10px'};
-
     return (
-      <div id="main-wrapper" class="verified-page">
+      <div id="main-wrapper" className="verified-page">
         <header>
             <div className="header-content">
               <div className="row">
-                <div className="col-lg-4">
-                  <Alert bsStyle="success">
-                    <strong>Now you can login into app!</strong> Follow the link below!
-                  </Alert>
-                  <div className="well bg-primary login" style={wellStyles}>
-                    <LoginComponentContainer/>
-                  </div>
-                </div>
-                <div className="col-lg-8">
+                <div className="col-lg-8 col-lg-push-4">
                   <div className="header-content-inner">
-                      <h1 id="homeHeading">Travel Buddy</h1>
+                      <h1 id="homeHeading"><a href="/">Travel Buddy</a></h1>
                       <hr/>
                       <p>TravelBuddy helps travellers to connect with locals and provide them unique experience in discovering!</p>
+                  </div>
+                </div>
+                <div className="col-lg-4 col-lg-pull-8">
+                  {/* <Alert bsStyle="success">
+                    <strong>Now you can login into app!</strong> Follow the link below!
+                  </Alert> */}
+                  <div className="bg-primary login">
+                    <LoginComponentContainer/>
                   </div>
                 </div>
               </div>
