@@ -110,12 +110,14 @@ export class CreateProductComponent extends Component{
       console.log('---create prod params', params);
       api.post("/usermain/me/owns?access_token="+localStorage.accessToken, params)
       .then((response) =>{
-        console.log(response);
+        // console.log(response);
         if (response.status === 200){
           let productID = response.data.id;
           let categoryID = this.state.selectedCategory;
-          this.uploadProfilePicture(params.picture, productID);
           const data =  {"refProductId": productID, "refProductCategoryId": categoryID };
+
+          this.uploadProfilePicture(params.picture, productID);
+
           api.post("/Product_ProductCategories?access_token="+localStorage.accessToken, data)
           .then((response)=>{
             if(response.status === 200){
@@ -136,7 +138,6 @@ export class CreateProductComponent extends Component{
   }
 
   uploadProfilePicture(image, productId){
-    // this.setState({isLoading: true});
     if(image && productId){
 
       var blob = this.dataURLtoBlob(image);
@@ -146,7 +147,6 @@ export class CreateProductComponent extends Component{
 
        api.post('/containers/productPictures/upload?access_token=' + localStorage.accessToken + '&productId=' + productId, formData)
          .then((data)=>{
-          //  this.setState({isLoading: false});
            console.log('--- upload successful', data);
          })
          .catch((error) => {
