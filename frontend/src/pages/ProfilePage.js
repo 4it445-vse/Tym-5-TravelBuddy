@@ -48,7 +48,7 @@ export class ProfilePage extends Component {
                 <Tabs  activeKey={this.state.tabKey} onSelect={this.handleTabSelect} id="controlled-tab">
                   <Tab  eventKey={1} title="My Offers"><ProductList/></Tab>
                   <Tab  eventKey={2} title="User Reviews">Tab 2 content</Tab>
-                  <Tab  eventKey={3} title="Messages"><Chat/></Tab>
+                  <Tab  eventKey={3} title="Connections"><Chat/></Tab>
                 </Tabs>
               </Col>
           </div>
