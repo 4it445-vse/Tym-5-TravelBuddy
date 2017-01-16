@@ -471,3 +471,7 @@ height:250px;
 .modal-container .modal, .modal-container .modal-backdrop {
   position: absolute;
 }*/
+
+.chatList{
+  height: 100%;
+}

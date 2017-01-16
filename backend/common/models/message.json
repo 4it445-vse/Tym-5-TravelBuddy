@@ -1,0 +1,32 @@
+{
+  "name": "Message",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "recordCreated": {
+      "type": "date",
+      "default": "$now"
+    },
+    "text": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "connection": {
+      "type": "belongsTo",
+      "model": "Connection",
+      "foreignKey": "refConnectionId"
+    },
+    "from": {
+      "type": "belongsTo",
+      "model": "UserMain",
+      "foreignKey": "fromUserId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

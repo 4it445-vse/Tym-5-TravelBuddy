@@ -56,6 +56,13 @@
       "model": "UserDetail",
       "foreignKey": "refUserMainId"
     },
+    "connections": {
+      "type": "hasMany",
+      "model": "UserMain",
+      "foreignKey": "refUser1",
+      "through": "Connection",
+      "keyThrough": "refUser2"
+    },
     "userRatings": {
       "type": "belongsTo",
       "model": "UserRating",
@@ -66,7 +73,7 @@
       "model": "UserReview",
       "foreignKey": "refUserId"
     },
-    "createdReviews":{
+    "createdReviews": {
       "type": "hasMany",
       "model": "UserReview",
       "foreignKey": "createdBy"

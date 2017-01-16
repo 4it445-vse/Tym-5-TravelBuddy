@@ -117,5 +117,13 @@
   "TimeUnit": {
     "dataSource": "mysqlds",
     "public": true
+  },
+  "Connection": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "Message": {
+    "dataSource": "mysqlds",
+    "public": false
   }
 }

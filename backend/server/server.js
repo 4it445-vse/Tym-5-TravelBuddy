@@ -33,8 +33,6 @@ app.get('/hello', function (req, res) {
   res.send(JSON.stringify(data));
 });
 
-
-
 app.start = function() {
   // start the web server
   return app.listen(function() {
@@ -55,5 +53,8 @@ boot(app, __dirname, function(err) {
 
   // start the server if `$ node server.js`
   if (require.main === module || GLOBAL.PhusionPassenger)
-    app.start();
+    //app.start();
+    var io = require('socket.io')(app.start(),{path: '/api/chat'});
+    const socketEvents = require('./socketEvents')(io,app);
+
 });
