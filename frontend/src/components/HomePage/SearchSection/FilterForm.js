@@ -201,9 +201,9 @@ export class FilterForm extends Component {
                     var presented = false;
 
                     for (var i = 0;i < categories.length;i++) {
-                        console.log("Checking category",categories[i].label);
-                        console.log("Against product category",product.categories[0].name);
-                        if(categories[i].label == product.categories[0].name) {
+                        console.log("Checking category 1",categories[i].label);
+                        // console.log("Against product category",product.categories[0].label);
+                        if(product.categories.length > 0 && categories[i].label == product.categories[0].name) {
                             presented = true;
                             break;
                         }
@@ -241,9 +241,9 @@ export class FilterForm extends Component {
                     var presented = false;
 
                     for (var i = 0;i < categories.length;i++) {
-                        console.log("Checking category",categories[i].label);
-                        console.log("Against product category",product.categories[0].name);
-                        if(categories[i].label == product.categories[0].name) {
+                        console.log("Checking category 2",categories[i].label, product);
+                        // console.log("Against product category",product.categories[0].label);
+                        if(product.categories.length > 0 && categories[i].label == product.categories[0].name) {
                             presented = true;
                             break;
                         }
