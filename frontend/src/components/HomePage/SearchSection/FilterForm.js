@@ -88,7 +88,7 @@ export class FilterForm extends Component {
                     console.log("FilterForm - Response data",response.data);
                     this.setState({ isLoading: false });
                     var filtered = response.data.filter(function (product) {
-                        return product.user.isActive == true;
+                        return product.user.isActive == true && product.user.id != localStorage.userId;
                     });
                     console.log("FilterForm -Filtered data",filtered);
                     this.setState({products: filtered, filteredProducts: filtered});
@@ -190,7 +190,7 @@ export class FilterForm extends Component {
             this.setState({errorToPrice: 'Price to must be positive number!'});
         }
         var filteredProducts;
-
+        console.log("USER ID:",localStorage.userId);
 
         if (isValid && isCity) {
 
@@ -216,6 +216,7 @@ export class FilterForm extends Component {
                         product.price >= priceFrom &&
                         product.description.toLowerCase().includes(description.toLowerCase()) &&
                         product.productCity.name.toLowerCase().includes(city.toLowerCase())&&
+
                         presented;
 
                 }
