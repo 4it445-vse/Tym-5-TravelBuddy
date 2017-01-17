@@ -10,6 +10,7 @@ import { ProfilePage } from "./pages/ProfilePage.js";
 import { AuthenticationWrapper } from "./components/AuthenticationWrapper.js";
 import { RootPageWrapper } from "./pages/RootPageWrapper.js";
 import { HomePage } from "./pages/HomePage.js";
+import { BuddyPage} from "./pages/BuddyPage.js";
 
 export function createRoutes() {
   return (
@@ -20,6 +21,7 @@ export function createRoutes() {
       <Route path="/verified" component={VerifiedPage}/>
       <Route path="/profile" component={AuthenticationWrapper(ProfilePage)}/>
       <Route path="/search" component={AuthenticationWrapper(HomePage)}/>
+        <Route path="/profile/:userId" component={AuthenticationWrapper(BuddyPage)}/>
       <Route path="*" component={PageNotFound}/>
     </Route>
   );
