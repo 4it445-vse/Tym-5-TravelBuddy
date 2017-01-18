@@ -73,7 +73,7 @@ export class ImageUploader extends Component{
         <div>
           <div>
             <div style={{display:"inline-block"}}>
-              <Image height="100px" width="100px" src={this.state.imageURL ? this.state.imageURL : "/images/profilePictureDefault.png"}  thumbnail/>
+              <Image height="100px" width="100px" src={this.state.imageURL ? this.state.imageURL : "/images/imageDefault.jpg"}  thumbnail/>
             </div>
             <div style={{display:"inline-block", margin:"10px"}}>
               <input type="file" ref="fileInput" style={{display: "none"}} onChange={(e)=>this.handleImageChange(e)} accept="image/*" autoComplete="off"/>
