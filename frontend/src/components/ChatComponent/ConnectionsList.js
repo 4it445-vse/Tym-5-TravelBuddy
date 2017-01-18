@@ -7,24 +7,31 @@ import api from '../../api.js';
 import lodash from "lodash";
 
 
-
 export class ConnectionsList extends Component{
   constructor(props){
     super(props);
     this.state = {
       elements: [],
       isInfiniteLoading: false,
-      activeElement:null
+      activeElementId:null
     }
 
-    this.buildElements = this.buildElements.bind(this);
     this.fetchData = this.fetchData.bind(this);
     this.handleInfiniteLoad = this.handleInfiniteLoad.bind(this);
     this.elementClicked = this.elementClicked.bind(this);
   }
 
-  componentDidMount(){
-    this.fetchData(6,0);
+  pushConnectionToTop(connectionId){
+    const connectionIndex = this.state.elements.findIndex((element,index,array)=>{
+      if (element.id === connectionId) return true;
+    });
+
+    if (connectionIndex >= 0){
+       this.state.elements.splice(0, 0, this.state.elements.splice(connectionIndex, 1)[0]);
+       this.forceUpdate();
+    }else{
+      
+    }
   }
 
   fetchData(limit,offset){
@@ -37,7 +44,7 @@ export class ConnectionsList extends Component{
         filter:{
           limit: limit,
           skip: offset,
-          order: "id DESC"
+          order: "lastMessageDate DESC"
         }
       }
     };
@@ -50,7 +57,7 @@ export class ConnectionsList extends Component{
         let connections = response.data;
         this.setState({
             isInfiniteLoading: false,
-            elements: this.buildElements(connections)
+            elements: this.state.elements.concat(connections)
         });
       }
     })
@@ -60,25 +67,12 @@ export class ConnectionsList extends Component{
     });
   }
 
-  elementClicked(data,index){
-    console.log("element clicked",this.state.elements[index]);
-
-    //if (this.state.activeElement) this.refs.infinite.props.children[this.state.activeElement].setActive(false);
-    //this.state.elements[index].setState({active:true});
-    this.setState({activeElement:index});
-
+  elementClicked(data,elementId){
+    this.setState({activeElementId:elementId});
     this.props.connectionSelectedCB(data);
   }
 
-    buildElements(data) {
-        var elements = [];
-        for (var i = 0; i < data.length; i++) {
-            elements.push(<ConnectionItem key={i} index={i} data={data[i]} handleElementClick={this.elementClicked}/>)
-        }
-        return elements;
-    }
-
-    elementInfiniteLoad() {
+  elementInfiniteLoad() {
       return(
         <div style={{ width:"100%",textAlign:"center"}}>
           <div style={{borderRadius:"8px",padding:"8px",display:"inline-block"}}>
@@ -88,7 +82,7 @@ export class ConnectionsList extends Component{
       );
     }
 
-    handleInfiniteLoad(){
+  handleInfiniteLoad(){
       var debounced = lodash.debounce(()=>{
         this.fetchData(6,this.state.elements.length);
       },1000);
@@ -105,9 +99,10 @@ export class ConnectionsList extends Component{
                isInfiniteLoading={this.state.isInfiniteLoading}
                ref="infinite"
                >
-               {this.state.elements.map((e)=>{
+               {
+                 this.state.elements.map((e,index)=>{
                  return(
-                   <ConnectionItem key={e.props.index} index={e.props.index} data={e.props.data} handleElementClick={e.props.handleElementClick} active={this.state.activeElement === e.props.index}/>
+                   <ConnectionItem key={e.id} index={index} data={e} currentUser={localStorage.userId} handleElementClick={this.elementClicked} active={this.state.activeElementId === e.id}/>
                   );
                })}
       </Infinite>

@@ -11,12 +11,12 @@ export class ConnectionItem extends Component{
 
 
   handleClickEvent(){
-    //console.log(this.props.data);
-    this.props.handleElementClick(this.props.data, this.props.index);
+    this.props.handleElementClick(this.props.data, this.props.data.id);
   }
 
   render(){
-    var userData = this.props.data.user1 ? this.props.data.user1 : this.props.data.user2;
+
+    var userData = (this.props.data.user1.id != this.props.currentUser) ? this.props.data.user1 : this.props.data.user2;
     var imgAddress = "/images/profilePictureDefault.png";
     if (userData.userDetail){
       if(userData.userDetail.profilePicture) imgAddress = "/api/containers/profilePictures/download/"+userData.userDetail.profilePicture+"?access_token="+localStorage.accessToken;

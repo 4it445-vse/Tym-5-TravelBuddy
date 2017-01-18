@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import  ReactChatView  from "react-chatview";
 import { MessageItem } from "./MessageItem.js";
 import api from '../../api.js';
-import { Form, FormGroup, FormControl, Button, Col, Row } from "react-bootstrap";
 import Textarea from 'react-textarea-autosize';
 
 import Promise from 'bluebird';
@@ -89,7 +88,7 @@ export class MessagesList extends Component{
 
   handleInfiniteLoad() {
     return new Promise((resolve, reject) => {
-      console.log("XXX");
+      //console.log("XXX");
       if (this.state.connectionData){
         //this.fetchMessageData(20,this.state.elements.length,this.state.connectionData.id);
 
@@ -152,12 +151,12 @@ export class MessagesList extends Component{
     }
 
     onKeyDown (e) {
-      if (e.keyCode == 13 && !e.shiftKey) {
-        console.log('enter pressed');
+      if (e.keyCode === 13 && !e.shiftKey) {
+        //console.log('enter pressed');
         e.preventDefault();
         //TODO send message
         this.sendMessage(e.target.value);
-        console.log("send message:", e.target.value);
+        //console.log("send message:", e.target.value);
         e.target.value="";
       }
     }
@@ -174,13 +173,18 @@ export class MessagesList extends Component{
         .then((response) =>{
           //console.log(response);
           if (response.status === 200){
-            //console.log("data",response.data);
             //emit the message via socket.io
-            this.props.socket.emit("new message",response.data);
+
+            var toUser = null;
+            if (this.state.connectionData.user1) toUser = this.state.connectionData.user1.id;
+            else toUser = this.state.connectionData.user2.id;
+            this.props.socket.emit("new message",{...response.data, toUserId:toUser});
 
             //and insert into elements TODO
             var newElements = [(<MessageItem key={response.data.id}  message={response.data} currentUser={localStorage.userId}/>)].concat(this.state.elements);
             this.setState({elements:newElements});
+
+            this.props.messageSentCB(response.data);
 
           }
         })
@@ -207,8 +211,8 @@ export class MessagesList extends Component{
                 className="chatList"
                  flipped={true}
                  onInfiniteLoad={this.handleInfiniteLoad}
-                 scrollLoadThreshold = {0}
-                 loadingSpinnerDelegate = {this.elementInfiniteLoad()}
+                 scrollLoadThreshold={0}
+                 loadingSpinnerDelegate={this.elementInfiniteLoad()}
                  >
                  {this.state.elements}
         </ReactChatView>
