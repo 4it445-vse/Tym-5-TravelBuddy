@@ -4,11 +4,16 @@ exports = module.exports = function(io,loopbackApp) {
 
   io.on('connection', function(socket) {
     console.log('user connected');
+    console.log("socketsByUser",socketsByUser);
+    console.log("usersBySocket",usersBySocket);
     //console.log("channels",socket.adapter.rooms);
     socket.on("hello",(data)=>{
       if(data.userId){
         usersBySocket.set(socket.id,data.userId);
         socketsByUser.set(data.userId,socket.id);
+        console.log("type",typeof data.userId);
+        console.log("x socketsByUser",socketsByUser);
+        console.log("x usersBySocket",usersBySocket);
       }
     });
 
@@ -24,7 +29,8 @@ exports = module.exports = function(io,loopbackApp) {
       console.log("socketsByUser",socketsByUser);
       console.log("usersBySocket",usersBySocket);
       console.log("msg",msg.toUserId);
-      var socketToSend = socketsByUser.get(msg.toUserId);
+      console.log("type",typeof msg.toUserId);
+      var socketToSend = socketsByUser.get(msg.toUserId.toString());
       console.log("socketToSend",socketToSend);
       if (socketToSend != undefined) {
         socket.broadcast.to(socketToSend).emit('new message notification', msg);

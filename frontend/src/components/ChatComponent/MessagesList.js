@@ -152,11 +152,8 @@ export class MessagesList extends Component{
 
     onKeyDown (e) {
       if (e.keyCode === 13 && !e.shiftKey) {
-        //console.log('enter pressed');
         e.preventDefault();
-        //TODO send message
         this.sendMessage(e.target.value);
-        //console.log("send message:", e.target.value);
         e.target.value="";
       }
     }
@@ -171,13 +168,11 @@ export class MessagesList extends Component{
 
         api.post("/connections/"+this.state.connectionData.id+"/messages?access_token="+localStorage.accessToken, dataToSend)
         .then((response) =>{
-          //console.log(response);
           if (response.status === 200){
             //emit the message via socket.io
-
             var toUser = null;
-            if (this.state.connectionData.user1) toUser = this.state.connectionData.user1.id;
-            else toUser = this.state.connectionData.user2.id;
+            if (this.state.connectionData.user1.id.toString() === localStorage.userId) toUser = this.state.connectionData.user2.id;
+            else toUser = this.state.connectionData.user1.id;
             this.props.socket.emit("new message",{...response.data, toUserId:toUser});
 
             //and insert into elements TODO
