@@ -16,4 +16,11 @@ module.exports = function(Userlanguage) {
     next();
   });
 
+  Userlanguage.beforeRemote("update", function(ctx, modelInstance, next) {
+    // Userlanguage.language.destroyAll(function(err) {
+    //
+    // });
+    console.log('--- beforeRemote Update FIRED');
+  });
+
 };

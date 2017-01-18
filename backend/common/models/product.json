@@ -36,7 +36,8 @@
       "type": "number"
     },
     "state": {
-      "type": "number"
+      "type": "string",
+      "default": "active"
     },
     "views": {
       "type": "number",
