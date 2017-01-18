@@ -33,8 +33,18 @@ export class BuddyPage extends Component {
             });
 
     }
+
+    paramsForSearchTerm() {
+        return {
+            filter: {
+                include: ['userDetail']
+            },
+            limit: 1000
+        };
+    }
+
     getUserDataById(id) {
-        api.get('/UserMain/'+id+'/userDetail')
+        api.get('/UserMain/'+id+'?access_token=' + localStorage.accessToken, {params: this.paramsForSearchTerm()})
             .then((response) => {
                 console.log('--- getUserDataDetail', response.data);
                 this.setState({ userDetail: response.data });
@@ -45,7 +55,7 @@ export class BuddyPage extends Component {
     }
     render() {
         const { userData } = this.state;
-        const {userDetail} = this.state;
+        const { userDetail } = this.state;
         return (
         <div id="main-wrapper" className="homepage">
             <div className="gradient-wrapper">

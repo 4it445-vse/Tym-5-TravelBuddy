@@ -21,7 +21,7 @@ export function createRoutes() {
       <Route path="/verified" component={VerifiedPage}/>
       <Route path="/profile" component={AuthenticationWrapper(ProfilePage)}/>
       <Route path="/search" component={AuthenticationWrapper(HomePage)}/>
-        <Route path="/profile/:userId" component={AuthenticationWrapper(BuddyPage)}/>
+      <Route path="/profile/:userId" component={AuthenticationWrapper(BuddyPage)}/>
       <Route path="*" component={PageNotFound}/>
     </Route>
   );
