@@ -6,9 +6,10 @@ exports = module.exports = function(io,loopbackApp) {
     console.log('user connected');
     //console.log("channels",socket.adapter.rooms);
     socket.on("hello",(data)=>{
-      usersBySocket.set(socket.id,data.userId);
-      socketsByUser.set(data.userId,socket.id);
-
+      if(data.userId){
+        usersBySocket.set(socket.id,data.userId);
+        socketsByUser.set(data.userId,socket.id);
+      }
     });
 
     socket.on('disconnect', function(){
@@ -21,9 +22,14 @@ exports = module.exports = function(io,loopbackApp) {
     socket.on('new message', function(msg) {
       console.log("message recieved",msg);
       console.log("socketsByUser",socketsByUser);
-      console.log("socketID",socketsByUser.get(JSON.stringify(msg.toUserId)));
-      var socketToSend = socketsByUser.get(JSON.stringify(msg.toUserId))
-      if (socketToSend != undefined) socket.broadcast.to(socketToSend).emit('new message notification', msg);
+      console.log("usersBySocket",usersBySocket);
+      console.log("msg",msg.toUserId);
+      var socketToSend = socketsByUser.get(msg.toUserId);
+      console.log("socketToSend",socketToSend);
+      if (socketToSend != undefined) {
+        socket.broadcast.to(socketToSend).emit('new message notification', msg);
+        console.log("sending notification to",socketToSend);
+      }
       else {
         //create notification in database
       }

@@ -17,7 +17,7 @@ export class Chat extends Component{
 
     socket.on('new message notification',(msg)=>{
       console.log("i got a message notification",msg);
-      this.connList.pushConnectionToTop(msg.refConnectionId);
+      this.connList.pushConnectionToTop(msg.refConnectionId, true);
     });
 
     this.socket = socket;
@@ -27,8 +27,7 @@ export class Chat extends Component{
   }
 
   messageSentCallback(msg){
-    //console.log("aaa",msg);
-    this.connList.pushConnectionToTop(msg.refConnectionId);
+    this.connList.pushConnectionToTop(msg.refConnectionId, false);
   }
 
   connectionSelectedCallback(data){

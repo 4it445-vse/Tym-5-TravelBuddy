@@ -12,6 +12,7 @@ export class ConnectionsList extends Component{
     super(props);
     this.state = {
       elements: [],
+      elementsWithNotification: new Set(),
       isInfiniteLoading: false,
       activeElementId:null
     }
@@ -21,17 +22,65 @@ export class ConnectionsList extends Component{
     this.elementClicked = this.elementClicked.bind(this);
   }
 
-  pushConnectionToTop(connectionId){
+  pushConnectionToTop(connectionId, isNotification){
     const connectionIndex = this.state.elements.findIndex((element,index,array)=>{
       if (element.id === connectionId) return true;
     });
 
     if (connectionIndex >= 0){
        this.state.elements.splice(0, 0, this.state.elements.splice(connectionIndex, 1)[0]);
-       this.forceUpdate();
+       //this.forceUpdate();
     }else{
-      
+      this.fetchSingleConnection(connectionId,(connection)=>{
+      this.state.elements.push(connection);
+      //this.forceUpdate();
+      });
     }
+
+    if (isNotification){
+      this.state.elementsWithNotification.add(connectionId);
+      console.log("this.state.elementsWithNotification",this.state.elementsWithNotification);
+    }
+    this.forceUpdate();
+  }
+
+  fetchSingleConnection(connectionId,cb){
+    var params = {
+      params:{
+        filter:{
+          order: "lastMessageDate DESC",
+          include:[{
+            relation: "user1",
+            scope:{
+              include: {
+                relation: "userDetail"
+              }
+            }
+          },
+          {
+            relation: "user2",
+            scope:{
+              include: {
+                relation: "userDetail"
+              }
+            }
+          }]
+        }
+      }
+    };
+
+    api.get("/connections/"+connectionId+"?access_token="+localStorage.accessToken, params)
+    .then((response) =>{
+      console.log(response);
+      if (response.status === 200){
+        //console.log("data",response.data);
+        cb(response.data);
+      }
+    })
+    .catch((error) => {
+      console.log("Error: ", error);
+      console.log("Error: ", error.response);
+    });
   }
 
   fetchData(limit,offset){
@@ -70,6 +119,8 @@ export class ConnectionsList extends Component{
   elementClicked(data,elementId){
     this.setState({activeElementId:elementId});
     this.props.connectionSelectedCB(data);
+    this.state.elementsWithNotification.delete(elementId);
+    this.forceUpdate();
   }
 
   elementInfiniteLoad() {
@@ -102,7 +153,8 @@ export class ConnectionsList extends Component{
                {
                  this.state.elements.map((e,index)=>{
                  return(
-                   <ConnectionItem key={e.id} index={index} data={e} currentUser={localStorage.userId} handleElementClick={this.elementClicked} active={this.state.activeElementId === e.id}/>
+                   <ConnectionItem key={e.id} index={index} data={e} currentUser={localStorage.userId} handleElementClick={this.elementClicked} active={this.state.activeElementId === e.id}
+                      hasNotification={this.state.elementsWithNotification.has(e.id)}/>
                   );
                })}
       </Infinite>

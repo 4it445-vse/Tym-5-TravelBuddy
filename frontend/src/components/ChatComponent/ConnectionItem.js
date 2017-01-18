@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row, Button } from "react-bootstrap";
+import { Col, Row, Button, Badge } from "react-bootstrap";
 
 export class ConnectionItem extends Component{
   constructor(props){
@@ -24,6 +24,15 @@ export class ConnectionItem extends Component{
     var buttonStyle = {height:"90px", width:"100%", margin:"0", borderBottom:"1px solid #e5e5e5", borderRadius:"0",display: "flex"};
     if (this.props.active){ buttonStyle = {...buttonStyle, background:"#F89778"}; }
 
+    let notificaionMessage;
+    if (this.props.hasNotification){
+      notificaionMessage = (
+        <div>
+          <Badge>New messages</Badge>
+        </div>
+      );
+    }
+
     return(
       <Button  style={buttonStyle} onClick={this.handleClickEvent}>
             <Col xs={4} style={{margin:"auto"}}>
@@ -36,6 +45,7 @@ export class ConnectionItem extends Component{
               <div>
                 {userData.firstName} {userData.lastName}
               </div>
+                { notificaionMessage }
             </Col>
       </Button>
     );

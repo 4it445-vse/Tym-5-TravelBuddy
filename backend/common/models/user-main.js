@@ -282,7 +282,7 @@ module.exports = function(Usermain) {
 
   Usermain.connectionsList = (id, filterQuery, cb) => {
     var responseArray = [];
-    console.log("filter",filterQuery);
+    //console.log("filter",filterQuery);
 
     let filter ={
       "where": {"and": [{"or":[{"refUser2": id},{"refUser1": id}]}, {"active": true}]},
