@@ -3,6 +3,7 @@ import { Button, Modal, FormGroup, ControlLabel, FormControl, HelpBlock } from '
 import { ImageUploader } from '../common/ImageUploader/ImageUploader.js';
 import api from '../../api.js';
 import lodash from "lodash";
+import { SubmitButton } from '../common/SubmitButton.js';
 
 import Select from 'react-select';
 
@@ -24,6 +25,7 @@ export class CreateProductComponent extends Component{
       categoryError: "",
       cityError: "",
       priceError:"",
+      isLoading: false,
       //-----
 
       //product data----
@@ -89,7 +91,7 @@ export class CreateProductComponent extends Component{
       error = true;
       this.setState({priceError:"Price cannot be less than 0."});
     }else this.setState({priceError:""});
-    if (isNaN(this.state.price)){
+    if (isNaN(this.state.price) && this.state.price){
       error = true;
       this.setState({priceError:"Price must be a number."});
     }else this.setState({priceError:""});
@@ -97,10 +99,14 @@ export class CreateProductComponent extends Component{
       error = true;
       this.setState({cityError:"Select a city."});
     }else this.setState({cityError:""});
+    if (error) {
+      this.setState({isLoading: false});
+    }
     return error;
   }
 
   handleCreateProduct(){
+    this.setState({isLoading: true});
     let inputError = this.checkInputs();
     if (!inputError){
       const params = {
@@ -110,7 +116,7 @@ export class CreateProductComponent extends Component{
         refCityId: this.state.selectedCity,
         picture: this._imgUp.getImage()
       };
-      console.log('---create prod params', params);
+      // console.log('---create prod params', params);
       api.post("/usermain/me/owns?access_token="+localStorage.accessToken, params)
       .then((response) =>{
         // console.log(response);
@@ -124,6 +130,7 @@ export class CreateProductComponent extends Component{
           api.post("/Product_ProductCategories?access_token="+localStorage.accessToken, data)
           .then((response)=>{
             if(response.status === 200){
+              this.setState({isLoading: false});
               this.hide();
             }
           })
@@ -310,7 +317,9 @@ export class CreateProductComponent extends Component{
           </Modal.Body>
           <Modal.Footer  >
             <Button onClick={() => {this.hide()}} bsSize="small">Cancel</Button>
-            <Button onClick={this.handleCreateProduct}  bsStyle="primary" bsSize="small">Create</Button>
+            <span onClick={this.handleCreateProduct}>
+              <SubmitButton type="button" isLoading={this.state.isLoading} bsStyle="primary" bsSize="small" name="Create"/>
+            </span>
           </Modal.Footer>
         </Modal>
 

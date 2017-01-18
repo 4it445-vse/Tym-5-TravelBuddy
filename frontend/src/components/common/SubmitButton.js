@@ -11,7 +11,8 @@ export class SubmitButton extends Component {
       isLoading: this.props.isLoading,
       bsStyle: this.props.bsStyle,
       bsSize: this.props.bsSize,
-      block: this.props.block
+      block: this.props.block,
+      type: this.props.type
     }
 
     // this.handleClick = this.handleClick.bind(this);
@@ -28,7 +29,7 @@ export class SubmitButton extends Component {
     if (isLoading) {
       return (
         <Button
-          type="submit"
+          type={this.state.type ? this.state.type : "submit"}
           disabled={isLoading}
           bsStyle={bsStyle}
           bsSize={bsSize}
