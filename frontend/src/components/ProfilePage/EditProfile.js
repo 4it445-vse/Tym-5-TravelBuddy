@@ -8,13 +8,15 @@ import {
     Popover,
     ButtonGroup,
     Button,
-    Image
+    Image,
+    Panel
 } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import { ProfilePictureEditorComponent } from "../ProfilePictureEditor/ProfilePictureEditorComponent.js";
 import api from '../../api.js';
 import { DatePicker } from '../common/DatePicker/DatePicker.js';
 import { SubmitButton } from '../common/SubmitButton.js';
+import Select from 'react-select';
 
 export class EditProfile extends Component {
     constructor(props) {
@@ -34,6 +36,9 @@ export class EditProfile extends Component {
             phone: "",
             skype: "",
             facebook: "",
+            languages: [],
+            selectedLanguages: null,
+
             clientErrors: {},
             errors: {},
             countryName: {},
@@ -41,6 +46,7 @@ export class EditProfile extends Component {
             refCountryId : "",
             isLoading: false,
             isActive: false,
+            expandSettings: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -59,12 +65,37 @@ export class EditProfile extends Component {
             componentContainer: ReactDOM.findDOMNode(this.refs.componentContainer)
         });
         this.loadCountryEntries();
+        this.loadLanguageEntries();
+    }
+
+    loadLanguageEntries(){
+        var languages = null;
+        api.get('/Languages?access_token=' + localStorage.accessToken)
+            .then((response) => {
+                console.log("Product languages:",response.data);
+                if (response.status === 200){
+                    languages = response.data;
+                    const transformedlanguages = languages.map((language)=>{
+                        return {value:language.id, label:language.name};
+                    });
+                    this.setState({languages:transformedlanguages});
+                }
+            })
+            .catch((error) => {
+                console.log("Error: ", error);
+                console.log("Error: ", error.response);
+            });
     }
 
     loadUserMain() {
         const srvUrl = '/UserMain/me?access_token=' + localStorage.accessToken;
-        api.get(srvUrl).then((response) => {
+        api.get(srvUrl, {params: {filter: {include: "languages"}}}).then((response) => {
             if (response.status === 200) {
+                let languages = response.data.languages;
+                let transformedLanguages = languages.map((language)=>{
+                    return {value:language.id, label:language.name};
+                });
+                this.setState({ selectedLanguages: transformedLanguages });
                 var keys = ["lastName", "firstName", "birthdate", "email","isActive"];
                 for (let i = 0; i < keys.length; i++) {
                   if ( i===2)
@@ -109,7 +140,6 @@ export class EditProfile extends Component {
                   }
                 }
 
-                  console.log("birthdate",response.data);
             }
         }).catch((error) => {
             console.log("Error: ", error);
@@ -298,41 +328,6 @@ export class EditProfile extends Component {
                         </OverlayTrigger>
                     );
                 }
-            case 'file':
-            var addr = '';
-            if (this.state.profilePicture || (this.state.profilePicture === null && this.state.oldProfilePicture === null))
-            {
-              addr = this.state.profilePicture ? this.state.profilePicture : "/images/profilePictureDefault.png";
-          }
-
-          else
-          {
-                addr = "/api/containers/profilePictures/download/"+this.state.oldProfilePicture +"?access_token="+localStorage.accessToken;
-          }
-
-                return (
-                    <div>
-                        <div style={{
-                            display: "inline-block"
-                        }}>
-                            <Image height="250px" width="250px" src={addr} thumbnail/>
-                        </div>
-                        <div style={{
-                            display: "inline-block",
-                            margin: "10px"
-                        }}>
-                            <input type={type} ref="fileInput" style={{
-                                display: "none"
-                            }} onChange={(e) => this.handlePictureChange(e)} accept="image/*"/>
-                            <Button type="submit" onClick={(e) => {
-                                e.preventDefault();
-                                ReactDOM.findDOMNode(this.refs.fileInput).click();
-                            }}>
-                                Choose new photo
-                            </Button>
-                        </div>
-                    </div>
-                );
             case 'textarea':
                 return (<FormControl type={type} name={key} componentClass={type} value={this.state[key]} onChange={this.handleInputChange} />);
             case "select":
@@ -420,12 +415,24 @@ export class EditProfile extends Component {
             this.setState({ isLoading: false });
         });
 
+        this.saveSelectedLanguages();
+
         if (!userMainFailed && !userDetailFailed) {
           this.setState({errors: {}});
         } else {
           this.setState({formSuccess: true});
         }
 
+    }
+
+    saveSelectedLanguages() {
+      let srv = '/UserLanguages?access_token=' + localStorage.accessToken;
+      let data = this.state.selectedLanguages;
+      api.put(srv, data).then(response => {
+        console.log('--- UserLanguages', response);
+      }).catch((error) => {
+        console.log('--- UserLanguages', error);
+      });
     }
 
     getFormData() {
@@ -475,13 +482,10 @@ export class EditProfile extends Component {
 
 
     render() {
-        const fields = [
+        const visibleFields = [
             /*key, label, type, desc, id*/
-             [
-                'profilePicture', '', 'file', ''
-            ],
             [
-               'isActive', '', 'radio-active', '', ['Active', 'Non-active']
+              'isActive', '', 'radio-active', '', ['Active', 'Non-active']
             ],
             [
                 'firstName', 'First name', 'text', ''
@@ -491,62 +495,115 @@ export class EditProfile extends Component {
             ],
             [
                 'birthdate', 'Birthdate', 'date', '',
-            ],
-            [
-                 'country', 'Country', 'select', ''
-            ],
-            [
-                'email', 'E-mail', 'email', 'Enter valid email. You will use it for login and password reset'
-            ],
-            [
-                'phone', 'Phone', 'text', ''
-            ],
-            [
-                'skype', 'Skype', 'text', ''
-            ],
-            [
-                'facebook', 'Facebook', 'text', ''
-            ],
-            [
-                'motto', 'Life motto', 'textarea', ''
-            ],
-            ['bio', 'About Me', 'textarea', '']
+            ]
         ];
+        const fields = [
+          [
+               'country', 'Country', 'select', ''
+          ],
+          [
+              'email', 'E-mail', 'email', 'Enter valid email. You will use it for login and password reset'
+          ],
+          [
+              'phone', 'Phone', 'text', ''
+          ],
+          [
+              'skype', 'Skype', 'text', ''
+          ],
+          [
+              'facebook', 'Facebook', 'text', ''
+          ],
+          [
+              'motto', 'Life motto', 'textarea', ''
+          ],
+          [
+              'bio', 'About Me', 'textarea', ''
+          ]
+        ];
+        var addr = '';
+        if (this.state.profilePicture || (this.state.profilePicture === null && this.state.oldProfilePicture === null)) {
+            addr = this.state.profilePicture ? this.state.profilePicture : "/images/profilePictureDefault.png";
+        } else {
+            addr = "/api/containers/profilePictures/download/"+this.state.oldProfilePicture +"?access_token="+localStorage.accessToken;
+        }
         const {clientErrors} = this.state;
         const {errors} = this.state;
         const { isLoading } = this.state;
+        const values = ['Active', 'Non-active']
         let cssClass = 'form-themed';
         return (
             <div>
                 <ProfilePictureEditorComponent container={this.props.modal} ref="pictureEditor" setPicture={this.setPicture}/>
-                <div>
-                    <form onSubmit={this.handleSubmit} style={{
-                        padding: "10px"
-                    }}>
+                <form onSubmit={this.handleSubmit} className="edit-profile-form" style={{
+                    padding: "10px"
+                }}>
+                    <Panel>
+                      {visibleFields.map(([key, label, type, desc, values]) => {
+                        const clientErrorMsg = clientErrors[key] || [];
+                        const errorMsg = errors[key] || [];
+                        let isValid = false;
+                        if (errorMsg.length || clientErrorMsg.length) {
+                            isValid = false;
+                        } else {
+                            isValid = true;
+                        }
+                        return (
+                            <FormGroup validationState={isValid
+                                ? undefined
+                                : "error"} key={key} controlId={key} className={cssClass}>
+                                {label ? <ControlLabel>{label}</ControlLabel> : undefined}
+                                {this.createField(type, key, desc, values)}
+                                <FormControl.Feedback/>
+                                <HelpBlock>{errorMsg === "can't be blank"
+                                        ? "Required!"
+                                        : errorMsg}</HelpBlock>
+                            </FormGroup>
+                        );
+                      })}
+
+                      <Button type="button" className="btn btn-primary" onClick={ ()=> this.setState({ expandSettings: !this.state.expandSettings })}>
+                        Show more settings&nbsp;
+                        {this.state.expandSettings ? <i className="fa fa-chevron-up" aria-hidden="true"></i> : <i className="fa fa-chevron-down" aria-hidden="true"></i>}
+                      </Button>
+                      {!this.state.expandSettings ? <SubmitButton name="Save changes" bsStyle="primary" isLoading={isLoading}/> : undefined}
+                      <Panel collapsible expanded={this.state.expandSettings}>
+                        <FormGroup className="form-themedx form-group" controlId="inputLanguages" key="inputLanguages" bsClass="" validationState={(true) ? null:"error"}>
+                          <ControlLabel>Languages</ControlLabel>
+                          <Select
+                              name="selectLanguages"
+                              value={this.state.selectedLanguages}
+                              onChange={(selected)=>{this.setState({selectedLanguages:selected});}}
+                              multi={true}
+                              options={this.state.languages}
+                              placeholder="Languages"
+                          />
+                        </FormGroup>
                         {fields.map(([key, label, type, desc, values]) => {
-                            const clientErrorMsg = clientErrors[key] || [];
-                            const errorMsg = errors[key] || [];
-                            let isValid = false;
-                            if (errorMsg.length || clientErrorMsg.length) {
-                                isValid = false;
-                            } else {
-                                isValid = true;
-                            }
-                            return (
-                                <FormGroup validationState={isValid
-                                    ? undefined
-                                    : "error"} key={key} controlId={key} className={cssClass}>
-                                    <ControlLabel>{label}</ControlLabel>
-                                    {this.createField(type, key, desc, values)}
-                                    <FormControl.Feedback/>
-                                    <HelpBlock>{errorMsg === "can't be blank"
-                                            ? "Required!"
-                                            : errorMsg}</HelpBlock>
-                                </FormGroup>
-                            );
-                        })}  <SubmitButton name="Save changes!" bsStyle="primary" isLoading={isLoading}/>
-                    </form>
-                </div>
+                          const clientErrorMsg = clientErrors[key] || [];
+                          const errorMsg = errors[key] || [];
+                          let isValid = false;
+                          if (errorMsg.length || clientErrorMsg.length) {
+                              isValid = false;
+                          } else {
+                              isValid = true;
+                          }
+                          return (
+                              <FormGroup validationState={isValid
+                                  ? undefined
+                                  : "error"} key={key} controlId={key} className={cssClass}>
+                                  {label ? <ControlLabel>{label}</ControlLabel> : undefined}
+                                  {this.createField(type, key, desc, values)}
+                                  <FormControl.Feedback/>
+                                  <HelpBlock>{errorMsg === "can't be blank"
+                                          ? "Required!"
+                                          : errorMsg}</HelpBlock>
+                              </FormGroup>
+                          );
+                        })}
+                        {this.state.expandSettings ? <SubmitButton name="Save changes" bsStyle="primary" isLoading={isLoading}/> : undefined}
+                      </Panel>
+                    </Panel>
+                </form>
             </div>
         );
     }

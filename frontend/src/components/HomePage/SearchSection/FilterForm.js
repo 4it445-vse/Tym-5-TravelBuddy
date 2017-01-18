@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import InputRange from 'react-input-range';
-import { Button, Panel, FormGroup } from 'react-bootstrap';
+import { Button, ButtonGroup, Panel, FormGroup } from 'react-bootstrap';
 import Select from 'react-select';
 import { ItemList } from './ItemList';
 import api from '../../../api';
@@ -14,9 +14,9 @@ export class FilterForm extends Component {
 
         this.state = {
           cityError: '',
-            categoriesError: '',
-            categories: [],
-            selectedCategories: null,
+          categoriesError: '',
+          categories: [],
+          selectedCategories: null,
           selectedCity: null,
           cities: [],
           products: [],
@@ -281,7 +281,7 @@ export class FilterForm extends Component {
 
 
     isNumber(n) {
-    return !isNaN(parseFloat(n)) && isFinite(n);
+        return !isNaN(parseFloat(n)) && isFinite(n);
     }
 
     handleLabelChange(event) {
@@ -326,6 +326,25 @@ export class FilterForm extends Component {
       this.setState({
         priceFrom: values.min,
         priceTo: values.max
+      });
+    }
+
+    handleReset(products) {
+      this.setState({
+        selectedCity: undefined,
+        selectedCategories: undefined,
+        label: "",
+        description: "",
+        priceFrom: this.state.inputRangeLimits.min,
+        priceTo: this.state.inputRangeLimits.max,
+        inputRangeLimits: {
+          min: this.state.inputRangeLimits.min,
+          max: this.state.inputRangeLimits.max
+        },
+        inputRangeValues: {
+          min: this.state.inputRangeLimits.min,
+          max: this.state.inputRangeLimits.max
+        },
       });
     }
 
@@ -398,7 +417,6 @@ export class FilterForm extends Component {
                                             placeholder="Categories"
                                         />
                                     </FormGroup>
-
                                 </div>
                             </div>
                             <div className="form-group input-range-controls">
@@ -428,7 +446,10 @@ export class FilterForm extends Component {
                               {this.state.errorFromPrice != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.errorFromPrice}</span> : null}
                                 {this.state.cityError != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.cityError}</span> : null}
                             </div> */}
-                            <button type="submit" className="btn btn-default center-block">Search</button>
+                            <div className="text-center clearfix">
+                                <button type="submit" className="btn btn-default">Search</button>
+                                <button style={{marginLeft: "15px"}} type="button" onClick={() => this.handleReset()} className="btn btn-default">Reset</button>
+                            </div>
                             {/* <button type="button" className="btn btn-default center-block">Reset</button> */}
                         </form>
                       </Panel>
