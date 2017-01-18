@@ -274,7 +274,7 @@ module.exports = function(Usermain) {
   Usermain.remoteMethod('connectionsList',{
     	accepts: {arg: 'id', type: 'number', required: true},
       http: {path: '/:id/connectionsList', verb: 'get'},
-      returns: {type: 'Array', root: true}
+      returns: {type: 'array', root: true}
   });
 
   Usermain.connectionsList = (id, cb) => {
