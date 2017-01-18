@@ -264,21 +264,12 @@ export class FilterForm extends Component {
                 }
 
             });
-
-
-
-
-
-
-
+            
 
             this.setState({filteredProducts: filteredProducts});
             console.log("FilteredProducts", filteredProducts);
         }
     }
-
-
-
 
 
     isNumber(n) {
