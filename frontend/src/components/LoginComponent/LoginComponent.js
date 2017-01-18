@@ -80,7 +80,7 @@ export class LoginComponent extends Component{
             return (
               <div key={key} className="login-form-element">
                 <FormGroup className={cssClass} key={key} controlId={key} >
-{/*                 <ControlLabel>{label}</ControlLabel> */}
+                {/* <ControlLabel>{label}</ControlLabel> */}
                   {' '}
                   {this.createField(type, key, desc)}
                   </FormGroup>

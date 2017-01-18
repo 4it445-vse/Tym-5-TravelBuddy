@@ -128,20 +128,20 @@ export class DatePicker extends Component {
       selectedDay: dtDefaul,
       showOverlay: false,
     });
-      console.log ('valueDefault', this.state.value);
-      console.log ('selectedDayDefault', this.state.selectedDay);
+      // console.log ('valueDefault', this.state.value);
+      // console.log ('selectedDayDefault', this.state.selectedDay);
     this.input.blur();
   }
 
   handleDayClick(e, day) {
-    console.log ('dayDay', day);
+    // console.log ('dayDay', day);
     this.setState({
       value: moment(day).format('L'),
       selectedDay: day,
       showOverlay: false,
     });
-    console.log ('valueClick', this.state.value);
-    console.log ('selectedDayClick', this.state.selectedDay);
+    // console.log ('valueClick', this.state.value);
+    // console.log ('selectedDayClick', this.state.selectedDay);
     this.input.blur();
   }
 

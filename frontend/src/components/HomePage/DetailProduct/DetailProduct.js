@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Modal, Form, FormGroup, ControlLabel, FormControl, Col } from 'react-bootstrap';
-import {connect} from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { fetchWeather } from '../../../actions/index';
+import { Button, Modal } from 'react-bootstrap';
 import { WeatherList } from '../../Weather/WeatherList';
 import api from '../../../api.js';
 
@@ -25,7 +22,7 @@ export class DetailProduct extends Component {
     }
 
     show(product, city, user, categories) {
-        console.log("Product", product);
+        // console.log("Product", product);
         // console.log("User",user);
         // console.log("City", city);
         // console.log("Categories", categories);
@@ -72,7 +69,7 @@ export class DetailProduct extends Component {
         let params = {params: {filter: {fields: {profilePicture: true}}, where: {refUserMainId: ownerId}}};
         api.get(srvUrl, params).then((response) => {
             if (response.status === 200) {
-              console.log("Success: ", response);
+              // console.log("Success: ", response);
               this.setState({ ownerProfilePicture: response.data[0].profilePicture });
             }
         }).catch((error) => {

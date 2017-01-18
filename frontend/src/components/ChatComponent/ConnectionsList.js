@@ -44,9 +44,9 @@ export class ConnectionsList extends Component{
 
     api.get("/usermain/me/connectionsList?access_token="+localStorage.accessToken, params)
     .then((response) =>{
-      console.log(response);
+      // console.log(response);
       if (response.status === 200){
-        console.log("data",response.data);
+        // console.log("data",response.data);
         let connections = response.data;
         this.setState({
             isInfiniteLoading: false,
@@ -61,7 +61,7 @@ export class ConnectionsList extends Component{
   }
 
   elementClicked(data,index){
-    console.log("element clicked",this.state.elements[index]);
+    // console.log("element clicked",this.state.elements[index]);
 
     //if (this.state.activeElement) this.refs.infinite.props.children[this.state.activeElement].setActive(false);
     //this.state.elements[index].setState({active:true});
