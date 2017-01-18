@@ -1,29 +1,38 @@
 {
-  "name": "User_Language",
-  "plural": "UserLanguages",
+  "name": "Connection",
+  "plural": "Connections",
   "base": "PersistedModel",
   "idInjection": true,
   "indexes": {
     "UNIQUE_INDEX": {
-      "columns": "refLanguageId,refUserId",
+      "columns": "refUser1,refUser2",
       "kind": "unique"
     }
   },
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "isActive": {
+      "type": "boolean"
+    }
+  },
   "validations": [],
   "relations": {
-    "language": {
-      "type": "belongsTo",
-      "model": "Language",
-      "foreignKey": "refLanguageId"
-    },
-    "user": {
+    "user1": {
       "type": "belongsTo",
       "model": "UserMain",
-      "foreignKey": "refUserId"
+      "foreignKey": "refUser1"
+    },
+    "user2": {
+      "type": "belongsTo",
+      "model": "UserMain",
+      "foreignKey": "refUser2"
+    },
+    "messages": {
+      "type": "hasMany",
+      "model": "Message",
+      "foreignKey": "refConnectionId"
     }
   },
   "acls": [

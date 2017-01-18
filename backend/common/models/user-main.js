@@ -270,4 +270,59 @@ module.exports = function(Usermain) {
   //    });
   //  });
 
-}
+
+  Usermain.remoteMethod('connectionsList',{
+    	accepts: {arg: 'id', type: 'number', required: true},
+      http: {path: '/:id/connectionsList', verb: 'get'},
+      returns: {type: 'Array', root: true}
+  });
+
+  Usermain.connectionsList = (id, cb) => {
+    var responseArray = [];
+
+    let filter ={
+      "where": {"and": [{"refUser1": id}, {"active": true}]},
+      include:{
+        relation: "user2",
+        scope:{
+          include: {
+            relation: "userDetail"
+          }
+        }
+      }
+    };
+    let filter2 ={
+      "where": {"and": [{"refUser2": id}, {"active": true}]},
+      include:{
+        relation: "user1",
+        scope:{
+          include: {
+            relation: "userDetail"
+          }
+        }
+      }
+    };
+
+    Usermain.app.models.Connection.find(filter,(err,instances)=>{
+      if(!err){
+        //console.log(instances);
+        responseArray = instances;
+
+        Usermain.app.models.Connection.find(filter2,(err,instances)=>{
+          if(!err){
+            //console.log(instances);
+            responseArray = responseArray.concat(instances);
+            //console.log(responseArray);
+            cb(null,responseArray);
+          }else {
+            cb(err,null);
+          }
+        });
+      }else {
+        cb(err,null);
+      }
+    });
+
+  };
+
+};

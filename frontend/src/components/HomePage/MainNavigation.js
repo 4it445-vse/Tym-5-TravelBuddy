@@ -13,11 +13,9 @@ export class MainNavigation extends Component {
       style: "affix",
       userData: undefined
     };
-    console.log('--- MainNavigation console', this.props.userData);
   }
 
   componentDidMount() {
-    console.log('--- MainNavigation didmount', this.props.userData);
     this.setState({ userData: this.props.userData });
   }
 
@@ -28,7 +26,6 @@ export class MainNavigation extends Component {
   //TODO change class of login-modal on scroll, affix-top on top, affix on affixed
 
   render() {
-    // const { userData } = this.state;
     return (
         <nav id="mainNav" className="navbar navbar-app navbar-default navbar-fixed-top">
             <div className="container-fluid">

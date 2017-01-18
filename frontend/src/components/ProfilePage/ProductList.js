@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ProductListItem } from './ProductListItem';
-import { Grid, Row, Col, ListGroup, Alert } from 'react-bootstrap';
+import { ListGroup, Alert } from 'react-bootstrap';
 import api from '../../api.js';
 
 export class ProductList extends Component {
@@ -19,10 +19,18 @@ export class ProductList extends Component {
 
     loadProducts() {
         const dataUrl = '/Products?access_token=' + localStorage.accessToken;
-        api.get(dataUrl, {params: {filter:{where:{refOwnerUserId:localStorage.userId}}}}).then((response) => {
+        const params = {
+          params: {
+            filter: {
+              where: {refOwnerUserId:localStorage.userId},
+              include: ['productCity', 'categories']
+            }
+          }
+        };
+        api.get(dataUrl, params).then((response) => {
             if (response.status === 200) {
             this.setState({products: response.data}) // pole hodnot - objects - potřeba zjistit atribut, ve kterým se vrací pole
-                console.log(response);
+                // console.log(response);
             }
         }).catch((error) => {
             console.log("Error: ", error);
@@ -31,12 +39,11 @@ export class ProductList extends Component {
     }
 
     render () {
-        const productItems = this.state.products.map((product) => {
+        const productItems = this.state.products.map((product, key) => {
             return (
                 <ProductListItem key={product.id} product={product} />
             );
         });
-
         if (productItems.length > 0) {
             return (
                 // <div>
@@ -50,13 +57,10 @@ export class ProductList extends Component {
                 //         {productItems}
                 //     </Grid>
                 // </div>
-                <div className="container item-list">
-                  <br/>
-                  <div className="row">
+                <div className="container-fluid item-list">
                       <ListGroup className="clearfix">
                           {productItems}
                       </ListGroup>
-                  </div>
                 </div>
             );
         } else {

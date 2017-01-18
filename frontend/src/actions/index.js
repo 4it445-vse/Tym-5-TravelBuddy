@@ -44,8 +44,8 @@ export const loginAction = (email, password) => (dispatch) => {
       //TODO!!!!! USE "password":hash
       api.post('/UserMain/login', {"email":email, "password":password})
       .then((response) => {
-        console.log(response.data);
-        console.log(response.status);
+        // console.log('--- loginAction', response.data);
+        // console.log('--- loginAction', response.status);
         if (response.status === 200){
           var userId = response.data.userId;
           var token = response.data.id;

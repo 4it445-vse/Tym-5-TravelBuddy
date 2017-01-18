@@ -17,7 +17,7 @@ export class ProfilePictureEditorComponent extends Component{
     this.setPicture = this.setPicture.bind(this);
   }
 
-  handleSave(){
+  handleSave = () => {
     //var canvas = this.refs.imgEditor.getImage(); // This is a HTMLCanvasElement.
     // It can be made into a data URL or a blob, drawn on another canvas, or added to the DOM.
     //let croppedImgURL = canvas.toDataURL('image/jpeg');

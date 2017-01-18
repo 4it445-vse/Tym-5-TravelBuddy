@@ -11,8 +11,6 @@ export class ItemList extends Component {
                 <Item key={product.id} product={product} modal={this.props.modal}/>
             );
         });
-
-        console.log("ItemList ",productItems);
         if (productItems.length > 0) {
             return (
                 <div className="row">
