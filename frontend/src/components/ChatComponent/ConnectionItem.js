@@ -37,7 +37,7 @@ export class ConnectionItem extends Component{
       <Button  style={buttonStyle} onClick={this.handleClickEvent}>
             <Col xs={4} style={{margin:"auto"}}>
               <div>
-                <img height={60} width={60} src={imgAddress} style={{borderRadius:"50%", border:"0"}}/>
+                <img height={60} width={60} src={imgAddress} style={{borderRadius:"50%", border:"0"}} role="presentation"/>
               </div>
             </Col>
 

@@ -19,17 +19,6 @@ export class ImageUploader extends Component{
   }
 
   handleSave(){
-    //var canvas = this.refs.imgEditor.getImage(); // This is a HTMLCanvasElement.
-    // It can be made into a data URL or a blob, drawn on another canvas, or added to the DOM.
-    //let croppedImgURL = canvas.toDataURL('image/jpeg');
-
-
-    // If you want the image resized to the canvas size (also a HTMLCanvasElement)
-    var canvasScaled = this.refs.imgEditor.getImageScaledToCanvas();
-    let croppedImgURL = canvasScaled.toDataURL('image/jpeg');
-    //console.log("canvasScaled",canvasScaled);
-
-    // this.props.setImage(null,croppedImgURL);
     this.hide();
   }
 
@@ -73,7 +62,7 @@ export class ImageUploader extends Component{
         <div>
           <div>
             <div style={{display:"inline-block"}}>
-              <Image height="100px" width="100px" src={this.state.imageURL ? this.state.imageURL : "/images/profilePictureDefault.png"}  thumbnail/>
+              <Image height="100px" width="100px" src={this.state.imageURL ? this.state.imageURL : "/images/imageDefault.jpg"}  thumbnail/>
             </div>
             <div style={{display:"inline-block", margin:"10px"}}>
               <input type="file" ref="fileInput" style={{display: "none"}} onChange={(e)=>this.handleImageChange(e)} accept="image/*" autoComplete="off"/>

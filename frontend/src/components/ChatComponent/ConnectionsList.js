@@ -100,9 +100,9 @@ export class ConnectionsList extends Component{
 
     api.get("/usermain/me/connectionsList?access_token="+localStorage.accessToken, params)
     .then((response) =>{
-      console.log(response);
+      // console.log(response);
       if (response.status === 200){
-        console.log("data",response.data);
+        // console.log("data",response.data);
         let connections = response.data;
         this.setState({
             isInfiniteLoading: false,

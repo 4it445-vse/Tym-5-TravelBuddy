@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Glyphicon, Modal, Form, FormGroup, ControlLabel, FormControl, InputGroup,ListGroup,ListGroupItem, Dropdown, MenuItem, Col,HelpBlock } from 'react-bootstrap';
+import { Button, Modal, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { ImageUploader } from '../common/ImageUploader/ImageUploader.js';
 import api from '../../api.js';
 import lodash from "lodash";
-import ReactDOM from 'react-dom';
 
 import Select from 'react-select';
 
@@ -32,7 +31,7 @@ export class CreateProductComponent extends Component{
       selectedCategory: null, //categoryID
       selectedCity: null, // cityID
       description: "",
-      price: 0,
+      price: "",
       picture: undefined
       //-----
     }
@@ -58,7 +57,7 @@ export class CreateProductComponent extends Component{
       selectedCategory: null, //categoryID
       selectedCity: null, // cityID
       description: "",
-      price: 0,
+      price: undefined,
       picture: undefined
     });
   }
@@ -89,6 +88,10 @@ export class CreateProductComponent extends Component{
     if (this.state.price < 0){
       error = true;
       this.setState({priceError:"Price cannot be less than 0."});
+    }else this.setState({priceError:""});
+    if (isNaN(this.state.price)){
+      error = true;
+      this.setState({priceError:"Price must be a number."});
     }else this.setState({priceError:""});
     if (!this.state.selectedCity){
       error = true;
@@ -222,23 +225,22 @@ export class CreateProductComponent extends Component{
     return(
       <Modal
           show={this.state.show}
-          bsSize="large"
           container={this.props.modalContainer}
-          onHide={() => {this.hide()}}
+          // onHide={() => {this.hide()}}
           className="modal-create-product"
           >
           <Modal.Header>
-            <Modal.Title id="modal-title">Create product</Modal.Title>
+            <Modal.Title id="modal-title">Create Offer</Modal.Title>
           </Modal.Header>
           <Modal.Body>
 
             <form className="form-create-product">
               <FormGroup className={cssClass} controlId="formLabel" validationState={(this.state.labelError === "") ? null:"error"}>
-                <ControlLabel>Label<span style={{fontSize:"150%", color:"red"}}>*</span></ControlLabel>
+                <ControlLabel>Name<span style={{fontSize:"150%", color:"red"}}>*</span></ControlLabel>
                 <FormControl
                   type="text"
                   value={this.state.label}
-                  placeholder="Enter label"
+                  placeholder="Enter name"
                   onChange={(e) => {this.setState({label:e.target.value})}}
                   autoComplete="off"
                 />
@@ -247,11 +249,11 @@ export class CreateProductComponent extends Component{
 
               <FormGroup className={cssClass} controlId="formCategory" validationState={(this.state.categoryError === "") ? null:"error"}>
                 <ControlLabel>Category<span style={{fontSize:"150%", color:"red"}}>*</span></ControlLabel>
-
                 <Select
                   name="selectFieldCategory"
-                  value= {this.state.selectedCategory}
-                  onChange= {(selected)=>{this.setState({selectedCategory:selected.value})}}
+                  placeholder="Select category"
+                  value={this.state.selectedCategory}
+                  onChange={(selected)=>{this.setState({selectedCategory:selected.value})}}
                   multi={false}
                   options={this.state.formHelperData.categories}
                  />
@@ -263,8 +265,9 @@ export class CreateProductComponent extends Component{
 
                 <Select.Async
                   name="selectFieldCity"
-                  value= {this.state.selectedCity}
-                  onChange= {(selected)=>{this.setState({selectedCity:selected.value})}}
+                  placeholder="Select city"
+                  value={this.state.selectedCity}
+                  onChange={(selected)=>{this.setState({selectedCity:selected.value})}}
                   multi={false}
                   options={this.state.formHelperData.categories}
                   loadOptions={(input, callback)=>{this.fetchCityDataDebounced(input,callback)}}
@@ -274,17 +277,14 @@ export class CreateProductComponent extends Component{
               </FormGroup>
 
               <FormGroup className={cssClass} controlId="formPrice" validationState={(this.state.priceError === "") ? null:"error"}>
-                <InputGroup>
-                  <ControlLabel>Price</ControlLabel>
+                  <ControlLabel>Price(<i className="fa fa-eur"></i>)</ControlLabel>
                   <FormControl
-                  type="number"
-                  min="0"
-                  value={this.state.price}
-                  onChange={(e) => {this.setState({price:e.target.value}); }}
-                  style={{zIndex:0}}
+                    type="text"
+                    placeholder="Enter price or leave blank"
+                    value={this.state.price}
+                    onChange={(e) => {this.setState({price:e.target.value}); }}
+                    style={{zIndex:0}}
                   />
-                  <InputGroup.Addon><i className="fa fa-eur"></i></InputGroup.Addon>
-                </InputGroup>
                 <HelpBlock>{this.state.priceError}</HelpBlock>
               </FormGroup>
 
@@ -318,10 +318,12 @@ export class CreateProductComponent extends Component{
   }
 }
 
-class CustomToggle extends React.Component {
-  render() {
-    return (
-      <div hidden="true"/>
-    );
-  }
-}
+// Unused for now @Martin @Dan
+//
+// class CustomToggle extends React.Component {
+//   render() {
+//     return (
+//       <div hidden="true"/>
+//     );
+//   }
+// }

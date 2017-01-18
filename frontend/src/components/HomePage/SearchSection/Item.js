@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
 import { ListGroupItem } from 'react-bootstrap';
-import {ReactDOM} from 'react-dom';
 
 
 export class Item extends Component{
@@ -19,9 +17,7 @@ export class Item extends Component{
 
 
     findModal() {
-
-        console.log("Modal ", this.state.modal);
-
+        //TODO return modal object
     }
 
     render() {
@@ -36,7 +32,6 @@ export class Item extends Component{
                 <h3>{this.props.product.label}</h3>
               </div>
               <div className="body">
-                {/* {this.props.product.description} */}
               </div>
               <div className="footer">
                 <span className="text-left">
@@ -60,10 +55,7 @@ export class Item extends Component{
                     )
                   }}>
                 <span><i className="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span>
-				        {/* <Button type='submit' bsStyle="primary" onClick={() => {this.state.modal.show(this.state.product,this.state.product.productCity,this.state.product.user,this.state.product.categories)}}>Detail</Button> */}
               </div>
-              {/* <Button type='submit' bsStyle="primary">Detail</Button> */}
-              {/* <Button type='submit' bsStyle="primary">Reply</Button> */}
             </ListGroupItem>
           </div>
         );
