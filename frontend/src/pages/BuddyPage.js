@@ -37,14 +37,14 @@ export class BuddyPage extends Component {
     paramsForSearchTerm() {
         return {
             filter: {
-                include: ['userDetail']
+                include: 'userMain'
             },
             limit: 1000
         };
     }
-
+//, {params: this.paramsForSearchTerm()}
     getUserDataById(id) {
-        api.get('/UserMain/'+id+'?access_token=' + localStorage.accessToken, {params: this.paramsForSearchTerm()})
+        api.get('/UserDetail/'+id+'?access_token=' + localStorage.accessToken)
             .then((response) => {
                 console.log('--- getUserDataDetail', response.data);
                 this.setState({ userDetail: response.data });
