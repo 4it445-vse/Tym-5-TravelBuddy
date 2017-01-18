@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Glyphicon, Modal, Form, FormGroup, ControlLabel, FormControl, InputGroup,ListGroup,ListGroupItem, Dropdown, MenuItem, Col,HelpBlock } from 'react-bootstrap';
+import { Button, Modal, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { ImageUploader } from '../common/ImageUploader/ImageUploader.js';
 import api from '../../api.js';
 import lodash from "lodash";
-import ReactDOM from 'react-dom';
 
 import Select from 'react-select';
 
@@ -254,7 +253,7 @@ export class CreateProductComponent extends Component{
                   name="selectFieldCategory"
                   placeholder="Select category"
                   value={this.state.selectedCategory}
-                  onChange= {(selected)=>{this.setState({selectedCategory:selected.value})}}
+                  onChange={(selected)=>{this.setState({selectedCategory:selected.value})}}
                   multi={false}
                   options={this.state.formHelperData.categories}
                  />
@@ -267,8 +266,8 @@ export class CreateProductComponent extends Component{
                 <Select.Async
                   name="selectFieldCity"
                   placeholder="Select city"
-                  value= {this.state.selectedCity}
-                  onChange= {(selected)=>{this.setState({selectedCity:selected.value})}}
+                  value={this.state.selectedCity}
+                  onChange={(selected)=>{this.setState({selectedCity:selected.value})}}
                   multi={false}
                   options={this.state.formHelperData.categories}
                   loadOptions={(input, callback)=>{this.fetchCityDataDebounced(input,callback)}}
@@ -319,10 +318,12 @@ export class CreateProductComponent extends Component{
   }
 }
 
-class CustomToggle extends React.Component {
-  render() {
-    return (
-      <div hidden="true"/>
-    );
-  }
-}
+// Unused for now @Martin @Dan
+//
+// class CustomToggle extends React.Component {
+//   render() {
+//     return (
+//       <div hidden="true"/>
+//     );
+//   }
+// }

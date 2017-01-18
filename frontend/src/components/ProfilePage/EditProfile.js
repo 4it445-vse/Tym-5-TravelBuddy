@@ -8,7 +8,6 @@ import {
     Popover,
     ButtonGroup,
     Button,
-    Image,
     Panel
 } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
@@ -24,18 +23,19 @@ export class EditProfile extends Component {
         this.state = {
             profilePicture: null,
             oldProfilePicture: null,
-            country: "",
+            isActive: false,
+            country: undefined,
             countryID: "",
-            motto: "",
-            bio: "",
+            motto: undefined,
+            bio: undefined,
             countries: [],
-            firstName: "",
-            lastName: "",
-            birthdate: "",
-            email: "",
-            phone: "",
-            skype: "",
-            facebook: "",
+            firstName: undefined,
+            lastName: undefined,
+            birthdate: undefined,
+            email: undefined,
+            phone: undefined,
+            skype: undefined,
+            facebook: undefined,
             languages: [],
             selectedLanguages: null,
 
@@ -45,7 +45,6 @@ export class EditProfile extends Component {
             formSuccess: false,
             refCountryId : "",
             isLoading: false,
-            isActive: false,
             expandSettings: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -72,7 +71,7 @@ export class EditProfile extends Component {
         var languages = null;
         api.get('/Languages?access_token=' + localStorage.accessToken)
             .then((response) => {
-                console.log("Product languages:",response.data);
+                // console.log("Product languages:",response.data);
                 if (response.status === 200){
                     languages = response.data;
                     const transformedlanguages = languages.map((language)=>{
@@ -190,7 +189,6 @@ export class EditProfile extends Component {
 
     loadUserCountry(refCountry) {
         const srvUrl = '/Countries/' + refCountry + '?access_token=' + localStorage.accessToken;
-          console.log('srvUrl',srvUrl);
         api.get(srvUrl).then((response) => {
             if (response.status === 200) {
                 var keys = ["id"];
@@ -213,7 +211,6 @@ export class EditProfile extends Component {
         api.get('/Countries').then((response) => {
             if (response.status === 200) {
                 countries = response.data;
-                console.log('countries',countries);
                 this.setState({countries: countries});
             }
         }).catch((error) => {
@@ -224,25 +221,24 @@ export class EditProfile extends Component {
 
     setIsActive(value) {
       this.setState({isActive: value});
-      if (value == 'Non-active')
+      if (value === 'Non-active')
       {
         value =  false;
         this.setState({isActive: value});
       }
-      if (value == 'Active')
+      if (value === 'Active')
       {
         value = true;
         this.setState({isActive: value});
       }
-      const srvUrl = '/UserMain/me?access_token=' + localStorage.accessToken;
-      let formDataActive = this.getFormDataActive();
-      //Funkcionalita odstraanen to vyeseni problemu 11.12.2016 JSA
-    /*  api.patch(srvUrl, formDataActive).then(response => {
-          console.log('--- edit active passed');
-      }).catch((error) => {
-          console.log('--- edit active failed');
-      });
-      */
+      // //Funkcionalita odstraanen to vyeseni problemu 11.12.2016 JSA
+      // const srvUrl = '/UserMain/me?access_token=' + localStorage.accessToken;
+      // let formDataActive = this.getFormDataActive();
+      // api.patch(srvUrl, formDataActive).then(response => {
+      //     console.log('--- edit active passed');
+      // }).catch((error) => {
+      //     console.log('--- edit active failed');
+      // });
       if (value === false)
       {
         value = 'Non-active';
@@ -276,7 +272,7 @@ export class EditProfile extends Component {
             this.refs.pictureEditor.setPicture(reader.result);
         }
         reader.onabort = () => {
-            console.log("aborted-.");
+            console.log("aborted");
         }
         reader.onerror = () => {
             console.log("error");
@@ -316,7 +312,7 @@ export class EditProfile extends Component {
                       <FormControl
                         type={type}
                         name={key}
-                        value={this.state[key]}
+                        value={this.state[key] ? this.state[key] : undefined}
                         onChange={this.handleInputChange}
                         />
                     );
@@ -372,42 +368,35 @@ export class EditProfile extends Component {
         let userDetailFailed = false;
         this.setState({isLoading: true});
 
-        if (formData.isActive == 'Non-active')
+        if (formData.isActive === 'Non-active')
         {
           formData.isActive = false;
         }
-        if (formData.isActive == 'Active')
+        if (formData.isActive === 'Active')
         {
           formData.isActive = true;
         }
 
         formData.birthdate = this.datePicker.getFormData().selectedDay;
-            console.log('--- wizard form data isActive', formData);
 
         this.uploadProfilePicture(this.state.profilePicture);
-        console.log('--- editpage handle submit', this.state.profilePicture);
         const srvUrl = '/UserMain/me?access_token=' + localStorage.accessToken;
         api.patch(srvUrl, formData).then(response => {
-            console.log('--- post usermain ok');
-            console.log('birthdateOK', formData.birthdate);
             this.setState({clientErrors: {}});
         }).catch((error) => {
-            console.log('<!> updateUserInfo', error);
-            console.log('birthdateFAIL', formData.birthdate);
+            console.log('<!> patch UserMain', error);
             userMainFailed = true;
             const {response} = error;
             const errors = response.data.error.details.messages;
             this.setState({errors});
-            console.log('--- edit usermain failed', this.state.errors);
         });
 
         const srvUrlUD = '/UserMain/me/userDetail?access_token=' + localStorage.accessToken;
         api.put(srvUrlUD, formData).then(response => {
-            console.log('--- post userDetail ok');
             this.setState({clientErrors: {}});
             this.setState({ isLoading: false });
         }).catch((error) => {
-            console.log('<!> updateUserDetail', error);
+            console.log('<!> put UserDetail', error);
             userDetailFailed = true;
             const {response} = error;
             const errors = response.data.error.details.messages;
@@ -429,7 +418,8 @@ export class EditProfile extends Component {
       let srv = '/UserLanguages?access_token=' + localStorage.accessToken;
       let data = this.state.selectedLanguages;
       api.put(srv, data).then(response => {
-        console.log('--- UserLanguages', response);
+        //TODO update or create user's languages
+        // console.log('--- UserLanguages', response);
       }).catch((error) => {
         console.log('--- UserLanguages', error);
       });
@@ -458,8 +448,6 @@ export class EditProfile extends Component {
         var formData = new FormData();
         var fileName = "profilePicture.jpg";
         formData.append("imageFile",blob, fileName);
-
-        console.log('--- profilePicture');
          api.post('/containers/profilePictures/upload?access_token=' + localStorage.accessToken, formData)
            .then((data)=>{
              console.log('--- upload successful', data);
@@ -485,7 +473,7 @@ export class EditProfile extends Component {
         const visibleFields = [
             /*key, label, type, desc, id*/
             [
-              'isActive', '', 'radio-active', '', ['Active', 'Non-active']
+                'isActive', '', 'radio-active', '', ['Active', 'Non-active']
             ],
             [
                 'firstName', 'First name', 'text', ''
@@ -499,7 +487,7 @@ export class EditProfile extends Component {
         ];
         const fields = [
           [
-               'country', 'Country', 'select', ''
+              'country', 'Country', 'select', ''
           ],
           [
               'email', 'E-mail', 'email', 'Enter valid email. You will use it for login and password reset'
@@ -520,16 +508,9 @@ export class EditProfile extends Component {
               'bio', 'About Me', 'textarea', ''
           ]
         ];
-        var addr = '';
-        if (this.state.profilePicture || (this.state.profilePicture === null && this.state.oldProfilePicture === null)) {
-            addr = this.state.profilePicture ? this.state.profilePicture : "/images/profilePictureDefault.png";
-        } else {
-            addr = "/api/containers/profilePictures/download/"+this.state.oldProfilePicture +"?access_token="+localStorage.accessToken;
-        }
-        const {clientErrors} = this.state;
-        const {errors} = this.state;
+        const { clientErrors } = this.state;
+        const { errors } = this.state;
         const { isLoading } = this.state;
-        const values = ['Active', 'Non-active']
         let cssClass = 'form-themed';
         return (
             <div>

@@ -167,7 +167,7 @@ export class RegistrationForm extends Component {
 
     api.post('UserMain/submit', formData)
     .then(response => {
-      console.log('--- post usermain ok');
+      // console.log('--- post usermain ok');
       this.setState({ clientErrors: {} });
       this.setState({ errors: {} });
       this.setState({ formSuccess: true });

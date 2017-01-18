@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ProductListItem } from './ProductListItem';
-import { Grid, Row, Col, ListGroup, Alert } from 'react-bootstrap';
+import { ListGroup, Alert } from 'react-bootstrap';
 import api from '../../api.js';
 
 export class ProductList extends Component {
@@ -30,7 +30,7 @@ export class ProductList extends Component {
         api.get(dataUrl, params).then((response) => {
             if (response.status === 200) {
             this.setState({products: response.data}) // pole hodnot - objects - potřeba zjistit atribut, ve kterým se vrací pole
-                console.log(response);
+                // console.log(response);
             }
         }).catch((error) => {
             console.log("Error: ", error);

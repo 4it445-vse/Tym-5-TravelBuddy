@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Modal, Row } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import { MessagesList } from "./MessagesList.js";
 import { ConnectionsList } from "./ConnectionsList.js";
 import io from 'socket.io-client';
@@ -23,7 +23,7 @@ export class Chat extends Component{
     return(
       <div
           className="modal-chat"
-          
+
           >
           <div style={{padding:"0"}}>
             <Col md={4} style={{padding:"0",background:"white"}}>

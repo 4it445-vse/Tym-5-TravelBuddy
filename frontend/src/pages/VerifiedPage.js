@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Alert } from 'react-bootstrap';
 import { LoginComponentContainer } from '../components/LoginComponent/LoginComponent.js';
 
 export class VerifiedPage extends Component {
@@ -19,9 +18,6 @@ export class VerifiedPage extends Component {
                   </div>
                 </div>
                 <div className="col-lg-4 col-lg-pull-8">
-                  {/* <Alert bsStyle="success">
-                    <strong>Now you can login into app!</strong> Follow the link below!
-                  </Alert> */}
                   <div className="bg-primary login">
                     <LoginComponentContainer/>
                   </div>

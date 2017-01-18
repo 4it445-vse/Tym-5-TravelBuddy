@@ -10,7 +10,7 @@ export class MessageItem extends Component{
 
   createMessageColumn(){
     //console.log(this.props.message.fromUserId, this.props.currentUser);
-    if (this.props.message.fromUserId == this.props.currentUser){
+    if (this.props.message.fromUserId === this.props.currentUser){
       return(
         <Col xs={8} className="pull-right" style={{textAlign:"right"}}>
           <div style={{backgroundColor:"#F05F40",color:"white",display:"inline-block",borderRadius:"8px",borderBottomRightRadius:"0px",padding:"5px",wordBreak:"break-all"}}>{this.props.message.text}</div>

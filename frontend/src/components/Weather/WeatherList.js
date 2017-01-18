@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Grid, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import Chart from './Chart';
 import GoogleMap from './google_map';
 import axios from 'axios';
@@ -23,8 +23,7 @@ export class WeatherList extends Component {
         axios.get(url)
             .then((response) => {
                 if (response.status === 200) {
-
-                console.log("WEATHER response",response.data);
+                    // console.log("WEATHER response",response.data);
                     this.setState({weather: response.data});
                 }
             })
@@ -35,10 +34,11 @@ export class WeatherList extends Component {
     }
 
     renderWeather(cityData) {
-        const name = cityData.city.name;
+
         const temps = cityData.list.map(weather => weather.main.temp);
-        const pressures = cityData.list.map(weather => weather.main.pressure);
-        const humidities= cityData.list.map(weather => weather.main.humidity);
+        // const name = cityData.city.name;
+        // const pressures = cityData.list.map(weather => weather.main.pressure);
+        // const humidities= cityData.list.map(weather => weather.main.humidity);
         const {lon, lat} = cityData.city.coord;
         return (
           <Row>
@@ -48,21 +48,14 @@ export class WeatherList extends Component {
             <Col md={6} className="chart">
               <Chart data={temps} color="orange" units="C"/>
             </Col>
+            {/* Unused charts */}
+            {/* <Col md={3} className="chart">
+              <Chart data={pressures} color="green" units="hPa"/>
+            </Col>
+            <Col md={3} className="chart">
+              <Chart data={humidities} color="black" units="%"/>
+            </Col> */}
           </Row>
-            // <tr className="weatherItem" key={name}>
-            //     <td>
-            //         <GoogleMap lat={lat} lon={lon} />
-            //     </td>
-            //     <td>
-            //         <Chart data={temps} color="orange" units="C"/>
-            //     </td>
-            //     {/* <td>
-            //         <Chart data={pressures} color="green" units="hPa"/>
-            //     </td>
-            //     <td>
-            //         <Chart data={humidities} color="black" units="%"/>
-            //     </td> */}
-            // </tr>
         );
     }
     render() {
@@ -70,20 +63,6 @@ export class WeatherList extends Component {
           <div className="weather">
             {this.state.weather != null ? this.renderWeather(this.state.weather) : <tr></tr>}
           </div>
-            // <table className="table">
-            //     <thead>
-            //         <tr>
-            //             <th>Map</th>
-            //             <th>Temperature (C)</th>
-            //             {/* <th>Pressure (hPa)</th>
-            //             <th>Humidity (%)</th> */}
-            //         </tr>
-            //     </thead>
-            //     <tbody>
-            //     {this.state.weather != null ? this.renderWeather(this.state.weather) : <tr></tr>}
-            //
-            //     </tbody>
-            // </table>
         );
     }
 }

@@ -1,15 +1,5 @@
 import React, { Component } from 'react';
-import {
-    FormGroup,
-    ControlLabel,
-    FormControl,
-    HelpBlock,
-    OverlayTrigger,
-    Popover,
-    ButtonGroup,
-    Button,
-    Image
-} from 'react-bootstrap';
+import { Button, Image } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import { ProfilePictureEditorComponent } from "../ProfilePictureEditor/ProfilePictureEditorComponent.js";
 import api from '../../api.js';
@@ -24,7 +14,6 @@ export class EditProfilePicture extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handlePictureChange = this.handlePictureChange.bind(this);
         this.setPicture = this.setPicture.bind(this);
-        this.loadUserMain();
         this.loadUserDetail();
 
 
@@ -36,85 +25,13 @@ export class EditProfilePicture extends Component {
         });
     }
 
-    loadUserMain() {
-        const srvUrl = '/UserMain/me?access_token=' + localStorage.accessToken;
-        api.get(srvUrl).then((response) => {
-            if (response.status === 200) {
-                var keys = ["lastName", "firstName", "birthdate", "email","isActive"];
-                for (let i = 0; i < keys.length; i++) {
-                  if ( i===2)
-                  {
-                    var dt = new Date(response.data[keys[i]]);
-                    var dtDate = dt.getDate();
-                    var dtMonth = dt.getMonth()+1;
-                    var dtYear = dt.getFullYear();
-                    if (dtDate < 10)
-                    {
-                      dtDate = '0'+dtDate;
-                    }
-                    if (dtMonth< 10)
-                    {
-                      dtMonth = '0'+dtMonth;
-                    }
-                   var dtDatum =   dtMonth+ '/' + dtDate  +  '/' +dtYear;
-                    this.setState({
-                        [keys[i]]: dtDatum
-                    })
-                      this.datePicker.setDefaultValue(this.state.birthdate);
-                      this.setActiveDefaultValue(this.state.isActive);
-                  }
-                  else if (i===4)
-                  {
-                      this.setState({
-                        [keys[i]]: response.data[keys[i]]
-                    })
-                    if (this.state.isActive === false || this.state.isActive == null)
-                    {
-                      this.setState({isActive: 'Non-active'})
-                    }
-                    if (this.state.isActive === true)
-                    {
-                      this.setState({isActive: 'Active'})
-                    }
-                  }
-                  else {
-                    this.setState({
-                        [keys[i]]: response.data[keys[i]]
-                    })
-                  }
-                }
-
-                  console.log("birthdate",response.data);
-            }
-        }).catch((error) => {
-            console.log("Error: ", error);
-            console.log("Error: ", error.response);
-        });
-    }
-
     loadUserDetail() {
         const srvUrl = '/UserMain/me/userDetail?access_token=' + localStorage.accessToken;
         api.get(srvUrl).then((response) => {
             if (response.status === 200) {
-                var keys = ["phone", "skype", "facebook", "bio", "motto","profilePicture","refCountryId"];
-                for (let i = 0; i < keys.length; i++) {
-                  if (i === 5)
-                  {
-                    this.setState({
-                        oldProfilePicture: response.data[keys[i]]
-                    })
-                  }
-                  else if (i === 6)
-                  {
-                    this.loadUserCountry(response.data[keys[i]]);
-                  }
-                  else
-                  {
-                    this.setState({
-                        [keys[i]]: response.data[keys[i]]
-                    })
-                  }
-              }
+                if (response.data.profilePicture) {
+                    this.setState({oldProfilePicture: response.data.profilePicture})
+                }
             }
         }).catch((error) => {
             console.log("Error: ", error);
@@ -133,7 +50,7 @@ export class EditProfilePicture extends Component {
             this.refs.pictureEditor.setPicture(reader.result);
         }
         reader.onabort = () => {
-            console.log("aborted-.");
+            console.log("aborted");
         }
         reader.onerror = () => {
             console.log("error");

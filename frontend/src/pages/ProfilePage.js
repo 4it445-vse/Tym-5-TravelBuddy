@@ -5,7 +5,7 @@ import { EditProfile} from '../components/ProfilePage/EditProfile';
 import { EditProfilePicture } from '../components/ProfilePage/EditProfilePicture.js';
 import { ProductList} from '../components/ProfilePage/ProductList.js';
 import { ProfilePictureEditorComponent } from "../components/ProfilePictureEditor/ProfilePictureEditorComponent.js";
-import { Panel, Tabs, Tab, Row, Col } from "react-bootstrap";
+import { Panel, Tabs, Tab } from "react-bootstrap";
 import api from '../api.js';
 import { Chat } from "../components/ChatComponent/Chat.js"
 
@@ -27,7 +27,7 @@ export class ProfilePage extends Component {
   getUserData() {
     api.get('UserMain/me?access_token=' + localStorage.accessToken)
       .then((response) => {
-          console.log('--- getUserData', response.data);
+          // console.log('--- getUserData', response.data);
           this.setState({ userData: response.data });
           this.setState({ fullName: response.data.firstName + ' ' + response.data.lastName});
       })
@@ -39,7 +39,7 @@ export class ProfilePage extends Component {
   componentDidMount() {
     //TODO retrieve users data, possible refactoring, getting data here and sending to EditProfile
     this.getUserData();
-    console.log('---- EditProfile data', this._editProfile.getFormData());
+    // console.log('---- EditProfile data', this._editProfile.getFormData());
   }
 
   render() {
@@ -64,7 +64,7 @@ export class ProfilePage extends Component {
                     </div>
                   </Tab>
                   <Tab eventKey={2} title="User Reviews">Tab 2 content</Tab>
-				  <Tab eventKey={3} title="Connections"><Chat/></Tab>
+				          <Tab eventKey={3} title="Connections"><Chat/></Tab>
                   <Tab eventKey={4} title="Settings">
                     <div className="settings">
                       <Panel><EditProfile ref={(component) => { this._editProfile = component; }}/></Panel>

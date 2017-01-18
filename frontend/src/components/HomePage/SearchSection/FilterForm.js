@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import InputRange from 'react-input-range';
-import { Button, ButtonGroup, Panel, FormGroup } from 'react-bootstrap';
+import { Button, Panel, FormGroup } from 'react-bootstrap';
 import Select from 'react-select';
 import { ItemList } from './ItemList';
 import api from '../../../api';
@@ -54,10 +54,6 @@ export class FilterForm extends Component {
 
     }
 
-    componentWillMount() {
-
-    }
-
     componentDidMount() {
         this.loadCategoriesEntries();
     }
@@ -85,12 +81,11 @@ export class FilterForm extends Component {
         api.get("/Products?access_token=" + localStorage.getItem("accessToken"), {params: this.paramsForSearchTerm()})
             .then((response) => {
                 if (response.status === 200) {
-                    console.log("FilterForm - Response data",response.data);
+                    // console.log("FilterForm - Response data",response.data);
                     this.setState({ isLoading: false });
                     var filtered = response.data.filter(function (product) {
-                        return product.user.isActive == true && product.user.id != localStorage.userId;
+                        return product.user.isActive === true && product.user.id !== localStorage.userId;
                     });
-                    console.log("FilterForm -Filtered data",filtered);
                     this.setState({products: filtered, filteredProducts: filtered});
                     this.updateInputRange(response.data);
                 }
@@ -107,7 +102,7 @@ export class FilterForm extends Component {
         var categories = null;
         api.get('/ProductCategories?access_token=' + localStorage.accessToken)
             .then((response) => {
-                console.log("Product Categories:",response.data);
+                // console.log("Product Categories:",response.data);
                 if (response.status === 200){
                     categories = response.data;
                     const transformedCategories = categories.map((category)=>{
@@ -151,164 +146,128 @@ export class FilterForm extends Component {
     }
 
     handleSubmitFilterData(event) {
-        event.preventDefault();
-        this.setState({errorFromPrice: '', errorToPrice: ''});
+      event.preventDefault();
+      this.setState({errorFromPrice: '', errorToPrice: ''});
 
-        const {priceFrom}= this.state;
-        const {priceTo} = this.state;
-        const {label} = this.state;
-        const {description} = this.state;
-        const {city} = this.state;
-        const categories = this.state.selectedCategories;
+      const {priceFrom}= this.state;
+      const {priceTo} = this.state;
+      const {label} = this.state;
+      const {description} = this.state;
+      const {city} = this.state;
+      const categories = this.state.selectedCategories;
 
-        let isValid = true;
-        let isCity = false;
-        let isCategory = false;
-        if (city) {
-            isCity = true;
-        }
+      let isValid = true;
+      let isCity = false;
+      let isCategory = false;
+      if (city) {
+          isCity = true;
+      }
 
-        if (categories && categories.length != 0) {
-            console.log("Category is presented",categories);
-            isCategory = true;
-        }
+      if (categories && categories.length !== 0) {
+          isCategory = true;
+      }
 
-        if (priceTo.length == 0) {
-            this.setState({priceTo: 9999999});
-        }
-        if (priceFrom.length == 0) {
-            this.setState({priceFrom: 0});
-        }
+      if (priceTo.length === 0) {
+          this.setState({priceTo: 9999999});
+      }
+      if (priceFrom.length === 0) {
+          this.setState({priceFrom: 0});
+      }
 
-        if (!this.isNumber(priceFrom) && priceFrom.length != 0) {
-            isValid = false;
-            this.setState({errorFromPrice: 'Price from must be positive number!'});
-        }
+      if (!this.isNumber(priceFrom) && priceFrom.length !== 0) {
+          isValid = false;
+          this.setState({errorFromPrice: 'Price from must be positive number!'});
+      }
 
-        if (!this.isNumber(priceTo) && priceTo.length != 0) {
-            isValid = false;
-            this.setState({errorToPrice: 'Price to must be positive number!'});
-        }
-        var filteredProducts;
-        console.log("USER ID:",localStorage.userId);
+      if (!this.isNumber(priceTo) && priceTo.length !== 0) {
+          isValid = false;
+          this.setState({errorToPrice: 'Price to must be positive number!'});
+      }
 
-        if (isValid && isCity) {
-
-
-
-            filteredProducts = this.state.products.filter(function (product) {
-                if (isCategory) {
-                    var presented = false;
-
-                    for (var i = 0;i < categories.length;i++) {
-                        console.log("Checking category 1",categories[i].label);
-                        // console.log("Against product category",product.categories[0].label);
-                        if(product.categories.length > 0 && categories[i].label == product.categories[0].name) {
-                            presented = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (isCategory) {
-                    return product.price <= priceTo &&
-                        product.label.toLowerCase().includes(label.toLowerCase()) &&
-                        product.price >= priceFrom &&
-                        product.description.toLowerCase().includes(description.toLowerCase()) &&
-                        product.productCity.name.toLowerCase().includes(city.toLowerCase())&&
-
-                        presented;
-
-                }
-                else{
-                    return product.price <= priceTo &&
-                        product.label.toLowerCase().includes(label.toLowerCase()) &&
-                        product.price >= priceFrom &&
-                        product.description.toLowerCase().includes(description.toLowerCase()) &&
-                        product.productCity.name.toLowerCase().includes(city.toLowerCase());
-                }
-
-
-            });
-
-            this.setState({filteredProducts: filteredProducts});
-            console.log("FilteredProducts", filteredProducts);
-        } else {
-
-
-
-            filteredProducts = this.state.products.filter(function (product) {
-                if (isCategory) {
-                    var presented = false;
-
-                    for (var i = 0;i < categories.length;i++) {
-                        console.log("Checking category 2",categories[i].label, product);
-                        // console.log("Against product category",product.categories[0].label);
-                        if(product.categories.length > 0 && categories[i].label == product.categories[0].name) {
-                            presented = true;
-                            break;
-                        }
-                    }
-                }
-                if (isCategory) {
-                    return product.price <= priceTo &&
-                        product.label.toLowerCase().includes(label.toLowerCase()) &&
-                        product.price >= priceFrom &&
-                        product.description.toLowerCase().includes(description.toLowerCase()) &&
-                        presented;
-                } else {
-                    return product.price <= priceTo &&
-                        product.label.toLowerCase().includes(label.toLowerCase()) &&
-                        product.price >= priceFrom &&
-                        product.description.toLowerCase().includes(description.toLowerCase());
-                }
-
-            });
-            
-
-            this.setState({filteredProducts: filteredProducts});
-            console.log("FilteredProducts", filteredProducts);
-        }
+      var filteredProducts;
+      if (isValid && isCity) {
+        filteredProducts = this.state.products.filter(function (product) {
+          if (isCategory) {
+            var presented = false;
+            for (var i = 0;i < categories.length;i++) {
+              if(product.categories.length > 0 && categories[i].label === product.categories[0].name) {
+                presented = true;
+                break;
+              }
+            }
+          }
+          if (isCategory) {
+            return product.price <= priceTo
+              && product.label.toLowerCase().includes(label.toLowerCase())
+              && product.price >= priceFrom
+              && product.description.toLowerCase().includes(description.toLowerCase())
+              && product.productCity.name.toLowerCase().includes(city.toLowerCase())
+              && presented;
+          } else {
+            return product.price <= priceTo
+              && product.label.toLowerCase().includes(label.toLowerCase())
+              && product.price >= priceFrom
+              && product.description.toLowerCase().includes(description.toLowerCase())
+              && product.productCity.name.toLowerCase().includes(city.toLowerCase());
+          }
+        });
+        this.setState({filteredProducts: filteredProducts});
+      } else {
+        filteredProducts = this.state.products.filter(function (product) {
+          if (isCategory) {
+            var presented = false;
+            for (var i = 0;i < categories.length;i++) {
+              if(product.categories.length > 0 && categories[i].label === product.categories[0].name) {
+                presented = true;
+                break;
+              }
+            }
+          }
+          if (isCategory) {
+            return product.price <= priceTo
+              && product.label.toLowerCase().includes(label.toLowerCase())
+              && product.price >= priceFrom
+              && product.description.toLowerCase().includes(description.toLowerCase())
+              && presented;
+          } else {
+            return product.price <= priceTo
+              && product.label.toLowerCase().includes(label.toLowerCase())
+              && product.price >= priceFrom
+              && product.description.toLowerCase().includes(description.toLowerCase());
+          }
+        });
+        this.setState({filteredProducts: filteredProducts});
+      }
     }
 
-
     isNumber(n) {
-        return !isNaN(parseFloat(n)) && isFinite(n);
+      return !isNaN(parseFloat(n)) && isFinite(n);
     }
 
     handleLabelChange(event) {
-        event.preventDefault();
-        console.log("LabelState",this.state.label);
-        this.setState({label: event.target.value})
+      event.preventDefault();
+      this.setState({label: event.target.value})
     }
 
     handleCityChange(event, selected) {
-        event.preventDefault();
-        console.log("CityState:",this.state.selectedCity);
-        console.log("SelectCityObject", selected);
-        this.setState({city: selected.label});
-        this.setState({selectedCity: selected.value})
+      event.preventDefault();
+      this.setState({city: selected.label});
+      this.setState({selectedCity: selected.value})
     }
 
-
     handlePriceFromChange(event) {
-        event.preventDefault();
-        console.log("PriceFromState:",this.state.priceFrom);
-        this.setState({priceFrom: event.target.value});
-        // this.setState({inputRangeValues: {min: event.target.value}});
+      event.preventDefault();
+      this.setState({priceFrom: event.target.value});
     }
 
     handleDescriptionChange(event) {
-        event.preventDefault();
-        console.log("PriceToState:",this.state.description);
-        this.setState({description: event.target.value});
+      event.preventDefault();
+      this.setState({description: event.target.value});
     }
 
     handlePriceToChange(event) {
-        event.preventDefault();
-        console.log("PriceToState:",this.state.priceTo);
-        this.setState({priceTo: event.target.value});
-        // this.setState({inputRangeValues: {max: event.target.value}});
+      event.preventDefault();
+      this.setState({priceTo: event.target.value});
     }
 
     handleInputRangeValuesChange(component, values) {
@@ -364,16 +323,17 @@ export class FilterForm extends Component {
                 <div className="filter-form">
                     <div className="row">
                       <div className="col-md-10 col-md-offset-1">
-                      {!this.state.isLoading ?
-                        <div className="clearfix">
-                          <Button type="button" className="btn-filter" onClick={ ()=> this.setState({ filterFormShow: !this.state.filterFormShow })}>
-                            Filter&nbsp;
-                            {this.state.filterFormShow ? <i className="fa fa-chevron-up" aria-hidden="true"></i> : <i className="fa fa-chevron-down" aria-hidden="true"></i>}
-                          </Button>
-                          <Button className="btn-offer-product" bsStyle="primary" onClick={() => {this.refs.createProductModal.show()}}>
-                            <i className="fa fa-plus" aria-hidden="true">&nbsp;</i>Offer
-                          </Button>
-                        </div>
+                      {
+                        !this.state.isLoading ?
+                          <div className="clearfix">
+                            <Button type="button" className="btn-filter" onClick={ ()=> this.setState({ filterFormShow: !this.state.filterFormShow })}>
+                              Filter&nbsp;
+                              {this.state.filterFormShow ? <i className="fa fa-chevron-up" aria-hidden="true"></i> : <i className="fa fa-chevron-down" aria-hidden="true"></i>}
+                            </Button>
+                            <Button className="btn-offer-product" bsStyle="primary" onClick={() => {this.refs.createProductModal.show()}}>
+                              <i className="fa fa-plus" aria-hidden="true">&nbsp;</i>Offer
+                            </Button>
+                          </div>
                           :
                           undefined
                       }
@@ -381,10 +341,10 @@ export class FilterForm extends Component {
                         <form className="form-horizontal" id="form-id" onSubmit={this.handleSubmitFilterData}>
                             <div className="form-group">
                               <div className="col-md-4 col-sm-6">
-                                <input type="text" className="form-control" id="inputName" onChange={this.handleLabelChange} placeholder="Name"/>
+                                <input type="text" className="form-control" id="inputName" onChange={this.handleLabelChange} value={this.state.label} placeholder="Name"/>
                               </div>
                               <div className="col-md-4 col-sm-6">
-                                <input type="text" className="form-control" id="inputName" onChange={this.handleDescriptionChange} placeholder="Description"/>
+                                <input type="text" className="form-control" id="inputDescription" onChange={this.handleDescriptionChange} value={this.state.description} placeholder="Description"/>
                               </div>
                               <div className="col-md-4">
                                 <FormGroup controlId="inputCity" bsClass="" validationState={(this.state.cityError === "") ? null:"error"}>
@@ -403,7 +363,7 @@ export class FilterForm extends Component {
                                         <Select
                                             name="selectFieldCategories"
                                             value={this.state.selectedCategories}
-                                            onChange={(selected)=>{this.setState({selectedCategories:selected});}}
+                                            onChange={(selected)=>{this.setState({selectedCategories: selected});}}
                                             multi={true}
                                             options={this.state.categories}
                                             placeholder="Categories"
@@ -420,7 +380,6 @@ export class FilterForm extends Component {
                                     <div className="col-sm-6">
                                       <InputRange
                                         name="inputName"
-                                        // classNames=""
                                         maxValue={this.state.inputRangeLimits.max}
                                         minValue={this.state.inputRangeLimits.min}
                                         value={this.state.inputRangeValues}
@@ -433,21 +392,16 @@ export class FilterForm extends Component {
                                 </div>
                               </div>
                             </div>
-                            {/* <div className="form-group">
-                              {this.state.errorToPrice != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.errorToPrice}</span> : null}
-                              {this.state.errorFromPrice != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.errorFromPrice}</span> : null}
-                                {this.state.cityError != '' ? <span className="col-sm-offset-2 col-sm-8 alert alert-danger">{this.state.cityError}</span> : null}
-                            </div> */}
                             <div className="text-center clearfix">
                                 <button type="submit" className="btn btn-default">Search</button>
                                 <button style={{marginLeft: "15px"}} type="button" onClick={() => this.handleReset()} className="btn btn-default">Reset</button>
                             </div>
-                            {/* <button type="button" className="btn btn-default center-block">Reset</button> */}
                         </form>
                       </Panel>
                       </div>
                     </div>
                 </div>
+                {/*Status bar, unused for now @Martin*/}
                 {/* <div className="status-bar">
                   <div className="row">
                     <div className="col-md-10 col-md-offset-1">
@@ -458,10 +412,12 @@ export class FilterForm extends Component {
                 <div className="item-list">
                   <div className="row">
                     <div className="col-md-10 col-md-offset-1">
-                      {this.state.isLoading ?
-                        <div className="loading-bar text-center"><i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>
-                        :
-                        <ItemList products={this.state.filteredProducts} modal={this.props.modal}/>}
+                      {
+                        this.state.isLoading ?
+                          <div className="loading-bar text-center"><i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>
+                          :
+                          <ItemList products={this.state.filteredProducts} modal={this.props.modal}/>
+                      }
                     </div>
                   </div>
                 </div>
