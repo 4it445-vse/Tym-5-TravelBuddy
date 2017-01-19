@@ -34,13 +34,13 @@ export class ConnectionItem extends Component{
 
     return(
       <Button  style={buttonStyle} onClick={this.handleClickEvent}>
-          <Col xs={4} style={{margin:"auto"}}>
-            <div>
-              <img height={60} width={60} src={imgAddress} style={{borderRadius:"50%", border:"0"}} role="presentation"/>
-            </div>
+          <Col xs={3} style={{padding:"0px"}}>
+            <div style={{height:"65px",width:"65px"}}>
+              <img height={60} width={60} src={imgAddress} className="img-circle" role="presentation"/>
+              </div>
           </Col>
 
-          <Col xs={8} style={{margin:"auto"}}>
+          <Col xs={9} style={{margin:"auto"}}>
             <div>
               {userData.firstName} {userData.lastName}
             </div>
