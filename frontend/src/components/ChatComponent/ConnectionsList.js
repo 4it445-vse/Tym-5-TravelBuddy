@@ -144,7 +144,7 @@ export class ConnectionsList extends Component{
   render(){
     return(
       <Infinite elementHeight={90}
-               containerHeight={500}
+               containerHeight={this.props.height}
                infiniteLoadBeginEdgeOffset={0}
                onInfiniteLoad={this.handleInfiniteLoad}
                loadingSpinnerDelegate={this.elementInfiniteLoad()}

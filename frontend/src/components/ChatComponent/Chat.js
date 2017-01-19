@@ -4,10 +4,13 @@ import { MessagesList } from "./MessagesList.js";
 import { ConnectionsList } from "./ConnectionsList.js";
 import io from 'socket.io-client';
 
+const SPACING = 280;
+
 export class Chat extends Component{
   constructor(props){
     super(props);
     this.state = {
+      dynamicHeight: (window.innerHeight-SPACING)
     }
 
     const socket = io('', { path: '/api/chat' });
@@ -24,6 +27,20 @@ export class Chat extends Component{
 
     this.connectionSelectedCallback = this.connectionSelectedCallback.bind(this);
     this.messageSentCallback = this.messageSentCallback.bind(this);
+    this.updateDimensions = this.updateDimensions.bind(this);
+  }
+
+  updateDimensions(){
+    console.log("window",window.innerHeight);
+    this.setState({dynamicHeight:(window.innerHeight-SPACING)});
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.updateDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
   }
 
   messageSentCallback(msg){
@@ -42,10 +59,10 @@ export class Chat extends Component{
           >
           <div style={{padding:"0"}}>
             <Col md={4} style={{padding:"0",background:"white"}}>
-            <ConnectionsList ref={(connList)=>{this.connList = connList;}} connectionSelectedCB={this.connectionSelectedCallback}/>
+            <ConnectionsList height={this.state.dynamicHeight} ref={(connList)=>{this.connList = connList;}} connectionSelectedCB={this.connectionSelectedCallback}/>
             </Col>
             <Col md={8} style={{padding:"0",background:"white"}}>
-              <MessagesList ref={(msgList)=>{this.messageList = msgList;}} messageSentCB={this.messageSentCallback} socket={this.socket}/>
+              <MessagesList height={this.state.dynamicHeight} ref={(msgList)=>{this.messageList = msgList;}} messageSentCB={this.messageSentCallback} socket={this.socket}/>
             </Col>
           </div>
 

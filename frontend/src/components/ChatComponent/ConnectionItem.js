@@ -27,7 +27,7 @@ export class ConnectionItem extends Component{
     if (this.props.hasNotification){
       notificaionMessage = (
         <div>
-          <Badge>New messages</Badge>
+          <Badge style={{background:"green"}}>New messages</Badge>
         </div>
       );
     }
@@ -41,7 +41,7 @@ export class ConnectionItem extends Component{
           </Col>
 
           <Col xs={9} style={{margin:"auto"}}>
-            <div>
+            <div style={{fontWeight:"normal"}}>
               {userData.firstName} {userData.lastName}
             </div>
               { notificaionMessage }
