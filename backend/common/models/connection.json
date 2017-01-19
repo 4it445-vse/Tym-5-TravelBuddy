@@ -15,6 +15,9 @@
   "properties": {
     "isActive": {
       "type": "boolean"
+    },
+    "lastMessageDate":{
+      "type":"date"
     }
   },
   "validations": [],

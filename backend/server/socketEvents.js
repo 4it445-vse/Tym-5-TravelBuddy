@@ -1,17 +1,44 @@
 exports = module.exports = function(io,loopbackApp) {
+  var usersBySocket = new Map();
+  var socketsByUser = new Map();
+
   io.on('connection', function(socket) {
-    console.log('a user connected');
+    console.log('user connected');
+    console.log("socketsByUser",socketsByUser);
+    console.log("usersBySocket",usersBySocket);
+    //console.log("channels",socket.adapter.rooms);
+    socket.on("hello",(data)=>{
+      if(data.userId){
+        usersBySocket.set(socket.id,data.userId);
+        socketsByUser.set(data.userId,socket.id);
+        console.log("type",typeof data.userId);
+        console.log("x socketsByUser",socketsByUser);
+        console.log("x usersBySocket",usersBySocket);
+      }
+    });
 
     socket.on('disconnect', function(){
       console.log('user disconnected');
+      var user = usersBySocket.get(socket.id);
+      usersBySocket.delete(socket.id);
+      socketsByUser.delete(user);
     });
 
     socket.on('new message', function(msg) {
       console.log("message recieved",msg);
-
-      //loopbackApp.models.message.create()
-
-
+      console.log("socketsByUser",socketsByUser);
+      console.log("usersBySocket",usersBySocket);
+      console.log("msg",msg.toUserId);
+      console.log("type",typeof msg.toUserId);
+      var socketToSend = socketsByUser.get(msg.toUserId.toString());
+      console.log("socketToSend",socketToSend);
+      if (socketToSend != undefined) {
+        socket.broadcast.to(socketToSend).emit('new message notification', msg);
+        console.log("sending notification to",socketToSend);
+      }
+      else {
+        //create notification in database
+      }
       socket.broadcast.to(msg.refConnectionId).emit('new inc message', msg);
     });
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import  Infinite from "react-infinite";
 import  ReactChatView  from "react-chatview";
 import { MessageItem } from "./MessageItem.js";
 import api from '../../api.js';
@@ -7,9 +6,6 @@ import Textarea from 'react-textarea-autosize';
 
 import Promise from 'bluebird';
 import lodash from "lodash";
-
-
-
 
 
 export class MessagesList extends Component{
@@ -31,18 +27,10 @@ export class MessagesList extends Component{
   }
 
   componentDidMount() {
-
     this.props.socket.on('new inc message', (msg) =>{
-      // console.log("--- recieved a new message", msg);
-      //TODO
       var newElements = [(<MessageItem key={msg.id} message={msg} currentUser={localStorage.userId}/>)].concat(this.state.elements);
-      //console.log("--- new elements",newElements);
       this.setState({elements:newElements});
     });
-
-  }
-
-  componentDidUpdate(prevProps, prevState) {
   }
 
   loadConnection(data){
@@ -56,8 +44,6 @@ export class MessagesList extends Component{
   }
 
   fetchMessageData(limit,offset, connectionId){
-    // console.log("fetching messages",limit,offset);
-
     var params = {
       params:{
         filter:{
@@ -71,7 +57,6 @@ export class MessagesList extends Component{
     api.get("/connections/"+connectionId+"/messages?access_token="+localStorage.accessToken, params)
     .then((response) =>{
       if (response.status === 200){
-        //console.log("data",response.data);
         let messages = response.data;
         var elements = this.state.elements.concat(this.buildElements(messages));
         this.setState({
@@ -88,7 +73,6 @@ export class MessagesList extends Component{
   handleInfiniteLoad() {
     return new Promise((resolve, reject) => {
       if (this.state.connectionData){
-        //this.fetchMessageData(20,this.state.elements.length,this.state.connectionData.id);
 
         var debounced = lodash.debounce(()=>{
             var params = {
@@ -104,7 +88,6 @@ export class MessagesList extends Component{
             api.get("/connections/"+this.state.connectionData.id+"/messages?access_token="+localStorage.accessToken, params)
             .then((response) =>{
               if (response.status === 200){
-                //console.log("data",response.data);
                 let messages = response.data;
                 var elements = this.state.elements.concat(this.buildElements(messages));
                 this.setState({
@@ -123,7 +106,7 @@ export class MessagesList extends Component{
 
         debounced();
 
-      } else {
+      }else{
         reject();
       }
     });
@@ -138,78 +121,79 @@ export class MessagesList extends Component{
   }
 
   elementInfiniteLoad() {
-      return(
-        <div style={{ width:"100%",textAlign:"center",zIndex:"1000"}}>
-          <div style={{borderRadius:"8px",padding:"8px",display:"inline-block"}}>
-            <i className="fa fa-spinner fa-pulse fa-fw fa-lg"/>
-          </div>
+    return(
+      <div style={{ width:"100%",textAlign:"center",zIndex:"1000"}}>
+        <div style={{borderRadius:"8px",padding:"8px",display:"inline-block"}}>
+          <i className="fa fa-spinner fa-pulse fa-fw fa-lg"/>
         </div>
+      </div>
     );
   }
 
-  onKeyDown (e) {
-    if (e.keyCode === 13 && !e.shiftKey) {
-      console.log('enter pressed');
-      e.preventDefault();
-      //TODO send message
-      this.sendMessage(e.target.value);
-      console.log("send message:", e.target.value);
-      e.target.value="";
-    }
-  }
-
-  sendMessage(msg){
-    var trimmedMsg = msg.trim();
-    if (trimmedMsg.length > 0){
-      var dataToSend ={
-        text:trimmedMsg,
-        fromUserId:localStorage.userId
+    onKeyDown (e) {
+      if (e.keyCode === 13 && !e.shiftKey) {
+        e.preventDefault();
+        this.sendMessage(e.target.value);
+        e.target.value="";
       }
-
-      api.post("/connections/"+this.state.connectionData.id+"/messages?access_token="+localStorage.accessToken, dataToSend)
-      .then((response) => {
-        if (response.status === 200){
-          //console.log("data",response.data);
-          //emit the message via socket.io
-          this.props.socket.emit("new message",response.data);
-
-          //and insert into elements TODO
-          var newElements = [(<MessageItem key={response.data.id}  message={response.data} currentUser={localStorage.userId}/>)].concat(this.state.elements);
-          this.setState({elements:newElements});
-
-        }
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-        console.log("Error: ", error.response);
-      });
     }
-  }
 
-  render() {
+    sendMessage(msg){
+      var trimmedMsg = msg.trim();
+      if (trimmedMsg.length > 0){
+        var dataToSend ={
+          text:trimmedMsg,
+          fromUserId:localStorage.userId
+        }
+
+        api.post("/connections/"+this.state.connectionData.id+"/messages?access_token="+localStorage.accessToken, dataToSend)
+        .then((response) =>{
+          if (response.status === 200){
+            //emit the message via socket.io
+            var toUser = null;
+            if (this.state.connectionData.user1.id.toString() === localStorage.userId) toUser = this.state.connectionData.user2.id;
+            else toUser = this.state.connectionData.user1.id;
+            this.props.socket.emit("new message",{...response.data, toUserId:toUser});
+
+            //and insert into elements
+            var newElements = [(<MessageItem key={response.data.id}  message={response.data} currentUser={localStorage.userId}/>)].concat(this.state.elements);
+            this.setState({elements:newElements});
+
+            this.props.messageSentCB(response.data);
+
+          }
+        })
+        .catch((error) => {
+          console.log("Error: ", error);
+          console.log("Error: ", error.response);
+        });
+      }
+    }
+
+  render(){
     if (this.state.connectionData){
       return(
         <div style={{height:"500px"}}>
-          <div style={{height:this.state.chatHeight}}>
-            <ReactChatView
-              className="chatList"
-               flipped={true}
-               onInfiniteLoad={this.handleInfiniteLoad}
-               scrollLoadThreshold={0}
-               loadingSpinnerDelegate={this.elementInfiniteLoad()}
-               >
-               {this.state.elements}
-            </ReactChatView>
-          </div>
-          <div >
-            <Textarea
-              style={{width:"100%", resize:"none", outline:"none", border: 0, boxSizing: 'border-box', height:"20px", bottom:"0px", position:"absolute", padding:"5px",borderTop:"solid 1px #e5e5e5"}}
-              maxRows={5}
-              placeholder="Write a message..."
-              onKeyDown={this.onKeyDown}
-              onHeightChange={(height) => {this.setState({chatHeight:(500-height)})}}
-            />
-          </div>
+        <div style={{height:this.state.chatHeight}}>
+        <ReactChatView
+                className="chatList"
+                 flipped={true}
+                 onInfiniteLoad={this.handleInfiniteLoad}
+                 scrollLoadThreshold={0}
+                 loadingSpinnerDelegate={this.elementInfiniteLoad()}
+                 >
+                 {this.state.elements}
+        </ReactChatView>
+        </div>
+        <div >
+        <Textarea
+          style={{width:"100%", resize:"none", outline:"none", border: 0, boxSizing: 'border-box', height:"20px", bottom:"0px", position:"absolute", padding:"5px",borderTop:"solid 1px #e5e5e5"}}
+          maxRows={5}
+          placeholder="Write a message..."
+          onKeyDown={this.onKeyDown}
+          onHeightChange={(height) => {this.setState({chatHeight:(500-height)})}}
+        />
+        </div>
         </div>
       );
     }else {
