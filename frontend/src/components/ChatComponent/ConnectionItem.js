@@ -20,8 +20,12 @@ export class ConnectionItem extends Component{
     if (userData.userDetail){
       if(userData.userDetail.profilePicture) imgAddress = "/api/containers/profilePictures/download/"+userData.userDetail.profilePicture+"?access_token="+localStorage.accessToken;
     }
+    var textStyle = {fontWeight:"normal"};
     var buttonStyle = {height:"90px", width:"100%", margin:"0", borderBottom:"1px solid #e5e5e5", borderRadius:"0",display: "flex"};
-    if (this.props.active){ buttonStyle = {...buttonStyle, background:"#F89778"}; }
+    if (this.props.active){
+      buttonStyle = {...buttonStyle, background:"#F89778", color:"white"};
+       textStyle = {fontWeight:"bold"};
+    }
 
     let notificaionMessage;
     if (this.props.hasNotification){
@@ -41,7 +45,7 @@ export class ConnectionItem extends Component{
           </Col>
 
           <Col xs={9} style={{margin:"auto"}}>
-            <div style={{fontWeight:"normal"}}>
+            <div style={textStyle}>
               {userData.firstName} {userData.lastName}
             </div>
               { notificaionMessage }
