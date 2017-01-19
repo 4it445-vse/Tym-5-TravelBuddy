@@ -25,6 +25,7 @@ export class ConnectionsList extends Component{
   pushConnectionToTop(connectionId, isNotification){
     const connectionIndex = this.state.elements.findIndex((element,index,array)=>{
       if (element.id === connectionId) return true;
+      return false;
     });
 
     if (connectionIndex >= 0){

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import  Infinite from "react-infinite";
 import  ReactChatView  from "react-chatview";
 import { MessageItem } from "./MessageItem.js";
 import api from '../../api.js';
@@ -7,9 +6,6 @@ import Textarea from 'react-textarea-autosize';
 
 import Promise from 'bluebird';
 import lodash from "lodash";
-
-
-
 
 
 export class MessagesList extends Component{
@@ -31,18 +27,10 @@ export class MessagesList extends Component{
   }
 
   componentDidMount() {
-
     this.props.socket.on('new inc message', (msg) =>{
-      console.log("recieved a new message", msg);
-      //TODO
       var newElements = [(<MessageItem key={msg.id} message={msg} currentUser={localStorage.userId}/>)].concat(this.state.elements);
-      //console.log("a",newElements);
       this.setState({elements:newElements});
     });
-
-  }
-
-  componentDidUpdate(prevProps, prevState) {
   }
 
   loadConnection(data){
@@ -56,8 +44,6 @@ export class MessagesList extends Component{
   }
 
   fetchMessageData(limit,offset, connectionId){
-    console.log("fetching messages",limit,offset);
-
     var params = {
       params:{
         filter:{
@@ -70,9 +56,7 @@ export class MessagesList extends Component{
 
     api.get("/connections/"+connectionId+"/messages?access_token="+localStorage.accessToken, params)
     .then((response) =>{
-      //console.log(response);
       if (response.status === 200){
-        //console.log("data",response.data);
         let messages = response.data;
         var elements = this.state.elements.concat(this.buildElements(messages));
         this.setState({
@@ -88,9 +72,7 @@ export class MessagesList extends Component{
 
   handleInfiniteLoad() {
     return new Promise((resolve, reject) => {
-      //console.log("XXX");
       if (this.state.connectionData){
-        //this.fetchMessageData(20,this.state.elements.length,this.state.connectionData.id);
 
         var debounced = lodash.debounce(()=>{
             var params = {
@@ -105,9 +87,7 @@ export class MessagesList extends Component{
 
             api.get("/connections/"+this.state.connectionData.id+"/messages?access_token="+localStorage.accessToken, params)
             .then((response) =>{
-              //console.log(response);
               if (response.status === 200){
-                //console.log("data",response.data);
                 let messages = response.data;
                 var elements = this.state.elements.concat(this.buildElements(messages));
                 this.setState({
@@ -132,23 +112,23 @@ export class MessagesList extends Component{
     });
   }
 
-    buildElements(data) {
-        var elements = [];
-        for (var i = 0; i <  data.length; i++) {
-            elements.push(<MessageItem key={data[i].id}  message={data[i]} currentUser={localStorage.userId}/>)
-        }
-        return elements;
-    }
+  buildElements(data) {
+      var elements = [];
+      for (var i = 0; i <  data.length; i++) {
+          elements.push(<MessageItem key={data[i].id}  message={data[i]} currentUser={localStorage.userId}/>)
+      }
+      return elements;
+  }
 
-    elementInfiniteLoad() {
-        return(
-          <div style={{ width:"100%",textAlign:"center",zIndex:"1000"}}>
-            <div style={{borderRadius:"8px",padding:"8px",display:"inline-block"}}>
-              <i className="fa fa-spinner fa-pulse fa-fw fa-lg"/>
-            </div>
-          </div>
-      );
-    }
+  elementInfiniteLoad() {
+    return(
+      <div style={{ width:"100%",textAlign:"center",zIndex:"1000"}}>
+        <div style={{borderRadius:"8px",padding:"8px",display:"inline-block"}}>
+          <i className="fa fa-spinner fa-pulse fa-fw fa-lg"/>
+        </div>
+      </div>
+    );
+  }
 
     onKeyDown (e) {
       if (e.keyCode === 13 && !e.shiftKey) {
@@ -175,7 +155,7 @@ export class MessagesList extends Component{
             else toUser = this.state.connectionData.user1.id;
             this.props.socket.emit("new message",{...response.data, toUserId:toUser});
 
-            //and insert into elements TODO
+            //and insert into elements
             var newElements = [(<MessageItem key={response.data.id}  message={response.data} currentUser={localStorage.userId}/>)].concat(this.state.elements);
             this.setState({elements:newElements});
 
@@ -189,13 +169,6 @@ export class MessagesList extends Component{
         });
       }
     }
-
-
-
-
-
-
-
 
   render(){
     if (this.state.connectionData){
