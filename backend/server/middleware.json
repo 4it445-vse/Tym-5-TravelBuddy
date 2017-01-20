@@ -34,13 +34,13 @@
   "auth": {},
   "parse": {
     "body-parser#json": {
-      "params" : {
-        "limit" : "50mb"
+      "params": {
+        "limit": "50mb"
       }
     },
     "body-parser#urlencoded": {
       "params": {
-        "limit" : "50mb",
+        "limit": "50mb",
         "extended": true
       }
     }

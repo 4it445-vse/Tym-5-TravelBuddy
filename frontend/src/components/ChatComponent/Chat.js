@@ -13,17 +13,6 @@ export class Chat extends Component{
       dynamicHeight: (window.innerHeight-SPACING)
     }
 
-    const socket = io('', { path: '/api/chat' });
-    socket.on("connect",()=>{
-      socket.emit("hello",{userId:localStorage.userId});
-    });
-
-    socket.on('new message notification',(msg)=>{
-      console.log("i got a message notification",msg);
-      this.connList.pushConnectionToTop(msg.refConnectionId, true);
-    });
-
-    this.socket = socket;
 
     this.connectionSelectedCallback = this.connectionSelectedCallback.bind(this);
     this.messageSentCallback = this.messageSentCallback.bind(this);
@@ -35,12 +24,27 @@ export class Chat extends Component{
     this.setState({dynamicHeight:(window.innerHeight-SPACING)});
   }
 
+  componentWillMount(){
+    const socket = io('', { path: '/api/chat' });
+    socket.on("connect",()=>{
+      socket.emit("hello",{userId:localStorage.userId});
+    });
+
+    socket.on('new message notification',(msg)=>{
+      console.log("i got a message notification",msg);
+      this.connList.pushConnectionToTop(msg.refConnectionId, true);
+    });
+
+    this.socket = socket;
+  }
+
   componentDidMount() {
     window.addEventListener("resize", this.updateDimensions);
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
+    this.socket.emit("forceDisconnect");
   }
 
   messageSentCallback(msg){

@@ -9,9 +9,9 @@ export class ConnectionItem extends Component{
     this.handleClickEvent=this.handleClickEvent.bind(this);
   }
 
-
   handleClickEvent(){
     this.props.handleElementClick(this.props.data, this.props.data.id);
+
   }
 
   render(){
@@ -28,12 +28,22 @@ export class ConnectionItem extends Component{
     }
 
     let notificaionMessage;
-    if (this.props.hasNotification){
-      notificaionMessage = (
-        <div>
-          <Badge style={{background:"green"}}>New messages</Badge>
-        </div>
-      );
+    if(!this.props.active){
+      if (this.props.hasNotification){
+        notificaionMessage = (
+          <div>
+            <Badge style={{background:"green"}}>New messages</Badge>
+          </div>
+        );
+      }else if (this.props.data.notification) {
+        if (this.props.data.notification.refUserId.toString() === this.props.currentUser){
+          notificaionMessage = (
+            <div>
+              <Badge style={{background:"green"}}>New messages</Badge>
+            </div>
+          );
+        }
+      }
     }
 
     return(

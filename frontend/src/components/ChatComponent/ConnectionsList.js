@@ -38,9 +38,9 @@ export class ConnectionsList extends Component{
       });
     }
 
-    if (isNotification){
+    console.log("conid,activeElementId",connectionId,this.state.activeElementId);
+    if (isNotification && (connectionId !== this.state.activeElementId)){
       this.state.elementsWithNotification.add(connectionId);
-      console.log("this.state.elementsWithNotification",this.state.elementsWithNotification);
     }
     this.forceUpdate();
   }
@@ -103,7 +103,7 @@ export class ConnectionsList extends Component{
     .then((response) =>{
       // console.log(response);
       if (response.status === 200){
-        // console.log("data",response.data);
+         console.log("data",response.data);
         let connections = response.data;
         this.setState({
             isInfiniteLoading: false,
@@ -123,6 +123,7 @@ export class ConnectionsList extends Component{
     this.state.elementsWithNotification.delete(elementId);
     this.forceUpdate();
   }
+
 
   elementInfiniteLoad() {
       return(
