@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import { WeatherList } from '../../Weather/WeatherList';
 import api from '../../../api.js';
+import { startBookingAction } from "../../Booking/actions.js";
 
 export class DetailProduct extends Component {
     constructor(props) {
@@ -18,7 +20,7 @@ export class DetailProduct extends Component {
 
         this.show = this.show.bind(this);
         this.hide = this.hide.bind(this);
-
+        this.handleStartBooking = this.handleStartBooking.bind(this);
     }
 
     show(product, city, user, categories) {
@@ -78,6 +80,18 @@ export class DetailProduct extends Component {
         });
     }
 
+    handleStartBooking() {
+      this.hide();
+      let data = {
+        product: this.state.product,
+        owner: this.state.user
+      }
+      data.product.city = this.state.city;
+      data.product.categories = this.state.categories;
+      data.owner.profilePicture = this.state.ownerProfilePicture;
+      this.props.dispatch(startBookingAction(data.product, data.owner, localStorage.userId));
+    }
+
     render() {
         let productImageUrl = "/api/containers/productPictures/download/"+this.state.product.picture;
         let productStyle = {
@@ -120,62 +134,19 @@ export class DetailProduct extends Component {
                     <div className="">
                       <p className="description">{this.state.product.description}</p>
                     </div>
-                    {/* <Form horizontal>
-                        <FormGroup controlId="productLabel">
-                            <Col componentClass={ControlLabel} sm={2}>
-                                Buddy:
-                            </Col>
-                            <Col sm={10}>
-                                <FormControl type="text" value={`${this.state.user.firstName} ${this.state.user.lastName}`} disabled/>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId="productCity">
-                            <Col componentClass={ControlLabel} sm={2}>
-                                Category:
-                            </Col>
-                            <Col sm={10}>
-                                <FormControl type="text" value={this.returnCategories()} disabled/>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId="productCity">
-                            <Col componentClass={ControlLabel} sm={2}>
-                                City:
-                            </Col>
-                            <Col sm={10}>
-                                <FormControl type="text" value={this.state.city.name} disabled/>
-                            </Col>
-                        </FormGroup>
-
-                        <FormGroup controlId="productPrice">
-                            <Col componentClass={ControlLabel} sm={2}>
-                                Price:
-                            </Col>
-                            <Col sm={10}>
-                                <FormControl type="text" value={this.state.product.price} disabled/>
-                            </Col>
-                        </FormGroup>
-
-                        <FormGroup controlId="productDescription">
-                            <Col componentClass={ControlLabel} sm={2}>
-                                Description:
-                            </Col>
-                            <Col sm={10}>
-                                <FormControl componentClass="textArea" value={this.state.product.description} disabled/>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId="weatherData">
-                            <Col sm={12}>
-                                <WeatherList cityName={this.state.city.name}/>
-                            </Col>
-                        </FormGroup>
-                    </Form> */}
                     <WeatherList cityName={this.state.city.name}/>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={() => {this.hide()}}>Cancel</Button>
-                    <Button type='button' bsStyle="primary">Reply</Button>
+                    <Button onClick={() => {this.handleStartBooking()}} type='button' bsStyle="primary">Book</Button>
                 </Modal.Footer>
             </Modal>
         );
     }
 }
+
+//---Mapping functions and React-redux connection
+
+export const DetailProductContainer = connect(
+  undefined, undefined, undefined, { withRef: true }
+)(DetailProduct);

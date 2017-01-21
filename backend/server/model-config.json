@@ -125,5 +125,9 @@
   "Message": {
     "dataSource": "mysqlds",
     "public": false
+  },
+  "Transaction": {
+    "dataSource": "mysqlds",
+    "public": true
   }
 }

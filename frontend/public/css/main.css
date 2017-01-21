@@ -322,6 +322,46 @@ footer.footer-app {
   .top-offers.item-list .list-group-item .footer span {
     width: 100%;
   }
+/* BookingWizard Component */
+.booking-wizard {
+
+}
+  .booking-wizard .container {
+    background: #fff;
+    padding-top: 15px;
+  }
+  .booking-wizard .controls {
+    text-align: center;
+    padding: 50px 0;
+  }
+.booking-wizard .detail-product .info-bar .profile-picture {
+    position: relative;
+    top: auto;
+    display: inline-block;
+}
+.booking-wizard .detail-product .info-bar span.name {
+    margin-left: 15px;
+}
+.booking-wizard .detail-product .info-bar span.price {
+  font-weight: 700;
+  font-size: 1em;
+  background: #f05f40;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: white;
+}
+.booking-wizard .detail-product .header {
+  height: 200px;
+  background: #f05f40;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+  .booking-wizard .detail-product .header h4 {
+    font-size: 4em;
+    text-align: left;
+    line-height: 1;
+    padding-left: 10px;
+  }
 /* DetailProduct Component */
 .detail-product {
 
@@ -329,8 +369,11 @@ footer.footer-app {
 .detail-product .modal-body {
   padding: 0;
 }
-.detail-product .modal-header {
+.detail-product .modal-dialog .modal-header {
   height: 400px;
+  background: #f05f40;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
   .detail-product .modal-header h4 {
     font-size: 4em;
@@ -490,9 +533,9 @@ footer.footer-app {
 .modal-create-product .Select-control {
   color: #000;
 }
-  .modal-create-product {
-
-  }
+.modal-create-product .modal-dialog .modal-body {
+  padding: 15px 15px 15px 0;
+}
 /* LandingPage */
 #register {
   background: #222;
@@ -503,28 +546,17 @@ footer.footer-app {
 }
 /* HomePage */
 .homepage {
-  height: 100%;
-  min-height: auto;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
-  background-position: top;
   background-image: url('../images/header.jpg');
 }
-  .homepage > .gradient-wrapper {
-    height: 100%;
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0+0,1+100 */
-    background: -moz-linear-gradient(top,  rgba(255,255,255,0) -100%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top,  rgba(255,255,255,0) -100%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom,  rgba(255,255,255,0) -100%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
-  }
   .homepage section.search {
     /*height: 100%;*/
     min-height: 100%;
     padding-bottom: 0;
   }
+/* BookingPage */
+.booking-page {
+  background-image: url('../images/header.jpg');
+}
 /* ProfilePage */
 .profile-page {
 

@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import { PageFooter } from '../components/common/PageFooter/PageFooter';
 import { MainNavigation } from '../components/HomePage/MainNavigation.js';
 import { SearchSection } from '../components/HomePage/SearchSection/SearchSection';
 import { WelcomeWizardModal } from '../components/WelcomeWizard/WelcomeWizardModal.js';
-import { DetailProduct } from '../components/HomePage/DetailProduct/DetailProduct';
+import { DetailProductContainer } from '../components/HomePage/DetailProduct/DetailProduct';
 import api from '../api.js';
 
-export class HomePage extends Component {
+export class HomePageRaw extends Component {
 
     constructor(props) {
         super(props);
@@ -50,12 +51,13 @@ export class HomePage extends Component {
         }
 
         return (
-          <div id="main-wrapper" className="homepage">
+          <div id="main-wrapper" className="booking-page">
             <div className="gradient-wrapper">
               {welcomeWizard}
               <MainNavigation userData={userData}/>
               <section className="search">
-                  <DetailProduct ref="detailProductModal"/>
+                  {/* this is creating reference for showing productDetail modal. It goes all the way from searchSection to Item through props */}
+                  <DetailProductContainer ref="detailProductModal" product={this.props.product} show={this.props.showDetail}/>
                   <div className="container">
                       <h1 className="text-center">Offers</h1>
                       <SearchSection modal={this.refs.detailProductModal}/>
@@ -67,3 +69,15 @@ export class HomePage extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+  const { searchSection } = state;
+  return {
+    product: searchSection.product,
+    showDetail: searchSection.showDetail
+  };
+}
+
+export const HomePage = connect(
+  mapStateToProps
+)(HomePageRaw);

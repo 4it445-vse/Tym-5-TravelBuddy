@@ -1,14 +1,14 @@
 import api from '../api.js';
 import { browserHistory } from 'react-router';
 
-
 //list of all action types
+
 export const ACTION_TYPE_LOGGED_IN = 'ACTION_TYPE_LOGGED_IN';
 export const ACTION_TYPE_LOG_OUT = 'ACTION_TYPE_LOG_OUT';
 export const ACTION_TYPE_LOG_IN_FAILED = 'ACTION_TYPE_LOG_IN_FAILED';
 
-
 //implement actions
+
 export const userLoggedInAction = (accessToken, userId) => {
   //store access token in localStorage
   localStorage.setItem('accessToken', accessToken);
@@ -21,14 +21,11 @@ export const userLoggedInAction = (accessToken, userId) => {
   };
 };
 
-
-
 export const userLoginFailedAction = () => {
   return {
     type: ACTION_TYPE_LOG_IN_FAILED
   };
 };
-
 
 export const loginAction = (email, password) => (dispatch) => {
 

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { ListGroupItem } from 'react-bootstrap';
 
-
 export class Item extends Component{
     constructor(props) {
         super(props);
@@ -47,7 +46,7 @@ export class Item extends Component{
               <div
                 className="wrapper-overlay text-center"
                 onClick={() => {
-                    this.state.modal.show(
+                    this.state.modal.getWrappedInstance().show(
                       this.state.product,
                       this.state.product.productCity,
                       this.state.product.user,

@@ -16,8 +16,8 @@
     "isActive": {
       "type": "boolean"
     },
-    "lastMessageDate":{
-      "type":"date"
+    "lastMessageDate": {
+      "type": "date"
     }
   },
   "validations": [],
