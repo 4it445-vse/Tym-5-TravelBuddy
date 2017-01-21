@@ -555,6 +555,7 @@ footer.footer-app {
 }
 .profile-page section {
   padding-top: 0;
+  padding-bottom: 50px;
 }
 .profile-page section .container {
   background: url('../images/profile_bg.png');
