@@ -69,20 +69,29 @@ export class BuddyPage extends Component {
 
         console.log("State",this.state.useritem);
         return (
-            <div id="main-wrapper" className="homepage">
-                <div className="gradient-wrapper">
+            <div id="main-wrapper" className="buddy-page">
+                <section>
                     <MainNavigation userData={this.state.userData}/>
                     <div className="container">
                         <div className="h1"></div>
                         <br/>
                         <h1 className="text-center">Buddy Detail</h1>
-                        <Grid>
+                        <Grid bsClass="buddy-profile">
+
                             <Row className="show-grid">
                                 <Col xs={4} md={4} lg={4}>Name:</Col>
-                                <Col xs={8} md={8} lg={8}>{this.state.useritem.firstName}</Col>
+                                <Col xs={8} md={8} lg={8}>{this.state.useritem.firstName != null ? this.state.useritem.firstName : "Unknown" } {this.state.useritem.lastName != null ? this.state.useritem.lastName : "Unknown" }</Col>
                             </Row>
                             <Row className="show-grid">
-                                <Col xs={4} md={4} lg={4}>Buddy:</Col>
+                                <Col xs={4} md={4} lg={4}>Birthdate:</Col>
+                                <Col xs={8} md={8} lg={8}>{this.state.useritem.las/Col>
+                            </Row>
+                            <Row className="show-grid">
+                                <Col xs={4} md={4} lg={4}>Bio:</Col>
+                                <Col xs={8} md={8} lg={8}></Col>
+                            </Row>
+                            <Row className="show-grid">
+                                <Col xs={4} md={4} lg={4}>Bio:</Col>
                                 <Col xs={8} md={8} lg={8}></Col>
                             </Row>
                         </Grid>
@@ -91,8 +100,8 @@ export class BuddyPage extends Component {
                             <div>Rating 1.6</div>
                         </div>
                     </div>
-                    <PageFooter/>
-                </div>
+                </section>
+                <PageFooter/>
             </div>
         );
     }

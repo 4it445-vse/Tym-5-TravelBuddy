@@ -501,6 +501,27 @@ footer.footer-app {
   padding-top: 50px;
   margin-top: 50px;
 }
+
+/* BuddyPage */
+.buddy-page {
+
+}
+
+.buddy-page .buddy-profile {
+
+}
+
+.buddy-picture {
+  height: 100px;
+  width: 100px;
+  background: #f05f40;
+  background-size: 100px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  position: absolute;
+  top: -50px;
+}
+
 /* HomePage */
 .homepage {
   height: 100%;
@@ -650,6 +671,8 @@ td, th {
   height: 200px;
   width: 250px;
 }
+
+
 
 /*.login-centered {
   padding-top: 10px;
