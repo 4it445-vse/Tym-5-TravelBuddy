@@ -53,10 +53,11 @@ export class TransactionListItemRaw extends Component{
               <div className="col-lg-12">
                 <ListGroupItem>
                   <div className={this.props.transaction.Status}>
-                    <span>User: {this.state.fullName} {this.props.transaction.refUserId}</span>
-                    <span>When: {requestDate}</span>
-                    <span>Note: {this.props.transaction.Note}</span>
-                    <span>state: {this.props.transaction.Status}</span>
+                    <span className="date">{requestDate}</span>
+                    <span>requested by</span>
+                    <span className="userName">{this.state.fullName}</span>
+                    {/* <span>Note: {this.props.transaction.Note}</span> */}
+                    {/* <span>state: {this.props.transaction.Status}</span> */}
                     {this.props.transaction.Status === "accepted" ?
                       undefined
                       :

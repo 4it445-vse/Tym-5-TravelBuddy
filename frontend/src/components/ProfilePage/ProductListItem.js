@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, ButtonGroup, Panel, Label, ListGroupItem } from 'react-bootstrap';
 import { TransactionList } from './TransactionList.js';
 import { connect } from 'react-redux';
+import { deactivateProductAction, activateProductAction } from '../Booking/actions.js';
 
 export class ProductListItemRaw extends Component{
 
@@ -9,7 +10,41 @@ export class ProductListItemRaw extends Component{
       super(props);
       this.state = {
         expandTransactions: false,
+        controlButton: this.props.product.state,
+        productState: this.props.product.state
       }
+    }
+
+    showLabel(label) {
+      switch (label) {
+        case "open":
+          return (
+            <Label bsStyle="warning">{label}</Label>
+          );
+        case "accepted":
+          return (
+            <Label bsStyle="success">{label}</Label>
+          );
+        case "deactivated":
+          return (
+            <Label bsStyle="danger">{label}</Label>
+          );
+        default:
+          break;
+
+      }
+    }
+
+    handleDeactivate() {
+      deactivateProductAction(this.props.product.id);
+      this.setState({ controlButton: "deactivated" })
+      this.setState({ productState: "deactivated" })
+    }
+
+    handleActivate() {
+      activateProductAction(this.props.product.id);
+      this.setState({ controlButton: "open" })
+      this.setState({ productState: "open" })
     }
 
     render() {
@@ -27,7 +62,7 @@ export class ProductListItemRaw extends Component{
                       <div className="row">
                         <div className="col-md-12">
                           <div className="title">
-                            <Label bsStyle="success">{this.props.product.state}</Label>
+                            {this.showLabel(this.state.productState)}
                             <h3>{this.props.product.label}</h3>
                           </div>
                         </div>
@@ -63,11 +98,14 @@ export class ProductListItemRaw extends Component{
 
                       </div>
                       <div className="col-md-6 text-right">
-                        <ButtonGroup>
-                          <Button bsStyle="primary">Deactive</Button>
+                        <ButtonGroup style={{marginRight: "15px"}}>
+                          {this.state.controlButton === "open" ?
+                            <Button onClick={this.handleDeactivate.bind(this)} bsStyle="primary">Deactive</Button>
+                            :
+                            <Button onClick={this.handleActivate.bind(this)} bsStyle="primary">Activate</Button>
+                          }
                         </ButtonGroup>
                         <ButtonGroup>
-                          {/* <Button bsStyle="primary">Deactive</Button> */}
                           {this.props.product.transactions.length === 0 ?
                           <Button bsStyle="default">No requests</Button>
                           :
@@ -93,8 +131,8 @@ export class ProductListItemRaw extends Component{
 const mapStateToProps = (state) => {
   const { booking } = state;
   return {
-    acceptedTxn: booking.acceptedTxn,
-    declinedTxn: booking.declinedTxn
+    productId: booking.productId,
+    productState: booking.productState
   };
 }
 

@@ -538,10 +538,38 @@ footer.footer-app {
 }
 /* TransactionList component */
 .transaction-list {
-  background: #f05f40;
+  background: transparent;
 }
 .transaction-list.accepted {
-  background: #f05f40;
+  background: #5cb85c;
+}
+.transaction-list .container-fluid.item-list {
+  padding: 0;
+}
+.transaction-list .list-group-item .btn-group {
+  float: right;
+}
+.transaction-list .item-list span.list-group-item {
+  padding: 10px;
+  margin-bottom: 0;
+}
+.transaction-list .col-lg-12 {
+  padding: 0;
+}
+.transaction-list .item-list span.list-group-item:hover {
+  background: rgba(0,0,0,0.05);
+}
+.transaction-list .item-list .list-group-item span.date {
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 2em;
+  font-weight: bold;
+  margin-right: 10px;
+}
+.transaction-list .item-list .list-group-item span.userName {
+  font-family: "Open Sans", Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-left: 10px;
 }
 /* LandingPage */
 #register {
@@ -647,6 +675,7 @@ footer.footer-app {
   background-position: right;
   background-repeat: no-repeat;
   height: auto;
+  margin-bottom: 0;
 }
 .profile-page .my-offers .item-list .gradient-overlay {
   min-height: 150px;
