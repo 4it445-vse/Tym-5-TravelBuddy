@@ -51,12 +51,11 @@ export class HomePageRaw extends Component {
         }
 
         return (
-          <div id="main-wrapper" className="booking-page">
+          <div id="main-wrapper" className="homepage">
             <div className="gradient-wrapper">
               {welcomeWizard}
               <MainNavigation userData={userData}/>
               <section className="search">
-                  {/* this is creating reference for showing productDetail modal. It goes all the way from searchSection to Item through props */}
                   <DetailProductContainer ref="detailProductModal" product={this.props.product} show={this.props.showDetail}/>
                   <div className="container">
                       <h1 className="text-center">Offers</h1>

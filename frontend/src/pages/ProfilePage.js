@@ -49,7 +49,6 @@ export class ProfilePage extends Component {
         <PageHeader/>
         {/* Profile info */}
         <section>
-
           <div className="container">
               <div className="col-md-3">
                 <ProfilePictureEditorComponent/>

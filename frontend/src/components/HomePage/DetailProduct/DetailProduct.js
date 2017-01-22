@@ -35,7 +35,7 @@ export class DetailProduct extends Component {
             categories:categories});
 
         this.updateViews(product.id);
-        this.getOwnerProfilePicture(product.user.id);
+        this.getOwnerProfilePicture(user.id);
     }
 
     hide() {

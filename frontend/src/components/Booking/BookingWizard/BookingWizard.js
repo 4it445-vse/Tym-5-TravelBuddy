@@ -69,7 +69,6 @@ export class BookingWizardRaw extends Component {
     }
     this.setState({ selectedDay: selected ? null : day });
     this.setState({ requestDate: selected ? null : day });
-    console.log('--- DAY CLICKED', day);
   }
 
   cancelBooking() {

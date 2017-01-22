@@ -9,16 +9,22 @@ Call non-pure functions, e.g. Date.now() or Math.random().
 import {
   BOOKING_START_BOOKING,
   BOOKING_CANCEL_BOOKING,
-  BOOKING_CREATE_TRANSACTION
+  BOOKING_CREATE_TRANSACTION,
+  BOOKING_DECLINE_REQUEST_TRANSACTION,
+  BOOKING_ACCEPT_REQUEST_TRANSACTION
 } from "./actions.js";
 
 const initialState = {
   product: null,
+  productId: null,
   owner: null,
   ownerId: null,
   userId: null,
-  productId: null,
   requestDate: null,
+  transaction: null,
+  acceptedTxn: null,
+  declinedTxn: null,
+  productState: null,
   statusText: null
 }
 
@@ -44,6 +50,20 @@ const bookingReducer = (state = initialState, action) => {
         userId: action.userId,
         requestDate: action.requestDate,
         statusText: action.statusText
+      };
+    case BOOKING_DECLINE_REQUEST_TRANSACTION:
+      return {
+        ...state,
+        transaction: action.transaction,
+        declinedTxn: action.transaction
+      };
+    case BOOKING_ACCEPT_REQUEST_TRANSACTION:
+      return {
+        ...state,
+        transaction: action.transaction,
+        productId: action.transaction.refProductId,
+        productState: "accepted",
+        acceptedTxn: action.transaction
       };
     default:
       return state;
