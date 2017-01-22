@@ -4,7 +4,7 @@ import { App } from './App';
 
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import containerReducer from './reducers';
+import { containerReducer } from './reducers';
 import {userLoggedInAction} from "./actions";
 
 
@@ -12,7 +12,7 @@ import {userLoggedInAction} from "./actions";
 // Rendering of the app starts here
 
 let store = createStore(containerReducer,applyMiddleware(thunk));
-
+console.log('--- STATES', store.getState());
 let accessToken = localStorage.getItem('accessToken');
 let userId = localStorage.getItem('userId');
 if (accessToken && userId) {

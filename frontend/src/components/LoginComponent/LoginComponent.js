@@ -109,9 +109,6 @@ export class LoginComponent extends Component{
   }
 }
 
-
-
-
 //---Mapping functions and React-redux connection
 
 const mapStateToProps = (state) => {

@@ -85,13 +85,19 @@
       "foreignKey": "refRecipientUserId",
       "through": "Notification"
     },
+    "transactions": {
+      "type": "hasMany",
+      "model": "Transaction",
+      "foreignKey": "refUserId",
+      "description": "User transactions, not buddy's transactions"
+    },
     "SenderNotifications": {
       "type": "hasMany",
       "model": "Notification",
       "foreignKey": "refSenderUserId",
       "through": "Notification"
     },
-    "inInterestedIn": {
+    "interestedIn": {
       "type": "hasMany",
       "model": "UserProduct",
       "foreignKey": "refTouristUserId",

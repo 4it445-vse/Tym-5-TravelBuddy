@@ -36,7 +36,8 @@
       "type": "number"
     },
     "state": {
-      "type": "number"
+      "type": "string",
+      "default": "active"
     },
     "views": {
       "type": "number",
@@ -78,6 +79,11 @@
       "type": "belongsTo",
       "model": "UserMain",
       "foreignKey": "refOwnerUserId"
+    },
+    "transactions": {
+      "type": "hasMany",
+      "model": "Transaction",
+      "foreignKey": "refProductId"
     }
   },
   "acls": [
