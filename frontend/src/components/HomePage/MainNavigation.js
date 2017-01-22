@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import Scroll from 'react-scroll';
 import { Link } from 'react-router';
 import { LogoutComponentContainer } from '../LogoutComponent/LogoutComponent.js';
+import {NotificationView} from '../../components/HomePage/NotificationView/NotificationView';
 
 export class MainNavigation extends Component {
   constructor(props) {
@@ -11,7 +12,8 @@ export class MainNavigation extends Component {
     this.state = {
       open: "",
       style: "affix",
-      userData: undefined
+      userData: undefined,
+        notificationView: props.notificationView,
     };
   }
 
@@ -40,6 +42,9 @@ export class MainNavigation extends Component {
                 {/* <!-- Collect the nav links, forms, and other content for toggling --> */}
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul className="nav navbar-nav navbar-right">
+                        <li>
+                            <NotificationView/>
+                        </li>
                         <li>
                             <Link to="/search" activeClassName="active"><i className="fa fa-search"></i>&nbsp;Search</Link>
                             {/* <a href="/search"><i className="fa fa-search"></i>&nbsp;Search</a> */}

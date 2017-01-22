@@ -4,6 +4,11 @@
 import api from '../../../api';
 import React, { Component } from 'react';
 import {Notifications, NotificationItem} from 'pui-react-notifications';
+import {Label} from 'react-bootstrap';
+
+
+
+
 export class NotificationView extends Component {
 
     constructor(props) {
@@ -12,7 +17,7 @@ export class NotificationView extends Component {
             notifications : null,
         };
 
-        this.getNotifications();
+        this.getNotifications(localStorage.userId);
 
     }
 
@@ -22,7 +27,7 @@ export class NotificationView extends Component {
                 if (response.status === 200){
                     let notifications = response.data;
                     const filterNotifications = notifications.filter(function (notification) {
-                        return notification.refRecipientUserId = localStorage.userId;
+                        return notification.refRecipientUserId == localStorage.userId;
                     });
                     console.log("Filtered Notifications",filterNotifications);
                    this.setState({notifications: filterNotifications});
@@ -57,13 +62,9 @@ export class NotificationView extends Component {
     renderList(){
         return this.state.notifications.map((notification) => {
             return (
-                <NotificationItem key={notification.id}
-                    onClick={() => this.setNotification(notification.id)}>
-                    <Flag image={<h3 className="mvn"><Label>New</Label></h3>}>
-                        <p className="type-sm type-neutral-5 mvn"> {notification.message}</p>
-                    </Flag>
-
-
+                <NotificationItem key={notification.id}>
+                    <div className="h4"><Label>New</Label>
+                        <p className="notification-message"> {notification.message}</p></div>
                 </NotificationItem>
             );
         });
@@ -75,8 +76,8 @@ export class NotificationView extends Component {
 
         return(
             <div className="notification-view">
-                <Notifications size="h2">
-                    {this.renderList()}
+                <Notifications size="h1">
+                    <NotificationItem>Item 1</NotificationItem>
                 </Notifications>
             </div>
         );
