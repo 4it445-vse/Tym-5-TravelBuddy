@@ -77,7 +77,7 @@ export class NotificationView extends Component {
         return(
             <div className="notification-view">
                 <Notifications size="h1">
-                    <NotificationItem>Item 1</NotificationItem>
+                    {this.renderList()}
                 </Notifications>
             </div>
         );

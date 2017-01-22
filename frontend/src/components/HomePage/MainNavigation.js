@@ -42,9 +42,7 @@ export class MainNavigation extends Component {
                 {/* <!-- Collect the nav links, forms, and other content for toggling --> */}
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul className="nav navbar-nav navbar-right">
-                        <li>
-                            <NotificationView/>
-                        </li>
+                        /*Notification Component goes here*/
                         <li>
                             <Link to="/search" activeClassName="active"><i className="fa fa-search"></i>&nbsp;Search</Link>
                             {/* <a href="/search"><i className="fa fa-search"></i>&nbsp;Search</a> */}
