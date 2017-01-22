@@ -196,7 +196,6 @@ footer.footer-app {
     width: 100%;
     padding: 0;
     border-radius: 0;
-    cursor: pointer;
     transition: background-color 0.2s ease;
     background-repeat: no-repeat;
     background-size: cover;
@@ -254,6 +253,7 @@ footer.footer-app {
       padding: 10px;
       font-size: 1.3em;
       width: 100%;
+      height: 48px;
       background: #f05f40;
       background: #fff;
       border-bottom: 1px solid #f05f40;
@@ -322,6 +322,46 @@ footer.footer-app {
   .top-offers.item-list .list-group-item .footer span {
     width: 100%;
   }
+/* BookingWizard Component */
+.booking-wizard {
+
+}
+  .booking-wizard .container {
+    background: #fff;
+    padding-top: 15px;
+  }
+  .booking-wizard .controls {
+    text-align: center;
+    padding: 50px 0;
+  }
+.booking-wizard .detail-product .info-bar .profile-picture {
+    position: relative;
+    top: auto;
+    display: inline-block;
+}
+.booking-wizard .detail-product .info-bar span.name {
+    margin-left: 15px;
+}
+.booking-wizard .detail-product .info-bar span.price {
+  font-weight: 700;
+  font-size: 1em;
+  background: #f05f40;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: white;
+}
+.booking-wizard .detail-product .header {
+  height: 200px;
+  background: #f05f40;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+  .booking-wizard .detail-product .header h4 {
+    font-size: 4em;
+    text-align: left;
+    line-height: 1;
+    padding-left: 10px;
+  }
 /* DetailProduct Component */
 .detail-product {
 
@@ -329,8 +369,11 @@ footer.footer-app {
 .detail-product .modal-body {
   padding: 0;
 }
-.detail-product .modal-header {
+.detail-product .modal-dialog .modal-header {
   height: 400px;
+  background: #f05f40;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
   .detail-product .modal-header h4 {
     font-size: 4em;
@@ -490,9 +533,16 @@ footer.footer-app {
 .modal-create-product .Select-control {
   color: #000;
 }
-  .modal-create-product {
-
-  }
+.modal-create-product .modal-dialog .modal-body {
+  padding: 15px 15px 15px 0;
+}
+/* TransactionList component */
+.transaction-list {
+  background: #f05f40;
+}
+.transaction-list.accepted {
+  background: #f05f40;
+}
 /* LandingPage */
 #register {
   background: #222;
@@ -528,28 +578,20 @@ footer.footer-app {
 
 /* HomePage */
 .homepage {
-  height: 100%;
-  min-height: auto;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
-  background-position: top;
   background-image: url('../images/header.jpg');
 }
-  .homepage > .gradient-wrapper {
-    height: 100%;
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0+0,1+100 */
-    background: -moz-linear-gradient(top,  rgba(255,255,255,0) -100%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top,  rgba(255,255,255,0) -100%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom,  rgba(255,255,255,0) -100%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
-  }
   .homepage section.search {
     /*height: 100%;*/
     min-height: 100%;
     padding-bottom: 0;
   }
+  .homepage section.search .item-list .list-group-item {
+    cursor: pointer;
+  }
+/* BookingPage */
+.booking-page {
+  background-image: url('../images/header.jpg');
+}
 /* ProfilePage */
 .profile-page {
 
@@ -596,8 +638,74 @@ footer.footer-app {
 .profile-page .panel.panel-default .panel-body {
   padding: 0;
 }
-.settings .edit-profile-form .panel .panel {
+.profile-page .settings .edit-profile-form .panel .panel {
   padding-top: 15px;
+}
+.profile-page .my-offers .item-list .list-group-item {
+  background: transparent;
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+  height: auto;
+}
+.profile-page .my-offers .item-list .gradient-overlay {
+  min-height: 150px;
+  background: -moz-linear-gradient(left,  rgba(255,255,255,1) 1%, rgba(255,255,255,1) 65%, rgba(255,255,255,0.53) 100%, rgba(255,255,255,0) 100%);
+  background: -webkit-linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(255,255,255,1) 65%,rgba(255,255,255,0.53) 100%,rgba(255,255,255,0) 100%);
+  background: linear-gradient(to right,  rgba(255,255,255,1) 1%,rgba(255,255,255,1) 65%,rgba(255,255,255,0.53) 100%,rgba(255,255,255,0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=1 );
+}
+.profile-page .my-offers .item-list .list-group-item .header {
+  background: transparent;
+  border: none;
+  margin-bottom: 0;
+}
+.profile-page .my-offers .item-list .list-group-item .header .title {
+  padding: 0;
+  line-height: 40px;
+}
+.profile-page .my-offers .item-list .list-group-item .header .title h3 {
+  display: inline;
+  color: #000;
+  line-height: inherit;
+  padding-bottom: 0;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+.profile-page .my-offers .item-list .list-group-item .body {
+  padding: 0;
+}
+.profile-page .my-offers .item-list .list-group-item .body .category {
+  text-transform: uppercase;
+}
+.profile-page .my-offers .item-list .list-group-item .body .properties span {
+  margin-right: 10px;
+}
+  .profile-page .my-offers .item-list .list-group-item .body .properties span.price {
+    padding-left: 10px;
+    border-left: solid 1px #dedede;
+  }
+.profile-page .my-offers .item-list .list-group-item .body .description {
+  margin-top: 5px;
+}
+.profile-page .my-offers .item-list .list-group-item .footer {
+  position: relative;
+  bottom: auto;
+}
+.profile-page .my-offers .item-list .list-group-item .footer.gradient-overlay {
+  min-height: auto;
+  height: auto;
+  padding: 0 0 5px 0;
+}
+.profile-page .my-offers .item-list .list-group-item .header .title .label {
+  vertical-align: middle;
+}
+.profile-page .my-offers .item-list .list-group-item .footer span {
+  width: auto;
+}
+.profile-page .my-offers .item-list .list-group-item .header img {
+  width: 100%;
+  height: 100%;
 }
 /* Verified Page */
 .verified-page {

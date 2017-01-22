@@ -11,6 +11,7 @@ import { AuthenticationWrapper } from "./components/AuthenticationWrapper.js";
 import { RootPageWrapper } from "./pages/RootPageWrapper.js";
 import { HomePage } from "./pages/HomePage.js";
 import { BuddyPage} from "./pages/BuddyPage.js";
+import { BookingPage } from "./pages/BookingPage.js";
 
 export function createRoutes() {
   return (
@@ -22,6 +23,7 @@ export function createRoutes() {
       <Route path="/profile" component={AuthenticationWrapper(ProfilePage)}/>
       <Route path="/search" component={AuthenticationWrapper(HomePage)}/>
       <Route path="/profile/:userId" component={AuthenticationWrapper(BuddyPage)}/>
+      <Route path="/booking" component={AuthenticationWrapper(BookingPage)}/>
       <Route path="*" component={PageNotFound}/>
     </Route>
   );
