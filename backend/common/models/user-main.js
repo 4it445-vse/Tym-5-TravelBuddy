@@ -304,6 +304,9 @@ module.exports = function(Usermain) {
             relation: "userDetail"
           }
         }
+      },
+      {
+        relation: "notification"
       }]
     };
 

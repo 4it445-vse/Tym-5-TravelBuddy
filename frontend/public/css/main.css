@@ -501,6 +501,31 @@ footer.footer-app {
   padding-top: 50px;
   margin-top: 50px;
 }
+
+/* BuddyPage */
+.buddy-page {
+
+}
+.buddy-profile .row {
+  margin-top: 5px;
+  margin-bottom: 7px;
+}
+.buddy-page .buddy-profile {
+  display: inline-block;
+  margin-left: 75px;
+  margin-top: 5px;
+}
+
+.buddy-picture {
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+  background: #f05f40;
+  background-size: 100px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+}
+
 /* HomePage */
 .homepage {
   height: 100%;
@@ -534,6 +559,7 @@ footer.footer-app {
 }
 .profile-page section {
   padding-top: 0;
+  padding-bottom: 50px;
 }
 .profile-page section .container {
   background: url('../images/profile_bg.png');
@@ -650,6 +676,8 @@ td, th {
   height: 200px;
   width: 250px;
 }
+
+
 
 /*.login-centered {
   padding-top: 10px;

@@ -1,0 +1,26 @@
+{
+  "name": "ChatNotification",
+  "plural": "ChatNotifications",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "indexes": {
+    "UNIQUE_INDEX": {
+      "columns": "refConnectionId",
+      "kind": "unique"
+    }
+  },
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "toUser": {
+      "type": "belongsTo",
+      "model": "UserMain",
+      "foreignKey": "refUserId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

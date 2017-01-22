@@ -81,11 +81,12 @@ export class FilterForm extends Component {
         api.get("/Products?access_token=" + localStorage.getItem("accessToken"), {params: this.paramsForSearchTerm()})
             .then((response) => {
                 if (response.status === 200) {
-                    // console.log("FilterForm - Response data",response.data);
+                     console.log("FilterForm - Response data",response.data);
                     this.setState({ isLoading: false });
                     var filtered = response.data.filter(function (product) {
-                        return product.user.isActive === true && product.user.id !== localStorage.userId;
+                        return product.user.isActive == true && product.user.id != localStorage.userId;
                     });
+                    console.log("FilterForm - Filtered data",filtered);
                     this.setState({products: filtered, filteredProducts: filtered});
                     this.updateInputRange(response.data);
                 }

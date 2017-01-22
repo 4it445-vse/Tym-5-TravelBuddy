@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import { Link } from 'react-router'
 import { WeatherList } from '../../Weather/WeatherList';
 import api from '../../../api.js';
 
@@ -87,6 +88,7 @@ export class DetailProduct extends Component {
         let ownerStyle = {
           backgroundImage: "url(" + ownerPictureUrl + ")",
         }
+        let buddyLink = "/profile/"+`${this.state.user.id}`;
         return(
 
             <Modal
@@ -106,7 +108,9 @@ export class DetailProduct extends Component {
                     <div className="info-bar">
                       <div className="profile-picture" style={ownerStyle}></div>
                       <span className="name">
+                          <Link to={buddyLink}>
                         {`${this.state.user.firstName} ${this.state.user.lastName}`}
+                          </Link>
                       </span>
                       <span className="city">
                         <i className="fa fa-map-marker" aria-hidden="true"></i>

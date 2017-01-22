@@ -15,7 +15,7 @@ export class MessagesList extends Component{
       elements: [],
       connectionData: null,
 
-      chatHeight:470
+      inputHeight:30
     }
 
     this.buildElements = this.buildElements.bind(this);
@@ -173,8 +173,8 @@ export class MessagesList extends Component{
   render(){
     if (this.state.connectionData){
       return(
-        <div style={{height:"500px"}}>
-        <div style={{height:this.state.chatHeight}}>
+        <div style={{height:this.props.height}}>
+        <div style={{height:(this.props.height - this.state.inputHeight)}}>
         <ReactChatView
                 className="chatList"
                  flipped={true}
@@ -191,14 +191,14 @@ export class MessagesList extends Component{
           maxRows={5}
           placeholder="Write a message..."
           onKeyDown={this.onKeyDown}
-          onHeightChange={(height) => {this.setState({chatHeight:(500-height)})}}
+          onHeightChange={(height) => {this.setState({inputHeight:(height)})}}
         />
         </div>
         </div>
       );
     }else {
       return(
-        <div style={{display: "flex", height:"500px",justifyContent:"center", alignContent:"center", flexDirection:"column"}}>
+        <div style={{display: "flex", height:this.props.height,justifyContent:"center", alignContent:"center", flexDirection:"column"}}>
           <div style={{textAlign:"center",fontWeight:"100",fontSize:"x-large",color:"lightgray"}}>Select a connection to display messages.</div>
         </div>
       );
