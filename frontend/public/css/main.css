@@ -506,20 +506,24 @@ footer.footer-app {
 .buddy-page {
 
 }
-
+.buddy-profile .row {
+  margin-top: 5px;
+  margin-bottom: 7px;
+}
 .buddy-page .buddy-profile {
-
+  display: inline-block;
+  margin-left: 75px;
+  margin-top: 5px;
 }
 
 .buddy-picture {
+  display: inline-block;
   height: 100px;
   width: 100px;
   background: #f05f40;
   background-size: 100px;
   border-radius: 50%;
   border: 3px solid #fff;
-  position: absolute;
-  top: -50px;
 }
 
 /* HomePage */
