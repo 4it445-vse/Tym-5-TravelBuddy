@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { TransactionListItem } from './TransactionListItem.js';
+import { MyRequestsTransactionListItem } from './MyRequestsTransactionListItem.js';
 import { ListGroup, Alert } from 'react-bootstrap';
 // import api from '../../api.js';
 
-export class TransactionList extends Component {
+export class MyRequestsTransactionList extends Component {
 
     constructor(props) {
         super(props);
@@ -17,22 +17,17 @@ export class TransactionList extends Component {
                 if (txn.Status === "accepted") {
                   listStyle = "accepted";
                   return (
-                      <TransactionListItem key={txn.id} transaction={txn}/>
+                      <MyRequestsTransactionListItem key={txn.id} transaction={txn}/>
                   );
                 }
                 break;
-              case "declined":
-                if (txn.Status === "declined") {
-                  return;
-                }
-              case "cancelled":
-                if (txn.Status === "cancelled") {
-                  return;
-                }
-                break;
               default:
+                if (txn.Status === "cancelled") {
+                  console.log('--- this one is cancelled')
+                  return;
+                }
                 return (
-                    <TransactionListItem key={txn.id} transaction={txn}/>
+                    <MyRequestsTransactionListItem key={txn.id} transaction={txn}/>
                 );
             }
         });

@@ -41,7 +41,7 @@
       "foreignKey": "refUserId"
     },
     "product": {
-      "type": "hasOne",
+      "type": "belongsTo",
       "model": "Product",
       "foreignKey": "refProductId"
     }

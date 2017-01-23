@@ -6,7 +6,7 @@ export class BookingWizardProgressBar extends Component {
     render() {
         let progress = (100 / 3) * this.props.step;
         return (
-            <ProgressBar striped bsStyle="danger" now={progress} />
+            <ProgressBar now={progress} />
         );
     }
 }

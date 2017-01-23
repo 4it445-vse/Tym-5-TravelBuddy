@@ -84,7 +84,7 @@ export class FilterForm extends Component {
                      console.log("FilterForm - Response data",response.data);
                     this.setState({ isLoading: false });
                     var filtered = response.data.filter(function (product) {
-                        return product.user.isActive == true && product.user.id != localStorage.userId;
+                        return product.user.isActive == true && product.user.id != localStorage.userId && product.state === "open";
                     });
                     console.log("FilterForm - Filtered data",filtered);
                     this.setState({products: filtered, filteredProducts: filtered});
