@@ -53,6 +53,9 @@ export class ProductListItemRaw extends Component{
           backgroundImage: "url(" + imageUrl + ")",
         }
         const acceptedTxn = this.props.product.transactions;
+        // if (this.props.productState) {
+        //   this.setState({productState: this.props.productState});
+        // }
         // console.log('--- product list item', this.props.product);
         return (
               <div className="col-lg-12">

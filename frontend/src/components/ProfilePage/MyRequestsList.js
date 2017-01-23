@@ -70,22 +70,25 @@ export class MyRequestsList extends Component {
       api.get('/Products/'+ id +'?access_token=' + localStorage.accessToken, params)
         .then(response => {
           let product = response.data;
-          let filteredTxns = [];
-          filteredTxns = transactions.filter((txn) => {
-            if (txn.Status === 'cancelled') {
-              return false;
-            }
-            let date = new Date(txn.Date);
-            let today = new Date();
-            if (date.getTime() < today.getTime()) {
-              return false;
-            }
-            return true;
-          });
-          product.transactions = filteredTxns;
-          this.setState(previousState => ({
-              products: [...previousState.products, product]
-          }));
+
+            let filteredTxns = [];
+            filteredTxns = transactions.filter((txn) => {
+              if (txn.Status === 'cancelled') {
+                return false;
+              }
+              let date = new Date(txn.Date);
+              let today = new Date();
+              if (date.getTime() < today.getTime()) {
+                return false;
+              }
+              return true;
+            });
+            product.transactions = filteredTxns;
+            this.setState(previousState => ({
+                products: [...previousState.products, product]
+            }));
+            // console.log('--- filtered products', this.state.products);
+
         })
         .catch((error) => {
           console.log('<!> error', error)
