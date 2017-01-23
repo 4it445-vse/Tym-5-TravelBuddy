@@ -45,7 +45,7 @@ export class MainNavigation extends Component {
                             {/* <a href="/search"><i className="fa fa-search"></i>&nbsp;Search</a> */}
                         </li>
                         <li>
-                            <Link to="/profile" activeClassName="active"><i className="fa fa-user"></i>&nbsp;{'Profile'}</Link>
+                            <Link to="/profile" activeClassName="active"><i className="fa fa-user"></i>&nbsp;My Buddy</Link>
                         </li>
                         <li>
                             <LogoutComponentContainer/>

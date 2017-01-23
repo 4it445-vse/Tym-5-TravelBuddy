@@ -12,6 +12,7 @@ import {
   BOOKING_CREATE_TRANSACTION,
   BOOKING_DECLINE_REQUEST_TRANSACTION,
   BOOKING_ACCEPT_REQUEST_TRANSACTION,
+  BOOKING_CANCEL_REQUEST_TRANSACTION,
   BOOKING_DEACTIVATE_PRODUCT,
   BOOKING_ACTIVATE_PRODUCT
 } from "./actions.js";
@@ -67,6 +68,11 @@ const bookingReducer = (state = initialState, action) => {
         productState: "accepted",
         acceptedTxn: action.transaction
       };
+    case BOOKING_CANCEL_REQUEST_TRANSACTION:
+      return {
+        ...state,
+        productState: action.productState
+      }
     case BOOKING_DEACTIVATE_PRODUCT:
       return {
         ...state,

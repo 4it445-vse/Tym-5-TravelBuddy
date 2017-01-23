@@ -559,12 +559,18 @@ footer.footer-app {
 .transaction-list .item-list span.list-group-item:hover {
   background: rgba(0,0,0,0.05);
 }
+.transaction-list.accepted .item-list span.list-group-item:hover {
+  background: transparent;
+}
 .transaction-list .item-list .list-group-item span.date {
   font-family: "Open Sans", Arial, sans-serif;
   font-size: 2em;
   font-weight: bold;
   margin-right: 10px;
 }
+  .transaction-list .item-list .list-group-item .declined span.date {
+    color: #f05f40;
+  }
 .transaction-list .item-list .list-group-item span.userName {
   font-family: "Open Sans", Arial, sans-serif;
   text-transform: uppercase;
@@ -669,31 +675,31 @@ footer.footer-app {
 .profile-page .settings .edit-profile-form .panel .panel {
   padding-top: 15px;
 }
-.profile-page .my-offers .item-list .list-group-item {
+.profile-page .tab-list .item-list .list-group-item {
   background: transparent;
   background-size: cover;
   background-position: right;
   background-repeat: no-repeat;
   height: auto;
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
-.profile-page .my-offers .item-list .gradient-overlay {
+.profile-page .tab-list .item-list .gradient-overlay {
   min-height: 150px;
   background: -moz-linear-gradient(left,  rgba(255,255,255,1) 1%, rgba(255,255,255,1) 65%, rgba(255,255,255,0.53) 100%, rgba(255,255,255,0) 100%);
   background: -webkit-linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(255,255,255,1) 65%,rgba(255,255,255,0.53) 100%,rgba(255,255,255,0) 100%);
   background: linear-gradient(to right,  rgba(255,255,255,1) 1%,rgba(255,255,255,1) 65%,rgba(255,255,255,0.53) 100%,rgba(255,255,255,0) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=1 );
 }
-.profile-page .my-offers .item-list .list-group-item .header {
+.profile-page .tab-list .item-list .list-group-item .header {
   background: transparent;
   border: none;
   margin-bottom: 0;
 }
-.profile-page .my-offers .item-list .list-group-item .header .title {
+.profile-page .tab-list .item-list .list-group-item .header .title {
   padding: 0;
   line-height: 40px;
 }
-.profile-page .my-offers .item-list .list-group-item .header .title h3 {
+.profile-page .tab-list .item-list .list-group-item .header .title h3 {
   display: inline;
   color: #000;
   line-height: inherit;
@@ -701,38 +707,50 @@ footer.footer-app {
   margin-left: 10px;
   vertical-align: middle;
 }
-.profile-page .my-offers .item-list .list-group-item .body {
+.profile-page .tab-list .item-list .list-group-item .body {
   padding: 0;
 }
-.profile-page .my-offers .item-list .list-group-item .body .category {
+.profile-page .tab-list .item-list .list-group-item .body .category {
   text-transform: uppercase;
 }
-.profile-page .my-offers .item-list .list-group-item .body .properties span {
+.profile-page .tab-list .item-list .list-group-item .body .properties span {
   margin-right: 10px;
 }
-  .profile-page .my-offers .item-list .list-group-item .body .properties span.price {
+  .profile-page .tab-list .item-list .list-group-item .body .properties span.price,
+  .profile-page .tab-list .item-list .list-group-item .body .properties span.buddy {
     padding-left: 10px;
     border-left: solid 1px #dedede;
   }
-.profile-page .my-offers .item-list .list-group-item .body .description {
+  .profile-page .tab-list .item-list .list-group-item .body .properties span.buddy {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+.profile-page .tab-list .item-list .list-group-item .body .description {
   margin-top: 5px;
 }
-.profile-page .my-offers .item-list .list-group-item .footer {
+.profile-page .tab-list .item-list .list-group-item .footer {
   position: relative;
   bottom: auto;
 }
-.profile-page .my-offers .item-list .list-group-item .footer.gradient-overlay {
+.profile-page .tab-list .item-list .list-group-item .footer.gradient-overlay {
   min-height: auto;
   height: auto;
   padding: 0 0 5px 0;
 }
-.profile-page .my-offers .item-list .list-group-item .header .title .label {
+.profile-page .tab-list .item-list .list-group-item .footer.gradient-overlay .col-md-12.warning {
+  padding: 0;
+}
+.profile-page .tab-list .item-list .list-group-item .footer.gradient-overlay .col-md-12.warning span.warning {
+  color: #d9534f;
+  text-transform: uppercase;
+}
+.profile-page .tab-list .item-list .list-group-item .header .title .label {
   vertical-align: middle;
 }
-.profile-page .my-offers .item-list .list-group-item .footer span {
+.profile-page .tab-list .item-list .list-group-item .footer span {
   width: auto;
 }
-.profile-page .my-offers .item-list .list-group-item .header img {
+.profile-page .tab-list .item-list .list-group-item .header img {
   width: 100%;
   height: 100%;
 }

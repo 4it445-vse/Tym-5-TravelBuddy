@@ -51,7 +51,12 @@ export class ProductListRaw extends Component {
               for (var i = 0; i < products.length;i++) {
                 let filteredTxns = [];
                 filteredTxns = products[i].transactions.filter((txn) => {
-                  if (txn.Status === 'declined') {
+                  if (txn.Status === 'declined' || txn.Status === 'cancelled') {
+                    return false;
+                  }
+                  let date = new Date(txn.Date);
+                  let today = new Date();
+                  if (date.getTime() < today.getTime()) {
                     return false;
                   }
                   return true;
@@ -72,7 +77,7 @@ export class ProductListRaw extends Component {
 
     render () {
         const productItems = this.state.products.map((product, key) => {
-            if(this.props.productId && this.props.productId === product.id) {
+            if(this.props.productId && this.props.productState && this.props.productId === product.id) {
               product.state = this.props.productState;
             }
             if(this.props.acceptedTxn) {

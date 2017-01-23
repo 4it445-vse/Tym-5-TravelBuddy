@@ -6,6 +6,7 @@ import { EditProfilePicture } from '../components/ProfilePage/EditProfilePicture
 import { ProductList} from '../components/ProfilePage/ProductList.js';
 import { ProfilePictureEditorComponent } from "../components/ProfilePictureEditor/ProfilePictureEditorComponent.js";
 import { Panel, Tabs, Tab } from "react-bootstrap";
+import { MyRequestsList } from '../components/ProfilePage/MyRequestsList.js';
 import api from '../api.js';
 import { Chat } from "../components/ChatComponent/Chat.js"
 
@@ -58,11 +59,16 @@ export class ProfilePage extends Component {
               <div className="col-md-9">
                 <Tabs  activeKey={this.state.tabKey} onSelect={this.handleTabSelect} id="controlled-tab">
                   <Tab eventKey={1} title="My Offers">
-                    <div className="my-offers">
+                    <div className="my-offers tab-list">
                       <Panel><ProductList/></Panel>
                     </div>
                   </Tab>
-                  <Tab eventKey={2} title="User Reviews">Tab 2 content</Tab>
+                  <Tab eventKey={2} title="My Requests">
+                    <div className="my-requests tab-list">
+                      <Panel><MyRequestsList/></Panel>
+                    </div>
+
+                  </Tab>
 				          <Tab eventKey={3} title="Connections"><Chat/></Tab>
                   <Tab eventKey={4} title="Settings">
                     <div className="settings">

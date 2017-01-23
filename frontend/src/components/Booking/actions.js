@@ -8,6 +8,7 @@ export const BOOKING_CANCEL_BOOKING = 'BOOKING_CANCEL_BOOKING';
 export const BOOKING_CREATE_TRANSACTION = 'BOOKING_CREATE_TRANSACTION';
 export const BOOKING_DECLINE_REQUEST_TRANSACTION = 'BOOKING_DECLINE_REQUEST_TRANSACTION';
 export const BOOKING_ACCEPT_REQUEST_TRANSACTION = 'BOOKING_ACCEPT_REQUEST_TRANSACTION';
+export const BOOKING_CANCEL_REQUEST_TRANSACTION = 'BOOKING_CANCEL_REQUEST_TRANSACTION';
 export const BOOKING_DEACTIVATE_PRODUCT = 'BOOKING_DEACTIVATE_PRODUCT';
 export const BOOKING_ACTIVATE_PRODUCT = 'BOOKING_ACTIVATE_PRODUCT';
 
@@ -86,6 +87,20 @@ export const acceptRequestAction = (transaction) => {
   transaction = {...transaction, Status: "accepted"};
   return {
     type: BOOKING_ACCEPT_REQUEST_TRANSACTION,
+    transaction: transaction
+  }
+}
+
+export const cancelRequestAction = (transaction) => {
+  const srvUrl = '/Transactions/' + transaction.id + '?access_token=' + localStorage.accessToken;
+  api.patch(srvUrl, {"Status": "cancelled"}).then(({data})=> {
+
+  }).catch((error)=> {
+    console.log('<!> declineRequestAction', error);
+  });
+  transaction = {...transaction, Status: "cancelled"};
+  return {
+    type: BOOKING_CANCEL_REQUEST_TRANSACTION,
     transaction: transaction
   }
 }
