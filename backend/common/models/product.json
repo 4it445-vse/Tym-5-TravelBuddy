@@ -35,6 +35,9 @@
     "refOwnerUserId": {
       "type": "number"
     },
+    "refTravellerUserId": {
+      "type": "number"
+    },
     "state": {
       "type": "string",
       "default": "active"
