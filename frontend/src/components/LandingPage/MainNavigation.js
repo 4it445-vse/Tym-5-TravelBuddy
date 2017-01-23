@@ -58,6 +58,7 @@ export class MainNavigation extends Component {
                   <LoginComponentContainer/>
               </div>
             </Fade>
+
         </nav>
       </Affix>
     );

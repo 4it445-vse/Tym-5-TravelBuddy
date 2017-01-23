@@ -785,7 +785,10 @@ td, th {
   width: 250px;
 }
 
-
+.notification-element {
+    padding-top: 10px;
+    margin-right: 15px;
+}
 
 /*.login-centered {
   padding-top: 10px;

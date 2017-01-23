@@ -5,7 +5,7 @@ import { MainNavigation } from '../components/HomePage/MainNavigation.js';
 import { SearchSection } from '../components/HomePage/SearchSection/SearchSection';
 import { WelcomeWizardModal } from '../components/WelcomeWizard/WelcomeWizardModal.js';
 import { DetailProductContainer } from '../components/HomePage/DetailProduct/DetailProduct';
-
+import {Notification} from '../components/HomePage/Notification/Notification';
 import api from '../api.js';
 
 export class HomePageRaw extends Component {
@@ -57,7 +57,9 @@ export class HomePageRaw extends Component {
             <div className="gradient-wrapper">
               {welcomeWizard}
               <MainNavigation userData={userData}/>
+
               <section className="search">
+
                   <DetailProductContainer ref="detailProductModal" product={this.props.product} show={this.props.showDetail}/>
                   <div className="container">
                       <h1 className="text-center">Offers</h1>
