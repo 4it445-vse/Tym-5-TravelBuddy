@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import Scroll from 'react-scroll';
 import { Link } from 'react-router';
 import { LogoutComponentContainer } from '../LogoutComponent/LogoutComponent.js';
-import {NotificationView} from '../../components/HomePage/NotificationView/NotificationView';
 
 export class MainNavigation extends Component {
   constructor(props) {
