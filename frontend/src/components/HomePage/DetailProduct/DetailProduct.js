@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { Link } from 'react-router'
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { WeatherList } from '../../Weather/WeatherList';
 import api from '../../../api.js';

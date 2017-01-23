@@ -551,7 +551,7 @@ export class EditProfile extends Component {
                         );
                       })}
 
-                      <Button type="button" className="btn btn-primary" onClick={ ()=> this.setState({ expandSettings: !this.state.expandSettings })}>
+                      <Button style={{marginRight: "15px"}} type="button" className="btn btn-primary" onClick={ ()=> this.setState({ expandSettings: !this.state.expandSettings })}>
                         Show more settings&nbsp;
                         {this.state.expandSettings ? <i className="fa fa-chevron-up" aria-hidden="true"></i> : <i className="fa fa-chevron-down" aria-hidden="true"></i>}
                       </Button>

@@ -332,8 +332,12 @@ footer.footer-app {
   }
   .booking-wizard .controls {
     text-align: center;
-    padding: 50px 0;
+    padding: 15px 0 50px 0;
   }
+.booking-wizard .detail-product .info-bar {
+  position: absolute;
+  bottom: 42px;
+}
 .booking-wizard .detail-product .info-bar .profile-picture {
     position: relative;
     top: auto;
@@ -343,25 +347,75 @@ footer.footer-app {
     margin-left: 15px;
 }
 .booking-wizard .detail-product .info-bar span.price {
-  font-weight: 700;
-  font-size: 1em;
-  background: #f05f40;
-  border-radius: 6px;
-  padding: 0 15px;
   color: white;
+  border: none;
 }
 .booking-wizard .detail-product .header {
   height: 200px;
   background: #f05f40;
   background-repeat: no-repeat;
   background-size: cover;
+  border-radius: 4px;
+  background-position: center;
 }
   .booking-wizard .detail-product .header h4 {
     font-size: 4em;
     text-align: left;
     line-height: 1;
-    padding-left: 10px;
+    margin: 10px;
+    padding: 0px 18px 16px 11px;
+    display: inline-block;
+    background: #f05f40;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 700;
+    font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
   }
+.booking-wizard .detail-product .body {
+  position: relative;
+}
+.booking-wizard .detail-product .body div.desc {
+  margin-top: 75px;
+}
+.booking-wizard .detail-product-row {
+  background: rgb(249, 249, 249);
+}
+.booking-wizard .back-row {
+  margin-bottom: 15px;
+}
+.booking-wizard .step-view {
+  padding: 15px 0;
+  border-bottom: 1px solid #e0e0e0;
+  border-top: 1px solid #e0e0e0;
+}
+.booking-wizard .step-view.step-1 {
+  padding: 15px 0 0 0;
+}
+.booking-wizard .step-view.step-2 .selected-day {
+  font-size: 2em;
+}
+.booking-wizard .step-view.step-3,
+.booking-wizard .step-view.step-4 {
+  border: none;
+}
+.booking-wizard .step-view.step-3 .list-group {
+  margin: 0 auto;
+  width: 400px;
+  margin-bottom: 15px;
+}
+.booking-wizard .progress {
+  margin: 0;
+  border-radius: 0;
+  height: 10px;
+}
+.booking-wizard .progress .progress-bar {
+  background-color: #f05f40;
+}
+.booking-wizard .daypicker .DayPicker {
+  width: 230px;
+  margin: 0 auto;
+  float: none;
+}
 /* DetailProduct Component */
 .detail-product {
 
@@ -538,10 +592,44 @@ footer.footer-app {
 }
 /* TransactionList component */
 .transaction-list {
-  background: #f05f40;
+  background: transparent;
 }
 .transaction-list.accepted {
-  background: #f05f40;
+  background: #5cb85c;
+}
+.transaction-list .container-fluid.item-list {
+  padding: 0;
+}
+.transaction-list .list-group-item .btn-group {
+  float: right;
+}
+.transaction-list .item-list span.list-group-item {
+  padding: 10px;
+  margin-bottom: 0;
+}
+.transaction-list .col-lg-12 {
+  padding: 0;
+}
+.transaction-list .item-list span.list-group-item:hover {
+  background: rgba(0,0,0,0.05);
+}
+.transaction-list.accepted .item-list span.list-group-item:hover {
+  background: transparent;
+}
+.transaction-list .item-list .list-group-item span.date {
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 2em;
+  font-weight: bold;
+  margin-right: 10px;
+}
+  .transaction-list .item-list .list-group-item .declined span.date {
+    color: #f05f40;
+  }
+.transaction-list .item-list .list-group-item span.userName {
+  font-family: "Open Sans", Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-left: 10px;
 }
 /* LandingPage */
 #register {
@@ -641,30 +729,31 @@ footer.footer-app {
 .profile-page .settings .edit-profile-form .panel .panel {
   padding-top: 15px;
 }
-.profile-page .my-offers .item-list .list-group-item {
+.profile-page .tab-list .item-list .list-group-item {
   background: transparent;
   background-size: cover;
   background-position: right;
   background-repeat: no-repeat;
   height: auto;
+  margin-bottom: 10px;
 }
-.profile-page .my-offers .item-list .gradient-overlay {
+.profile-page .tab-list .item-list .gradient-overlay {
   min-height: 150px;
   background: -moz-linear-gradient(left,  rgba(255,255,255,1) 1%, rgba(255,255,255,1) 65%, rgba(255,255,255,0.53) 100%, rgba(255,255,255,0) 100%);
   background: -webkit-linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(255,255,255,1) 65%,rgba(255,255,255,0.53) 100%,rgba(255,255,255,0) 100%);
   background: linear-gradient(to right,  rgba(255,255,255,1) 1%,rgba(255,255,255,1) 65%,rgba(255,255,255,0.53) 100%,rgba(255,255,255,0) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=1 );
 }
-.profile-page .my-offers .item-list .list-group-item .header {
+.profile-page .tab-list .item-list .list-group-item .header {
   background: transparent;
   border: none;
   margin-bottom: 0;
 }
-.profile-page .my-offers .item-list .list-group-item .header .title {
+.profile-page .tab-list .item-list .list-group-item .header .title {
   padding: 0;
   line-height: 40px;
 }
-.profile-page .my-offers .item-list .list-group-item .header .title h3 {
+.profile-page .tab-list .item-list .list-group-item .header .title h3 {
   display: inline;
   color: #000;
   line-height: inherit;
@@ -672,38 +761,50 @@ footer.footer-app {
   margin-left: 10px;
   vertical-align: middle;
 }
-.profile-page .my-offers .item-list .list-group-item .body {
+.profile-page .tab-list .item-list .list-group-item .body {
   padding: 0;
 }
-.profile-page .my-offers .item-list .list-group-item .body .category {
+.profile-page .tab-list .item-list .list-group-item .body .category {
   text-transform: uppercase;
 }
-.profile-page .my-offers .item-list .list-group-item .body .properties span {
+.profile-page .tab-list .item-list .list-group-item .body .properties span {
   margin-right: 10px;
 }
-  .profile-page .my-offers .item-list .list-group-item .body .properties span.price {
+  .profile-page .tab-list .item-list .list-group-item .body .properties span.price,
+  .profile-page .tab-list .item-list .list-group-item .body .properties span.buddy {
     padding-left: 10px;
     border-left: solid 1px #dedede;
   }
-.profile-page .my-offers .item-list .list-group-item .body .description {
+  .profile-page .tab-list .item-list .list-group-item .body .properties span.buddy {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+.profile-page .tab-list .item-list .list-group-item .body .description {
   margin-top: 5px;
 }
-.profile-page .my-offers .item-list .list-group-item .footer {
+.profile-page .tab-list .item-list .list-group-item .footer {
   position: relative;
   bottom: auto;
 }
-.profile-page .my-offers .item-list .list-group-item .footer.gradient-overlay {
+.profile-page .tab-list .item-list .list-group-item .footer.gradient-overlay {
   min-height: auto;
   height: auto;
   padding: 0 0 5px 0;
 }
-.profile-page .my-offers .item-list .list-group-item .header .title .label {
+.profile-page .tab-list .item-list .list-group-item .footer.gradient-overlay .col-md-12.warning {
+  padding: 0;
+}
+.profile-page .tab-list .item-list .list-group-item .footer.gradient-overlay .col-md-12.warning span.warning {
+  color: #d9534f;
+  text-transform: uppercase;
+}
+.profile-page .tab-list .item-list .list-group-item .header .title .label {
   vertical-align: middle;
 }
-.profile-page .my-offers .item-list .list-group-item .footer span {
+.profile-page .tab-list .item-list .list-group-item .footer span {
   width: auto;
 }
-.profile-page .my-offers .item-list .list-group-item .header img {
+.profile-page .tab-list .item-list .list-group-item .header img {
   width: 100%;
   height: 100%;
 }

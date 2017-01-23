@@ -8,6 +8,9 @@ export const BOOKING_CANCEL_BOOKING = 'BOOKING_CANCEL_BOOKING';
 export const BOOKING_CREATE_TRANSACTION = 'BOOKING_CREATE_TRANSACTION';
 export const BOOKING_DECLINE_REQUEST_TRANSACTION = 'BOOKING_DECLINE_REQUEST_TRANSACTION';
 export const BOOKING_ACCEPT_REQUEST_TRANSACTION = 'BOOKING_ACCEPT_REQUEST_TRANSACTION';
+export const BOOKING_CANCEL_REQUEST_TRANSACTION = 'BOOKING_CANCEL_REQUEST_TRANSACTION';
+export const BOOKING_DEACTIVATE_PRODUCT = 'BOOKING_DEACTIVATE_PRODUCT';
+export const BOOKING_ACTIVATE_PRODUCT = 'BOOKING_ACTIVATE_PRODUCT';
 
 //implement actions
 
@@ -85,5 +88,45 @@ export const acceptRequestAction = (transaction) => {
   return {
     type: BOOKING_ACCEPT_REQUEST_TRANSACTION,
     transaction: transaction
+  }
+}
+
+export const cancelRequestAction = (transaction) => {
+  const srvUrl = '/Transactions/' + transaction.id + '?access_token=' + localStorage.accessToken;
+  api.patch(srvUrl, {"Status": "cancelled"}).then(({data})=> {
+
+  }).catch((error)=> {
+    console.log('<!> declineRequestAction', error);
+  });
+  transaction = {...transaction, Status: "cancelled"};
+  return {
+    type: BOOKING_CANCEL_REQUEST_TRANSACTION,
+    transaction: transaction
+  }
+}
+
+export const deactivateProductAction = (productId) => {
+  const srvUrl = '/Products/' + productId + '?access_token=' + localStorage.accessToken;
+  api.patch(srvUrl, {"state": "deactivated"}).then(({data})=> {
+
+  }).catch((error)=> {
+    console.log('<!> deactivateProductAction', error);
+  });
+  return {
+    type: BOOKING_DEACTIVATE_PRODUCT,
+    productState: "deactivated",
+  }
+}
+
+export const activateProductAction = (productId) => {
+  const srvUrl = '/Products/' + productId + '?access_token=' + localStorage.accessToken;
+  api.patch(srvUrl, {"state": "open"}).then(({data})=> {
+
+  }).catch((error)=> {
+    console.log('<!> activateProductAction', error);
+  });
+  return {
+    type: BOOKING_ACTIVATE_PRODUCT,
+    productState: "open",
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, Button, Form, FormGroup, ControlLabel, FormControl, HelpBlock,
-  Glyphicon, Row, ListGroup, ListGroupItem } from 'react-bootstrap';
+  Glyphicon, Row, Label, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { SubmitButton } from '../../common/SubmitButton.js';
 import { BookingWizardProgressBar } from './BookingWizardProgressBar.js';
 import ReactDOM from 'react-dom';
@@ -121,15 +121,20 @@ export class BookingWizardRaw extends Component {
               &nbsp;
               {product.city.name}
             </span>
-            <span className="category">
-              {product.categories.name}
-            </span>
+            {product.categories.name ?
+              <span className="category">
+                {product.categories.name}
+              </span>
+              :
+              undefined}
             <span className="price">
-              {product.price !== 0 ? <i className="fa fa-eur" aria-hidden="true">&nbsp;</i> : undefined}
-              {product.price === 0 ? "Free!" : product.price}
+              <Label bsStyle="success">
+                {product.price !== 0 ? <i className="fa fa-eur" aria-hidden="true">&nbsp;</i> : undefined}
+                {product.price === 0 ? "Free!" : product.price}
+              </Label>
             </span>
           </div>
-          <div className="">
+          <div className="desc">
             <p className="description">{product.description}</p>
           </div>
         </div>
@@ -143,29 +148,30 @@ export class BookingWizardRaw extends Component {
     switch(step) {
       case 1:
         return (
-          <div className="col-md-6">
+          <div className="col-md-12 daypicker">
+            <h3 className="text-center">Select day, when you want to request this offer</h3>
             <DayPicker
                 initialMonth={new Date()}
                 disabledDays={DateUtils.isPastDay}
                 selectedDays={day => DateUtils.isSameDay(this.state.selectedDay, day)}
                 onDayClick={this.handleDayClick }
             />
-            <p className="text-center">{selectedDay ? selectedDay.toLocaleDateString() : "Select date"}</p>
+            <p className="text-center" style={{fontSize: "2em"}}>{selectedDay ? selectedDay.toLocaleDateString() : "Select date"}</p>
           </div>
         );
       case 2:
         return(
-          <div className="col-md-6 block-center">
+          <div className="col-md-12 block-center">
             <div className="text-center">
-              <p>Event will be requestred on:</p>
-              <p>{selectedDay.toLocaleDateString()}</p>
+              <p>Event will be requested on</p>
+              <p className="selected-day">{selectedDay.toLocaleDateString()}</p>
               <p>Do you want to continue?</p>
             </div>
           </div>
         );
       case 3:
         return(
-          <div>
+          <div className="col-md-12">
             <ListGroup>
               <ListGroupItem header="Offer name">{product.label}</ListGroupItem>
               <ListGroupItem header="Buddy">{`${owner.firstName} ${owner.lastName}`}</ListGroupItem>
@@ -173,14 +179,15 @@ export class BookingWizardRaw extends Component {
               <ListGroupItem header="Price">{product.price}</ListGroupItem>
               <ListGroupItem header="Request Date">{selectedDay.toLocaleDateString()}</ListGroupItem>
             </ListGroup>
-            <p>Notification will be send to travel buddy. He can decide to decline request. If so, you will be notified.
-            If he accepts your request, you will be connected and you will be able to discuss specifics of your trip (payment, exact place, exact time).</p>
+            <Alert>
+              After confirm, Buddy will be noted about your request. He can accept or decline your request.
+            </Alert>
           </div>
         );
       case 4:
         return(
           <Alert>
-            Your request was sent. Dont forget to check notificitions.
+            Your request was sent. Dont forget to check <Link to="/profile">My Buddy</Link>.
           </Alert>
         );
       default:
@@ -199,14 +206,14 @@ export class BookingWizardRaw extends Component {
       case 2:
         return(
           <div>
-            <Button onClick={this.prevStep}><Glyphicon glyph="glyphicon glyphicon-chevron-left"></Glyphicon>&nbsp;No</Button>
+            <Button style={{marginRight: "15px"}} onClick={this.prevStep}><Glyphicon glyph="glyphicon glyphicon-chevron-left"></Glyphicon>&nbsp;No</Button>
             <Button onClick={this.nextStep} bsStyle="primary">Yes&nbsp;<Glyphicon glyph="glyphicon glyphicon-chevron-right"></Glyphicon></Button>
           </div>
         );
       case 3:
         return(
           <div>
-            <Button onClick={this.cancelBooking} bsSize="large"><Glyphicon glyph="glyphicon glyphicon-remove"></Glyphicon>&nbsp;Cancel</Button>
+            <Button style={{marginRight: "15px"}} onClick={this.cancelBooking} bsSize="large"><Glyphicon glyph="glyphicon glyphicon-remove"></Glyphicon>&nbsp;Cancel</Button>
             <span onClick={this.createTransaction}><SubmitButton  name="Confirm" bsStyle="primary" bsSize="large" isLoading={this.state.isLoading}/></span>
           </div>
         );
@@ -223,15 +230,17 @@ export class BookingWizardRaw extends Component {
     const { product, owner } = this.props.booking;
     return (
       <div className="col-lg-12">
-        <Row>
-          {this.state.lastStep === this.state.currentStep ?
-            undefined :
+        {this.state.currentStep > 2 ?
+          undefined :
+          <div className="row back-row">
             <Button><Link to="/search"><Glyphicon glyph="glyphicon glyphicon-chevron-left"></Glyphicon>&nbsp;Back to searching</Link></Button>
-          }
-          {this.state.lastStep === this.state.currentStep ? undefined : <BookingWizardProgressBar step={this.state.currentStep} />}
-        </Row>
-        <Row>
+          </div>
+        }
+        <div className="row detail-product-row">
           {this.state.currentStep < 3 ? this.showProductDetail(product, owner) : undefined}
+        </div>
+        <Row>
+          {this.state.lastStep === this.state.currentStep ? undefined : <BookingWizardProgressBar step={this.state.currentStep} />}
         </Row>
         <Row>
           <div className={`clearfix step-view step-${this.state.currentStep}`}>
