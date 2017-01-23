@@ -332,8 +332,12 @@ footer.footer-app {
   }
   .booking-wizard .controls {
     text-align: center;
-    padding: 50px 0;
+    padding: 15px 0 50px 0;
   }
+.booking-wizard .detail-product .info-bar {
+  position: absolute;
+  bottom: 42px;
+}
 .booking-wizard .detail-product .info-bar .profile-picture {
     position: relative;
     top: auto;
@@ -343,25 +347,75 @@ footer.footer-app {
     margin-left: 15px;
 }
 .booking-wizard .detail-product .info-bar span.price {
-  font-weight: 700;
-  font-size: 1em;
-  background: #f05f40;
-  border-radius: 6px;
-  padding: 0 15px;
   color: white;
+  border: none;
 }
 .booking-wizard .detail-product .header {
   height: 200px;
   background: #f05f40;
   background-repeat: no-repeat;
   background-size: cover;
+  border-radius: 4px;
+  background-position: center;
 }
   .booking-wizard .detail-product .header h4 {
     font-size: 4em;
     text-align: left;
     line-height: 1;
-    padding-left: 10px;
+    margin: 10px;
+    padding: 0px 18px 16px 11px;
+    display: inline-block;
+    background: #f05f40;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 700;
+    font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
   }
+.booking-wizard .detail-product .body {
+  position: relative;
+}
+.booking-wizard .detail-product .body div.desc {
+  margin-top: 75px;
+}
+.booking-wizard .detail-product-row {
+  background: rgb(249, 249, 249);
+}
+.booking-wizard .back-row {
+  margin-bottom: 15px;
+}
+.booking-wizard .step-view {
+  padding: 15px 0;
+  border-bottom: 1px solid #e0e0e0;
+  border-top: 1px solid #e0e0e0;
+}
+.booking-wizard .step-view.step-1 {
+  padding: 15px 0 0 0;
+}
+.booking-wizard .step-view.step-2 .selected-day {
+  font-size: 2em;
+}
+.booking-wizard .step-view.step-3,
+.booking-wizard .step-view.step-4 {
+  border: none;
+}
+.booking-wizard .step-view.step-3 .list-group {
+  margin: 0 auto;
+  width: 400px;
+  margin-bottom: 15px;
+}
+.booking-wizard .progress {
+  margin: 0;
+  border-radius: 0;
+  height: 10px;
+}
+.booking-wizard .progress .progress-bar {
+  background-color: #f05f40;
+}
+.booking-wizard .daypicker .DayPicker {
+  width: 230px;
+  margin: 0 auto;
+  float: none;
+}
 /* DetailProduct Component */
 .detail-product {
 
