@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Button, ButtonGroup, Panel, Label, ListGroupItem } from 'react-bootstrap';
-import { TransactionList } from './TransactionList.js';
+import { MyRequestsTransactionList } from './MyRequestsTransactionList.js';
 import { connect } from 'react-redux';
-import { deactivateProductAction, activateProductAction } from '../Booking/actions.js';
+import { Link } from 'react-router';
 
-export class ProductListItemRaw extends Component{
+export class MyRequestsListItemRaw extends Component{
 
     constructor(props) {
       super(props);
@@ -27,7 +27,7 @@ export class ProductListItemRaw extends Component{
           );
         case "deactivated":
           return (
-            <Label bsStyle="danger">{label}</Label>
+            <Label bsStyle="danger">N/A</Label>
           );
         default:
           break;
@@ -35,16 +35,43 @@ export class ProductListItemRaw extends Component{
       }
     }
 
-    handleDeactivate() {
-      deactivateProductAction(this.props.product.id);
-      this.setState({ controlButton: "deactivated" })
-      this.setState({ productState: "deactivated" })
-    }
+    renderByProductState(state) {
+      const acceptedTxn = this.props.product.transactions;
+      switch (state) {
+        case "accepted":
+          return (
+            <MyRequestsTransactionList transactions={acceptedTxn} type="accepted"/>
+          );
+        case "open":
+          return (
+            <div className="footer container-fluid gradient-overlay">
+              <div className="col-md-3">
 
-    handleActivate() {
-      activateProductAction(this.props.product.id);
-      this.setState({ controlButton: "open" })
-      this.setState({ productState: "open" })
+              </div>
+              <div className="col-md-3">
+
+              </div>
+              <div className="col-md-6 text-right">
+                <ButtonGroup>
+                  <Button type="button" className="btn btn-primary" onClick={ ()=> this.setState({ expandTransactions: !this.state.expandTransactions })}>
+                    Your Requests ({this.props.product.transactions.length})&nbsp;{this.state.expandTransactions ? <i className="fa fa-chevron-up" aria-hidden="true"></i> : <i className="fa fa-chevron-down" aria-hidden="true"></i>}
+                  </Button>
+                </ButtonGroup>
+              </div>
+            </div>
+          );
+        case "deactivated":
+          return(
+            <div className="footer container-fluid gradient-overlay">
+              <div className="col-md-12 warning">
+                <span className="warning"><i className="fa fa-exclamation-circle" aria-hidden="true"></i>&nbsp;Offer is no longer available</span>
+              </div>
+            </div>
+          );
+        default:
+          return;
+
+      }
     }
 
     render() {
@@ -52,10 +79,6 @@ export class ProductListItemRaw extends Component{
         var style = {
           backgroundImage: "url(" + imageUrl + ")",
         }
-        const acceptedTxn = this.props.product.transactions;
-        // if (this.props.productState) {
-        //   this.setState({productState: this.props.productState});
-        // }
         // console.log('--- product list item', this.props.product);
         return (
               <div className="col-lg-12">
@@ -82,48 +105,20 @@ export class ProductListItemRaw extends Component{
                           {this.props.product.price !== 0 ? <i className="fa fa-eur" aria-hidden="true">&nbsp;</i> : undefined}
                           {this.props.product.price === 0 ? "Free!" : this.props.product.price}
                         </span>
+                        <span className="buddy">
+                          <Link to={`/profile/${this.props.product.refOwnerUserId}`}>{this.props.product.user.firstName + ' ' + this.props.product.user.lastName}</Link>
+                        </span>
                       </div>
                       <div className="category">{this.props.product.categories.length !== 0 ? this.props.product.categories[0].name : undefined }</div>
                       <div className="description">{this.props.product.description}</div>
 
                     </div>
                   </div>
-                  {
-                    this.props.product.state === "accepted"
-                    ?
-                    <TransactionList transactions={acceptedTxn} type="accepted"/>
-                    :
-                    <div className="footer container-fluid gradient-overlay">
-                      <div className="col-md-3">
-
-                      </div>
-                      <div className="col-md-3">
-
-                      </div>
-                      <div className="col-md-6 text-right">
-                        <ButtonGroup style={{marginRight: "15px"}}>
-                          {this.state.controlButton === "open" ?
-                            <Button onClick={this.handleDeactivate.bind(this)} bsStyle="primary">Deactive</Button>
-                            :
-                            <Button onClick={this.handleActivate.bind(this)} bsStyle="primary">Activate</Button>
-                          }
-                        </ButtonGroup>
-                        <ButtonGroup>
-                          {this.props.product.transactions.length === 0 ?
-                          <Button bsStyle="default">No requests</Button>
-                          :
-                          <Button type="button" className="btn btn-primary" onClick={ ()=> this.setState({ expandTransactions: !this.state.expandTransactions })}>
-                            Show Requests ({this.props.product.transactions.length})&nbsp;{this.state.expandTransactions ? <i className="fa fa-chevron-up" aria-hidden="true"></i> : <i className="fa fa-chevron-down" aria-hidden="true"></i>}
-                          </Button>
-                          }
-                        </ButtonGroup>
-                      </div>
-                    </div>
-                  }
+                  {this.renderByProductState(this.props.product.state)}
                 </ListGroupItem>
-                {this.props.product.state === "accepted" ? undefined :
+                {this.props.product.state === "accepted" || this.props.product.state === "deactivated" ? undefined :
                 <Panel collapsible expanded={this.state.expandTransactions}>
-                    <TransactionList transactions={this.props.product.transactions}/>
+                    <MyRequestsTransactionList transactions={this.props.product.transactions}/>
                 </Panel>
                 }
               </div>
@@ -139,6 +134,6 @@ const mapStateToProps = (state) => {
   };
 }
 
-export const ProductListItem = connect(
+export const MyRequestsListItem = connect(
   mapStateToProps
-)(ProductListItemRaw);
+)(MyRequestsListItemRaw);

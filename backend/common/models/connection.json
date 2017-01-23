@@ -15,6 +15,9 @@
   "properties": {
     "isActive": {
       "type": "boolean"
+    },
+    "lastMessageDate": {
+      "type": "date"
     }
   },
   "validations": [],
@@ -32,6 +35,11 @@
     "messages": {
       "type": "hasMany",
       "model": "Message",
+      "foreignKey": "refConnectionId"
+    },
+    "notification": {
+      "type": "hasOne",
+      "model": "ChatNotification",
       "foreignKey": "refConnectionId"
     }
   },

@@ -125,5 +125,13 @@
   "Message": {
     "dataSource": "mysqlds",
     "public": false
+  },
+  "ChatNotification": {
+    "dataSource": "mysqlds",
+    "public": true
+  },
+  "Transaction": {
+    "dataSource": "mysqlds",
+    "public": true
   }
 }

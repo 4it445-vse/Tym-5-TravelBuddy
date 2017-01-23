@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 // import { Affix } from 'react-overlays';
-// import { Button, Fade } from 'react-bootstrap';
+import { Button, Fade } from 'react-bootstrap';
 import Scroll from 'react-scroll';
 import { Link } from 'react-router';
 import { LogoutComponentContainer } from '../LogoutComponent/LogoutComponent.js';
+import {Notification} from '../HomePage/Notification/Notification';
+
 
 export class MainNavigation extends Component {
   constructor(props) {
@@ -11,8 +13,11 @@ export class MainNavigation extends Component {
     this.state = {
       open: "",
       style: "affix",
-      userData: undefined
+      userData: undefined,
+        openNotification: false,
     };
+
+      this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -22,7 +27,10 @@ export class MainNavigation extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({ userData: nextProps.userData });
   }
-
+    handleClick(event) {
+        //event.preventDefault();
+        this.setState({showNotification: !this.state.showNotification});
+    }
   //TODO change class of login-modal on scroll, affix-top on top, affix on affixed
 
   render() {
@@ -40,12 +48,17 @@ export class MainNavigation extends Component {
                 {/* <!-- Collect the nav links, forms, and other content for toggling --> */}
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul className="nav navbar-nav navbar-right">
+                        {/* <!--Notification Component goes here--> */}
+                        <li>
+
+                            <Notification show={this.state.openNotification}/>
+                        </li>
                         <li>
                             <Link to="/search" activeClassName="active"><i className="fa fa-search"></i>&nbsp;Search</Link>
                             {/* <a href="/search"><i className="fa fa-search"></i>&nbsp;Search</a> */}
                         </li>
                         <li>
-                            <Link to="/profile" activeClassName="active"><i className="fa fa-user"></i>&nbsp;{'Profile'}</Link>
+                            <Link to="/profile" activeClassName="active"><i className="fa fa-user"></i>&nbsp;My Buddy</Link>
                         </li>
                         <li>
                             <LogoutComponentContainer/>
@@ -53,8 +66,10 @@ export class MainNavigation extends Component {
                     </ul>
                 </div>
                 {/* <!-- /.navbar-collapse --> */}
+
             </div>
             {/* <!-- /.container-fluid --> */}
+
         </nav>
     );
   };

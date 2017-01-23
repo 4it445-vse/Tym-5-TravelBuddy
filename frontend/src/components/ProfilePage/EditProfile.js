@@ -11,7 +11,6 @@ import {
     Panel
 } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
-import { ProfilePictureEditorComponent } from "../ProfilePictureEditor/ProfilePictureEditorComponent.js";
 import api from '../../api.js';
 import { DatePicker } from '../common/DatePicker/DatePicker.js';
 import { SubmitButton } from '../common/SubmitButton.js';
@@ -404,7 +403,8 @@ export class EditProfile extends Component {
             this.setState({ isLoading: false });
         });
 
-        this.saveSelectedLanguages();
+        // TODO
+        // this.saveSelectedLanguages(this.state.selectedLanguages);
 
         if (!userMainFailed && !userDetailFailed) {
           this.setState({errors: {}});
@@ -414,15 +414,25 @@ export class EditProfile extends Component {
 
     }
 
-    saveSelectedLanguages() {
-      let srv = '/UserLanguages?access_token=' + localStorage.accessToken;
-      let data = this.state.selectedLanguages;
-      api.put(srv, data).then(response => {
-        //TODO update or create user's languages
-        // console.log('--- UserLanguages', response);
-      }).catch((error) => {
-        console.log('--- UserLanguages', error);
-      });
+    saveSelectedLanguages(languages) {
+      if (languages){
+        const transformedLanguages = languages.map((language)=>{
+          return {
+            //"refUserId": "3",
+            "refLanguageId": language.value
+          }
+        });
+        let srv = '/UserLanguages?access_token=' + localStorage.accessToken;
+        let data = this.state.selectedLanguages;
+        api.put(srv, data).then(response => {
+          //TODO update or create user's languages
+          // console.log('--- UserLanguages', response);
+        }).catch((error) => {
+          console.log('--- UserLanguages', error);
+        });
+      } else {
+        console.log('--- saveSelectedLanguages empty languages');
+      }
     }
 
     getFormData() {
@@ -514,7 +524,6 @@ export class EditProfile extends Component {
         let cssClass = 'form-themed';
         return (
             <div>
-                <ProfilePictureEditorComponent container={this.props.modal} ref="pictureEditor" setPicture={this.setPicture}/>
                 <form onSubmit={this.handleSubmit} className="edit-profile-form" style={{
                     padding: "10px"
                 }}>
@@ -542,7 +551,7 @@ export class EditProfile extends Component {
                         );
                       })}
 
-                      <Button type="button" className="btn btn-primary" onClick={ ()=> this.setState({ expandSettings: !this.state.expandSettings })}>
+                      <Button style={{marginRight: "15px"}} type="button" className="btn btn-primary" onClick={ ()=> this.setState({ expandSettings: !this.state.expandSettings })}>
                         Show more settings&nbsp;
                         {this.state.expandSettings ? <i className="fa fa-chevron-up" aria-hidden="true"></i> : <i className="fa fa-chevron-down" aria-hidden="true"></i>}
                       </Button>

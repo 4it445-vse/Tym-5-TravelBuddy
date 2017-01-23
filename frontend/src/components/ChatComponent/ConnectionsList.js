@@ -7,24 +7,81 @@ import api from '../../api.js';
 import lodash from "lodash";
 
 
-
 export class ConnectionsList extends Component{
   constructor(props){
     super(props);
     this.state = {
       elements: [],
+      elementsWithNotification: new Set(),
       isInfiniteLoading: false,
-      activeElement:null
+      activeElementId:null
     }
 
-    this.buildElements = this.buildElements.bind(this);
     this.fetchData = this.fetchData.bind(this);
     this.handleInfiniteLoad = this.handleInfiniteLoad.bind(this);
     this.elementClicked = this.elementClicked.bind(this);
   }
 
-  componentDidMount(){
-    this.fetchData(6,0);
+  pushConnectionToTop(connectionId, isNotification){
+    const connectionIndex = this.state.elements.findIndex((element,index,array)=>{
+      if (element.id === connectionId) return true;
+      return false;
+    });
+
+    if (connectionIndex >= 0){
+       this.state.elements.splice(0, 0, this.state.elements.splice(connectionIndex, 1)[0]);
+       //this.forceUpdate();
+    }else{
+      this.fetchSingleConnection(connectionId,(connection)=>{
+      this.state.elements.push(connection);
+      //this.forceUpdate();
+      });
+    }
+
+    console.log("conid,activeElementId",connectionId,this.state.activeElementId);
+    if (isNotification && (connectionId !== this.state.activeElementId)){
+      this.state.elementsWithNotification.add(connectionId);
+    }
+    this.forceUpdate();
+  }
+
+  fetchSingleConnection(connectionId,cb){
+    var params = {
+      params:{
+        filter:{
+          order: "lastMessageDate DESC",
+          include:[{
+            relation: "user1",
+            scope:{
+              include: {
+                relation: "userDetail"
+              }
+            }
+          },
+          {
+            relation: "user2",
+            scope:{
+              include: {
+                relation: "userDetail"
+              }
+            }
+          }]
+        }
+      }
+    };
+
+    api.get("/connections/"+connectionId+"?access_token="+localStorage.accessToken, params)
+    .then((response) =>{
+      console.log(response);
+      if (response.status === 200){
+        //console.log("data",response.data);
+        cb(response.data);
+      }
+    })
+    .catch((error) => {
+      console.log("Error: ", error);
+      console.log("Error: ", error.response);
+    });
   }
 
   fetchData(limit,offset){
@@ -37,7 +94,7 @@ export class ConnectionsList extends Component{
         filter:{
           limit: limit,
           skip: offset,
-          order: "id DESC"
+          order: "lastMessageDate DESC"
         }
       }
     };
@@ -46,11 +103,11 @@ export class ConnectionsList extends Component{
     .then((response) =>{
       // console.log(response);
       if (response.status === 200){
-        // console.log("data",response.data);
+         console.log("data",response.data);
         let connections = response.data;
         this.setState({
             isInfiniteLoading: false,
-            elements: this.buildElements(connections)
+            elements: this.state.elements.concat(connections)
         });
       }
     })
@@ -60,25 +117,15 @@ export class ConnectionsList extends Component{
     });
   }
 
-  elementClicked(data,index){
-    // console.log("element clicked",this.state.elements[index]);
-
-    //if (this.state.activeElement) this.refs.infinite.props.children[this.state.activeElement].setActive(false);
-    //this.state.elements[index].setState({active:true});
-    this.setState({activeElement:index});
-
+  elementClicked(data,elementId){
+    this.setState({activeElementId:elementId});
     this.props.connectionSelectedCB(data);
+    this.state.elementsWithNotification.delete(elementId);
+    this.forceUpdate();
   }
 
-    buildElements(data) {
-        var elements = [];
-        for (var i = 0; i < data.length; i++) {
-            elements.push(<ConnectionItem key={i} index={i} data={data[i]} handleElementClick={this.elementClicked}/>)
-        }
-        return elements;
-    }
 
-    elementInfiniteLoad() {
+  elementInfiniteLoad() {
       return(
         <div style={{ width:"100%",textAlign:"center"}}>
           <div style={{borderRadius:"8px",padding:"8px",display:"inline-block"}}>
@@ -88,7 +135,7 @@ export class ConnectionsList extends Component{
       );
     }
 
-    handleInfiniteLoad(){
+  handleInfiniteLoad(){
       var debounced = lodash.debounce(()=>{
         this.fetchData(6,this.state.elements.length);
       },1000);
@@ -98,16 +145,18 @@ export class ConnectionsList extends Component{
   render(){
     return(
       <Infinite elementHeight={90}
-               containerHeight={500}
+               containerHeight={this.props.height}
                infiniteLoadBeginEdgeOffset={0}
                onInfiniteLoad={this.handleInfiniteLoad}
                loadingSpinnerDelegate={this.elementInfiniteLoad()}
                isInfiniteLoading={this.state.isInfiniteLoading}
                ref="infinite"
                >
-               {this.state.elements.map((e)=>{
+               {
+                 this.state.elements.map((e,index)=>{
                  return(
-                   <ConnectionItem key={e.props.index} index={e.props.index} data={e.props.data} handleElementClick={e.props.handleElementClick} active={this.state.activeElement === e.props.index}/>
+                   <ConnectionItem key={e.id} index={index} data={e} currentUser={localStorage.userId} handleElementClick={this.elementClicked} active={this.state.activeElementId === e.id}
+                      hasNotification={this.state.elementsWithNotification.has(e.id)}/>
                   );
                })}
       </Infinite>
