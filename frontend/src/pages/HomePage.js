@@ -5,7 +5,6 @@ import { MainNavigation } from '../components/HomePage/MainNavigation.js';
 import { SearchSection } from '../components/HomePage/SearchSection/SearchSection';
 import { WelcomeWizardModal } from '../components/WelcomeWizard/WelcomeWizardModal.js';
 import { DetailProductContainer } from '../components/HomePage/DetailProduct/DetailProduct';
-import {Notification} from '../components/HomePage/Notification/Notification';
 import api from '../api.js';
 
 export class HomePageRaw extends Component {
@@ -47,7 +46,6 @@ export class HomePageRaw extends Component {
     render() {
         const { userData } = this.state;
         let welcomeWizard = undefined;
-
         if (this.state.showWelcomeWizard) {
             welcomeWizard = <WelcomeWizardModal steps={2}/>;
         }

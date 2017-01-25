@@ -70,8 +70,10 @@ export class MyRequestsList extends Component {
       api.get('/Products/'+ id +'?access_token=' + localStorage.accessToken, params)
         .then(response => {
           let product = response.data;
-
-            let filteredTxns = [];
+          let filteredTxns = [];
+          if (product.state === "accepted" && product.refTravellerUserId != localStorage.userId) {
+            //dont process product which is accepted but not by me
+           } else {
             filteredTxns = transactions.filter((txn) => {
               if (txn.Status === 'cancelled') {
                 return false;
@@ -83,12 +85,12 @@ export class MyRequestsList extends Component {
               }
               return true;
             });
-            product.transactions = filteredTxns;
-            this.setState(previousState => ({
-                products: [...previousState.products, product]
-            }));
-            // console.log('--- filtered products', this.state.products);
-
+          }
+          product.transactions = filteredTxns;
+          console.log('>>> request list processed', product);
+          this.setState(previousState => ({
+              products: [...previousState.products, product]
+          }));
         })
         .catch((error) => {
           console.log('<!> error', error)

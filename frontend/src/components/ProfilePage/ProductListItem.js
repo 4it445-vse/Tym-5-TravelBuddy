@@ -17,7 +17,7 @@ export class ProductListItemRaw extends Component{
 
     showLabel(label) {
       switch (label) {
-        case "open":
+        case "active":
           return (
             <Label bsStyle="warning">{label}</Label>
           );
@@ -43,8 +43,8 @@ export class ProductListItemRaw extends Component{
 
     handleActivate() {
       activateProductAction(this.props.product.id);
-      this.setState({ controlButton: "open" })
-      this.setState({ productState: "open" })
+      this.setState({ controlButton: "active" })
+      this.setState({ productState: "active" })
     }
 
     render() {
@@ -53,9 +53,10 @@ export class ProductListItemRaw extends Component{
           backgroundImage: "url(" + imageUrl + ")",
         }
         const acceptedTxn = this.props.product.transactions;
-        // if (this.props.productState) {
-        //   this.setState({productState: this.props.productState});
-        // }
+        let state = this.state.productState;
+        if (this.props.productState) {
+          state = this.props.productState;
+        }
         // console.log('--- product list item', this.props.product);
         return (
               <div className="col-lg-12">
@@ -65,7 +66,7 @@ export class ProductListItemRaw extends Component{
                       <div className="row">
                         <div className="col-md-12">
                           <div className="title">
-                            {this.showLabel(this.state.productState)}
+                            {this.showLabel(state)}
                             <h3>{this.props.product.label}</h3>
                           </div>
                         </div>
@@ -102,7 +103,7 @@ export class ProductListItemRaw extends Component{
                       </div>
                       <div className="col-md-6 text-right">
                         <ButtonGroup style={{marginRight: "15px"}}>
-                          {this.state.controlButton === "open" ?
+                          {this.state.controlButton === "active" ?
                             <Button onClick={this.handleDeactivate.bind(this)} bsStyle="primary">Deactive</Button>
                             :
                             <Button onClick={this.handleActivate.bind(this)} bsStyle="primary">Activate</Button>

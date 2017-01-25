@@ -25,50 +25,32 @@ export class ProductListRaw extends Component {
           params: {
             filter: {
               where: {refOwnerUserId: localStorage.userId},
-              include: [
-                {
-                  relation: "productCity"
-                },
-                {
-                  relation: "categories"
-                },
-                {
-                  relation: "transactions",
-                  scope: {
-                    include: {
-                      relation: "user"
-                    }
-                  }
-                }
-              ]
+              include: ['productCity', 'categories', 'transactions']
             }
           }
         };
         api.get(dataUrl, params).then((response) => {
-            if (response.status === 200) {
-              console.log('>>> loadProducts', response.data);
-              let products = response.data;
-              for (var i = 0; i < products.length;i++) {
-                let filteredTxns = [];
-                filteredTxns = products[i].transactions.filter((txn) => {
-                  if (txn.Status === 'declined' || txn.Status === 'cancelled') {
-                    return false;
-                  }
-                  let date = new Date(txn.Date);
-                  let today = new Date();
-                  if (date.getTime() < today.getTime()) {
-                    return false;
-                  }
-                  return true;
-                });
-                products[i].transactions = filteredTxns;
-              }
-
-              // products.product.transactions = filteredTxns;
-              this.setState({products: products}) // pole hodnot - objects - potřeba zjistit atribut, ve kterým se vrací pole
-              this.setState({ isLoading: false });
-
+            console.log('>>> loadProducts', response.data);
+            let products = response.data;
+            for (var i = 0; i < products.length;i++) {
+              let filteredTxns = [];
+              filteredTxns = products[i].transactions.filter((txn) => {
+                //remove declined or cancelled
+                if (txn.Status === 'declined' || txn.Status === 'cancelled') {
+                  return false;
+                }
+                //remove old transactions
+                let date = new Date(txn.Date);
+                let today = new Date();
+                if (date.getTime() < today.getTime()) {
+                  return false;
+                }
+                return true;
+              });
+              products[i].transactions = filteredTxns;
             }
+            this.setState({ products: products })
+            this.setState({ isLoading: false });
         }).catch((error) => {
             console.log("Error: ", error);
             console.log("Error: ", error.response);

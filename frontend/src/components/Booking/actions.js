@@ -76,7 +76,7 @@ export const acceptRequestAction = (transaction) => {
   api.patch(srvUrl, {"Status": "accepted"}).then(({data})=> {
     //update product state
     const srvUrl = '/Products/' + transaction.refProductId + '?access_token=' + localStorage.accessToken;
-    api.patch(srvUrl, {"state": "accepted"}).then(({data})=> {
+    api.patch(srvUrl, {"state": "accepted", "refTravellerUserId": transaction.refUserId}).then(({data})=> {
 
     }).catch((error)=> {
       console.log('<!> acceptRequestAction', error);

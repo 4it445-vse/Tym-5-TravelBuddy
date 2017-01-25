@@ -60,6 +60,24 @@ exports = module.exports = function(io,loopbackApp) {
               }
             });
           }
+        }else{
+          //create notification in database
+          let notification = {refUserId:msg.toUserId,refConnectionId:msg.refConnectionId};
+          let filter = {where:{"refConnectionId": msg.refConnectionId}};
+          loopbackApp.models.ChatNotification.findOrCreate(filter,notification,(err,obj,created)=>{
+            if (!err){
+              if (created) {
+                console.log("created chat notification", obj);
+              }
+              else {
+                  if (obj.refUserId !== msg.toUserId){
+                    obj.updateAttribute("refUserId",msg.toUserId,(err,updatedInstance)=>{
+
+                    });
+                  }
+                }
+              }
+            });
         }
 
       socket.broadcast.to(msg.refConnectionId).emit('new inc message', msg);
