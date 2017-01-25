@@ -71,7 +71,7 @@ export class MyRequestsList extends Component {
         .then(response => {
           let product = response.data;
           let filteredTxns = [];
-          if (product.state === "accepted" && product.refTravellerUserId !== localStorage.userId) {
+          if (product.state === "accepted" && product.refTravellerUserId != localStorage.userId) {
             //dont process product which is accepted but not by me
            } else {
             filteredTxns = transactions.filter((txn) => {
@@ -87,6 +87,7 @@ export class MyRequestsList extends Component {
             });
           }
           product.transactions = filteredTxns;
+          console.log('>>> request list processed', product);
           this.setState(previousState => ({
               products: [...previousState.products, product]
           }));
