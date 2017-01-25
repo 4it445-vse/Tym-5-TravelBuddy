@@ -17,7 +17,7 @@ export class MyRequestsListItemRaw extends Component{
 
     showLabel(label) {
       switch (label) {
-        case "open":
+        case "active":
           return (
             <Label bsStyle="warning">{label}</Label>
           );
@@ -42,7 +42,7 @@ export class MyRequestsListItemRaw extends Component{
           return (
             <MyRequestsTransactionList transactions={acceptedTxn} type="accepted"/>
           );
-        case "open":
+        case "active":
           return (
             <div className="footer container-fluid gradient-overlay">
               <div className="col-md-3">
@@ -79,6 +79,10 @@ export class MyRequestsListItemRaw extends Component{
         var style = {
           backgroundImage: "url(" + imageUrl + ")",
         }
+        let state = this.state.productState;
+        if (this.props.productState) {
+          state = this.props.productState;
+        }
         // console.log('--- product list item', this.props.product);
         return (
               <div className="col-lg-12">
@@ -88,7 +92,7 @@ export class MyRequestsListItemRaw extends Component{
                       <div className="row">
                         <div className="col-md-12">
                           <div className="title">
-                            {this.showLabel(this.state.productState)}
+                            {this.showLabel(state)}
                             <h3>{this.props.product.label}</h3>
                           </div>
                         </div>

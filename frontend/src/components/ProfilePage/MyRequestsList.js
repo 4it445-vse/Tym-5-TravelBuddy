@@ -71,18 +71,23 @@ export class MyRequestsList extends Component {
         .then(response => {
           let product = response.data;
           let filteredTxns = [];
-          filteredTxns = transactions.filter((txn) => {
-            if (txn.Status === 'cancelled') {
-              return false;
-            }
-            let date = new Date(txn.Date);
-            let today = new Date();
-            if (date.getTime() < today.getTime()) {
-              return false;
-            }
-            return true;
-          });
+          if (product.state === "accepted" && product.refTravellerUserId != localStorage.userId) {
+            //dont process product which is accepted but not by me
+           } else {
+            filteredTxns = transactions.filter((txn) => {
+              if (txn.Status === 'cancelled') {
+                return false;
+              }
+              let date = new Date(txn.Date);
+              let today = new Date();
+              if (date.getTime() < today.getTime()) {
+                return false;
+              }
+              return true;
+            });
+          }
           product.transactions = filteredTxns;
+          console.log('>>> request list processed', product);
           this.setState(previousState => ({
               products: [...previousState.products, product]
           }));
